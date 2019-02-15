@@ -24,10 +24,10 @@ public final class BetaCore extends JavaPlugin {
     }
 
     public void regCommands(){
-
     }
 
     public void regListeners(){
+
 
     }
 

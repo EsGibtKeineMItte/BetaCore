@@ -24,6 +24,7 @@ public enum Rank {
         this.color = color;
     }
 
+
     public String getName() {
         return name;
     }
