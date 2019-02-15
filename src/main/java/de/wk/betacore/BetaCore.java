@@ -23,6 +23,13 @@ public final class BetaCore extends JavaPlugin {
         }, 30);
     }
 
+    public void regCommands(){
+
+    }
+
+    public void regListeners(){
+
+    }
 
 
     @Override
