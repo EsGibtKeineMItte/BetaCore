@@ -9,7 +9,6 @@ import java.lang.reflect.Field;
 
 public class Tablist {
 
-
     /**
      * Update the Tablist Header and Footer of the Player
      * (n) gets Replaced to a New line Char
