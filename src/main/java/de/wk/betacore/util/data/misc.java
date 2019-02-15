@@ -16,8 +16,10 @@ public class misc {
     public static String getPREFIX() {
         return PREFIX;
     }
-
     public static String getNOPERM() {
         return NOPERM;
+    }
+    public static String getMUTED() {
+        return MUTED;
     }
 }
