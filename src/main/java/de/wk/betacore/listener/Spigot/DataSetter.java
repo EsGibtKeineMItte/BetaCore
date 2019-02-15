@@ -40,8 +40,6 @@ public class DataSetter implements Listener {
             cm.getPlayerData().setString(e.getPlayer().getUniqueId().toString() + ".firstjoin", today.toString());
             return;
         }
-
         cm.getPlayerData().setString(e.getPlayer().getUniqueId().toString() + ".lastjoin", today.toString());
-
     }
 }
