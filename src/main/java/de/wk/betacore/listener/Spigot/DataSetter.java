@@ -35,13 +35,13 @@ public class DataSetter implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        LocalDate heute = LocalDate.now();
-        if (e.getPlayer().hasPlayedBefore() || cm.getPlayerData().getString(e.getPlayer().getUniqueId().toString() + ".firstjoin") == null) {
-            cm.getPlayerData().setString(e.getPlayer().getUniqueId().toString() + ".firstjoin", heute.toString());
+        LocalDate today = LocalDate.now();
+        if (cm.getPlayerData().getString(e.getPlayer().getUniqueId().toString() + ".firstjoin") == null) {
+            cm.getPlayerData().setString(e.getPlayer().getUniqueId().toString() + ".firstjoin", today.toString());
             return;
         }
 
-        cm.getPlayerData().setString(e.getPlayer().getUniqueId().toString() + ".lastjoin", heute.toString());
+        cm.getPlayerData().setString(e.getPlayer().getUniqueId().toString() + ".lastjoin", today.toString());
 
     }
 }

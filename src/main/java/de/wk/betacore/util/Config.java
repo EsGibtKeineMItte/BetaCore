@@ -46,8 +46,8 @@ public class Config {
      * @param InputStream inputstream is a inputstream from another Config, which should be used to create the Config with instead of getting a resourcefile
      * @param JavaPlugin  plugin Instance of JavaPlugin, used to get plugins datafolder
      */
-
     public Config(String configname, Plugin plugin) {
+
         this.configname = configname;
         this.datafolder = null;
         if (!configname.contains("/")) {
