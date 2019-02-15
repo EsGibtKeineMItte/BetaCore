@@ -47,7 +47,7 @@ public final class BetaCore extends JavaPlugin {
 
 
 
-    public static  BetaCore getInstance() {
+    public static BetaCore getInstance() {
         return instance;
     }
 }
