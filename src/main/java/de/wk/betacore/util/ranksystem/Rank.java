@@ -5,15 +5,15 @@ import net.md_5.bungee.api.ChatColor;
 
 public enum Rank {
 
-    ADMIN("Admin", ChatColor.DARK_RED),
-    MANAGER("Manager", ChatColor.YELLOW),
-    DEV("Dev", ChatColor.AQUA),
-    MOD("Mod", ChatColor.RED),
-    SUPPORTER("Supp", ChatColor.BLUE),
-    ARCHI("Builder", ChatColor.GREEN),
-    YOU_TUBER("YT", ChatColor.DARK_PURPLE),
-    PREMIUM("Premium", ChatColor.GOLD),
-    USER("User", ChatColor.GRAY);
+    ADMIN("&4Admin", ChatColor.DARK_RED),
+    MANAGER("&eManager", ChatColor.YELLOW),
+    DEV("&3Dev", ChatColor.AQUA),
+    MOD("&cMod", ChatColor.RED),
+    SUPPORTER("&1Supp", ChatColor.BLUE),
+    ARCHI("&aBuilder", ChatColor.GREEN),
+    YOU_TUBER("&5YT", ChatColor.DARK_PURPLE),
+    PREMIUM("&6Premium", ChatColor.GOLD),
+    USER("&7User", ChatColor.GRAY);
 
 
     private String name;
