@@ -38,7 +38,7 @@ public class Config {
 
     public String configname;
 
-    /**
+    /*
      * Constructor for Config class
      *
      * @param String      configname is the path, where the configfile will be (relative to the plugin Folder)

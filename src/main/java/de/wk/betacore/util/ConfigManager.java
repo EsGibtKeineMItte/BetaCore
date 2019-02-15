@@ -3,8 +3,6 @@ package de.wk.betacore.util;
 
 import de.wk.betacore.BetaCore;
 
-import java.util.UUID;
-
 
 public class ConfigManager {
     private Config config = new Config("config.yml", BetaCore.getInstance());
@@ -38,9 +36,9 @@ public class ConfigManager {
         }
     }
 
-    public String getMOTD(){
-        if(config.getBoolean("use"))
-    }
+//    public String getMOTD(){
+//        if(config.getBoolean("use"))
+//    }
 
 
 

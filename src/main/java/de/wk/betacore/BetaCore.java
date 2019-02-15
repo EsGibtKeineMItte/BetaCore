@@ -8,16 +8,17 @@ public final class BetaCore extends JavaPlugin {
 
 
 
+
     @Override
     public void onEnable() {
         instance = this;
-
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
     }
+
 
 
     public static  BetaCore getInstance() {
