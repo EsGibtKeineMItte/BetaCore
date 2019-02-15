@@ -6,10 +6,10 @@ import de.wk.betacore.BetaCore;
 
 public class ConfigManager {
     private Config config = new Config("config.yml", BetaCore.getInstance());
-    private Config globalConfig = new Config("../../../Data/gconfig.yml", BetaCore.getInstance());
-    private Config playerData = new Config("../../../Data/PlayerData.yml", BetaCore.getInstance());
-    private Config teams = new Config("../../../Data/Teams.yml", BetaCore.getInstance());
-    private Config permissions = new Config("../../../Data/Permissions.yml", BetaCore.getInstance());
+    private Config globalConfig = new Config("../../../data/gconfig.yml", BetaCore.getInstance());
+    private Config playerData = new Config("../../../data/PlayerData.yml", BetaCore.getInstance());
+    private Config teams = new Config("../../../data/Teams.yml", BetaCore.getInstance());
+    private Config permissions = new Config("../../../data/Permissions.yml", BetaCore.getInstance());
 
 
     //

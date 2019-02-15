@@ -1,7 +1,6 @@
-package de.wk.betacore;
+package de.wk.betacore.util.data;
 
-public class Data {
-
+public class misc {
     private static String PREFIX = "§aBetaCore §7|";
     private static String NOPERM = "§cDu hast nicht die benötigten Berechtigungen, um diesen Befehl auszuführen";
 
