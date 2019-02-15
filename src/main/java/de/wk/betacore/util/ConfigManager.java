@@ -1,7 +1,6 @@
 package de.wk.betacore.util;
 
 
-import de.ops.alphacore.main.AlphaCoreS;
 import de.wk.betacore.BetaCore;
 
 import java.util.UUID;
