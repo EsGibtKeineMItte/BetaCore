@@ -7,6 +7,7 @@ import org.bukkit.command.SimpleCommandMap;
 import java.lang.reflect.Field;
 import java.util.Map;
 
+
 public class CommandRemover {
 
     private static String packageName = Bukkit.getServer().getClass().getPackage().getName();
