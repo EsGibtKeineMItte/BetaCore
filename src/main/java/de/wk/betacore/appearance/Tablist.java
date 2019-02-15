@@ -1,6 +1,5 @@
 package de.wk.betacore.appearance;
 
-import net.md_5.bungee.api.chat.BaseComponent;
 import net.minecraft.server.v1_12_R1.IChatBaseComponent;
 import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerListHeaderFooter;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -9,7 +8,6 @@ import org.bukkit.entity.Player;
 import java.lang.reflect.Field;
 
 public class Tablist {
-
 
     /**
      * Update the Tablist Header and Footer of the Player
