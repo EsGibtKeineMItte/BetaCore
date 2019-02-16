@@ -9,7 +9,6 @@ public class RankSystem {
 
     public void setRank(UUID uuid, Rank rank){
         cm.getPlayerData().setString(uuid.toString() + ".rank", rank.name().toUpperCase());
-        cm.getPlayerData().save();
     }
 
     public Rank getRank(UUID uuid){

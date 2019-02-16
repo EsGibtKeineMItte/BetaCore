@@ -11,3 +11,7 @@ commands:
     description: Command, um sich zu den Arenen zu teleportien
   core:
     description: Commands für den Core
+  l:
+    description: Command, um sich zum Bau zu teleportieren
+    aliases: hub
+

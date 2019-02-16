@@ -39,6 +39,11 @@ public class ConfigManager {
             config.setBoolean("useAntiLaggSystem", true);
         }
         config.save();
+
+        globalConfig.setString("LinkToArena-1", "Arena-1");
+        globalConfig.setString("LinkToArena-2", "Arena-2");
+        globalConfig.setString("LinkToBau", "Bau");
+        globalConfig.setString("LinkToLobby", "Lobby-1");
     }
 
 //    public String getMOTD(){
