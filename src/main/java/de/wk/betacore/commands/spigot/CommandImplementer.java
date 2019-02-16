@@ -249,13 +249,14 @@ public class CommandImplementer {
                         }
                     }
                     if (isRank) {
-                        Info.sendInfo((Player) sender, "Ranks does not exist");
+                        Info.sendInfo((Player) sender, "Rank " + args[2].toUpperCase() + " does not exist");
                         return;
                     }
                     if (your < their || your == 0 || !(sender instanceof Player) || sender.isOp()) {
                         String rank = args[2].toUpperCase();
                         cm.getPlayerData().setString(Bukkit.getOfflinePlayer(args[1]).getUniqueId() + ".rank", rank);
                         Info.sendInfo((Player) sender, "Rank geändert zu " + rank);
+                        joinHandler.update((Player) Bukkit.getOfflinePlayer(args[1]));
                     }
                 }
             }
