@@ -23,9 +23,10 @@ public class TeamSystem {
         cm.getPlayerData().setString(teamAdmin.getUniqueId().toString() + ".wsteam", teamName);
         cm.getTeams().setList(teamName + "admins", teamAdmins);
         cm.getTeams().setString(teamName + ".short", kuerzel);
-        cm.getTeams().setInt(teamName + ".teamrank", -1);
-        cm.getTeams().setInt(teamName + ".wonPrivateFights", -1);
-        cm.getTeams().setInt(teamName + ".wonPublicFights", -1);
+        cm.getTeams().setInt(teamName + ".teamrank", -1);//PrivateFight *3 + wonEvents*5 + wonpublicfights
+        cm.getTeams().setInt(teamName + ".wonPrivateFights", 0);
+        cm.getTeams().setInt(teamName + ".wonPublicFights", 0);
+        cm.getTeams().setInt(teamName + ".wonEvents", 0);
 
         cm.getTeams().save();
 
@@ -56,6 +57,7 @@ public class TeamSystem {
     }
 
     public void promoteUser(String Teamname, Player player) {
+
 
     }
 
