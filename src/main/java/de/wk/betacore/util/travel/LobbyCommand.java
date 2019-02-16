@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class BauCommand implements CommandExecutor {
+public class LobbyCommand implements CommandExecutor {
 
     FastTravelSystem fs = new FastTravelSystem();
     ConfigManager cm = new ConfigManager();
@@ -18,7 +18,7 @@ public class BauCommand implements CommandExecutor {
             return false;
         }
         Player player = (Player) sender;
-        fs.connect(player,cm.getGlobalConfig().getString("LinkToBau") );
+        fs.connect(player, cm.getGlobalConfig().getString("LinkToLobby"));
 
         return false;
     }
