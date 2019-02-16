@@ -7,6 +7,14 @@ Version: 1.0 Alpha
 
 Licences: GLP V3
 
+Description:
+* Core System
+* Ban
+* Kick
+* Rank
+* Team
+* WorldEdit Schems
+
 Used APIs:
 * Spigot
 * Bungee
