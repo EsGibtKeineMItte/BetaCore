@@ -12,6 +12,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.ArrayList;
+
 public class JoinHandler implements Listener {
     RankSystem rankSystem = new RankSystem();
 
@@ -35,21 +37,36 @@ public class JoinHandler implements Listener {
 
     public void scoreboard(Player e) {
         ConfigManager cm = new ConfigManager();
-        String[] st = new String[14];
-        st[0] = "&6";
-        st[1] = "&6> &7Money";
-        st[2] = "&6> &e" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId().toString() + ".money");
-        st[3] = "&6> &7Rank";
-        st[4] = "&6> " + rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName();
-        st[5] = "&6> &7WSRank";
-        st[6] = "&6> &5" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId() + ".wsrank");
-        st[7] = "&7";
-        st[8] = "&6> &7Joins";
-        st[9] = "&6> &e(Joins)";
-        st[10] = "&6> &7Play Time";
-        st[11] = "&6> &e(PlayTime)";
-        st[12] = "&8";
-        st[13] = "&6TheWarking.de";
+
+        ArrayList<String> sscore = new ArrayList<>();
+        sscore.add("&6");
+        sscore.add("&6> &7Money");
+        sscore.add("&6> &e" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId().toString() + ".money"));
+        sscore.add("&6> &7Rank");
+        if (cm.getPlayerData().getInt(e.getPlayer().getUniqueId() + ".wsrank") < 501) {
+            sscore.add("&7");
+            sscore.add("&6> &7WSRank");
+            sscore.add("&6> &e&l" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId() + ".wsrank"));
+        }
+        if (cm.getPlayerData().getString(e.getPlayer().getUniqueId() + ".team").length() != 0) {
+            sscore.add("&6> &7Team");
+            sscore.add("&6> &e&l" + cm.getPlayerData().getString(e.getPlayer().getUniqueId() + ".team"));
+        }
+        sscore.add("&8");
+        sscore.add("&6> &7Joins");
+        sscore.add("&6> &e(Joins)");
+        sscore.add("&6> &7Play Time");
+        sscore.add("&6> &e(PlayTime)");
+        sscore.add("&9");
+        sscore.add("&6TheWarking.de");
+
+        String[] st = new String[sscore.size()];
+        int i = 0;
+        for (String string : sscore) {
+            st[i] = string;
+            i++;
+        }
+
         Scoreboard.updateScoreboard("", new String[0], e.getPlayer());
         Scoreboard.updateScoreboard("&aTheWarKing", st, e.getPlayer());
     }
