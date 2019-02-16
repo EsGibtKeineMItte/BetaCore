@@ -42,6 +42,7 @@ public class JoinHandler implements Listener {
         st[9] = "&6> &e(PlayTime)";
         st[10] = "&8";
         st[11] = "&6TheWarking.de";
+        Scoreboard.updateScoreboard("", new String[0], e.getPlayer());
         Scoreboard.updateScoreboard("&aTheWarKing", st, e.getPlayer());
     }
 

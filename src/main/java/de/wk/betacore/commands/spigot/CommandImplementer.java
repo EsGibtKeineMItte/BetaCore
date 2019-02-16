@@ -27,6 +27,7 @@ public class CommandImplementer {
 
             @Override
             public void run(CommandSender sender, String[] args) {
+                cm.getPlayerData().reload();
                 Info.sendInfo((Player) sender, "&aMoney > " + cm.getPlayerData().getInt(((Player) sender).getUniqueId().toString() + ".money"));
                 joinHandler.scoreboard((Player) sender);
                 joinHandler.playerTablist((Player) sender);
@@ -58,6 +59,7 @@ public class CommandImplementer {
 
             @Override
             public void run(CommandSender sender, String[] args) {
+                cm.getPlayerData().reload();
                 int i = Integer.parseInt(args[1]);
                 cm.getPlayerData().setInt(((Player) sender).getPlayer().getUniqueId().toString() + ".money", i);
                 Info.sendInfo((Player) sender, "&aMoney set to > " + cm.getPlayerData().getInt(((Player) sender).getUniqueId().toString() + ".money"));
