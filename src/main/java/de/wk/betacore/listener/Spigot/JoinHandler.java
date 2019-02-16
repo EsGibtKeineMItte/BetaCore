@@ -22,14 +22,14 @@ public class JoinHandler implements Listener {
         String[] st = new String[12];
         st[0] = "&6";
         st[1] = "&6> &7Money";
-        st[2] = "&6> &7" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId().toString() + ".money");
+        st[2] = "&6> &e&7" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId().toString() + ".money");
         st[3] = "&6> &7Rank";
         st[4] = "&6> " + rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName();
         st[5] = "&7";
         st[6] = "&6> &7Joins";
-        st[7] = "&6> &7(Joins)";
+        st[7] = "&6> &e(Joins)";
         st[8] = "&6> &7Play Time";
-        st[9] = "&6> &7(PlayTime)";
+        st[9] = "&6> &e(PlayTime)";
         st[10] = "&8";
         st[11] = "&6TheWarking.de";
         Scoreboard.updateScoreboard("&aTheWarKing", st, e.getPlayer());
