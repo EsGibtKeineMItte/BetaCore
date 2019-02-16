@@ -4,9 +4,12 @@ import de.wk.betacore.commands.spigot.commandmanager.CommandManager;
 import de.wk.betacore.listener.Spigot.DataSetter;
 import de.wk.betacore.listener.Spigot.JoinHandler;
 import de.wk.betacore.listener.Spigot.MessageSend;
+import de.wk.betacore.listener.Spigot.WorldSystemUtil;
 import de.wk.betacore.util.ConfigManager;
 import de.wk.betacore.util.data.misc;
 import de.wk.betacore.util.misc.CommandRemover;
+import de.wk.betacore.util.travel.ArenaCommand;
+import de.wk.betacore.util.travel.BauCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -56,6 +59,15 @@ public final class BetaCore extends JavaPlugin {
         removeCommands();
         cm.setup();
 
+        if (!cm.getConfig().getBoolean("useAsBauServer")) {
+            getCommand("bau").setExecutor(new BauCommand());
+        } else {
+            this.getServer().getPluginManager().registerEvents(new WorldSystemUtil(), this);
+        }
+        if (!cm.getConfig().getBoolean("useAsArena")) {
+            getCommand("arena").setExecutor(new ArenaCommand());
+            //   getCommand("a").setExecutor(new ArenaCommand());
+        }
     }
 
     @Override
