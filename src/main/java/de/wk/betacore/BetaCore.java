@@ -2,6 +2,7 @@ package de.wk.betacore;
 
 import de.wk.betacore.listener.Spigot.JoinHandler;
 import de.wk.betacore.listener.Spigot.MessageSend;
+import de.wk.betacore.util.ConfigManager;
 import de.wk.betacore.util.data.misc;
 import de.wk.betacore.util.misc.CommandRemover;
 import org.bukkit.Bukkit;
@@ -10,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class BetaCore extends JavaPlugin {
 
     private static BetaCore instance;
+    ConfigManager cm = new ConfigManager();
     private void removeCommands() {
         Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> {
             try {
@@ -44,6 +46,7 @@ public final class BetaCore extends JavaPlugin {
 
         // COMMANDS so the commands and so on
         removeCommands();
+        cm.setup();
 
     }
 

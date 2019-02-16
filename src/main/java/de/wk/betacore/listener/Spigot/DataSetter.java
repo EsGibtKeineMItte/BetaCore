@@ -1,7 +1,6 @@
 package de.wk.betacore.listener.Spigot;
 
-import de.wk.betacore.appearance.Scoreboard;
-import de.wk.betacore.appearance.Tablist;
+
 import de.wk.betacore.util.ConfigManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

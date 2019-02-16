@@ -6,7 +6,6 @@ import de.wk.betacore.BetaCore;
 
 public class ConfigManager {
 
-
     private Config config = new Config("config.yml", BetaCore.getInstance());
     private Config globalConfig = new Config("../../../data/gconfig.yml", BetaCore.getInstance());
     private Config playerData = new Config("../../../data/PlayerData.yml", BetaCore.getInstance());
@@ -16,6 +15,7 @@ public class ConfigManager {
 
     //
     public void setup() {
+
 
         if (!config.getBoolean("useGlobalConfig")) {
             config.setBoolean("useGlobalConfig", true);
@@ -36,6 +36,7 @@ public class ConfigManager {
         if (!config.getBoolean("useAntiLaggSystem")) {
             config.setBoolean("useAntiLaggSystem", true);
         }
+        config.save();
     }
 
 //    public String getMOTD(){
