@@ -5,6 +5,7 @@ import de.wk.betacore.commands.spigot.manager.CommandInterface;
 import de.wk.betacore.commands.spigot.manager.CommandManager;
 import de.wk.betacore.listener.Spigot.JoinHandler;
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.ranksystem.RankSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,6 +15,7 @@ public class CommandImplementer {
     public static void implementCommands() {
         ConfigManager cm = new ConfigManager();
         JoinHandler joinHandler = new JoinHandler();
+        RankSystem rankSystem = new RankSystem();
 
         CommandManager.addCommand(new CommandInterface() {
             @Override
@@ -163,6 +165,65 @@ public class CommandImplementer {
             @Override
             public Boolean inConsole() {
                 return false;
+            }
+        });
+
+        CommandManager.addCommand(new CommandInterface() {
+            @Override
+            public String getName() {
+                return "core";
+            }
+
+            @Override
+            public String getInfo() {
+                return "/core help";
+            }
+
+            @Override
+            public void run(CommandSender sender, String[] args) { }
+
+            @Override
+            public String[] getSubCommands() {
+                String[] subs = new String[5];
+                subs[0] = "core setrank";
+                subs[1] = "core setup";
+                subs[2] = "core reload";
+                subs[3] = "core info";
+                subs[4] = "core help";
+                return subs;
+            }
+
+            @Override
+            public Boolean inConsole() {
+                return true;
+            }
+        });
+        CommandManager.addCommand(new CommandInterface() {
+            @Override
+            public String getName() {
+                return "core setrank";
+            }
+
+            @Override
+            public String getInfo() {
+                return "";
+            }
+
+            @Override
+            public void run(CommandSender sender, String[] args) {
+                if (sender.hasPermission("betacore.setrank")) {
+                    rankSystem.getRank(((Player) sender).getUniqueId())
+                }
+            }
+
+            @Override
+            public String[] getSubCommands() {
+                return new String[0];
+            }
+
+            @Override
+            public Boolean inConsole() {
+                return true;
             }
         });
     }
