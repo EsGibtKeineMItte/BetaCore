@@ -9,6 +9,7 @@ public class Update extends Thread {
 
     @Override
     public void run() {
+        System.out.println("DEBUG: Test");
         isStarted = true;
         joinHandler.updateLists();
 

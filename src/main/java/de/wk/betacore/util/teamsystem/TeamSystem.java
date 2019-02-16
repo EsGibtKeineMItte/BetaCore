@@ -1,6 +1,5 @@
 package de.wk.betacore.util.teamsystem;
 
-
 import de.wk.betacore.util.ConfigManager;
 import org.bukkit.entity.Player;
 
