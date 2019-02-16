@@ -70,7 +70,7 @@ public class CommandManager {
                     subCommand = ci;
                 }
             }
-            if (!(subExecutable)) {
+            if (subExecutable) {
                 Info.sendInfo((Player) commandSender, "&cUnbekannter Befehl!");
                 return;
             }
