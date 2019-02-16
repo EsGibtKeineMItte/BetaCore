@@ -1,15 +1,25 @@
 package de.wk.betacore.commands.spigot;
 
 import de.wk.betacore.commands.spigot.commandmanager.SubCommand;
+import de.wk.betacore.commands.spigot.manager.CommandManager;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class SetRankCommand extends SubCommand {
+public class SetRankCommand implements CommandExecutor {
+
     @Override
-    public void onCommand(Player player, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        CommandManager.executeCommand(sender, "core", args);
+        return true;
+    }
+
+        /*
         RankSystem rankSystem = new RankSystem();
         if (args[2].equalsIgnoreCase("USER")) {
             if (player.hasPermission("betacore.setrank.user") || player.hasPermission("betacore.setrank.*") ||player.hasPermission("betacore.*")) {
@@ -69,5 +79,5 @@ public class SetRankCommand extends SubCommand {
     @Override
     public String[] aliases() {
         return new String[1];
-    }
+    }*/
 }

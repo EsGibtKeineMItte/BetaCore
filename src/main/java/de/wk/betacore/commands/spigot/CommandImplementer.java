@@ -5,10 +5,13 @@ import de.wk.betacore.commands.spigot.manager.CommandInterface;
 import de.wk.betacore.commands.spigot.manager.CommandManager;
 import de.wk.betacore.listener.Spigot.JoinHandler;
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
 
 public class CommandImplementer {
 
@@ -212,7 +215,48 @@ public class CommandImplementer {
             @Override
             public void run(CommandSender sender, String[] args) {
                 if (sender.hasPermission("betacore.setrank")) {
-                    rankSystem.getRank(((Player) sender).getUniqueId())
+                    if (args.length != 3) {
+                        CommandManager.wrongUsage(sender);
+                        return;
+                    }
+                    int your = rankSystem.getRank(((Player) sender).getUniqueId()).getPriority();
+                    ArrayList<String> ranks = new ArrayList<>();
+                    ranks.add(Rank.ADMIN.getName());
+                    ranks.add(Rank.DEV.getName());
+                    ranks.add(Rank.MOD.getName());
+                    ranks.add(Rank.SUPPORTER.getName());
+                    ranks.add(Rank.ARCHI.getName());
+                    ranks.add(Rank.YOU_TUBER.getName());
+                    ranks.add(Rank.PREMIUM.getName());
+                    ranks.add(Rank.USER.getName());
+
+                    ArrayList<String> priority = new ArrayList<>();
+                    ranks.add(Rank.ADMIN.getPriority() + "");
+                    ranks.add(Rank.DEV.getPriority() + "");
+                    ranks.add(Rank.MOD.getPriority() + "");
+                    ranks.add(Rank.SUPPORTER.getPriority() + "");
+                    ranks.add(Rank.ARCHI.getPriority() + "");
+                    ranks.add(Rank.YOU_TUBER.getPriority() + "");
+                    ranks.add(Rank.PREMIUM.getPriority() + "");
+                    ranks.add(Rank.USER.getPriority() + "");
+
+                    Boolean isRank = true;
+                    int their = 0;
+                    for (String name : ranks) {
+                        if (isRank && name.equals(args[2].toUpperCase())) {
+                            isRank = false;
+                            their = Integer.parseInt(priority.get(ranks.indexOf(name)));
+                        }
+                    }
+                    if (isRank) {
+                        Info.sendInfo((Player) sender, "Ranks does not exist");
+                        return;
+                    }
+                    if (your < their || your == 0 || !(sender instanceof Player)) {
+                        String rank = args[2].toUpperCase();
+                        cm.getPlayerData().setString(((Player) sender).getUniqueId().toString() + ".rank", rank);
+                        Info.sendInfo((Player) sender, "Rank geändert zu " + rank);
+                    }
                 }
             }
 
