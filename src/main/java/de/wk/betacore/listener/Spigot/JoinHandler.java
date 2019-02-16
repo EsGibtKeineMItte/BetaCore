@@ -23,6 +23,14 @@ public class JoinHandler implements Listener {
         playerTablist(e);
     }
 
+    public void updateLists() {
+        for (Player e : Bukkit.getOnlinePlayers()) {
+            scoreboard((PlayerJoinEvent) e);
+            tablist((PlayerJoinEvent) e);
+            playerTablist((PlayerJoinEvent) e);
+        }
+    }
+
     private void scoreboard(PlayerJoinEvent e) {
         String[] st = new String[12];
         st[0] = "&6";

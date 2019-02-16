@@ -3,9 +3,10 @@ package de.wk.betacore;
 import de.wk.betacore.commands.spigot.CommandImplementer;
 import de.wk.betacore.commands.spigot.Money;
 import de.wk.betacore.commands.spigot.PcCommand;
-import de.wk.betacore.commands.spigot.commandmanager.CommandManager;
+import de.wk.betacore.commands.spigot.commandmanager.CommandManagerOld;
 import de.wk.betacore.listener.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
+import de.wk.betacore.threads.Update;
 import de.wk.betacore.util.ConfigManager;
 import de.wk.betacore.util.misc.CommandRemover;
 import de.wk.betacore.util.travel.ArenaCommand;
@@ -74,7 +75,7 @@ public final class BetaCore extends JavaPlugin {
     public void onEnable() {
         instance = this;
         ConfigManager cm = new ConfigManager();
-        CommandManager commandManager = new CommandManager();
+        CommandManagerOld commandManager = new CommandManagerOld();
         commandManager.setup();
 
         CommandImplementer.implementCommands();
@@ -82,6 +83,10 @@ public final class BetaCore extends JavaPlugin {
         regCommands();
         regListeners();
 
+        Update update = new Update();
+        if (!(Update.isStarted)) {
+            update.start();
+        }
 
         removeCommands();
         cm.setup();
