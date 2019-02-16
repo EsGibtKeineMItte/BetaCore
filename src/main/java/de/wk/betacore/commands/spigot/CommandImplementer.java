@@ -11,9 +11,8 @@ public class CommandImplementer {
 
     public void implementCommands() {
         ConfigManager cm = new ConfigManager();
-        CommandManager commandManager = new CommandManager();
 
-        commandManager.addCommand(new CommandInterface() {
+        CommandManager.addCommand(new CommandInterface() {
             @Override
             public String getName() {
                 return "money";

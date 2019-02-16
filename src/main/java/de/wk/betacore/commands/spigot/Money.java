@@ -9,8 +9,7 @@ public class Money implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        CommandManager commandManager = new CommandManager();
-        commandManager.executeCommand(sender, "money", args);
+        CommandManager.executeCommand(sender, "money", args);
         return true;
     }
 

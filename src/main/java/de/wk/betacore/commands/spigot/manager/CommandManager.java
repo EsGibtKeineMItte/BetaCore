@@ -9,21 +9,21 @@ import java.util.ArrayList;
 
 public class CommandManager {
 
-    ArrayList<CommandInterface> commands = new ArrayList<>();
+    static ArrayList<CommandInterface> commands = new ArrayList<>();
 
-    public void addCommand(CommandInterface ci) {
+    public static void addCommand(CommandInterface ci) {
         commands.add(ci);
     }
 
-    public void removeCommand(CommandInterface ci) {
+    public static void removeCommand(CommandInterface ci) {
         commands.remove(ci);
     }
 
-    public ArrayList<CommandInterface> getCommands() {
+    public static ArrayList<CommandInterface> getCommands() {
         return commands;
     }
 
-    public void executeCommand(CommandSender commandSender, String cmd, String[] args) {
+    public static void executeCommand(CommandSender commandSender, String cmd, String[] args) {
         Boolean executable = true;
         CommandInterface command = null;
         for (CommandInterface ci : commands) {
