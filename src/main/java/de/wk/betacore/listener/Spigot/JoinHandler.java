@@ -11,7 +11,7 @@ public class JoinHandler implements Listener {
     ConfigManager cm = new ConfigManager();
 
     @EventHandler
-    public void onJoine(PlayerJoinEvent e) {
+    public void onJoin(PlayerJoinEvent e) {
         scoreboard(e);
         tablist(e);
     }

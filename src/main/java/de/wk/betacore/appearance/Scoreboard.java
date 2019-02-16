@@ -84,7 +84,7 @@ public class Scoreboard {
                     text = text.replaceAll("\\(PlayTime\\)", PlayTime2);
 
                     Score score = obj.getScore(text);
-                    score.setScore(j + 1 - i);
+                    score.setScore(j + 0 - i);
 
                     p.setScoreboard(board);
                 }
@@ -165,7 +165,7 @@ public class Scoreboard {
                         text = text.replaceAll("\\(PlayTime\\)", PlayTime2);
 
                         Score score = obj.getScore(text);
-                        score.setScore(j + 1 - i);
+                        score.setScore(j + 0 - i);
 
                         p.setScoreboard(board);
                     }
