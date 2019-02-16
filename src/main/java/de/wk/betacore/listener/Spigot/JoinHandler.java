@@ -28,11 +28,11 @@ public class JoinHandler implements Listener {
         st[7] = "&6> &7" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId().toString() + ".money");
         st[8] = "&8";
         st[9] = "&6> TheWarking.de";
-        Scoreboard.updateScoreboard(e.getPlayer().getServer().getServerName(), st, e.getPlayer());
+        Scoreboard.updateScoreboard("&aTheWarKing", st, e.getPlayer());
     }
 
     private void tablist(PlayerJoinEvent e) {
-        Tablist.Tablist("(Server)(n)dein WarShip Server", "Viel Spaß auf dem Server(n)(Name)!", e.getPlayer());
+        Tablist.Tablist("&aTheWarKing(n)&7dein WarShip Server", "&7Viel Spaß auf dem Server(n)&e(Name)&7!", e.getPlayer());
     }
 
 }
