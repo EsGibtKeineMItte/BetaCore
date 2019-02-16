@@ -20,12 +20,43 @@ public class CommandImplementer {
 
             @Override
             public String getInfo() {
-                return "";
+                return "/money [SET/PAY]";
             }
 
             @Override
             public void run(CommandSender sender, String[] args) {
                 Info.sendInfo((Player) sender, "&aMoney > " + cm.getPlayerData().getInt(((Player) sender).getUniqueId().toString() + ".money"));
+            }
+
+            @Override
+            public String[] getSubCommands() {
+                String[] subs = new String[2];
+                subs[0] = "set";
+                subs[1] = "pay";
+                return subs;
+            }
+
+            @Override
+            public Boolean inConsole() {
+                return false;
+            }
+        });
+        CommandManager.addCommand(new CommandInterface() {
+            @Override
+            public String getName() {
+                return "money set";
+            }
+
+            @Override
+            public String getInfo() {
+                return "";
+            }
+
+            @Override
+            public void run(CommandSender sender, String[] args) {
+                int i = Integer.parseInt(args[1]);
+                cm.getPlayerData().setInt(((Player) sender).getPlayer().getUniqueId().toString() + ".money", i);
+                Info.sendInfo((Player) sender, "&aMoney set to > " + cm.getPlayerData().getInt(((Player) sender).getUniqueId().toString() + ".money"));
             }
 
             @Override
