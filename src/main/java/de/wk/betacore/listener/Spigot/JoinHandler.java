@@ -18,9 +18,9 @@ public class JoinHandler implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        scoreboard((Player) e);
-        tablist((Player) e);
-        playerTablist((Player) e);
+        scoreboard(e.getPlayer());
+        tablist(e.getPlayer());
+        playerTablist(e.getPlayer());
         if (rankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.setJoinMessage("");
         } else {
