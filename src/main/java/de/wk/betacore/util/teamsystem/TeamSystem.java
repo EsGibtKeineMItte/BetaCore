@@ -14,8 +14,14 @@ public class TeamSystem {
 
     public void createTeam(String teamName, String kuerzel, Player teamAdmin) {
     if(!(cm.getTeams().getList(teamName) == null )){
-        System.out.println("Das Team konnte nicht erstellt werden.");
+        System.out.println("Das Team konnte nicht erstellt werden, da es bereits existiert");
     }
+    ArrayList<Object> teamAdmins = new ArrayList<>();
+    teamAdmins.add(teamAdmin.toString());
+    cm.getTeams().setList(teamName + "admins", teamAdmins);
+    cm.getTeams().setInt(teamName + ".wsrang", -1);
+
+    cm.getTeams().save();
 
     }
 
