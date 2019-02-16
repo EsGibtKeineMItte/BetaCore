@@ -1,25 +1,21 @@
 package de.wk.betacore.util.ranksystem;
 
-
-import net.md_5.bungee.api.ChatColor;
-
 public enum Rank {
 
-    ADMIN("&4Admin", ChatColor.DARK_RED),
-    //MANAGER("&eManager", ChatColor.YELLOW),
-    DEV("&3Dev", ChatColor.AQUA),
-    MOD("&cMod", ChatColor.RED),
-    SUPPORTER("&1Supp", ChatColor.BLUE),
-    ARCHI("&aBuilder", ChatColor.GREEN),
-    YOU_TUBER("&5YT", ChatColor.DARK_PURPLE),
-    PREMIUM("&6Premium", ChatColor.GOLD),
-    USER("&7User", ChatColor.GRAY);
+    ADMIN("Admin", "&4"),
+    DEV("Dev", "&3"),
+    MOD("Mod", "&c"),
+    SUPPORTER("Supp", "&1"),
+    ARCHI("Builder", "&a"),
+    YOU_TUBER("YT", "&5"),
+    PREMIUM("Premium", "&6"),
+    USER("User", "&7");
 
 
     private String name;
-    private ChatColor color;
+    private String color;
 
-    private Rank(String name, ChatColor color) {
+    private Rank(String name, String color) {
         this.name = name;
         this.color = color;
     }
@@ -29,7 +25,7 @@ public enum Rank {
         return name;
     }
 
-    public ChatColor getColor() {
+    public String getColor() {
         return color;
     }
 }
