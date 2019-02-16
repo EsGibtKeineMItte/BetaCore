@@ -2,9 +2,14 @@ package de.wk.betacore.util.data;
 
 /*
 Permissions:
+
+beta.core.*
+
 betacore.gm.self
 betacore.gm.other
 
+
+betacore.setrank.*
 betacore.setrank.user
 betacore.setrank.premium
 betacore.setrank.youtuber
