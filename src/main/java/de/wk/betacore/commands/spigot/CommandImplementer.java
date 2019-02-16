@@ -104,6 +104,10 @@ public class CommandImplementer {
                     return;
                 }
                 int i = Integer.parseInt(args[2]);
+                if (i < 1) {
+                    Info.sendInfo((Player) sender, "&cDiese Anzahl ist nicht erlaubt");
+                    return;
+                }
                 cm.getPlayerData().reload();
                 if (cm.getPlayerData().getInt(((Player) sender).getUniqueId().toString() + ".money") >= i) {
                     cm.getPlayerData().setInt(((Player) sender).getPlayer().getUniqueId().toString() + ".money", cm.getPlayerData().getInt(((Player) sender).getPlayer().getUniqueId().toString() + ".money") - i);
