@@ -9,8 +9,6 @@ import java.util.List;
 
 
 public class TeamSystem {
-
-
     public void createTeam(String teamName, String kuerzel, Player teamAdmin) {
         ConfigManager cm = new ConfigManager();
 
