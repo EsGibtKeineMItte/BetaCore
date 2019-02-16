@@ -27,6 +27,12 @@ public class JoinHandler implements Listener {
         }
     }
 
+    public void update(Player e) {
+        scoreboard(e);
+        tablist(e);
+        playerTablist(e);
+    }
+
     public void scoreboard(Player e) {
         ConfigManager cm = new ConfigManager();
         String[] st = new String[12];
