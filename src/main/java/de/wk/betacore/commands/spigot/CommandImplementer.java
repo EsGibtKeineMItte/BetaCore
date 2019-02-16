@@ -191,8 +191,8 @@ public class CommandImplementer {
                 subs[0] = "core setrank";
                 subs[1] = "core setup";
                 subs[2] = "core reload";
-                subs[3] = "core info";
-                subs[4] = "core help";
+                subs[3] = "core help";
+                subs[4] = "core info";
                 return subs;
             }
 
