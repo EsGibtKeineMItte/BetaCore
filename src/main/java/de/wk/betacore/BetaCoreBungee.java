@@ -4,14 +4,23 @@ import net.md_5.bungee.api.plugin.Plugin;
 
 public class BetaCoreBungee extends Plugin {
 
-   @Override
-    public void onEnable(){
 
-   }
+    private static BetaCoreBungee instance;
 
-   @Override
-    public void onDisable(){
+    @Override
+    public void onEnable() {
+        instance = this;
 
-   }
+    }
+
+    @Override
+    public void onDisable() {
+
+    }
     //
+
+
+    public static BetaCoreBungee getInstance() {
+        return instance;
+    }
 }
