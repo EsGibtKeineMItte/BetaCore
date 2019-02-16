@@ -78,11 +78,7 @@ public class CommandManager {
                 commandSender.sendMessage("Nicht in der Console erlaubt");
                 return;
             }
-            if (command.getInfo().length() > 0) {
-                Info.sendInfo((Player) commandSender, "&c" + command.getInfo());
-                return;
-            }
-            command.run(commandSender, args);
+            subCommand.run(commandSender, args);
         }
     }
 
