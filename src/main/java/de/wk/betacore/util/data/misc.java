@@ -28,6 +28,14 @@ public class misc {
     private static String MUTED = "§cDu bist gemuted und kannst keine Nachrichten senden";
 
 
+    private static String HELP = "§7Benutze §6/help§7 , um Hilfe zu erhalten";
+
+
+
+
+    private static String NOTINCONSOLE = "Du kannst diesen Befehl nicht in der Konsole verwenden";
+
+
     public static String getPREFIX() {
         return PREFIX;
     }
@@ -37,4 +45,11 @@ public class misc {
     public static String getMUTED() {
         return MUTED;
     }
+    public static String getNOTINCONSOLE() {
+        return NOTINCONSOLE;
+    }
+    public static String getHELP() {
+        return HELP;
+    }
+
 }
