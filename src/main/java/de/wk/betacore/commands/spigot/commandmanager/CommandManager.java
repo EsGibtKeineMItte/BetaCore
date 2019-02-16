@@ -20,7 +20,7 @@ public class CommandManager implements CommandExecutor {
     }
 
     //Sub Commands
-    public String main = "yt";
+    public String main = "core";
     public String info = "info";
 
     public void setup() {
@@ -57,9 +57,9 @@ public class CommandManager implements CommandExecutor {
             arrayList.addAll(Arrays.asList(args));
             arrayList.remove(0);
 
-            try{
-                target.onCommand(player,args);
-            }catch (Exception e){
+            try {
+                target.onCommand(player, args);
+            } catch (Exception e) {
                 player.sendMessage(ChatColor.RED + "An error has occurred.");
 
                 e.printStackTrace();
