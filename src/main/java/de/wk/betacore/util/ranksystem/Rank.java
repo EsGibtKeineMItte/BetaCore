@@ -6,7 +6,7 @@ import net.md_5.bungee.api.ChatColor;
 public enum Rank {
 
     ADMIN("&4Admin", ChatColor.DARK_RED),
-    MANAGER("&eManager", ChatColor.YELLOW),
+    //MANAGER("&eManager", ChatColor.YELLOW),
     DEV("&3Dev", ChatColor.AQUA),
     MOD("&cMod", ChatColor.RED),
     SUPPORTER("&1Supp", ChatColor.BLUE),

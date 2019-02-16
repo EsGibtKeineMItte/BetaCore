@@ -1,6 +1,7 @@
 package de.wk.betacore.commands.spigot.commandmanager;
 
 import de.wk.betacore.BetaCore;
+import de.wk.betacore.commands.spigot.SetRankCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -25,12 +26,13 @@ public class CommandManager implements CommandExecutor {
 
     public void setup() {
         BetaCore.getInstance().getCommand(main).setExecutor(this);
+        this.commands.add(new SetRankCommand());
 
 //        this.commands.add(new InfoCommand());
 //        this.commands.add(new HelpCommand());
     }
 
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (!(sender instanceof Player)) {
             sender.sendMessage(ChatColor.RED + "Only players can use commands for this BetaCore.getInstance().");
@@ -39,9 +41,9 @@ public class CommandManager implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (command.getName().equalsIgnoreCase(main)) {
+        if (cmd.getName().equalsIgnoreCase(main)) {
             if (args.length == 0) {
-                player.sendMessage(ChatColor.RED + "Please add arguments to your command. Type /yt help for info");
+                player.sendMessage(ChatColor.RED + "Please add arguments to your command. Type /core help for info");
                 return true;
             }
 
