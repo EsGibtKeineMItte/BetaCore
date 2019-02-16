@@ -179,20 +179,24 @@ public class CommandImplementer {
 
             @Override
             public String getInfo() {
-                return "/core help";
+                return "";
             }
 
             @Override
-            public void run(CommandSender sender, String[] args) { }
+            public void run(CommandSender sender, String[] args) {
+                if (!(sender.hasPermission("betacore.core"))) {
+                    return;
+                }
+                Info.sendInfo((Player) sender, "&c/core help");
+            }
 
             @Override
             public String[] getSubCommands() {
-                String[] subs = new String[5];
+                String[] subs = new String[4];
                 subs[0] = "core setrank";
-                subs[1] = "core setup";
+                subs[1] = "core info";
                 subs[2] = "core reload";
                 subs[3] = "core help";
-                subs[4] = "core info";
                 return subs;
             }
 
@@ -214,7 +218,7 @@ public class CommandImplementer {
 
             @Override
             public void run(CommandSender sender, String[] args) {
-                if (sender.hasPermission("betacore.setrank")) {
+                if (sender.hasPermission("betacore.core.setrank")) {
                     if (args.length != 3) {
                         CommandManager.wrongUsage(sender);
                         return;
@@ -255,7 +259,7 @@ public class CommandImplementer {
                     if (your < their || your == 0 || !(sender instanceof Player) || sender.isOp()) {
                         String rank = args[2].toUpperCase();
                         cm.getPlayerData().setString(Bukkit.getOfflinePlayer(args[1]).getUniqueId() + ".rank", rank);
-                        Info.sendInfo((Player) sender, "Rank geändert zu " + rank);
+                        Info.sendInfo((Player) sender, "&eRank geändert zu " + rank);
                         joinHandler.update((Player) Bukkit.getOfflinePlayer(args[1]));
                     }
                 }
@@ -269,6 +273,42 @@ public class CommandImplementer {
             @Override
             public Boolean inConsole() {
                 return true;
+            }
+        });
+        CommandManager.addCommand(new CommandInterface() {
+            @Override
+            public String getName() {
+                return "core help";
+            }
+
+            @Override
+            public String getInfo() {
+                return "";
+            }
+
+            @Override
+            public void run(CommandSender sender, String[] args) {
+                if (!(sender.hasPermission("betacore.core.help"))) {
+                    return;
+                }
+                Info.sendInfo((Player) sender, "&7/core help");
+                Info.sendInfo((Player) sender, "&7Zeigt diese Nachricht an");
+                Info.sendInfo((Player) sender, "&7/core setrank [User] [Rank]");
+                Info.sendInfo((Player) sender, "&7Setzte den Rank eines Users");
+                Info.sendInfo((Player) sender, "&7/core info");
+                Info.sendInfo((Player) sender, "&7Zeigt Informationen über den Server an");
+                Info.sendInfo((Player) sender, "&7/core reload");
+                Info.sendInfo((Player) sender, "&7Reloade alle Config files");
+            }
+
+            @Override
+            public String[] getSubCommands() {
+                return new String[0];
+            }
+
+            @Override
+            public Boolean inConsole() {
+                return false;
             }
         });
     }

@@ -1,7 +1,6 @@
 package de.wk.betacore.commands.spigot.commandmanager;
 
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.commands.spigot.SetRankCommand;
 import de.wk.betacore.commands.spigot.SetupCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
