@@ -10,7 +10,7 @@ import org.bukkit.scoreboard.Score;
 public class Scoreboard {
 
     public static Integer PlayTime(Player p) {
-        Integer PlayTime = p.getStatistic(Statistic.PLAY_ONE_TICK) / 20 / 60;
+        Integer PlayTime = p.getStatistic(Statistic.PLAY_ONE_TICK) / 20 / 60 / 60;
         return PlayTime;
     }
 
@@ -65,7 +65,7 @@ public class Scoreboard {
             board.resetScores(string);
         }
 
-        for (int i = 0; i < j + 1; i++) {
+        for (int i = 0; i < j + 2; i++) {
 
             if (Entries[i] != null) {
                 if (Entries[i].toCharArray().length < 17) {
@@ -80,7 +80,7 @@ public class Scoreboard {
                     text = text.replaceAll("\\(Joins\\)", Joins2);
                     text = text.replaceAll("\\(Server\\)", p.getServer().getServerName());
                     Integer PlayTime = PlayTime(p);
-                    String PlayTime2 = PlayTime + "";
+                    String PlayTime2 = PlayTime + "H";
                     text = text.replaceAll("\\(PlayTime\\)", PlayTime2);
 
                     Score score = obj.getScore(text);
@@ -146,7 +146,7 @@ public class Scoreboard {
                 board.resetScores(string);
             }
 
-            for (int i = 0; i < j + 1; i++) {
+            for (int i = 0; i < j + 2; i++) {
 
                 if (Entries[i] != null) {
                     if (Entries[i].toCharArray().length < 17) {
@@ -161,7 +161,7 @@ public class Scoreboard {
                         text = text.replaceAll("\\(Joins\\)", Joins2);
                         text = text.replaceAll("\\(Server\\)", p.getServer().getName());
                         Integer PlayTime = PlayTime(p);
-                        String PlayTime2 = PlayTime + "";
+                        String PlayTime2 = PlayTime + "H";
                         text = text.replaceAll("\\(PlayTime\\)", PlayTime2);
 
                         Score score = obj.getScore(text);
