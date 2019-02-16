@@ -58,6 +58,7 @@ public class CommandManager {
                 }
             }
             if (isSubCommand) {
+                System.out.println("command is not a subb command");
                 command.run(commandSender, args);
                 return;
             }
