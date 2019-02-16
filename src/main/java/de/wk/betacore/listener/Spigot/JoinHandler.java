@@ -13,7 +13,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class JoinHandler implements Listener {
-    ConfigManager cm = new ConfigManager();
     RankSystem rankSystem = new RankSystem();
 
     @EventHandler
@@ -29,6 +28,7 @@ public class JoinHandler implements Listener {
     }
 
     public void scoreboard(Player e) {
+        ConfigManager cm = new ConfigManager();
         String[] st = new String[12];
         st[0] = "&6";
         st[1] = "&6> &7Money";
