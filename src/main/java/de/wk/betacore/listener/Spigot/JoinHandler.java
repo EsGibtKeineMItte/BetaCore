@@ -35,19 +35,21 @@ public class JoinHandler implements Listener {
 
     public void scoreboard(Player e) {
         ConfigManager cm = new ConfigManager();
-        String[] st = new String[12];
+        String[] st = new String[14];
         st[0] = "&6";
         st[1] = "&6> &7Money";
         st[2] = "&6> &e" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId().toString() + ".money");
         st[3] = "&6> &7Rank";
         st[4] = "&6> " + rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName();
-        st[5] = "&7";
-        st[6] = "&6> &7Joins";
-        st[7] = "&6> &e(Joins)";
-        st[8] = "&6> &7Play Time";
-        st[9] = "&6> &e(PlayTime)";
-        st[10] = "&8";
-        st[11] = "&6TheWarking.de";
+        st[5] = "&6> &7WSRank";
+        st[6] = "&6> &c" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId() + ".wsrank");
+        st[7] = "&7";
+        st[8] = "&6> &7Joins";
+        st[9] = "&6> &e(Joins)";
+        st[10] = "&6> &7Play Time";
+        st[11] = "&6> &e(PlayTime)";
+        st[12] = "&8";
+        st[13] = "&6TheWarking.de";
         Scoreboard.updateScoreboard("", new String[0], e.getPlayer());
         Scoreboard.updateScoreboard("&aTheWarKing", st, e.getPlayer());
     }
