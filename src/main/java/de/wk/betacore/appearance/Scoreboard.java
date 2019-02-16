@@ -67,7 +67,7 @@ public class Scoreboard {
             board.resetScores(string);
         }
 
-        for (int i = 0; i < j + 1; i++) {
+        for (int i = 0; i < j; i++) {
 
             if (Entries[i] != null) {
                 if (Entries[i].toCharArray().length < 17) {
@@ -147,7 +147,7 @@ public class Scoreboard {
                 board.resetScores(string);
             }
 
-            for (int i = 0; i < j + 1; i++) {
+            for (int i = 0; i < j; i++) {
 
                 if (Entries[i] != null) {
                     if (Entries[i].toCharArray().length < 17) {
