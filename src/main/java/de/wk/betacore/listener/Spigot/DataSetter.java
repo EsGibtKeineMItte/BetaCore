@@ -1,6 +1,7 @@
 package de.wk.betacore.listener.Spigot;
 
 import de.wk.betacore.appearance.Scoreboard;
+import de.wk.betacore.appearance.Tablist;
 import de.wk.betacore.util.ConfigManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -43,6 +44,7 @@ public class DataSetter implements Listener {
         }
         cm.getPlayerData().setString(e.getPlayer().getUniqueId().toString() + ".lastjoin", today.toString());
         scoreboard(e);
+        tablist(e);
     }
 
     private void scoreboard(PlayerJoinEvent e) {
@@ -56,5 +58,9 @@ public class DataSetter implements Listener {
         st[6] = "&6> &7Money";
         st[7] = "&6> &7" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId().toString() + ".money");
         Scoreboard.updateScoreboard(e.getPlayer().getServer().getServerName(), st, e.getPlayer());
+    }
+
+    private void tablist(PlayerJoinEvent e) {
+        Tablist.Tablist("(Server)(n)dein WarShip Server", "Viel Spaß auf dem Server(n)(Name)!", e.getPlayer());
     }
 }
