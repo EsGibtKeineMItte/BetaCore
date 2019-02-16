@@ -13,35 +13,54 @@ public class TeamSystem {
 
     public void createTeam(String teamName, String kuerzel, Player teamAdmin) {
         ConfigManager cm = new ConfigManager();
-    if(!(cm.getTeams().getList(teamName) == null )){
-        System.out.println("Das Team konnte nicht erstellt werden, da es bereits existiert");
-        return;
-    }
-    ArrayList<Object> teamAdmins = new ArrayList<>();
-    teamAdmins.add(teamAdmin.getUniqueId().toString());
-    cm.getTeams().setList(teamName + "admins", teamAdmins);
-    cm.getTeams().setInt(teamName + ".wsrank", -1);
 
-    cm.getTeams().save();
+
+        if (!(cm.getTeams().getList(teamName + ".admin") == null)) {
+            System.out.println("Das Team konnte nicht erstellt werden, da es bereits existiert");
+            return;
+        }
+        ArrayList<Object> teamAdmins = new ArrayList<>();
+        teamAdmins.add(teamAdmin.getUniqueId().toString());
+        cm.getPlayerData().setString(teamAdmin.getUniqueId().toString() + ".wsteam", teamName);
+        cm.getTeams().setList(teamName + "admins", teamAdmins);
+        cm.getTeams().setString(teamName + ".short", kuerzel);
+        cm.getTeams().setInt(teamName + ".teamrank", -1);
+        cm.getTeams().setInt(teamName + ".wonPrivateFights", -1);
+        cm.getTeams().setInt(teamName + ".wonPublicFights", -1);
+
+        cm.getTeams().save();
 
     }
 
     public void addTeammember(String teamName, Player player) {
         ConfigManager cm = new ConfigManager();
-      if(cm.getTeams().getList(teamName + ".admins") == null){
-          System.out.println("Dem Team konnten keine Member hinzugefügt werden, da es nicht existiert");
-          return;
-      }
-      ArrayList<String> teamMembers = new ArrayList<String>();
-      teamMembers.add(player.getUniqueId().toString());
-      cm.getTeams().setList(teamName + ".members", teamMembers);
+        if (cm.getTeams().getList(teamName + ".admins") == null) {
+            System.out.println("Dem Team konnten keine Member hinzugefügt werden, da es nicht existiert");
+            return;
+        }
+        cm.getPlayerData().setString(player.getUniqueId().toString() + ".wsteam", teamName);
+        ArrayList<String> teamMembers = new ArrayList<String>();
+        teamMembers.add(player.getUniqueId().toString());
+        cm.getTeams().setList(teamName + ".members", teamMembers);
     }
 
-    public void removeTeammembe(String Teamname, Player player) {
+    public void removeTeammembe(String teamName, Player player) {
+        ConfigManager cm = new ConfigManager();
+        ArrayList<String> teamMembers = new ArrayList<>();
 
+        for (Object members : cm.getTeams().getList(teamName + ".members")) {
+            teamMembers.add(members.toString());
+        }
+        teamMembers.remove(player.getUniqueId().toString());
+        cm.getTeams().setList(teamName + ".members", teamMembers);
+        cm.getTeams().save();
     }
 
     public void promoteUser(String Teamname, Player player) {
+
+    }
+
+    public void getTeamFromPlayer(Player player) {
 
     }
 
