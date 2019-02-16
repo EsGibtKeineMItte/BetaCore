@@ -78,7 +78,7 @@ public class Scoreboard {
                     Integer joins = p.getStatistic(Statistic.LEAVE_GAME) + 1;
                     String Joins2 = joins + "";
                     text = text.replaceAll("\\(Joins\\)", Joins2);
-                    text = text.replaceAll("\\(Server\\)", p.getServer().getName());
+                    text = text.replaceAll("\\(Server\\)", p.getServer().getServerName());
                     Integer PlayTime = PlayTime(p);
                     String PlayTime2 = PlayTime + "";
                     text = text.replaceAll("\\(PlayTime\\)", PlayTime2);
@@ -121,7 +121,7 @@ public class Scoreboard {
             Objective obj = board.registerNewObjective("a", "b");
             DisplayName = DisplayName.replaceAll("\\(Name\\)", p.getName());
             DisplayName = DisplayName.replaceAll("\\(World\\)", p.getWorld().toString());
-            DisplayName = DisplayName.replaceAll("\\(Server\\)", p.getServer().getName());
+            DisplayName = DisplayName.replaceAll("\\(Server\\)", p.getServer().getServerName());
 
             if (DisplayName.isEmpty()) {
                 DisplayName = " ";
