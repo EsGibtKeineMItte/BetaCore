@@ -23,11 +23,9 @@ betacore.setrank.admin
 
 
 public class misc {
-    private static String PREFIX = "§aBetaCore §7|";
+    private static String PREFIX = "§aBetaCore §7| ";
     private static String NOPERM = "§cDu hast nicht die benötigten Berechtigungen, um diesen Befehl auszuführen";
     private static String MUTED = "§cDu bist gemuted und kannst keine Nachrichten senden";
-
-
     private static String HELP = "§7Benutze §6/help§7 , um Hilfe zu erhalten";
 
 
