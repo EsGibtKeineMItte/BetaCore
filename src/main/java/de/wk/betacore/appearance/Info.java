@@ -1,6 +1,6 @@
 package de.wk.betacore.appearance;
 
-import de.wk.betacore.util.data.misc;
+import de.wk.betacore.util.data.Misc;
 import org.bukkit.entity.Player;
 
 public class Info {
@@ -21,7 +21,7 @@ public class Info {
         } else if (replaceGM && !(replaceWorld)) {
             info.replaceAll("\\(GM\\)", p.getGameMode().name());
         }
-        p.sendMessage(Color.ConvertColor(misc.getPREFIX()) + " §r" + Color.ConvertColor(info));
+        p.sendMessage(Color.ConvertColor(Misc.getPREFIX()) + " §r" + Color.ConvertColor(info));
     }
 
 }

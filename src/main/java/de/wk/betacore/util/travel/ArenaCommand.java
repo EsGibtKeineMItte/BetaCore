@@ -2,7 +2,7 @@ package de.wk.betacore.util.travel;
 
 
 import de.wk.betacore.util.ConfigManager;
-import de.wk.betacore.util.data.misc;
+import de.wk.betacore.util.data.Misc;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,11 +16,11 @@ public class ArenaCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(misc.getNOTINCONSOLE());
+            sender.sendMessage(Misc.getNOTINCONSOLE());
             return false;
         }
         if (!(args.length == 1)) {
-            sender.sendMessage(misc.getPREFIX() + "§7Benutzung: §6/arena <1|2>");
+            sender.sendMessage(Misc.getPREFIX() + "§7Benutzung: §6/arena <1|2>");
             return false;
         }
         Player player = (Player) sender;
@@ -31,7 +31,7 @@ public class ArenaCommand implements CommandExecutor {
             fs.connect(player, cm.getGlobalConfig().getString("LinkToArena-2"));
             player.sendMessage("§aDu wirst zur Arena§7-§a2 verbunden.");
         } else {
-            player.sendMessage(misc.getPREFIX() + "§cDiese Arena existiert nicht.");
+            player.sendMessage(Misc.getPREFIX() + "§cDiese Arena existiert nicht.");
         }
         return false;
     }
