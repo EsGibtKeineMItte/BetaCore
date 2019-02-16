@@ -46,13 +46,15 @@ public class DataSetter implements Listener {
     }
 
     private void scoreboard(PlayerJoinEvent e) {
-        String[] st = new String[5];
+        String[] st = new String[8];
         st[0] = "&6";
         st[1] = "&6> &7Joins";
         st[2] = "&6> &7(Joins)";
-        st[3] = "&6";
-        st[4] = "&6> &7Play Time";
-        st[5] = "&6> &7(PlayTime)";
+        st[3] = "&6> &7Play Time";
+        st[4] = "&6> &7(PlayTime)";
+        st[5] = "&6";
+        st[6] = "&6> &7Money";
+        st[7] = "&6> &7" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId().toString() + ".money");
         Scoreboard.updateScoreboard(e.getPlayer().getServer().getServerName(), st, e.getPlayer());
     }
 }
