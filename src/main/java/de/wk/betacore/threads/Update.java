@@ -5,7 +5,7 @@ import de.wk.betacore.listener.Spigot.JoinHandler;
 public class Update extends Thread {
 
     public static boolean isStarted = false;
-    JoinHandler joinHandler = new JoinHandler();
+    public JoinHandler joinHandler = new JoinHandler();
 
     @Override
     public void run() {
