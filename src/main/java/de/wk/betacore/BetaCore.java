@@ -2,10 +2,7 @@ package de.wk.betacore;
 
 import de.wk.betacore.commands.spigot.Money;
 import de.wk.betacore.commands.spigot.commandmanager.CommandManager;
-import de.wk.betacore.listener.Spigot.DataSetter;
-import de.wk.betacore.listener.Spigot.JoinHandler;
-import de.wk.betacore.listener.Spigot.MessageSend;
-import de.wk.betacore.listener.Spigot.WorldSystemUtil;
+import de.wk.betacore.listener.Spigot.*;
 import de.wk.betacore.util.ConfigManager;
 import de.wk.betacore.util.data.misc;
 import de.wk.betacore.util.misc.CommandRemover;
@@ -43,7 +40,7 @@ public final class BetaCore extends JavaPlugin {
             try {
                 CommandRemover.removeAll("tell", "libsdisguises:", "turnier", "bukkit:pl",
                         "bukkit:plugins", "ver", "bukkit:ver", "bukkit:seed", "bukkit:msg", "bukkit:w",
-                        "bukkit:tell", "bukkit:list", "version", "bukkit:version", "?", "bukkit:?", "help", "me",
+                        "bukkit:tell", "bukkit:list", "version", "bukkit:version", "?", "bukkit:?","me",
                         "bukkit:help", "minecraft:help", "about", "bukkit:about", "icanhasbukkit", "me", "msg",
                         "bukkit:kill", "bukkit:me", "plugins", "minecraft:me", "eval", "evaluate", "solve", "calc",
                         "calculate", "/eval", "/evaluate", "/solve", "/calc", "/calculate", "w", "minecraft:w", "list", "minecraft:list");
@@ -62,6 +59,7 @@ public final class BetaCore extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new DataSetter(), this);
         Bukkit.getPluginManager().registerEvents(new MessageSend(), this);
         Bukkit.getPluginManager().registerEvents(new JoinHandler(), this);
+        Bukkit.getPluginManager().registerEvents(new CommandListener(), this);
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new FastTravelSystem());
     }

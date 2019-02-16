@@ -11,7 +11,7 @@ public class CommandListener implements Listener {
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent e){
-       if( e.getMessage().equalsIgnoreCase("/pl")|| e.getMessage().equalsIgnoreCase("/plugins")){
+       if( e.getMessage().equalsIgnoreCase("/pl")|| e.getMessage().equalsIgnoreCase("/plugins") || e.getMessage().equalsIgnoreCase("/help") ){
            if(!(e.getPlayer().hasPermission("betacore.seeplugins")|| e.getPlayer().hasPermission("betacore.*"))){
               e.setCancelled(true);
            }
