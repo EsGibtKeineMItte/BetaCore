@@ -11,6 +11,7 @@ public class Update extends Thread {
     public void run() {
         isStarted = true;
         joinHandler.updateLists();
+        System.out.println("TEST");
 
         try {
             sleep(30000);

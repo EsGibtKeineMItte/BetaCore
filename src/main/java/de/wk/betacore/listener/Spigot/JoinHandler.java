@@ -21,6 +21,7 @@ public class JoinHandler implements Listener {
         scoreboard(e);
         tablist(e);
         playerTablist(e);
+        e.setJoinMessage("");
     }
 
     public void updateLists() {
