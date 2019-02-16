@@ -43,6 +43,7 @@ public class JoinHandler implements Listener {
         sscore.add("&6> &7Money");
         sscore.add("&6> &e" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId().toString() + ".money"));
         sscore.add("&6> &7Rank");
+        sscore.add("&6> &e" + rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName());
         if (cm.getPlayerData().getInt(e.getPlayer().getUniqueId() + ".wsrank") < 501) {
             sscore.add("&7");
             sscore.add("&6> &7WSRank");
