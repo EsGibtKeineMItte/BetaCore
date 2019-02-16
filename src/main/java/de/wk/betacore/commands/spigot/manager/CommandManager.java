@@ -23,6 +23,11 @@ public class CommandManager {
         return commands;
     }
 
+    public static void wrongUsage(CommandSender commandSender) {
+        Info.sendInfo((Player) commandSender, "&cUnbekannter Benutzung!");
+        return;
+    }
+
     public static void executeCommand(CommandSender commandSender, String cmd, String[] args) {
         Boolean executable = true;
         CommandInterface command = null;
