@@ -58,7 +58,6 @@ public class CommandManager {
                 }
             }
             if (isSubCommand) {
-                System.out.println("command is not a subb command");
                 command.run(commandSender, args);
                 return;
             }
@@ -79,13 +78,11 @@ public class CommandManager {
                 commandSender.sendMessage("Nicht in der Console erlaubt");
                 return;
             }
-            if (args.length == 0) {
-                if (command.getInfo().length() > 0) {
-                    Info.sendInfo((Player) commandSender, "&c" + command.getInfo());
-                    return;
-                }
-                command.run(commandSender, args);
+            if (command.getInfo().length() > 0) {
+                Info.sendInfo((Player) commandSender, "&c" + command.getInfo());
+                return;
             }
+            command.run(commandSender, args);
         }
     }
 
