@@ -2,6 +2,7 @@ package de.wk.betacore.listener.Spigot;
 
 
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.ranksystem.RankSystem;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -42,6 +43,8 @@ public class DataSetter implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         LocalDate today = LocalDate.now();
+        RankSystem rankSystem = new RankSystem();
+        rankSystem.setRank(e.getPlayer().getUniqueId(), rankSystem.getRank(e.getPlayer().getUniqueId()));
         if (cm.getPlayerData().getString(e.getPlayer().getUniqueId().toString() + ".firstjoin") == null) {
             cm.getPlayerData().setString(e.getPlayer().getUniqueId().toString() + ".firstjoin", today.toString());
             return;
