@@ -65,7 +65,7 @@ public class CommandManager {
             Boolean subExecutable = true;
             CommandInterface subCommand = null;
             for (CommandInterface ci : commands) {
-                if (subExecutable && subcmd.equals(command.getName() + " " + ci.getName())) {
+                if (subExecutable && subcmd.equals(ci.getName())) {
                     subExecutable = false;
                     subCommand = ci;
                 }
