@@ -1,5 +1,6 @@
 package de.wk.betacore;
 
+import de.wk.betacore.commands.spigot.CommandImplementer;
 import de.wk.betacore.commands.spigot.Money;
 import de.wk.betacore.commands.spigot.commandmanager.CommandManager;
 import de.wk.betacore.listener.Spigot.*;
@@ -71,8 +72,8 @@ public final class BetaCore extends JavaPlugin {
         ConfigManager cm = new ConfigManager();
         CommandManager commandManager = new CommandManager();
         commandManager.setup();
-        // EVENTS so just the talk walk and so on!
-        // COMMANDS so the commands and so on
+
+        CommandImplementer.implementCommands();
 
         regCommands();
         regListeners();

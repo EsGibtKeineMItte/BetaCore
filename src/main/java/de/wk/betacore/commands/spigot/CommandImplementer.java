@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 public class CommandImplementer {
 
-    public void implementCommands() {
+    public static void implementCommands() {
         ConfigManager cm = new ConfigManager();
 
         CommandManager.addCommand(new CommandInterface() {
