@@ -9,9 +9,11 @@ import org.bukkit.scoreboard.Score;
 
 public class Scoreboard {
 
-    public static Integer PlayTime(Player p) {
-        Integer PlayTime = p.getStatistic(Statistic.PLAY_ONE_TICK) / 20 / 60 / 60;
-        return PlayTime;
+    public static String PlayTime(Player p) {
+        int PlayTime = p.getStatistic(Statistic.PLAY_ONE_TICK) / 20 / 60;
+        int pl2 = PlayTime / 60;
+        int pl3 = PlayTime - pl2 * 60;
+        return pl2 + ":" + pl3;
     }
 
     /**
@@ -79,9 +81,8 @@ public class Scoreboard {
                     String Joins2 = joins + "";
                     text = text.replaceAll("\\(Joins\\)", Joins2);
                     text = text.replaceAll("\\(Server\\)", p.getServer().getServerName());
-                    Integer PlayTime = PlayTime(p);
-                    String PlayTime2 = PlayTime + "H";
-                    text = text.replaceAll("\\(PlayTime\\)", PlayTime2);
+                    String PlayTime = PlayTime(p) + "H";
+                    text = text.replaceAll("\\(PlayTime\\)", PlayTime);
 
                     Score score = obj.getScore(text);
                     score.setScore(j + 0 - i);
@@ -160,9 +161,8 @@ public class Scoreboard {
                         String Joins2 = joins + "";
                         text = text.replaceAll("\\(Joins\\)", Joins2);
                         text = text.replaceAll("\\(Server\\)", p.getServer().getName());
-                        Integer PlayTime = PlayTime(p);
-                        String PlayTime2 = PlayTime + "H";
-                        text = text.replaceAll("\\(PlayTime\\)", PlayTime2);
+                        String PlayTime = PlayTime(p) + "H";
+                        text = text.replaceAll("\\(PlayTime\\)", PlayTime);
 
                         Score score = obj.getScore(text);
                         score.setScore(j + 0 - i);
