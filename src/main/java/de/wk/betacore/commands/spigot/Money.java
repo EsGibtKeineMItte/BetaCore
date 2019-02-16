@@ -10,6 +10,7 @@ public class Money implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         CommandManager.executeCommand(sender, "money", args);
+        System.out.println("Got the Command");
         return true;
     }
 

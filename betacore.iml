@@ -54,14 +54,5 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: de.butzlabben:WorldSystem:LATEST">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/WorldSystem.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
   </component>
 </module>
