@@ -24,13 +24,10 @@ public class CommandManager {
     }
 
     public static void executeCommand(CommandSender commandSender, String cmd, String[] args) {
-        System.out.println("TEST");
         Boolean executable = true;
         CommandInterface command = null;
         for (CommandInterface ci : commands) {
-            System.out.println(ci.getName());
             if (executable && cmd.equals(ci.getName())) {
-                System.out.println("Found Command");
                 executable = false;
                 command = ci;
             }
