@@ -231,14 +231,14 @@ public class CommandImplementer {
                     ranks.add(Rank.USER.getName());
 
                     ArrayList<String> priority = new ArrayList<>();
-                    ranks.add(Rank.ADMIN.getPriority() + "");
-                    ranks.add(Rank.DEV.getPriority() + "");
-                    ranks.add(Rank.MOD.getPriority() + "");
-                    ranks.add(Rank.SUPPORTER.getPriority() + "");
-                    ranks.add(Rank.ARCHI.getPriority() + "");
-                    ranks.add(Rank.YOU_TUBER.getPriority() + "");
-                    ranks.add(Rank.PREMIUM.getPriority() + "");
-                    ranks.add(Rank.USER.getPriority() + "");
+                    priority.add(Rank.ADMIN.getPriority() + "");
+                    priority.add(Rank.DEV.getPriority() + "");
+                    priority.add(Rank.MOD.getPriority() + "");
+                    priority.add(Rank.SUPPORTER.getPriority() + "");
+                    priority.add(Rank.ARCHI.getPriority() + "");
+                    priority.add(Rank.YOU_TUBER.getPriority() + "");
+                    priority.add(Rank.PREMIUM.getPriority() + "");
+                    priority.add(Rank.USER.getPriority() + "");
 
                     Boolean isRank = true;
                     int their = 0;

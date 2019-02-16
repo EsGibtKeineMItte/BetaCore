@@ -24,7 +24,7 @@ public class CommandManager {
     }
 
     public static void wrongUsage(CommandSender commandSender) {
-        Info.sendInfo((Player) commandSender, "&cUnbekannter Benutzung!");
+        Info.sendInfo((Player) commandSender, "&cUnbekannte Benutzung!");
         return;
     }
 

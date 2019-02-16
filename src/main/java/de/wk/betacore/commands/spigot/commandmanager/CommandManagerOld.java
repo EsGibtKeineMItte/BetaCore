@@ -27,7 +27,7 @@ public class CommandManagerOld implements CommandExecutor {
 
     public void setup() {
         BetaCore.getInstance().getCommand(main).setExecutor(this);
-        this.commands.add(new SetRankCommand());
+        //this.commands.add(new SetRankCommand());
         this.commands.add(new SetupCommand());
 
 //        this.commands.add(new InfoCommand());
