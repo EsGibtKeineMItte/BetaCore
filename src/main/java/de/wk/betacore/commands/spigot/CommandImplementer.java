@@ -31,8 +31,8 @@ public class CommandImplementer {
             @Override
             public String[] getSubCommands() {
                 String[] subs = new String[2];
-                subs[0] = "set";
-                subs[1] = "pay";
+                subs[0] = "money set";
+                subs[1] = "money pay";
                 return subs;
             }
 
