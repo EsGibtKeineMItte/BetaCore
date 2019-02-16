@@ -1,6 +1,7 @@
 package de.wk.betacore.appearance;
 
 import org.bukkit.entity.Player;
+import de.wk.betacore.appearance.Color;
 
 public class Chat {
 

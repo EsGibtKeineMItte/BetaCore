@@ -5,6 +5,8 @@ import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerListHeaderFooter;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
+import de.wk.betacore.appearance.Color;
+
 import java.lang.reflect.Field;
 
 public class Tablist {
