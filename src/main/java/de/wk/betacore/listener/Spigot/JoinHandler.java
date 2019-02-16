@@ -6,6 +6,8 @@ import de.wk.betacore.appearance.Tablist;
 import de.wk.betacore.util.ConfigManager;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -45,9 +47,9 @@ public class JoinHandler implements Listener {
     private void playerTablist(PlayerJoinEvent e) {
         e.getPlayer().setDisplayName(e.getPlayer().getName());
         if (rankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
-            e.getPlayer().setDisplayName(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName()));
+            e.getPlayer().setPlayerListName(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName()));
         } else {
-            e.getPlayer().setDisplayName(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " " + e.getPlayer().getName()));
+            e.getPlayer().setPlayerListName(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + "   " + e.getPlayer().getName()));
         }
     }
 
