@@ -13,12 +13,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class CommandManager implements CommandExecutor {
+public class CommandManagerOld implements CommandExecutor {
 
     private ArrayList<SubCommand> commands = new ArrayList<SubCommand>();
 
 
-    public CommandManager() {
+    public CommandManagerOld() {
     }
 
     //Sub Commands
