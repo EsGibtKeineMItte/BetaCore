@@ -31,7 +31,7 @@ public class CommandManager {
                 command = ci;
             }
         }
-        if (!(executable)) {
+        if (executable) {
             Info.sendInfo((Player) commandSender, "&cUnbekannter Befehl!");
             return;
         }
