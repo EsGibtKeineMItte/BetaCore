@@ -16,8 +16,6 @@ Implements:
 * BanManager
 * Reload
 * GameMode
-* Language
-* Schems(Only for Warships and Wargears)
   
 Comming:
 * Teams
