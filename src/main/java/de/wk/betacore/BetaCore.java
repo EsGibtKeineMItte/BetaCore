@@ -1,5 +1,7 @@
 package de.wk.betacore;
 
+import de.wk.betacore.commands.spigot.commandmanager.CommandManager;
+import de.wk.betacore.listener.Spigot.DataSetter;
 import de.wk.betacore.listener.Spigot.JoinHandler;
 import de.wk.betacore.listener.Spigot.MessageSend;
 import de.wk.betacore.util.ConfigManager;
@@ -11,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class BetaCore extends JavaPlugin {
 
     private static BetaCore instance;
-    ConfigManager cm = new ConfigManager();
+
     private void removeCommands() {
         Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> {
             try {
@@ -27,24 +29,30 @@ public final class BetaCore extends JavaPlugin {
         }, 30);
     }
 
+
     public void regCommands(){
     }
 
     public void regListeners(){
-
-
+        Bukkit.getPluginManager().registerEvents(new DataSetter(), this);
+        Bukkit.getPluginManager().registerEvents(new MessageSend(), this);
+        Bukkit.getPluginManager().registerEvents(new JoinHandler(), this);
     }
 
 
     @Override
     public void onEnable() {
         instance = this;
-
+        ConfigManager cm = new ConfigManager();
+        CommandManager commandManager = new CommandManager();
+        commandManager.setup();
         // EVENTS so just the talk walk and so on!
-        Bukkit.getPluginManager().registerEvents(new MessageSend(), this);
-        Bukkit.getPluginManager().registerEvents(new JoinHandler(), this);
-
         // COMMANDS so the commands and so on
+
+        regCommands();
+        regListeners();
+
+
         removeCommands();
         cm.setup();
 

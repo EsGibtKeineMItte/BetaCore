@@ -4,6 +4,16 @@ package de.wk.betacore.util.data;
 Permissions:
 betacore.gm.self
 betacore.gm.other
+
+betacore.setrank.user
+betacore.setrank.premium
+betacore.setrank.youtuber
+betacore.setrank.archi
+betacore.setrank.supp
+betacore.setrank.mod
+betacore.setrank.dev
+betacore.setrank.admin
+
  */
 
 

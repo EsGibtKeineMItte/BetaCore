@@ -16,6 +16,8 @@ public class ConfigManager {
     //
     public void setup() {
 
+        playerData.setHeader("PlayerData");
+        playerData.save();
 
         if (!config.getBoolean("useGlobalConfig")) {
             config.setBoolean("useGlobalConfig", true);

@@ -8,12 +8,13 @@ public class RankSystem {
     ConfigManager cm = new ConfigManager();
 
     public void setRank(UUID uuid, Rank rank){
-        cm.getPlayerData().setString(uuid.toString() + ".rank", rank.toString());
+        cm.getPlayerData().setString(uuid.toString() + ".rank", rank.name().toUpperCase());
         cm.getPlayerData().save();
     }
 
     public Rank getRank(UUID uuid){
         if (cm.getPlayerData().getString(uuid.toString() + ".rank") == null) {
+            System.out.println("DEBUG Rank war null");
             return Rank.USER;
         }
         return Rank.valueOf(cm.getPlayerData().getString(uuid.toString() + ".rank"));
