@@ -18,21 +18,17 @@ public class JoinHandler implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        scoreboard(e);
-        tablist(e);
-        playerTablist(e);
-        e.setJoinMessage("");
-    }
-
-    public void updateLists() {
-        for (Player e : Bukkit.getOnlinePlayers()) {
-            scoreboard((PlayerJoinEvent) e);
-            tablist((PlayerJoinEvent) e);
-            playerTablist((PlayerJoinEvent) e);
+        scoreboard((Player) e);
+        tablist((Player) e);
+        playerTablist((Player) e);
+        if (rankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
+            e.setJoinMessage("");
+        } else {
+            e.setJoinMessage(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " " + e.getPlayer().getName()));
         }
     }
 
-    private void scoreboard(PlayerJoinEvent e) {
+    public void scoreboard(Player e) {
         String[] st = new String[12];
         st[0] = "&6";
         st[1] = "&6> &7Money";
@@ -49,11 +45,11 @@ public class JoinHandler implements Listener {
         Scoreboard.updateScoreboard("&aTheWarKing", st, e.getPlayer());
     }
 
-    private void tablist(PlayerJoinEvent e) {
+    public void tablist(Player e) {
         Tablist.Tablist("&aTheWarKing(n)&7dein WarShip Server", "&7Viel Spaß auf dem Server(n)&e(Name)&7!", e.getPlayer());
     }
 
-    private void playerTablist(PlayerJoinEvent e) {
+    public void playerTablist(Player e) {
         e.getPlayer().setDisplayName(e.getPlayer().getName());
         if (rankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.getPlayer().setPlayerListName(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName()));

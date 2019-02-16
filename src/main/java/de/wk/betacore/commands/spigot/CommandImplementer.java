@@ -3,6 +3,7 @@ package de.wk.betacore.commands.spigot;
 import de.wk.betacore.appearance.Info;
 import de.wk.betacore.commands.spigot.manager.CommandInterface;
 import de.wk.betacore.commands.spigot.manager.CommandManager;
+import de.wk.betacore.listener.Spigot.JoinHandler;
 import de.wk.betacore.util.ConfigManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -11,6 +12,7 @@ public class CommandImplementer {
 
     public static void implementCommands() {
         ConfigManager cm = new ConfigManager();
+        JoinHandler joinHandler = new JoinHandler();
 
         CommandManager.addCommand(new CommandInterface() {
             @Override
@@ -26,6 +28,8 @@ public class CommandImplementer {
             @Override
             public void run(CommandSender sender, String[] args) {
                 Info.sendInfo((Player) sender, "&aMoney > " + cm.getPlayerData().getInt(((Player) sender).getUniqueId().toString() + ".money"));
+                joinHandler.scoreboard((Player) sender);
+                joinHandler.playerTablist((Player) sender);
             }
 
             @Override
@@ -57,6 +61,8 @@ public class CommandImplementer {
                 int i = Integer.parseInt(args[1]);
                 cm.getPlayerData().setInt(((Player) sender).getPlayer().getUniqueId().toString() + ".money", i);
                 Info.sendInfo((Player) sender, "&aMoney set to > " + cm.getPlayerData().getInt(((Player) sender).getUniqueId().toString() + ".money"));
+                joinHandler.scoreboard((Player) sender);
+                joinHandler.playerTablist((Player) sender);
             }
 
             @Override
