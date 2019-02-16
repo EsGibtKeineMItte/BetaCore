@@ -1,5 +1,6 @@
 package de.wk.betacore;
 
+import de.wk.betacore.listener.Spigot.JoinHandler;
 import de.wk.betacore.listener.Spigot.MessageSend;
 import de.wk.betacore.util.data.misc;
 import de.wk.betacore.util.misc.CommandRemover;
@@ -39,6 +40,7 @@ public final class BetaCore extends JavaPlugin {
 
         // EVENTS so just the talk walk and so on!
         Bukkit.getPluginManager().registerEvents(new MessageSend(), this);
+        Bukkit.getPluginManager().registerEvents(new JoinHandler(), this);
 
         // COMMANDS so the commands and so on
         removeCommands();
