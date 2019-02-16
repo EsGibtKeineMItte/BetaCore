@@ -27,7 +27,7 @@ public class DataSetter implements Listener {
             cm.getPlayerData().setString(e.getPlayer().getUniqueId().toString() + ".name", e.getPlayer().getName());
         }
         if (!(cm.getPlayerData().getBoolean(e.getPlayer().getUniqueId().toString() + ".muted"))) {
-            cm.getPlayerData().setBoolean(e.getPlayer().getUniqueId().toString() + "muted", false);
+            cm.getPlayerData().setBoolean(e.getPlayer().getUniqueId().toString() + ".muted", false);
         }
 
         if (cm.getPlayerData().getInt(e.getPlayer().getUniqueId() + ".wsrank") == 0) {

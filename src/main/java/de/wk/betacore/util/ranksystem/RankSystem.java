@@ -13,10 +13,11 @@ public class RankSystem {
     }
 
     public Rank getRank(UUID uuid){
+        cm.getPlayerData().reload();
         if (cm.getPlayerData().getString(uuid.toString() + ".rank") == null) {
             System.out.println("DEBUG Rank war null");
             return Rank.USER;
         }
-        return Rank.valueOf(cm.getPlayerData().getString(uuid.toString() + ".rank"));
+        return Rank.valueOf(cm.getPlayerData().getString(uuid.toString() + ".rank").toUpperCase());
     }
 }
