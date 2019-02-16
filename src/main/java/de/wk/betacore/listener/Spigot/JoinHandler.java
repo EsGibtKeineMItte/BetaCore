@@ -27,7 +27,7 @@ public class JoinHandler implements Listener {
         st[6] = "&6> &7Money";
         st[7] = "&6> &7" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId().toString() + ".money");
         st[8] = "&8";
-        st[9] = "&6> TheWarking.de";
+        st[9] = "&6TheWarking.de";
         Scoreboard.updateScoreboard("&aTheWarKing", st, e.getPlayer());
     }
 
