@@ -40,7 +40,7 @@ public class CommandManager {
             return;
         }
         if (args.length == 0) {
-            if (command.getInfo().length() > 0) {
+            if (command.getInfo() != null && command.getInfo().length() > 0) {
                 Info.sendInfo((Player) commandSender, "&c" + command.getInfo());
                 return;
             }
@@ -48,6 +48,8 @@ public class CommandManager {
                 command.run(commandSender, args);
                 return;
             }
+            command.run(commandSender, args);
+        } else {
             Boolean isSubCommand = true;
             for (String st : command.getSubCommands()) {
                 if (isSubCommand && st.equals(args[0])) {
