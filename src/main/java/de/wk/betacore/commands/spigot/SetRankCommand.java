@@ -22,7 +22,7 @@ public class SetRankCommand extends SubCommand {
                 rankSystem.setRank(Bukkit.getOfflinePlayer(args[1]).getUniqueId(), Rank.PREMIUM);
                 player.sendMessage(misc.getPREFIX() + "§aRang geändert.");
             }
-        } else if (args[2].equalsIgnoreCase("YOU_TUBER")) {
+        } else if (args[2].equalsIgnoreCase("YOUTUBER")) {
             if (player.hasPermission("betacore.setrank.youtuber")|| player.hasPermission("betacore.setrank.*") ||player.hasPermission("betacore.*")) {
                 rankSystem.setRank(Bukkit.getOfflinePlayer(args[1]).getUniqueId(), Rank.YOU_TUBER);
                 player.sendMessage(misc.getPREFIX() + "§aRang geändert.");
