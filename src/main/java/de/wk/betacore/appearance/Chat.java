@@ -17,6 +17,18 @@ public class Chat {
         send(p, message, "", false, false);
     }
 
+    public static void sendMessage(Player p, Player[] a, String message, String prefix, Boolean allowColor, Boolean allowSpecial) {
+        send(a, p, message, prefix, allowColor, allowSpecial);
+    }
+
+    public static void sendMessage(Player p, Player[] a, String message, String prefix) {
+        send(a, p, message, prefix, false, false);
+    }
+
+    public static void sendMessage(Player p, Player[] a, String message) {
+        send(a, p, message, "", false, false);
+    }
+
     private static void send(Player p, String message, String prefix, Boolean allowColor, Boolean allowSpecial) {
         prefix = prefix.replaceAll("\\(World\\)", p.getWorld().getName()).replaceAll("\\(Name\\)", p.getName()).replaceAll("&?", "");
         System.out.println(Color.ConvertColor(Color.ConvertSpecial(prefix)));
@@ -31,6 +43,27 @@ public class Chat {
 
         }
         p.sendMessage(prefix + " §r" + message);
+    }
+
+    private static void send(Player[] all, Player p, String message, String prefix, Boolean allowColor, Boolean allowSpecial) {
+        prefix = prefix.replaceAll("\\(World\\)", p.getWorld().getName()).replaceAll("\\(Name\\)", p.getName()).replaceAll("&?", "");
+        System.out.println(Color.ConvertColor(Color.ConvertSpecial(prefix)));
+        prefix = Color.ConvertColor(Color.ConvertSpecial(prefix));
+        if (allowColor  == true && allowSpecial == true) {
+            message = Color.ConvertColor(Color.ConvertSpecial(message));
+        } else if (allowColor  == false && allowSpecial == true) {
+            message = Color.ConvertSpecial(message);
+        } else if (allowColor  == true && allowSpecial == false) {
+            message = Color.ConvertColor(message);
+        } else {
+
+        }
+        p.sendMessage(prefix + " §r" + message);
+        for (Player a : all) {
+            if (a != p) {
+                a.sendMessage(prefix + " §r" + message);
+            }
+        }
     }
 
 }
