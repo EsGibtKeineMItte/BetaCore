@@ -24,6 +24,7 @@ public class CommandManager {
     }
 
     public static void executeCommand(CommandSender commandSender, String cmd, String[] args) {
+        System.out.println("TEST");
         Boolean executable = true;
         CommandInterface command = null;
         for (CommandInterface ci : commands) {
