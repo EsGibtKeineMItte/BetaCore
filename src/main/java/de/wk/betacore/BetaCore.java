@@ -2,10 +2,11 @@ package de.wk.betacore;
 
 import de.wk.betacore.commands.spigot.CommandImplementer;
 import de.wk.betacore.commands.spigot.Money;
+import de.wk.betacore.commands.spigot.PcCommand;
 import de.wk.betacore.commands.spigot.commandmanager.CommandManager;
+import de.wk.betacore.listener.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
 import de.wk.betacore.util.ConfigManager;
-import de.wk.betacore.util.data.misc;
 import de.wk.betacore.util.misc.CommandRemover;
 import de.wk.betacore.util.travel.ArenaCommand;
 import de.wk.betacore.util.travel.BauCommand;
@@ -19,6 +20,7 @@ public final class BetaCore extends JavaPlugin {
       /*
     <AlphaCore a core plugin for minecraft server.>
     Copyright (C) <2018>  <linksKeineMitte, YoyoNow, Chaoschaot>
+    Thank to Butzlabben.
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -54,6 +56,7 @@ public final class BetaCore extends JavaPlugin {
 
     public void regCommands(){
         getCommand("money").setExecutor(new Money());
+        getCommand("pc").setExecutor(new PcCommand());
     }
 
     public void regListeners(){
@@ -61,6 +64,7 @@ public final class BetaCore extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new MessageSend(), this);
         Bukkit.getPluginManager().registerEvents(new JoinHandler(), this);
         Bukkit.getPluginManager().registerEvents(new CommandListener(), this);
+        this.getServer().getPluginManager().registerEvents(RecordListener.getInstance(), this);
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new FastTravelSystem());
     }

@@ -3,7 +3,7 @@ package de.wk.betacore.listener.Spigot;
 import de.wk.betacore.appearance.Chat;
 import de.wk.betacore.appearance.Info;
 import de.wk.betacore.util.ConfigManager;
-import de.wk.betacore.util.data.misc;
+import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
 import org.bukkit.Bukkit;
@@ -29,7 +29,7 @@ public class MessageSend implements Listener {
     public void onChat(AsyncPlayerChatEvent e) {
         e.setCancelled(true);
         if (cm.getPlayerData().getBoolean(e.getPlayer().getUniqueId().toString() + ".muted")) {
-            Info.sendInfo(e.getPlayer(), misc.getMUTED());
+            Info.sendInfo(e.getPlayer(), Misc.getMUTED());
             return;
         }
         RankSystem rankSystem = new RankSystem();
