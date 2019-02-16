@@ -212,7 +212,7 @@ public class CommandImplementer {
             @Override
             public void run(CommandSender sender, String[] args) {
                 if (sender.hasPermission("betacore.setrank")) {
-                    rankSystem.getRank(((Player) sender).getUniqueId())
+                    rankSystem.getRank(((Player) sender).getUniqueId());
                 }
             }
 

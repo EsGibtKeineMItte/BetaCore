@@ -1,5 +1,6 @@
 package de.wk.betacore.util.teamsystem;
 
+import de.wk.betacore.util.Config;
 import de.wk.betacore.util.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -58,8 +59,9 @@ public class TeamSystem {
 
     }
 
-    public void getTeamFromPlayer(Player player) {
-
+    public String getTeamFromPlayer(Player player) {
+        ConfigManager cm = new ConfigManager();
+        return cm.getPlayerData().getString(player.getUniqueId().toString() + ".team");
     }
 
 
