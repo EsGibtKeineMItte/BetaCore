@@ -22,7 +22,7 @@ public enum Rank {
 
 
     public String getName() {
-        return name;
+        return name.toUpperCase();
     }
 
     public String getColor() {
