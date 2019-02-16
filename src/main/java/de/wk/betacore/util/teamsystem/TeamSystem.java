@@ -12,29 +12,26 @@ public class TeamSystem {
     ConfigManager cm = new ConfigManager();
 
 
-
-    public void createTeam(String teamName, Player teamAdmin){
-        List<String> teamAdmins = new ArrayList<String>();
-        teamAdmins.add(teamAdmin.getUniqueId().toString());
-
-
-
+    public void createTeam(String teamName, String kuerzel, Player teamAdmin) {
+    if(!(cm.getTeams().getList(teamName) == null )){
+        System.out.println("Das Team konnte nicht erstellt werden.");
+    }
 
     }
 
-    public void deleteTeam(String teamName){
+    public void deleteTeam(String teamName) {
 
     }
 
-    public void addTeammember(String Teamname, Player player){
+    public void addTeammember(String Teamname, Player player) {
 
     }
 
-    public void removeTeammembe(String Teamname, Player player){
+    public void removeTeammembe(String Teamname, Player player) {
 
     }
 
-    public void promoteUser(String Teamname, Player player){
+    public void promoteUser(String Teamname, Player player) {
 
     }
 
