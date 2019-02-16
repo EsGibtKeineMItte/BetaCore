@@ -1,5 +1,6 @@
 package de.wk.betacore.listener.Spigot;
 
+import de.wk.betacore.appearance.Scoreboard;
 import de.wk.betacore.util.ConfigManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -41,5 +42,17 @@ public class DataSetter implements Listener {
             return;
         }
         cm.getPlayerData().setString(e.getPlayer().getUniqueId().toString() + ".lastjoin", today.toString());
+        scoreboard(e);
+    }
+
+    private void scoreboard(PlayerJoinEvent e) {
+        String[] st = new String[5];
+        st[0] = "&6";
+        st[1] = "&6> &7Joins";
+        st[2] = "&6> &7(Joins)";
+        st[3] = "&6";
+        st[4] = "&6> &7Play Time";
+        st[5] = "&6> &7(PlayTime)";
+        Scoreboard.updateScoreboard(e.getPlayer().getServer().getServerName(), st, e.getPlayer());
     }
 }

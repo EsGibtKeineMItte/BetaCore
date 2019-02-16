@@ -1,5 +1,6 @@
 package de.wk.betacore;
 
+import de.wk.betacore.listener.Spigot.MessageSend;
 import de.wk.betacore.util.data.misc;
 import de.wk.betacore.util.misc.CommandRemover;
 import org.bukkit.Bukkit;
@@ -36,8 +37,12 @@ public final class BetaCore extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        // EVENTS so just the talk walk and so on!
+        Bukkit.getPluginManager().registerEvents(new MessageSend(), this);
 
+        // COMMANDS so the commands and so on
         removeCommands();
+
     }
 
     @Override

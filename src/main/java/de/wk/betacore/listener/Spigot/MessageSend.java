@@ -7,9 +7,10 @@ import de.wk.betacore.util.data.misc;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-public class MessageSend {
+public class MessageSend implements Listener {
     ConfigManager cm = new ConfigManager();
 
     @EventHandler

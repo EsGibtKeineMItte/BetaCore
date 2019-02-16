@@ -103,7 +103,7 @@ public class Scoreboard {
      *                    (Server) gets Replaced to the Server Name of the Player
      * @param Entries Your Entries and an Array
      *                (World) gets Replaced to the World of the Player
-     *                Name) gets Replaced to the Name of the Player
+     *                (Name) gets Replaced to the Name of the Player
      *                (Joins) gets Replaced to the Join Count of the Player
      *                (Server) gets Replaced to the Server of the Player
      *                (PlayTime) gets Replaced to the PlayTime in Hours of the Time
