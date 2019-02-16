@@ -13,7 +13,11 @@ public class Scoreboard {
         int PlayTime = p.getStatistic(Statistic.PLAY_ONE_TICK) / 20 / 60;
         int pl2 = PlayTime / 60;
         int pl3 = PlayTime - pl2 * 60;
-        return pl2 + ":" + pl3;
+        if (pl3 < 10) {
+            return pl2 + ":0" + pl3;
+        } else {
+            return pl2 + ":" + pl3;
+        }
     }
 
     /**
