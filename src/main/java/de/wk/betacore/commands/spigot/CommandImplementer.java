@@ -21,7 +21,7 @@ public class CommandImplementer {
 
             @Override
             public String getInfo() {
-                return null;
+                return "";
             }
 
             @Override

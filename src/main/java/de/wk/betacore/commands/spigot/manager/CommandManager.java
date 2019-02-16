@@ -40,7 +40,7 @@ public class CommandManager {
             return;
         }
         if (args.length == 0) {
-            if (command.getInfo() != null && command.getInfo().length() > 0) {
+            if (command.getInfo().length() > 0) {
                 Info.sendInfo((Player) commandSender, "&c" + command.getInfo());
                 return;
             }
