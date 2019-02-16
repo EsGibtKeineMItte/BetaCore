@@ -33,6 +33,7 @@ public class DataSetter implements Listener {
         if (cm.getPlayerData().getInt(e.getPlayer().getUniqueId() + ".wsrank") == 0) {
             cm.getPlayerData().setInt(e.getPlayer().getUniqueId() + ".wsrank", 900);
         }
+        cm.getPlayerData().save();
     }
 
     @EventHandler
@@ -43,5 +44,6 @@ public class DataSetter implements Listener {
             return;
         }
         cm.getPlayerData().setString(e.getPlayer().getUniqueId().toString() + ".lastjoin", today.toString());
+        cm.getPlayerData().save();
     }
 }
