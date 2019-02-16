@@ -1,6 +1,7 @@
 package de.wk.betacore.commands.spigot.manager;
 
 import de.wk.betacore.appearance.Info;
+import de.wk.betacore.util.data.misc;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -36,7 +37,7 @@ public class CommandManager {
             return;
         }
         if (!(commandSender instanceof Player) && !(command.inConsole())) {
-            commandSender.sendMessage("Nicht in der Console erlaubt");
+            commandSender.sendMessage(misc.getNOTINCONSOLE());
             return;
         }
         if (args.length == 0) {

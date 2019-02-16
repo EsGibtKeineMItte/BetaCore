@@ -14,4 +14,4 @@ commands:
   l:
     description: Command, um sich zum Bau zu teleportieren
     aliases: hub
-
+  money:

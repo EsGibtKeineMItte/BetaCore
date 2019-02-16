@@ -1,6 +1,6 @@
 package de.wk.betacore;
 
-import de.wk.betacore.commands.spigot.CommandImplementer;
+import de.wk.betacore.commands.spigot.Money;
 import de.wk.betacore.commands.spigot.commandmanager.CommandManager;
 import de.wk.betacore.listener.Spigot.DataSetter;
 import de.wk.betacore.listener.Spigot.JoinHandler;
@@ -55,6 +55,7 @@ public final class BetaCore extends JavaPlugin {
 
 
     public void regCommands(){
+        getCommand("money").setExecutor(new Money());
     }
 
     public void regListeners(){
@@ -72,9 +73,8 @@ public final class BetaCore extends JavaPlugin {
         ConfigManager cm = new ConfigManager();
         CommandManager commandManager = new CommandManager();
         commandManager.setup();
-
-        CommandImplementer ci = new CommandImplementer();
-        ci.implementCommands();
+        // EVENTS so just the talk walk and so on!
+        // COMMANDS so the commands and so on
 
         regCommands();
         regListeners();
