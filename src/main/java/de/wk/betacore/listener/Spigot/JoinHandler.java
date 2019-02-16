@@ -42,7 +42,7 @@ public class JoinHandler implements Listener {
         st[3] = "&6> &7Rank";
         st[4] = "&6> " + rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName();
         st[5] = "&6> &7WSRank";
-        st[6] = "&6> &c" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId() + ".wsrank");
+        st[6] = "&6> &5" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId() + ".wsrank");
         st[7] = "&7";
         st[8] = "&6> &7Joins";
         st[9] = "&6> &e(Joins)";
