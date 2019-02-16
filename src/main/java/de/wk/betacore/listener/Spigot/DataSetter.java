@@ -16,7 +16,6 @@ public class DataSetter implements Listener {
     public void onLogin(PlayerLoginEvent e) {
         //Rank
         if (cm.getPlayerData().getString(e.getPlayer().getUniqueId().toString() + ".rank") == null) {
-            System.out.println("DEBUG: Rang zu User gesetzt. " + e.getPlayer().getName());
             cm.getPlayerData().setString(e.getPlayer().getUniqueId().toString() + ".rank", "USER");
         }
         if (cm.getPlayerData().getString(e.getPlayer().getUniqueId().toString() + ".money") == null) {

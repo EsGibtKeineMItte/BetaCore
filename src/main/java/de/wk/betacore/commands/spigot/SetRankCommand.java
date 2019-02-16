@@ -11,9 +11,6 @@ public class SetRankCommand extends SubCommand {
     @Override
     public void onCommand(Player player, String[] args) {
         RankSystem rankSystem = new RankSystem();
-        player.sendMessage(args[0]);
-        player.sendMessage(args[1]);
-        player.sendMessage(args[2]);
         if (args[2].equalsIgnoreCase("USER")) {
             if (player.hasPermission("betacore.setrank.user") || player.hasPermission("betacore.setrank.*") ||player.hasPermission("betacore.*")) {
                 rankSystem.setRank(Bukkit.getOfflinePlayer(args[2]).getUniqueId(), Rank.USER);
