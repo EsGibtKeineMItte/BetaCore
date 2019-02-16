@@ -53,7 +53,7 @@ public class CommandManager {
         } else {
             Boolean isSubCommand = true;
             for (String st : command.getSubCommands()) {
-                if (isSubCommand && st.equals(args[0])) {
+                if (isSubCommand && st.equals(command.getName() + " " + args[0])) {
                     isSubCommand = false;
                 }
             }
@@ -65,7 +65,7 @@ public class CommandManager {
             Boolean subExecutable = true;
             CommandInterface subCommand = null;
             for (CommandInterface ci : commands) {
-                if (subExecutable && subcmd.equals(ci.getName())) {
+                if (subExecutable && subcmd.equals(command.getName() + " " + ci.getName())) {
                     subExecutable = false;
                     subCommand = ci;
                 }

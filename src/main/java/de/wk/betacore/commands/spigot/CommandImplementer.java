@@ -20,7 +20,7 @@ public class CommandImplementer {
 
             @Override
             public String getInfo() {
-                return "/money [SET/PAY]";
+                return "";
             }
 
             @Override
