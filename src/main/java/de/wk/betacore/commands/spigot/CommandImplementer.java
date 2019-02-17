@@ -404,8 +404,8 @@ public class CommandImplementer {
                     }
                     if(!(StringUtils.isNumeric(args[0]))){
                         Info.sendInfo((Player) sender, "§7Dieser GameMode existiert nicht.");
+                        return;
                     }
-
                     int i = Integer.parseInt(args[0]);
                     if (i > -1 && i <= 4) {
                         if (i == 0) {
@@ -429,6 +429,10 @@ public class CommandImplementer {
                     }
                     if (!(sender.hasPermission("betacore.gm.other"))) {
                         Info.sendInfo((Player) sender, Misc.getNOPERM());
+                        return;
+                    }
+                    if(!(StringUtils.isNumeric(args[0]))){
+                        Info.sendInfo((Player) sender, "§7Dieser GameMode existiert nicht.");
                         return;
                     }
                     int i = Integer.parseInt(args[0]);
