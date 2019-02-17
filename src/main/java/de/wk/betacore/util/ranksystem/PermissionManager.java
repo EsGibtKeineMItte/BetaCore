@@ -56,11 +56,6 @@ public class PermissionManager {
         if (cm.getPermissions().getBoolean("permsSetup")) {
             return;
         }
-
-        if (cm.getPermissions().getList("ADMIN") != null) {
-            return;
-        }
-
         List<String> adminPerms = new ArrayList<String>();
         List<String> managerPerms = new ArrayList<String>();
         List<String> devPerms = new ArrayList<String>();
@@ -78,7 +73,7 @@ public class PermissionManager {
         cm.getPermissions().setList("YOU_TUBER", ytPerms);
         cm.getPermissions().setList("PREMIUM", premiumPerms);
         cm.getPermissions().setList("USER", userPerms);
-        cm.getGlobalConfig().setBoolean("permsSetup", true);
+        cm.getPermissions().setBoolean("permsSetup", true);
         cm.getPermissions().save();
 
 
