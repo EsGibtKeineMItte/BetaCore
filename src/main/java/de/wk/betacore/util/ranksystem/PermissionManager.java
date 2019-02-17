@@ -53,7 +53,7 @@ public class PermissionManager {
 
     public void setupPermissionConfig() {
 
-        if(cm.getPermissions().getBoolean("permsSetup")){
+        if (cm.getPermissions().getBoolean("permsSetup")) {
             return;
         }
 
@@ -78,8 +78,9 @@ public class PermissionManager {
         cm.getPermissions().setList("YOU_TUBER", ytPerms);
         cm.getPermissions().setList("PREMIUM", premiumPerms);
         cm.getPermissions().setList("USER", userPerms);
-        cm.getPermissions().save();
         cm.getGlobalConfig().setBoolean("permsSetup", true);
+        cm.getPermissions().save();
+
 
     }
 
