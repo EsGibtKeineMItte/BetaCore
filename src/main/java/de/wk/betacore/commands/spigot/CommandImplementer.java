@@ -5,6 +5,7 @@ import de.wk.betacore.commands.spigot.manager.CommandInterface;
 import de.wk.betacore.commands.spigot.manager.CommandManager;
 import de.wk.betacore.listener.Spigot.JoinHandler;
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
 import org.bukkit.Bukkit;
@@ -422,22 +423,23 @@ public class CommandImplementer {
                         return;
                     }
                     if (!(sender.hasPermission("betacore.gm.other"))) {
-                        Info.sendInfo((Player) sender, "&cDu hast keine Rechte dazu!");
+                        Info.sendInfo((Player) sender, Misc.getNOPERM());
                         return;
                     }
                     int i = Integer.parseInt(args[1]);
                     if (i > -1 && i <= 4) {
-                        if (!(Bukkit.getOfflinePlayer(args[1]).getPlayer().isOnline())) {
+                        if (Bukkit.getPlayer(args[0]) == null) {
+                            Info.sendInfo((Player) sender, "§7Dieser Spieler ist nicht online.");
                             return;
                         }
                         if (i == 0) {
-                            (Bukkit.getOfflinePlayer(args[1]).getPlayer()).setGameMode(GameMode.SURVIVAL);
+                            (Bukkit.getPlayer(args[0]).getPlayer()).setGameMode(GameMode.SURVIVAL);
                         } else if (i == 1) {
-                            (Bukkit.getOfflinePlayer(args[1]).getPlayer()).setGameMode(GameMode.CREATIVE);
+                            (Bukkit.getPlayer(args[0]).getPlayer()).setGameMode(GameMode.CREATIVE);
                         } else if (i == 2) {
-                            (Bukkit.getOfflinePlayer(args[1]).getPlayer()).setGameMode(GameMode.ADVENTURE);
+                            (Bukkit.getPlayer(args[0]).getPlayer()).setGameMode(GameMode.ADVENTURE);
                         } else if (i == 3) {
-                            (Bukkit.getOfflinePlayer(args[1]).getPlayer()).setGameMode(GameMode.SPECTATOR);
+                            (Bukkit.getPlayer(args[0]).getPlayer()).setGameMode(GameMode.SPECTATOR);
                         }
                         Info.sendInfo((Player) sender, "&aGamemode updated zu " + ((Player) sender).getGameMode().toString());
                     } else {
