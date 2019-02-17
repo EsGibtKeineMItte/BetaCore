@@ -51,37 +51,31 @@ public class PermissionManager {
     }
 
 
-    public void setPerms() {
+    public void setupPermissionConfig() {
+
+        if(cm.getPermissions().getBoolean("permsSetup")){
+            return;
+        }
 
         if (cm.getPermissions().getList("ADMIN") != null) {
             return;
         }
 
         List<String> adminPerms = new ArrayList<String>();
-        adminPerms.add("minecraft.*");
-        adminPerms.add("alphacore.setpw");
-
         List<String> managerPerms = new ArrayList<String>();
-        managerPerms.add("alphacore.setpw");
         List<String> devPerms = new ArrayList<String>();
-        devPerms.add("alphacore.setpw");
         List<String> modPerms = new ArrayList<String>();
-        modPerms.add("alphacore.setpw");
         List<String> suppPerms = new ArrayList<String>();
-        suppPerms.add("alphacore.setpw");
         List<String> ytPerms = new ArrayList<String>();
-        ytPerms.add("alphacore.setpw");
         List<String> premiumPerms = new ArrayList<String>();
-        premiumPerms.add("alphacore.setpw");
         List<String> userPerms = new ArrayList<String>();
-        userPerms.add("alphacore.setpw");
 
         cm.getPermissions().setList("ADMIN", adminPerms);
         cm.getPermissions().setList("MANANGER", managerPerms);
         cm.getPermissions().setList("DEV", devPerms);
         cm.getPermissions().setList("MOD", modPerms);
         cm.getPermissions().setList("SUPPORTER", suppPerms);
-        cm.getPermissions().setList("You_Tuber", ytPerms);
+        cm.getPermissions().setList("YOU_TUBER", ytPerms);
         cm.getPermissions().setList("PREMIUM", premiumPerms);
         cm.getPermissions().setList("USER", userPerms);
         cm.getPermissions().save();

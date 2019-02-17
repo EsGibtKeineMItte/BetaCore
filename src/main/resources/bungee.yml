@@ -4,3 +4,6 @@ main: de.wk.BetaCoreBungee
 
 authors: [linksKeineMitte, YoyoNow, Zeanon]
 
+commands:
+  ping:
+
