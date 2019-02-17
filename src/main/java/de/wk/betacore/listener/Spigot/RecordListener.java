@@ -1,4 +1,4 @@
-package de.wk.betacore.listener;
+package de.wk.betacore.listener.Spigot;
 
 
 import de.wk.betacore.util.Record;

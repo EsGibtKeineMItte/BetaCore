@@ -1,7 +1,7 @@
 package de.wk.betacore.util;
 
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.listener.RecordListener;
+import de.wk.betacore.listener.Spigot.RecordListener;
 import de.wk.betacore.util.data.Misc;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

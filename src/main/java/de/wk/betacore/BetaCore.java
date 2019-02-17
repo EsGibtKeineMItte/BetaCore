@@ -5,7 +5,7 @@ import de.wk.betacore.commands.spigot.Money;
 import de.wk.betacore.commands.spigot.PcCommand;
 import de.wk.betacore.commands.spigot.Core;
 import de.wk.betacore.commands.spigot.commandmanager.CommandManagerOld;
-import de.wk.betacore.listener.RecordListener;
+import de.wk.betacore.listener.Spigot.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
 import de.wk.betacore.util.ConfigManager;
 import de.wk.betacore.util.misc.CommandRemover;
