@@ -1,7 +1,7 @@
 package de.wk.betacore.listener.Spigot;
 
 import de.wk.betacore.appearance.Color;
-import de.wk.betacore.appearance.Scoreboard;
+import de.wk.betacore.appearance.ScoreboardUtils;
 import de.wk.betacore.appearance.Tablist;
 import de.wk.betacore.util.ConfigManager;
 import de.wk.betacore.util.ranksystem.Rank;
@@ -12,6 +12,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,7 @@ public class JoinHandler implements Listener {
         scoreboard(e.getPlayer());
         tablist(e.getPlayer());
         playerTablist(e.getPlayer());
+        playerTeam(e.getPlayer());
         if (rankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.setJoinMessage("");
         } else {
@@ -43,6 +46,7 @@ public class JoinHandler implements Listener {
         scoreboard(e);
         tablist(e);
         playerTablist(e);
+        playerTeam(e);
     }
 
     public void scoreboard(Player e) {
@@ -77,7 +81,7 @@ public class JoinHandler implements Listener {
             st[i] = string;
             i++;
         }
-        Scoreboard.updateScoreboard("&aTheWarKing", st, e.getPlayer());
+        ScoreboardUtils.updateScoreboard("&aTheWarKing", st, e.getPlayer());
     }
 
     public void tablist(Player e) {
@@ -91,6 +95,60 @@ public class JoinHandler implements Listener {
         } else {
             e.getPlayer().setPlayerListName(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " " + e.getPlayer().getName()));
         }
+    }
+
+    public void playerTeam(Player e) {
+
+        Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
+        Team Admin = board.registerNewTeam("01Admin");
+        Team Dev = board.registerNewTeam("03Dev");
+        Team Mod = board.registerNewTeam("04Mod");
+        Team Supp = board.registerNewTeam("05Supp");
+        Team Archi = board.registerNewTeam("06Archi");
+        Team YouTuber = board.registerNewTeam("07YouTuber");
+        Team Premium = board.registerNewTeam("08Premium");
+        Team User = board.registerNewTeam("09User");
+
+        Admin.setPrefix(Rank.ADMIN.getColor() + Rank.ADMIN.getName() + " §7| " + Rank.ADMIN.getColor());
+        Admin.setSuffix("§e §7[§eTeam§7]");
+        Dev.setPrefix(Rank.DEV.getColor() + Rank.DEV.getName() + " §7| " + Rank.DEV.getColor());
+        Mod.setPrefix(Rank.MOD.getColor() + Rank.MOD.getName() + " §7| " + Rank.MOD.getColor());
+        Supp.setPrefix(Rank.SUPPORTER.getColor() + Rank.SUPPORTER.getName() + " §7| " + Rank.SUPPORTER.getColor());
+        Archi.setPrefix(Rank.ARCHI.getColor() + Rank.ARCHI.getName() + " §7| " + Rank.ARCHI.getColor());
+        YouTuber.setPrefix(Rank.YOU_TUBER.getColor() + Rank.YOU_TUBER.getName() + " §7| " + Rank.YOU_TUBER.getColor());
+        Premium.setPrefix(Rank.PREMIUM.getColor() + Rank.PREMIUM.getName() + " §7| " + Rank.PREMIUM.getColor());
+        User.setPrefix(Rank.USER.getColor() + "");
+
+        RankSystem rankSystem = new RankSystem();
+
+        switch (rankSystem.getRank(e.getUniqueId())) {
+
+            case ADMIN:
+                Admin.addEntry(e.getName());
+                break;
+            case DEV:
+                Dev.addEntry(e.getName());
+                break;
+            case MOD:
+                Mod.addEntry(e.getName());
+                break;
+            case SUPPORTER:
+                Supp.addEntry(e.getName());
+                break;
+            case ARCHI:
+                Archi.addEntry(e.getName());
+                break;
+            case YOU_TUBER:
+                YouTuber.addEntry(e.getName());
+                break;
+            case PREMIUM:
+                Premium.addEntry(e.getName());
+                break;
+            case USER:
+                User.addEntry(e.getName());
+                break;
+        }
+        e.setScoreboard(board);
     }
 
 }

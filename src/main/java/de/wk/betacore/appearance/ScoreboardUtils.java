@@ -7,7 +7,7 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 
-public class Scoreboard {
+public class ScoreboardUtils {
 
     public static String PlayTime(Player p) {
         int PlayTime = p.getStatistic(Statistic.PLAY_ONE_TICK) / 20 / 60;
