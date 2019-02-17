@@ -400,8 +400,8 @@ public class CommandImplementer {
                         Info.sendInfo((Player) sender, "&cDu hast keine Rechte dazu!");
                         return;
                     }
-                    int i = Integer.parseInt(args[1]);
-                    if (i > -1 && i < 4) {
+                    int i = Integer.parseInt(args[0]);
+                    if (i > -1 && i <= 4) {
                         if (i == 0) {
                             ((Player) sender).setGameMode(GameMode.SURVIVAL);
                         } else if (i == 1) {
@@ -426,18 +426,18 @@ public class CommandImplementer {
                         return;
                     }
                     int i = Integer.parseInt(args[1]);
-                    if (i > -1 && i < 4) {
-                        if (!(Bukkit.getOfflinePlayer(args[2]).getPlayer().isOnline())) {
+                    if (i > -1 && i <= 4) {
+                        if (!(Bukkit.getOfflinePlayer(args[1]).getPlayer().isOnline())) {
                             return;
                         }
                         if (i == 0) {
-                            (Bukkit.getOfflinePlayer(args[2]).getPlayer()).setGameMode(GameMode.SURVIVAL);
+                            (Bukkit.getOfflinePlayer(args[1]).getPlayer()).setGameMode(GameMode.SURVIVAL);
                         } else if (i == 1) {
-                            (Bukkit.getOfflinePlayer(args[2]).getPlayer()).setGameMode(GameMode.CREATIVE);
+                            (Bukkit.getOfflinePlayer(args[1]).getPlayer()).setGameMode(GameMode.CREATIVE);
                         } else if (i == 2) {
-                            (Bukkit.getOfflinePlayer(args[2]).getPlayer()).setGameMode(GameMode.ADVENTURE);
+                            (Bukkit.getOfflinePlayer(args[1]).getPlayer()).setGameMode(GameMode.ADVENTURE);
                         } else if (i == 3) {
-                            (Bukkit.getOfflinePlayer(args[2]).getPlayer()).setGameMode(GameMode.SPECTATOR);
+                            (Bukkit.getOfflinePlayer(args[1]).getPlayer()).setGameMode(GameMode.SPECTATOR);
                         }
                         Info.sendInfo((Player) sender, "&aGamemode updated zu " + ((Player) sender).getGameMode().toString());
                     } else {

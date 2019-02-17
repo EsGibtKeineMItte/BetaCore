@@ -13,10 +13,10 @@ public class cmdParser {
     }
 
     public static void Pars(Player p, String cmd){
-        f = new File("plugins//commands//" + cmd +".cmd");
-        if(!f.exists()){
-
-        }
+//        f = new File("plugins//commands//" + cmd +".cmd");
+//        if(!f.exists()){
+//
+//        }
 
     }
 
