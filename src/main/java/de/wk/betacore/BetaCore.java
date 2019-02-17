@@ -9,6 +9,7 @@ import de.wk.betacore.listener.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
 import de.wk.betacore.util.ConfigManager;
 import de.wk.betacore.util.misc.CommandRemover;
+import de.wk.betacore.util.ranksystem.PermissionManager;
 import de.wk.betacore.util.travel.ArenaCommand;
 import de.wk.betacore.util.travel.BauCommand;
 import de.wk.betacore.util.travel.FastTravelSystem;
@@ -85,7 +86,8 @@ public final class BetaCore extends JavaPlugin {
 
         removeCommands();
         cm.setup();
-
+        PermissionManager permissionManager = new PermissionManager();
+        permissionManager.setupPermissionConfig();
         if (!cm.getConfig().getBoolean("useAsBauServer")) {
             getCommand("bau").setExecutor(new BauCommand());
         } else {
