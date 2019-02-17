@@ -8,6 +8,7 @@ import de.wk.betacore.util.ConfigManager;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -375,6 +376,84 @@ public class CommandImplementer {
             @Override
             public Boolean inConsole() {
                 return false;
+            }
+        });
+        CommandManager.addCommand(new CommandInterface() {
+            @Override
+            public String getName() {
+                return "gm";
+            }
+
+            @Override
+            public String getInfo() {
+                return "";
+            }
+
+            @Override
+            public void run(CommandSender sender, String[] args) {
+                if (args.length == 1) {
+                    if (!(sender instanceof Player)) {
+                        sender.sendMessage("Nicht in der Console ausführbar");
+                        return;
+                    }
+                    if (sender.hasPermission("betacore.gm.self")) {
+                        Info.sendInfo((Player) sender, "&cDu hast keine Rechte dazu!");
+                        return;
+                    }
+                    int i = Integer.parseInt(args[1]);
+                    if (i > -1 && i < 4) {
+                        if (i == 0) {
+                            ((Player) sender).setGameMode(GameMode.SURVIVAL);
+                        } else if (i == 1) {
+                            ((Player) sender).setGameMode(GameMode.CREATIVE);
+                        } else if (i == 2) {
+                            ((Player) sender).setGameMode(GameMode.ADVENTURE);
+                        } else if (i == 3) {
+                            ((Player) sender).setGameMode(GameMode.SPECTATOR);
+                        }
+                        Info.sendInfo((Player) sender, "&aGamemode updated zu " + ((Player) sender).getGameMode().toString());
+                    } else {
+                        Info.sendInfo((Player) sender, "&cUnbekannter Gamemode!");
+                    }
+                }
+                if (args.length == 2) {
+                    if (!(sender instanceof Player)) {
+                        sender.sendMessage("Nicht in der Console ausführbar");
+                        return;
+                    }
+                    if (sender.hasPermission("betacore.gm.other")) {
+                        Info.sendInfo((Player) sender, "&cDu hast keine Rechte dazu!");
+                        return;
+                    }
+                    int i = Integer.parseInt(args[1]);
+                    if (i > -1 && i < 4) {
+                        if (!(Bukkit.getOfflinePlayer(args[2]).getPlayer().isOnline())) {
+                            return;
+                        }
+                        if (i == 0) {
+                            (Bukkit.getOfflinePlayer(args[2]).getPlayer()).setGameMode(GameMode.SURVIVAL);
+                        } else if (i == 1) {
+                            (Bukkit.getOfflinePlayer(args[2]).getPlayer()).setGameMode(GameMode.CREATIVE);
+                        } else if (i == 2) {
+                            (Bukkit.getOfflinePlayer(args[2]).getPlayer()).setGameMode(GameMode.ADVENTURE);
+                        } else if (i == 3) {
+                            (Bukkit.getOfflinePlayer(args[2]).getPlayer()).setGameMode(GameMode.SPECTATOR);
+                        }
+                        Info.sendInfo((Player) sender, "&aGamemode updated zu " + ((Player) sender).getGameMode().toString());
+                    } else {
+                        Info.sendInfo((Player) sender, "&cUnbekannter Gamemode!");
+                    }
+                }
+            }
+
+            @Override
+            public String[] getSubCommands() {
+                return new String[0];
+            }
+
+            @Override
+            public Boolean inConsole() {
+                return true;
             }
         });
     }
