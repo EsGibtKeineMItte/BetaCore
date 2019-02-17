@@ -21,7 +21,8 @@ public class TeamSystem {
         ArrayList<Object> teamAdmins = new ArrayList<>();
         teamAdmins.add(teamAdmin.getUniqueId().toString());
         cm.getPlayerData().setString(teamAdmin.getUniqueId().toString() + ".wsteam", teamName);
-        cm.getTeams().setList(teamName + "admins", teamAdmins);
+        cm.getPlayerData().save();
+        cm.getTeams().setList(teamName + ".admins", teamAdmins);
         cm.getTeams().setString(teamName + ".short", kuerzel);
         cm.getTeams().setInt(teamName + ".teamrank", -1);//PrivateFight *3 + wonEvents*5 + wonpublicfights
         cm.getTeams().setInt(teamName + ".wonPrivateFights", 0);
@@ -63,7 +64,7 @@ public class TeamSystem {
 
     public String getTeamFromPlayer(Player player) {
         ConfigManager cm = new ConfigManager();
-        return cm.getPlayerData().getString(player.getUniqueId().toString() + ".team");
+        return cm.getPlayerData().getString(player.getUniqueId().toString() + ".wsteam");
     }
 
 
