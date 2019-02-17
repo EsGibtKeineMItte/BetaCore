@@ -67,5 +67,15 @@ public class TeamSystem {
         return cm.getPlayerData().getString(player.getUniqueId().toString() + ".wsteam");
     }
 
+    public void invitePlayer(String teamName, Player player) {
+        ConfigManager cm = new ConfigManager();
+        if(cm.getTeams().getString(teamName) == null){
+            System.out.println("Dieses Team existiert nicht");
+            return;
+        }
+
+
+
+    }
 
 }

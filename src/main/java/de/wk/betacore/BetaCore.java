@@ -19,8 +19,7 @@ public final class BetaCore extends JavaPlugin {
       /*
     <AlphaCore a core plugin for minecraft server.>
     Copyright (C) <2018>  <linksKeineMitte, YoyoNow, Chaoschaot>
-    Thank to Butzlabben.
-
+    CommandRemover by Exceptionflug.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -42,7 +41,7 @@ public final class BetaCore extends JavaPlugin {
             try {
                 CommandRemover.removeAll("tell", "libsdisguises:", "turnier", "bukkit:pl",
                         "bukkit:plugins", "ver", "bukkit:ver", "bukkit:seed", "bukkit:msg", "bukkit:w",
-                        "bukkit:tell", "bukkit:list", "version", "bukkit:version", "?", "bukkit:?","me",
+                        "bukkit:tell", "bukkit:list", "version", "bukkit:version", "?", "bukkit:?", "me",
                         "bukkit:help", "minecraft:help", "about", "bukkit:about", "icanhasbukkit", "me", "msg",
                         "bukkit:kill", "bukkit:me", "plugins", "minecraft:me", "eval", "evaluate", "solve", "calc",
                         "calculate", "/eval", "/evaluate", "/solve", "/calc", "/calculate", "w", "minecraft:w", "list", "minecraft:list");
@@ -53,7 +52,7 @@ public final class BetaCore extends JavaPlugin {
     }
 
 
-    public void regCommands(){
+    public void regCommands() {
         getCommand("money").setExecutor(new Money());
         getCommand("core").setExecutor(new Core());
         getCommand("gm").setExecutor(new Gm());
@@ -61,7 +60,7 @@ public final class BetaCore extends JavaPlugin {
         getCommand("team").setExecutor(new TeamCommandTest());
     }
 
-    public void regListeners(){
+    public void regListeners() {
         Bukkit.getPluginManager().registerEvents(new DataSetter(), this);
         Bukkit.getPluginManager().registerEvents(new MessageSend(), this);
         Bukkit.getPluginManager().registerEvents(new JoinHandler(), this);
@@ -102,7 +101,6 @@ public final class BetaCore extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
     }
-
 
 
     public static BetaCore getInstance() {
