@@ -3,7 +3,7 @@ package de.wk.betacore;
 import de.wk.betacore.commands.spigot.CommandImplementer;
 import de.wk.betacore.commands.spigot.Money;
 import de.wk.betacore.commands.spigot.PcCommand;
-import de.wk.betacore.commands.spigot.Rank;
+import de.wk.betacore.commands.spigot.Core;
 import de.wk.betacore.commands.spigot.commandmanager.CommandManagerOld;
 import de.wk.betacore.listener.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
@@ -57,7 +57,7 @@ public final class BetaCore extends JavaPlugin {
 
     public void regCommands(){
         getCommand("money").setExecutor(new Money());
-        getCommand("core").setExecutor(new Rank());
+        getCommand("core").setExecutor(new Core());
         getCommand("pc").setExecutor(new PcCommand());
     }
 

@@ -39,7 +39,7 @@ public class CommandImplementer {
                 cm.getPlayerData().reload();
                 Info.sendInfo((Player) sender, "&aMoney > " + cm.getPlayerData().getInt(((Player) sender).getUniqueId().toString() + ".money"));
                 joinHandler.update((Player) sender);
-                cm.getPlayerData().save();
+                cm.getConfig().save();
             }
 
             @Override
@@ -77,7 +77,7 @@ public class CommandImplementer {
                 cm.getPlayerData().setInt(((Player) sender).getPlayer().getUniqueId().toString() + ".money", i);
                 Info.sendInfo((Player) sender, "&aMoney set to > " + cm.getPlayerData().getInt(((Player) sender).getUniqueId().toString() + ".money"));
                 joinHandler.update((Player) sender);
-                cm.getPlayerData().save();
+                cm.getConfig().save();
             }
 
             @Override
@@ -124,7 +124,7 @@ public class CommandImplementer {
                 }
                 joinHandler.update((Player) sender);
                 joinHandler.update((Player) Bukkit.getOfflinePlayer(args[1]));
-                cm.getPlayerData().save();
+                cm.getConfig().save();
             }
 
             @Override
@@ -161,7 +161,7 @@ public class CommandImplementer {
                 cm.getPlayerData().setInt(Bukkit.getOfflinePlayer(args[1]).getUniqueId().toString() + ".money", 0);
                 Info.sendInfo((Player) sender, "&aCleared the Money from " + Bukkit.getOfflinePlayer(args[1]).getPlayer().getName());
                 joinHandler.update((Player) Bukkit.getOfflinePlayer(args[1]));
-                cm.getPlayerData().save();
+                cm.getConfig().save();
             }
 
             @Override
@@ -303,6 +303,68 @@ public class CommandImplementer {
                 Info.sendInfo((Player) sender, "&7Zeigt Informationen über den Server an");
                 Info.sendInfo((Player) sender, "&7/core reload");
                 Info.sendInfo((Player) sender, "&7Reloade alle Config files");
+            }
+
+            @Override
+            public String[] getSubCommands() {
+                return new String[0];
+            }
+
+            @Override
+            public Boolean inConsole() {
+                return false;
+            }
+        });
+        CommandManager.addCommand(new CommandInterface() {
+            @Override
+            public String getName() {
+                return "core reload";
+            }
+
+            @Override
+            public String getInfo() {
+                return "";
+            }
+
+            @Override
+            public void run(CommandSender sender, String[] args) {
+                if (!(sender.hasPermission("betacore.core.reload"))) {
+                    return;
+                }
+                for (Player e : Bukkit.getOnlinePlayers()) {
+                    joinHandler.update(e);
+                }
+                // TODO: hier muss noch das ganze reload zeug hin!
+                Info.sendInfo((Player) sender, "&eCore System reloaded");
+            }
+
+            @Override
+            public String[] getSubCommands() {
+                return new String[0];
+            }
+
+            @Override
+            public Boolean inConsole() {
+                return true;
+            }
+        });
+        CommandManager.addCommand(new CommandInterface() {
+            @Override
+            public String getName() {
+                return "core info";
+            }
+
+            @Override
+            public String getInfo() {
+                return "";
+            }
+
+            @Override
+            public void run(CommandSender sender, String[] args) {
+                if (!(sender.hasPermission("betacore.core.info"))) {
+                    return;
+                }
+                // TODO: Hier muss noch alles an Info hin
             }
 
             @Override
