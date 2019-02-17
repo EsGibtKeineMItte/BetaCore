@@ -39,6 +39,7 @@ public class CommandImplementer {
                 cm.getPlayerData().reload();
                 Info.sendInfo((Player) sender, "&aMoney > " + cm.getPlayerData().getInt(((Player) sender).getUniqueId().toString() + ".money"));
                 joinHandler.update((Player) sender);
+                cm.getPlayerData().save();
             }
 
             @Override
@@ -76,6 +77,7 @@ public class CommandImplementer {
                 cm.getPlayerData().setInt(((Player) sender).getPlayer().getUniqueId().toString() + ".money", i);
                 Info.sendInfo((Player) sender, "&aMoney set to > " + cm.getPlayerData().getInt(((Player) sender).getUniqueId().toString() + ".money"));
                 joinHandler.update((Player) sender);
+                cm.getPlayerData().save();
             }
 
             @Override
@@ -122,6 +124,7 @@ public class CommandImplementer {
                 }
                 joinHandler.update((Player) sender);
                 joinHandler.update((Player) Bukkit.getOfflinePlayer(args[1]));
+                cm.getPlayerData().save();
             }
 
             @Override
@@ -158,6 +161,7 @@ public class CommandImplementer {
                 cm.getPlayerData().setInt(Bukkit.getOfflinePlayer(args[1]).getUniqueId().toString() + ".money", 0);
                 Info.sendInfo((Player) sender, "&aCleared the Money from " + Bukkit.getOfflinePlayer(args[1]).getPlayer().getName());
                 joinHandler.update((Player) Bukkit.getOfflinePlayer(args[1]));
+                cm.getPlayerData().save();
             }
 
             @Override
