@@ -386,7 +386,7 @@ public class CommandImplementer {
 
             @Override
             public String getInfo() {
-                return "";
+                return "/gm [GameMode]";
             }
 
             @Override
@@ -396,7 +396,7 @@ public class CommandImplementer {
                         sender.sendMessage("Nicht in der Console ausführbar");
                         return;
                     }
-                    if (sender.hasPermission("betacore.gm.self")) {
+                    if (!(sender.hasPermission("betacore.gm.self"))) {
                         Info.sendInfo((Player) sender, "&cDu hast keine Rechte dazu!");
                         return;
                     }
@@ -421,7 +421,7 @@ public class CommandImplementer {
                         sender.sendMessage("Nicht in der Console ausführbar");
                         return;
                     }
-                    if (sender.hasPermission("betacore.gm.other")) {
+                    if (!(sender.hasPermission("betacore.gm.other"))) {
                         Info.sendInfo((Player) sender, "&cDu hast keine Rechte dazu!");
                         return;
                     }

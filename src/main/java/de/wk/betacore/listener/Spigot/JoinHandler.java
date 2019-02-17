@@ -77,8 +77,6 @@ public class JoinHandler implements Listener {
             st[i] = string;
             i++;
         }
-
-        Scoreboard.updateScoreboard("", new String[0], e.getPlayer());
         Scoreboard.updateScoreboard("&aTheWarKing", st, e.getPlayer());
     }
 

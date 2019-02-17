@@ -16,3 +16,6 @@ commands:
     aliases: hub
   money:
   pc:
+  gm:
+    description: Command, um seinen GameMode zu wechseln
+  team:
