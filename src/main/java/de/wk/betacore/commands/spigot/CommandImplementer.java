@@ -388,7 +388,7 @@ public class CommandImplementer {
 
             @Override
             public String getInfo() {
-                return "/gm [GameMode]";
+                return "/gm [GameMode] <Player>";
             }
 
             @Override
