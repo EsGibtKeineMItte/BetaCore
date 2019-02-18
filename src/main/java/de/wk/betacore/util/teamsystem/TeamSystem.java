@@ -1,16 +1,21 @@
 package de.wk.betacore.util.teamsystem;
 
+import de.butzlabben.world.config.MessageConfig;
+import de.butzlabben.world.wrapper.SystemWorld;
 import de.wk.betacore.util.Config;
 import de.wk.betacore.util.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class TeamSystem {
     public void createTeam(String teamName, String kuerzel, Player teamAdmin) {
+        LocalDate dateOfTeamCreation = LocalDate.now();
+
         ConfigManager cm = new ConfigManager();
 
 
@@ -24,11 +29,12 @@ public class TeamSystem {
         cm.getPlayerData().save();
         cm.getTeams().setList(teamName + ".admins", teamAdmins);
         cm.getTeams().setString(teamName + ".short", kuerzel);
+        cm.getTeams().setString(teamName + ".dateOfCreation", dateOfTeamCreation.toString());
         cm.getTeams().setInt(teamName + ".teamrank", -1);//PrivateFight *3 + wonEvents*5 + wonpublicfights
         cm.getTeams().setInt(teamName + ".wonPrivateFights", 0);
         cm.getTeams().setInt(teamName + ".wonPublicFights", 0);
         cm.getTeams().setInt(teamName + ".wonEvents", 0);
-
+        cm.getTeams().setString(teamName + ".world", null);
         cm.getTeams().save();
 
     }
@@ -73,7 +79,6 @@ public class TeamSystem {
             System.out.println("Dieses Team existiert nicht");
             return;
         }
-
 
 
     }
