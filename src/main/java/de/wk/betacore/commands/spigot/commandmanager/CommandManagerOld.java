@@ -1,7 +1,6 @@
 package de.wk.betacore.commands.spigot.commandmanager;
 
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.commands.spigot.SetupCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,7 +26,7 @@ public class CommandManagerOld implements CommandExecutor {
     public void setup() {
         BetaCore.getInstance().getCommand(main).setExecutor(this);
         //this.commands.add(new SetRankCommand());
-        this.commands.add(new SetupCommand());
+        //this.commands.add(new SetupCommand());
 
 //        this.commands.add(new InfoCommand());
 //        this.commands.add(new HelpCommand());

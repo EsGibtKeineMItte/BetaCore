@@ -39,7 +39,6 @@ public class DataSetter implements Listener {
         }
         cm.getPlayerData().save();
     }
-
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         LocalDate today = LocalDate.now();

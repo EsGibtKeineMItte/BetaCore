@@ -5,8 +5,10 @@ import de.wk.betacore.commands.spigot.manager.CommandInterface;
 import de.wk.betacore.commands.spigot.manager.CommandManager;
 import de.wk.betacore.listener.Spigot.JoinHandler;
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
@@ -386,7 +388,7 @@ public class CommandImplementer {
 
             @Override
             public String getInfo() {
-                return "/gm [GameMode]";
+                return "/gm [GameMode] <Player>";
             }
 
             @Override
@@ -400,8 +402,12 @@ public class CommandImplementer {
                         Info.sendInfo((Player) sender, "&cDu hast keine Rechte dazu!");
                         return;
                     }
-                    int i = Integer.parseInt(args[1]);
-                    if (i > -1 && i < 4) {
+                    if(!(StringUtils.isNumeric(args[0]))){
+                        Info.sendInfo((Player) sender, "§7Dieser GameMode existiert nicht.");
+                        return;
+                    }
+                    int i = Integer.parseInt(args[0]);
+                    if (i > -1 && i <= 4) {
                         if (i == 0) {
                             ((Player) sender).setGameMode(GameMode.SURVIVAL);
                         } else if (i == 1) {
@@ -422,22 +428,27 @@ public class CommandImplementer {
                         return;
                     }
                     if (!(sender.hasPermission("betacore.gm.other"))) {
-                        Info.sendInfo((Player) sender, "&cDu hast keine Rechte dazu!");
+                        Info.sendInfo((Player) sender, Misc.getNOPERM());
                         return;
                     }
-                    int i = Integer.parseInt(args[1]);
-                    if (i > -1 && i < 4) {
-                        if (!(Bukkit.getOfflinePlayer(args[2]).getPlayer().isOnline())) {
+                    if(!(StringUtils.isNumeric(args[0]))){
+                        Info.sendInfo((Player) sender, "§7Dieser GameMode existiert nicht.");
+                        return;
+                    }
+                    int i = Integer.parseInt(args[0]);
+                    if (i > -1 && i <= 4) {
+                        if (Bukkit.getPlayer(args[1]) == null) {
+                            Info.sendInfo((Player) sender, "§7Dieser Spieler ist nicht online.");
                             return;
                         }
                         if (i == 0) {
-                            (Bukkit.getOfflinePlayer(args[2]).getPlayer()).setGameMode(GameMode.SURVIVAL);
+                            (Bukkit.getPlayer(args[1]).getPlayer()).setGameMode(GameMode.SURVIVAL);
                         } else if (i == 1) {
-                            (Bukkit.getOfflinePlayer(args[2]).getPlayer()).setGameMode(GameMode.CREATIVE);
+                            (Bukkit.getPlayer(args[1]).getPlayer()).setGameMode(GameMode.CREATIVE);
                         } else if (i == 2) {
-                            (Bukkit.getOfflinePlayer(args[2]).getPlayer()).setGameMode(GameMode.ADVENTURE);
+                            (Bukkit.getPlayer(args[1]).getPlayer()).setGameMode(GameMode.ADVENTURE);
                         } else if (i == 3) {
-                            (Bukkit.getOfflinePlayer(args[2]).getPlayer()).setGameMode(GameMode.SPECTATOR);
+                            (Bukkit.getPlayer(args[1]).getPlayer()).setGameMode(GameMode.SPECTATOR);
                         }
                         Info.sendInfo((Player) sender, "&aGamemode updated zu " + ((Player) sender).getGameMode().toString());
                     } else {
