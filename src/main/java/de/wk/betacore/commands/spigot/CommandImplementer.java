@@ -265,13 +265,12 @@ public class CommandImplementer {
                     }
                     if (your < their || your == 0 || !(sender instanceof Player) || sender.isOp()) {
                         String rank = args[2].toUpperCase();
-                        cm.getPlayerData().setString(Bukkit.getOfflinePlayer(args[1]).toString() + ".rank", "");
-                        cm.getPlayerData().save();
-                        cm.getPlayerData().reload();
                         cm.getPlayerData().setString(Bukkit.getOfflinePlayer(args[1]).getUniqueId() + ".rank", rank);
                         cm.getPlayerData().save();
                         Info.sendInfo((Player) sender, "&eRank geändert zu " + rank);
-                        joinHandler.update((Player) Bukkit.getOfflinePlayer(args[1]));
+                        if (Bukkit.getPlayer(args[1]) != null) {
+                            joinHandler.update(Bukkit.getPlayer(args[1]));
+                        }
                     }
                 }
             }
@@ -406,7 +405,7 @@ public class CommandImplementer {
                         Info.sendInfo((Player) sender, "&cDu hast keine Rechte dazu!");
                         return;
                     }
-                    if(!(StringUtils.isNumeric(args[0]))){
+                    if (!(StringUtils.isNumeric(args[0]))) {
                         Info.sendInfo((Player) sender, "§7Dieser GameMode existiert nicht.");
                         return;
                     }
@@ -435,7 +434,7 @@ public class CommandImplementer {
                         Info.sendInfo((Player) sender, Misc.getNOPERM());
                         return;
                     }
-                    if(!(StringUtils.isNumeric(args[0]))){
+                    if (!(StringUtils.isNumeric(args[0]))) {
                         Info.sendInfo((Player) sender, "§7Dieser GameMode existiert nicht.");
                         return;
                     }

@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class PlayerInfoCommand implements CommandExecutor {
 
@@ -20,7 +19,7 @@ public class PlayerInfoCommand implements CommandExecutor {
             return false;
         }
         if (args.length != 1) {
-            sender.sendMessage(Misc.getPREFIX() + "§7Benutung : §6/pi §7<§6Spieler>");
+            sender.sendMessage(Misc.getPREFIX() + "§7Benutung : §6/pi §7<§6Spieler§7>");
             return false;
         }
 
