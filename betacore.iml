@@ -52,7 +52,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: de.butzlabben:WorldSystem:2.4.3.2">
+      <library name="Maven: de.butzlabben.world:WorldSystem:2.4.3.2">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/WorldSystem.jar!/" />
         </CLASSES>

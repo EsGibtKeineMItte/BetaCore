@@ -39,11 +39,19 @@ public class DataSetter implements Listener {
         }
         cm.getPlayerData().save();
     }
+
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         LocalDate today = LocalDate.now();
+
         RankSystem rankSystem = new RankSystem();
-        rankSystem.setRank(e.getPlayer().getUniqueId(), rankSystem.getRank(e.getPlayer().getUniqueId()));
+        System.out.println("Debug Message: Rang ist:" + rankSystem.getRank(e.getPlayer().getUniqueId()));
+        cm.getPlayerData().reload();
+        cm.getPlayerData().save();
+        // cm.getPlayerData().setString(uuid.toString() + ".rank", rank.name().toUpperCase());
+        //
+        System.out.println("Debug Message: Rang ist:" + cm.getPlayerData().getString(e.getPlayer().getUniqueId().toString() + ".rank").toUpperCase());
+        cm.getPlayerData().setString(e.getPlayer().getUniqueId().toString() + ".rank", cm.getPlayerData().getString(e.getPlayer().getUniqueId().toString() + ".rank").toUpperCase());
         if (cm.getPlayerData().getString(e.getPlayer().getUniqueId().toString() + ".firstjoin") == null) {
             cm.getPlayerData().setString(e.getPlayer().getUniqueId().toString() + ".firstjoin", today.toString());
             return;
