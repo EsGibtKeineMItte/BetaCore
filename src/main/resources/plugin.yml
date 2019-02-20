@@ -19,3 +19,4 @@ commands:
   gm:
     description: Command, um seinen GameMode zu wechseln
   team:
+  pi:
