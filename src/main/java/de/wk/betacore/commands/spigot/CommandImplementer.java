@@ -265,6 +265,9 @@ public class CommandImplementer {
                     }
                     if (your < their || your == 0 || !(sender instanceof Player) || sender.isOp()) {
                         String rank = args[2].toUpperCase();
+                        cm.getPlayerData().setString(Bukkit.getOfflinePlayer(args[1]).toString() + ".rank", "");
+                        cm.getPlayerData().save();
+                        cm.getPlayerData().reload();
                         cm.getPlayerData().setString(Bukkit.getOfflinePlayer(args[1]).getUniqueId() + ".rank", rank);
                         cm.getPlayerData().save();
                         Info.sendInfo((Player) sender, "&eRank geändert zu " + rank);
