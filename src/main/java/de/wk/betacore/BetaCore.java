@@ -58,6 +58,7 @@ public final class BetaCore extends JavaPlugin {
         getCommand("gm").setExecutor(new Gm());
         getCommand("pc").setExecutor(new PcCommand());
         getCommand("team").setExecutor(new TeamCommandTest());
+        getCommand("pi").setExecutor(new PlayerInfoCommand());
     }
 
     public void regListeners() {

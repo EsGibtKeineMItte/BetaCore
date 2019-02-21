@@ -9,8 +9,34 @@ import org.bukkit.entity.Player;
 
 
 public class TeamCommandTest implements CommandExecutor {
+
+    /*
+          0      1
+    /team info <eigenes|anderes>
+    /team join <Teamname>
+    /team leave
+    /team setadmin <Spielername>
+    /team getworld
+    /team challenge <teamname> -> Wenn angenommen wird zu einen privaten Arena gesendet.
+           0          1
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length == 0) {
+
+        }
+
+        if (args.length == 1) {
+            if (args[0].equalsIgnoreCase("info")) {
+
+            }
+
+        }
+
+        if (args.length == 2) {
+
+        }
+
         TeamSystem teamSystem = new TeamSystem();
         if (!(sender instanceof Player)) {
             return false;
