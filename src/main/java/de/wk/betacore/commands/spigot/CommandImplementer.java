@@ -9,6 +9,7 @@ import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.EnumUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
@@ -267,8 +268,13 @@ public class CommandImplementer {
                         String rank = args[2].toUpperCase();
                         cm.getPlayerData().setString(Bukkit.getOfflinePlayer(args[1]).getUniqueId() + ".rank", rank);
                         cm.getPlayerData().save();
-                        Info.sendInfo((Player) sender, "&eRank geändert zu " + rank);
-                        joinHandler.update((Player) Bukkit.getOfflinePlayer(args[1]));
+                        Info.sendInfo((Player) sender, "&7Rang von" + Bukkit.getOfflinePlayer(args[1]).getName() + "§7 geändert zu " + Rank.valueOf(rank).getColor() + rank);
+
+                        if (Bukkit.getPlayer(args[1]) != null) {
+                            joinHandler.update(Bukkit.getPlayer(args[1]));
+                        }
+
+
                     }
                 }
             }
@@ -299,14 +305,10 @@ public class CommandImplementer {
                 if (!(sender.hasPermission("betacore.core.help"))) {
                     return;
                 }
-                Info.sendInfo((Player) sender, "&7/core help");
-                Info.sendInfo((Player) sender, "&7Zeigt diese Nachricht an");
-                Info.sendInfo((Player) sender, "&7/core setrank [User] [Rank]");
-                Info.sendInfo((Player) sender, "&7Setzte den Rank eines Users");
-                Info.sendInfo((Player) sender, "&7/core info");
-                Info.sendInfo((Player) sender, "&7Zeigt Informationen über den Server an");
-                Info.sendInfo((Player) sender, "&7/core reload");
-                Info.sendInfo((Player) sender, "&7Reloade alle Config files");
+                Info.sendInfo((Player) sender, "&6/core help &7-Zeigt diese Nachricht an");
+                Info.sendInfo((Player) sender, "&6/core setrank §7<§6User§7> §7<§6Rank§7> \n&7Setzte den Rank eines Users");
+                Info.sendInfo((Player) sender, "&6/core info &7- Zeigt Informationen über den Server an");
+                Info.sendInfo((Player) sender, "&6/core reload &7- Reloaded alle Config files");
             }
 
             @Override
@@ -403,7 +405,7 @@ public class CommandImplementer {
                         Info.sendInfo((Player) sender, "&cDu hast keine Rechte dazu!");
                         return;
                     }
-                    if(!(StringUtils.isNumeric(args[0]))){
+                    if (!(StringUtils.isNumeric(args[0]))) {
                         Info.sendInfo((Player) sender, "§7Dieser GameMode existiert nicht.");
                         return;
                     }
@@ -432,7 +434,7 @@ public class CommandImplementer {
                         Info.sendInfo((Player) sender, Misc.getNOPERM());
                         return;
                     }
-                    if(!(StringUtils.isNumeric(args[0]))){
+                    if (!(StringUtils.isNumeric(args[0]))) {
                         Info.sendInfo((Player) sender, "§7Dieser GameMode existiert nicht.");
                         return;
                     }

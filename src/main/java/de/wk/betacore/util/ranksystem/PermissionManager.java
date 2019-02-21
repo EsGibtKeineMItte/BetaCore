@@ -2,6 +2,7 @@ package de.wk.betacore.util.ranksystem;
 
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.Player.WarPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 
@@ -57,7 +58,6 @@ public class PermissionManager {
             return;
         }
         List<String> adminPerms = new ArrayList<String>();
-        List<String> managerPerms = new ArrayList<String>();
         List<String> devPerms = new ArrayList<String>();
         List<String> modPerms = new ArrayList<String>();
         List<String> suppPerms = new ArrayList<String>();
@@ -65,14 +65,13 @@ public class PermissionManager {
         List<String> premiumPerms = new ArrayList<String>();
         List<String> userPerms = new ArrayList<String>();
 
-        cm.getPermissions().setList("ADMIN", adminPerms);
-        cm.getPermissions().setList("MANANGER", managerPerms);
-        cm.getPermissions().setList("DEV", devPerms);
-        cm.getPermissions().setList("MOD", modPerms);
-        cm.getPermissions().setList("SUPPORTER", suppPerms);
-        cm.getPermissions().setList("YOU_TUBER", ytPerms);
-        cm.getPermissions().setList("PREMIUM", premiumPerms);
-        cm.getPermissions().setList("USER", userPerms);
+        cm.getPermissions().setList(Rank.ADMIN.getName(), adminPerms);
+        cm.getPermissions().setList(Rank.DEV.getName(), devPerms);
+        cm.getPermissions().setList(Rank.MOD.getName(), modPerms);
+        cm.getPermissions().setList(Rank.SUPPORTER.getName(), suppPerms);
+        cm.getPermissions().setList(Rank.YOU_TUBER.getName(), ytPerms);
+        cm.getPermissions().setList(Rank.PREMIUM.getName(), premiumPerms);
+        cm.getPermissions().setList(Rank.USER.getName(), userPerms);
         cm.getPermissions().setBoolean("permsSetup", true);
         cm.getPermissions().save();
 

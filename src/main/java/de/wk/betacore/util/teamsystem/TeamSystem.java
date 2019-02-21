@@ -64,8 +64,6 @@ public class TeamSystem {
     }
 
     public void promoteUser(String Teamname, Player player) {
-
-
     }
 
     public String getTeamFromPlayer(Player player) {
@@ -75,7 +73,7 @@ public class TeamSystem {
 
     public void invitePlayer(String teamName, Player player) {
         ConfigManager cm = new ConfigManager();
-        if(cm.getTeams().getString(teamName) == null){
+        if (cm.getTeams().getString(teamName) == null) {
             System.out.println("Dieses Team existiert nicht");
             return;
         }
