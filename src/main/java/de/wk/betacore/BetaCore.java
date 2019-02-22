@@ -74,6 +74,7 @@ public final class BetaCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
         instance = this;
         ConfigManager cm = new ConfigManager();
         CommandManagerOld commandManager = new CommandManagerOld();
@@ -85,6 +86,7 @@ public final class BetaCore extends JavaPlugin {
 
         removeCommands();
         cm.setup();
+        TestKt.test();
         PermissionManager permissionManager = new PermissionManager();
         permissionManager.setupPermissionConfig();
         if (!cm.getConfig().getBoolean("useAsBauServer")) {
