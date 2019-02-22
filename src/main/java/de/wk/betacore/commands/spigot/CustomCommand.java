@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class CustomCommand implements CommandExecutor, Listener {
 
-    static Player edit = null;
+    public static Player edit = null;
     static ArrayList<String> lines = new ArrayList<>();
     public static String edit1;
 
@@ -39,7 +39,7 @@ public class CustomCommand implements CommandExecutor, Listener {
                         p.sendMessage("§c/cc §ecreate §7| §aCreate a new Command");
                         p.sendMessage("§c/cc §edelete [name] §7| §aDelete a Command");
                     }else if(args[0].equalsIgnoreCase("create")){
-                        if(edit.equals(null)){
+                        if(edit == null){
                             edit = p;
                         }else {
                             p.sendMessage("§bCustom Command §l| §cOnly one command can be edited at the same time!");
@@ -53,7 +53,7 @@ public class CustomCommand implements CommandExecutor, Listener {
     }
     @EventHandler
     public static void onChat(AsyncPlayerChatEvent e){
-        if(e.getPlayer().equals(edit)){
+        if(e.getPlayer() == edit){
             e.setCancelled(true);
             String msg = e.getMessage();
             Player p = e.getPlayer();
