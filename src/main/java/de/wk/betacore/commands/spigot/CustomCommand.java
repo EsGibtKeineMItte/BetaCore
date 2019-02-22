@@ -74,17 +74,25 @@ public class CustomCommand implements CommandExecutor, Listener {
                 for (String line :
                         lines) {
                     i++;
-                    IChatBaseComponent comp2 = IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + i + ". \",\"color\":\"gold\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"edit " + i + " " + line + "\"}},{\"text\":\"" + lines + "\",\"color\":\"yellow\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"edit " + i + " " + line + "\"}}");
+                    IChatBaseComponent comp2 = IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + i + ". \",\"color\":\"gold\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"edit " + i + " " + line + "\"}},{\"text\":\"" + line + "\",\"color\":\"yellow\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"edit " + i + " " + line + "\"}}");
                     PacketPlayOutChat pack2 = new PacketPlayOutChat(comp2);
                     ((CraftPlayer) p).getHandle().playerConnection.sendPacket(pack2);
                 }
             }else if(msg.startsWith("add")){
-                msg.replace("add ", "");
+                String[] args = msg.split(" ");
+                String out = "";
+                for (int i1 = 2; i1 < args.length; i1++){
+                    out = out + args[i1];
+                }
                 lines.add(msg);
             }else if(msg.startsWith("finish")){
-                msg.replace("finish ", "");
-                File f = new File("plugins//commands//" + msg +".command");
-                f.mkdirs();
+                String[] out1 = msg.split(" ");
+                File f = new File("plugins//commands//" + out1[1] +".command");
+                try {
+                    f.createNewFile();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
                 try {
                     FileWriter fw = new FileWriter(f);
                     for (String line:
@@ -99,15 +107,14 @@ public class CustomCommand implements CommandExecutor, Listener {
                 }
 
             }else if(msg.startsWith("edit")){
-                msg.replace("edit ", "");
                 String[] args = msg.split(" ");
-                int i = Integer.parseInt(args[0]);
+                int i = Integer.parseInt(args[1]);
 
                 lines.remove(i+1);
-                for (int i1 = 1; i1 < args.length; i1++){
-                    edit1 = edit1 + args[i];
+                for (int i1 = 2; i1 < args.length; i1++){
+                    edit1 = edit1 + args[i1];
                 }
-                lines.set(i+1, edit1);
+                lines.set(i-1, edit1);
             }
         }
     }
