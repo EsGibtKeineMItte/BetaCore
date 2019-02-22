@@ -2,13 +2,11 @@ package de.wk.betacore.commands.spigot;
 
 
 import de.wk.betacore.util.ConfigManager;
-import de.wk.betacore.util.WarPlayer;
 import de.wk.betacore.util.data.Misc;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class PlayerInfoCommand implements CommandExecutor {
 

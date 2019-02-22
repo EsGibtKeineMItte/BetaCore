@@ -21,7 +21,7 @@ public class JoinHandler implements Listener {
     RankSystem rankSystem = new RankSystem();
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
+    public void onJoin(PlayerJoinEvent e) { ;
         scoreboard(e.getPlayer());
         tablist(e.getPlayer());
         playerTablist(e.getPlayer());

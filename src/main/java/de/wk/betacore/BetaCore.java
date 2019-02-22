@@ -59,15 +59,13 @@ public final class BetaCore extends JavaPlugin {
         getCommand("pc").setExecutor(new PcCommand());
         getCommand("team").setExecutor(new TeamCommandTest());
         getCommand("pi").setExecutor(new PlayerInfoCommand());
-        getCommand("cc").setExecutor(new CustomCommand());
     }
 
     public void regListeners() {
         Bukkit.getPluginManager().registerEvents(new DataSetter(), this);
         Bukkit.getPluginManager().registerEvents(new MessageSend(), this);
         Bukkit.getPluginManager().registerEvents(new JoinHandler(), this);
-        Bukkit.getPluginManager().registerEvents(new CommandListener(), this);
-        Bukkit.getPluginManager().registerEvents(new CustomCommand(), this);
+        Bukkit.getPluginManager().registerEvents(new CommandListener(), this);;
         this.getServer().getPluginManager().registerEvents(RecordListener.getInstance(), this);
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new FastTravelSystem());

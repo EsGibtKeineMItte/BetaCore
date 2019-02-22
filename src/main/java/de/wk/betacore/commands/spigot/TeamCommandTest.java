@@ -46,11 +46,11 @@ public class TeamCommandTest implements CommandExecutor {
         Player player = (Player) sender;
         if (args.length == 0) {
             if (teamSystem.getTeamFromPlayer(player) == null) {
-                player.sendMessage(Misc.getPREFIX() + "Du bist in keinem WarShip Team");
+                player.sendMessage(Misc.getPREFIX() + "Du bist in keinem WarShip Team.");
                 return false;
             }
 
-            player.sendMessage(Misc.getPREFIX() + "§7Du bist im Team§6 " + teamSystem.getTeamFromPlayer(player));
+            player.sendMessage(Misc.getPREFIX() + "§7Du bist im Team§6 " + teamSystem.getTeamFromPlayer(player) + ".");
         }
 
         if (args.length == 3) {
