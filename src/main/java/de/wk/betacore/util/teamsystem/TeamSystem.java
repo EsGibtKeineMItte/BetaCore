@@ -37,6 +37,7 @@ public class TeamSystem {
         cm.getTeams().setString(teamName + ".world", null);
         cm.getTeams().save();
 
+        teamAdmins.clear();
     }
 
     public void addTeammember(String teamName, Player player) {
@@ -49,6 +50,7 @@ public class TeamSystem {
         ArrayList<String> teamMembers = new ArrayList<String>();
         teamMembers.add(player.getUniqueId().toString());
         cm.getTeams().setList(teamName + ".members", teamMembers);
+        teamMembers.clear();
     }
 
     public void removeTeammembe(String teamName, Player player) {
@@ -61,6 +63,7 @@ public class TeamSystem {
         teamMembers.remove(player.getUniqueId().toString());
         cm.getTeams().setList(teamName + ".members", teamMembers);
         cm.getTeams().save();
+        teamMembers.clear();
     }
 
     public void promoteUser(String Teamname, Player player) {
@@ -80,7 +83,11 @@ public class TeamSystem {
             return;
         }
 
+        ArrayList<String> invitations = new ArrayList<>();
+        invitations.add(player.getUniqueId().toString());
+        cm.getTeams().setList(teamName + ".invations", invitations);
 
+        invitations.clear();
     }
 
 }

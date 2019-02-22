@@ -65,7 +65,7 @@ public final class BetaCore extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new DataSetter(), this);
         Bukkit.getPluginManager().registerEvents(new MessageSend(), this);
         Bukkit.getPluginManager().registerEvents(new JoinHandler(), this);
-        Bukkit.getPluginManager().registerEvents(new CommandListener(), this);
+        Bukkit.getPluginManager().registerEvents(new CommandListener(), this);;
         this.getServer().getPluginManager().registerEvents(RecordListener.getInstance(), this);
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new FastTravelSystem());
