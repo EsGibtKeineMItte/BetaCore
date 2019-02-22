@@ -194,7 +194,11 @@ public class CommandImplementer {
                 if (!(sender.hasPermission("betacore.core"))) {
                     return;
                 }
-                Info.sendInfo((Player) sender, "&c/core help");
+                if (sender instanceof Player) {
+                    Info.sendInfo((Player) sender, "&c/core help");
+                } else {
+                    System.out.println("/core help");
+                }
             }
 
             @Override
