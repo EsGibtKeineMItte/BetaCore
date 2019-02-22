@@ -11,11 +11,19 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CustomCommand implements CommandExecutor, Listener {
 
     static Player edit = null;
+    static ArrayList<String> lines = new ArrayList<>();
+    public static String edit1;
+
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
@@ -23,7 +31,7 @@ public class CustomCommand implements CommandExecutor, Listener {
             Player p = (Player) sender;
             if(p.hasPermission("betacore.cc")){
                 if(args.length == 0){
-                    p.sendMessage("§bCustom Command §l| §c Syntax: /cc help");
+                    p.sendMessage("§bCustom Command §l| §cSyntax: /cc help");
                 }if (args.length == 1){
                     if(args[0].equalsIgnoreCase("help")){
                         p.sendMessage("§b--==§lCustom Command§b==--");
@@ -31,7 +39,11 @@ public class CustomCommand implements CommandExecutor, Listener {
                         p.sendMessage("§c/cc §ecreate §7| §aCreate a new Command");
                         p.sendMessage("§c/cc §edelete [name] §7| §aDelete a Command");
                     }else if(args[0].equalsIgnoreCase("create")){
-                        edit = p;
+                        if(edit.equals(null)){
+                            edit = p;
+                        }else {
+                            p.sendMessage("§bCustom Command §l| §cOnly one command can be edited at the same time!");
+                        }
                     }
 
                 }
@@ -45,10 +57,48 @@ public class CustomCommand implements CommandExecutor, Listener {
             e.setCancelled(true);
             String msg = e.getMessage();
             Player p = e.getPlayer();
-            if(msg.startsWith("help")){
-                IChatBaseComponent comp1 = IChatBaseComponent.ChatSerializer.a("{\"text\":\"[Add]\",\"color\":\"green\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"add [code]\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Add an Line to the code\",\"color\":\"gold\"}]}}},{\"text\":\" [Remove]\",\"color\":\"dark_red\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"remove [line]\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Remove a line from the code\",\"color\":\"gray\"}]}}},{\"text\":\" [Edit]\",\"color\":\"gold\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"edit [line] [code]\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Edit an code line\",\"color\":\"gray\"}]}}}");
+            if(msg.startsWith("help")) {
+                IChatBaseComponent comp1 = IChatBaseComponent.ChatSerializer.a("{\"text\":\"[Add]\",\"color\":\"dark_green\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"add [code]\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Add an Line to the code\",\"color\":\"gold\"}]}}},{\"text\":\" [Remove]\",\"color\":\"dark_red\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"remove [line]\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Remove a line from the code\",\"color\":\"gray\"}]}}},{\"text\":\" [Edit]\",\"color\":\"gold\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"edit [line] [code]\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Edit an code line\",\"color\":\"gray\"}]}}},{\"text\":\" [Finish]\",\"color\":\"green\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"finish [name]\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Write the code\",\"color\":\"gray\"}]}}}");
                 PacketPlayOutChat pack1 = new PacketPlayOutChat(comp1);
-                ((CraftPlayer)p).getHandle().playerConnection.sendPacket(pack1);
+                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(pack1);
+                int i = 0;
+                for (String line :
+                        lines) {
+                    i++;
+                    IChatBaseComponent comp2 = IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + i + ". \",\"color\":\"gold\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"edit " + i + " " + line + "\"}},{\"text\":\"" + lines + "\",\"color\":\"yellow\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"edit " + i + " " + line + "\"}}");
+                    PacketPlayOutChat pack2 = new PacketPlayOutChat(comp2);
+                    ((CraftPlayer) p).getHandle().playerConnection.sendPacket(pack2);
+                }
+            }else if(msg.startsWith("add")){
+                msg.replace("add ", "");
+                lines.add(msg);
+            }else if(msg.startsWith("finish")){
+                msg.replace("finish ", "");
+                File f = new File("plugins//commands//" + msg +".command");
+                f.mkdirs();
+                try {
+                    FileWriter fw = new FileWriter(f);
+                    for (String line:
+                         lines) {
+                        fw.write(line);
+                    }
+                    fw.close();
+                    edit = null;
+                    lines.clear();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+            }else if(msg.startsWith("edit")){
+                msg.replace("edit ", "");
+                String[] args = msg.split(" ");
+                int i = Integer.parseInt(args[0]);
+
+                lines.remove(i+1);
+                for (int i1 = 1; i1 < args.length; i1++){
+                    edit1 = edit1 + args[i];
+                }
+                lines.set(i+1, edit1);
             }
         }
     }
