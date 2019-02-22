@@ -58,8 +58,17 @@ public class CustomCommand implements CommandExecutor, Listener {
             String msg = e.getMessage();
             Player p = e.getPlayer();
             if(msg.startsWith("help")) {
-                IChatBaseComponent comp1 = IChatBaseComponent.ChatSerializer.a("{\"text\":\"[Add]\",\"color\":\"dark_green\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"add [code]\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Add an Line to the code\",\"color\":\"gold\"}]}}},{\"text\":\" [Remove]\",\"color\":\"dark_red\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"remove [line]\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Remove a line from the code\",\"color\":\"gray\"}]}}},{\"text\":\" [Edit]\",\"color\":\"gold\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"edit [line] [code]\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Edit an code line\",\"color\":\"gray\"}]}}},{\"text\":\" [Finish]\",\"color\":\"green\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"finish [name]\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Write the code\",\"color\":\"gray\"}]}}}");
+                IChatBaseComponent comp1 = IChatBaseComponent.ChatSerializer.a("{\"text\":\"[Add]\",\"color\":\"dark_green\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"add [code]\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Add an Line to the code\",\"color\":\"gold\"}]}}}");
+                IChatBaseComponent comp3 = IChatBaseComponent.ChatSerializer.a("{\"text\":\" [Remove]\",\"color\":\"dark_red\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"remove [line]\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Remove a line from the code\",\"color\":\"gray\"}]}}}");
+                IChatBaseComponent comp4 = IChatBaseComponent.ChatSerializer.a("{\"text\":\" [Edit]\",\"color\":\"gold\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"edit [line] [code]\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Edit an code line\",\"color\":\"gray\"}]}}}");
+                IChatBaseComponent comp5 = IChatBaseComponent.ChatSerializer.a("{\"text\":\" [Finish]\",\"color\":\"green\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"finish [name]\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Write the code\",\"color\":\"gray\"}]}}}");
                 PacketPlayOutChat pack1 = new PacketPlayOutChat(comp1);
+                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(pack1);
+                pack1 = new PacketPlayOutChat(comp3);
+                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(pack1);
+                pack1 = new PacketPlayOutChat(comp4);
+                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(pack1);
+                pack1 = new PacketPlayOutChat(comp5);
                 ((CraftPlayer) p).getHandle().playerConnection.sendPacket(pack1);
                 int i = 0;
                 for (String line :
