@@ -6,11 +6,22 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.util.HashMap;
+
 public class WarPlayer extends CraftPlayer {
-    TeamSystem teamSystem = new TeamSystem();
+    private static final HashMap<String, WarPlayer> PLAYERS = new HashMap<>();
 
     public WarPlayer(Player player) {
         super((CraftServer) Bukkit.getServer(), ((CraftPlayer) player).getHandle());
+    }
+
+    public static WarPlayer getPlayer(String player) {
+        if (PLAYERS.containsKey(player.toLowerCase())) {
+            return PLAYERS.get(player.toLowerCase());
+        } else {
+            Player p = Bukkit.getPlayer(player);
+            return p == null ? null : new WarPlayer(p);
+        }
     }
 
     public void putÍnTeam(String teamName, WarPlayer player) {
@@ -26,7 +37,7 @@ public class WarPlayer extends CraftPlayer {
 
     }
 
-    public void test(){
+    public void test() {
 
     }
 
