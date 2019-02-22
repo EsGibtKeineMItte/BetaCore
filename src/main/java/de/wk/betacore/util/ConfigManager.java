@@ -2,6 +2,9 @@ package de.wk.betacore.util;
 
 
 import de.wk.betacore.BetaCore;
+import de.wk.betacore.util.ranksystem.Rank;
+
+import java.util.UUID;
 
 
 public class ConfigManager {
@@ -41,6 +44,10 @@ public class ConfigManager {
         globalConfig.setString("LinkToArena-2", "Arena-2");
         globalConfig.setString("LinkToBau", "Bau");
         globalConfig.setString("LinkToLobby", "Lobby-1");
+    }
+
+    public void setPlayerRank(UUID uuid, Rank rank){
+        getTeams().setString(uuid.toString() + ".rank" , rank.getName());
     }
 
 //    public String getMOTD(){
