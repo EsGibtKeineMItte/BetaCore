@@ -2,6 +2,7 @@ package de.wk.betacore.listener.Spigot;
 
 import de.wk.betacore.appearance.Chat;
 import de.wk.betacore.appearance.Info;
+import de.wk.betacore.commands.spigot.CustomCommand;
 import de.wk.betacore.util.ConfigManager;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.Rank;
@@ -30,6 +31,9 @@ public class MessageSend implements Listener {
         e.setCancelled(true);
         if (cm.getPlayerData().getBoolean(e.getPlayer().getUniqueId().toString() + ".muted")) {
             Info.sendInfo(e.getPlayer(), Misc.getMUTED());
+            return;
+        }
+        if (e.getPlayer().equals(CustomCommand.edit)) {
             return;
         }
         RankSystem rankSystem = new RankSystem();
