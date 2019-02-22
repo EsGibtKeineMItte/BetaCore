@@ -6,7 +6,7 @@ import java.io.File;
 
 public class cmdParser {
 
-    private File f;
+    private static File f;
 
     public cmdParser(){
 
