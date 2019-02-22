@@ -13,7 +13,6 @@ public class ConfigManager {
 
     //
     public void setup() {
-
         playerData.setHeader("PlayerData");
         playerData.save();
 

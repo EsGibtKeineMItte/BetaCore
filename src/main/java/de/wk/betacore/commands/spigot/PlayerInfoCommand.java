@@ -2,11 +2,13 @@ package de.wk.betacore.commands.spigot;
 
 
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.WarPlayer;
 import de.wk.betacore.util.data.Misc;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class PlayerInfoCommand implements CommandExecutor {
 
@@ -21,8 +23,9 @@ public class PlayerInfoCommand implements CommandExecutor {
         if (args.length != 1) {
             sender.sendMessage(Misc.getPREFIX() + "§7Benutung : §6/pi §7<§6Spieler§7>");
             return false;
-        }
 
+
+        }
 
         sender.sendMessage("§6Name: §7" + cm.getPlayerData().getString(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".name"));
 

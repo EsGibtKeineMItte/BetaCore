@@ -1,6 +1,7 @@
 package de.wk.betacore.commands.spigot;
 
 import de.wk.betacore.util.data.Misc;
+import de.wk.betacore.util.teamsystem.Team;
 import de.wk.betacore.util.teamsystem.TeamSystem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,6 +10,7 @@ import org.bukkit.entity.Player;
 
 
 public class TeamCommandTest implements CommandExecutor {
+    TeamSystem teamSystem = new TeamSystem();
 
     /*
           0      1
@@ -37,7 +39,7 @@ public class TeamCommandTest implements CommandExecutor {
 
         }
 
-        TeamSystem teamSystem = new TeamSystem();
+
         if (!(sender instanceof Player)) {
             return false;
         }
@@ -48,13 +50,13 @@ public class TeamCommandTest implements CommandExecutor {
                 return false;
             }
 
-            player.sendMessage(Misc.getPREFIX() + "§7Du bist im Team: §6 " + teamSystem.getTeamFromPlayer(player));
+            player.sendMessage(Misc.getPREFIX() + "§7Du bist im Team§6 " + teamSystem.getTeamFromPlayer(player));
         }
 
         if (args.length == 3) {
             //Team create abstract_artZ aaZ
             //      0        1          2
-            teamSystem.createTeam(args[1], args[2], player);
+            Team team = new Team(args[1], args[2], player);
             player.sendMessage(Misc.getPREFIX() + "§7Du hast das Team §6" + args[1] + " §7mit dem Kürzel §6" + args[2] + "§7 erstellt.");
 
         }
