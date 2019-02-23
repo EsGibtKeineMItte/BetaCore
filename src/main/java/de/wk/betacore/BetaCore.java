@@ -13,6 +13,8 @@ import de.wk.betacore.util.travel.FastTravelSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
+
 public final class BetaCore extends JavaPlugin {
 
 
@@ -60,6 +62,7 @@ public final class BetaCore extends JavaPlugin {
         getCommand("team").setExecutor(new TeamCommandTest());
         getCommand("pi").setExecutor(new PlayerInfoCommand());
         getCommand("cc").setExecutor(new CustomCommand());
+        getCommand("addperm").setExecutor(new ManPermissionAdder());
     }
 
     public void regListeners() {
@@ -88,9 +91,15 @@ public final class BetaCore extends JavaPlugin {
 
         removeCommands();
         cm.setup();
+        cm.getPlayerData().getConfig().set("test", "teeeeeeschd");
+        try {
+            cm.getPlayerData().getConfig().save(cm.getPlayerData().toString());
+        }catch (IOException e){
+            System.out.println("test?");
+        }
         TestKt.test();
         PermissionManager permissionManager = new PermissionManager();
-        permissionManager.setupPermissionConfig();
+      //  permissionManager.setupPermissionConfig();
         if (!cm.getConfig().getBoolean("useAsBauServer")) {
             getCommand("bau").setExecutor(new BauCommand());
         } else {

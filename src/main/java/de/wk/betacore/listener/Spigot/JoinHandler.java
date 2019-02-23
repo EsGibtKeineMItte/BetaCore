@@ -21,7 +21,7 @@ public class JoinHandler implements Listener {
     RankSystem rankSystem = new RankSystem();
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent e) { ;
+    public void onJoin(PlayerJoinEvent e) {
         scoreboard(e.getPlayer());
         tablist(e.getPlayer());
         playerTablist(e.getPlayer());
@@ -29,7 +29,7 @@ public class JoinHandler implements Listener {
         if (rankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.setJoinMessage("");
         } else {
-            e.setJoinMessage(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " " + e.getPlayer().getName() + " &eist beigetreten"));
+            e.setJoinMessage(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " " + e.getPlayer().getName() + " &ehat den Server betreten."));
         }
     }
 
@@ -38,7 +38,7 @@ public class JoinHandler implements Listener {
         if (rankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.setQuitMessage("");
         } else {
-            e.setQuitMessage(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " " + e.getPlayer().getName() + " &ehat uns verlassen"));
+            e.setQuitMessage(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " " + e.getPlayer().getName() + " &ehat den Server verlassen"));
         }
     }
 
@@ -63,7 +63,7 @@ public class JoinHandler implements Listener {
             sscore.add("&6> &7WSRank");
             sscore.add("&6> &e&l" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId() + ".wsrank"));
         }
-        if (cm.getPlayerData().getString(e.getPlayer().getUniqueId() + ".team").length() != 0) {
+        if (cm.getPlayerData().getString(e.getPlayer().getUniqueId() + ".wsteam") != null) {
             sscore.add("&6> &7Team");
             sscore.add("&6> &e&l" + cm.getPlayerData().getString(e.getPlayer().getUniqueId() + ".team"));
         }

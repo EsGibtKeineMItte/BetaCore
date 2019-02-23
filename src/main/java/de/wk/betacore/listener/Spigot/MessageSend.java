@@ -40,7 +40,7 @@ public class MessageSend implements Listener {
         if (rankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             Chat.sendMessage(e.getPlayer(), onlinePlayers(), e.getMessage(),Rank.USER.getColor() + "(Name)§8 »§f");
         } else {
-            Chat.sendMessage(e.getPlayer(), onlinePlayers(), e.getMessage(),rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " (Name)§8 »", true, true);
+            Chat.sendMessage(e.getPlayer(), onlinePlayers(), e.getMessage(),rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName().toLowerCase() +"§7| " + " (Name)§8 »", true, true);
         }
     }
 

@@ -22,3 +22,5 @@ commands:
   pi:
   cc:
     description: Command, um Custom Commands zu erstellen
+  addperm:
+
