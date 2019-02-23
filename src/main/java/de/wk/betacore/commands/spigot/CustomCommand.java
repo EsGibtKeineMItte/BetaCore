@@ -22,7 +22,6 @@ public class CustomCommand implements CommandExecutor, Listener {
 
     public static Player edit = null;
     static ArrayList<String> lines = new ArrayList<>();
-    public static String edit1;
 
 
     @Override
@@ -74,20 +73,37 @@ public class CustomCommand implements CommandExecutor, Listener {
                 for (String line :
                         lines) {
                     i++;
-                    IChatBaseComponent comp2 = IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + i + ". \",\"color\":\"gold\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"edit " + i + " " + line + "\"}},{\"text\":\"" + line + "\",\"color\":\"yellow\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"edit " + i + " " + line + "\"}}");
+                    IChatBaseComponent comp2 = IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + i + "." + line +" \",\"color\":\"gold\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"edit " + i + " " + line + "\"}}");
                     PacketPlayOutChat pack2 = new PacketPlayOutChat(comp2);
                     ((CraftPlayer) p).getHandle().playerConnection.sendPacket(pack2);
                 }
             }else if(msg.startsWith("add")){
                 String[] args = msg.split(" ");
-                String out = "";
-                for (int i1 = 2; i1 < args.length; i1++){
-                    out = out + args[i1];
+                String out = args[1];
+                for (int i = 2; i < args.length; i++){
+                    out = out + " " + args[i];
                 }
-                lines.add(msg);
+                lines.add(out);
+                int i = 0;
+                for (String line :
+                        lines) {
+                    i++;
+                    IChatBaseComponent comp2 = IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + i + "." + line +" \",\"color\":\"gold\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"edit " + i + " " + line + "\"}}");
+                    PacketPlayOutChat pack2 = new PacketPlayOutChat(comp2);
+                    ((CraftPlayer) p).getHandle().playerConnection.sendPacket(pack2);
+                }
             }else if(msg.startsWith("finish")){
                 String[] out1 = msg.split(" ");
+                int i = 0;
+                for (String line :
+                        lines) {
+                    i++;
+                    IChatBaseComponent comp2 = IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + i + "." + line +" \",\"color\":\"gold\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"edit " + i + " " + line + "\"}}");
+                    PacketPlayOutChat pack2 = new PacketPlayOutChat(comp2);
+                    ((CraftPlayer) p).getHandle().playerConnection.sendPacket(pack2);
+                }
                 File f = new File("plugins//commands//" + out1[1] +".command");
+                new File("plugins//commands").mkdirs();
                 try {
                     f.createNewFile();
                 } catch (IOException e1) {
@@ -97,7 +113,7 @@ public class CustomCommand implements CommandExecutor, Listener {
                     FileWriter fw = new FileWriter(f);
                     for (String line:
                          lines) {
-                        fw.write(line);
+                        fw.write(line + "\n");
                     }
                     fw.close();
                     edit = null;
@@ -107,6 +123,7 @@ public class CustomCommand implements CommandExecutor, Listener {
                 }
 
             }else if(msg.startsWith("edit")){
+                String edit1 = "";
                 String[] args = msg.split(" ");
                 int i = Integer.parseInt(args[1]);
 
@@ -115,6 +132,25 @@ public class CustomCommand implements CommandExecutor, Listener {
                     edit1 = edit1 + args[i1];
                 }
                 lines.set(i-1, edit1);
+                i = 0;
+                for (String line :
+                        lines) {
+                    i++;
+                    IChatBaseComponent comp2 = IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + i + "." + line +" \",\"color\":\"gold\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"edit " + i + " " + line + "\"}}");
+                    PacketPlayOutChat pack2 = new PacketPlayOutChat(comp2);
+                    ((CraftPlayer) p).getHandle().playerConnection.sendPacket(pack2);
+                }
+            }else if(msg.startsWith("remove")){
+                String[] args = msg.split(" ");
+                lines.remove(Integer.parseInt(args[1]));
+                int i = 0;
+                for (String line :
+                        lines) {
+                    i++;
+                    IChatBaseComponent comp2 = IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + i + "." + line +" \",\"color\":\"gold\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"edit " + i + " " + line + "\"}}");
+                    PacketPlayOutChat pack2 = new PacketPlayOutChat(comp2);
+                    ((CraftPlayer) p).getHandle().playerConnection.sendPacket(pack2);
+                }
             }
         }
     }
