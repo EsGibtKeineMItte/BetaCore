@@ -88,7 +88,7 @@ public final class BetaCore extends JavaPlugin {
         cm.setup();
         TestKt.test();
         PermissionManager permissionManager = new PermissionManager();
-        permissionManager.setupPermissionConfig();
+      //  permissionManager.setupPermissionConfig();
         if (!cm.getConfig().getBoolean("useAsBauServer")) {
             getCommand("bau").setExecutor(new BauCommand());
         } else {

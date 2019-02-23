@@ -3,6 +3,7 @@ package de.wk.betacore.util;
 
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.util.ranksystem.Rank;
+import org.apache.commons.lang3.EnumUtils;
 
 import java.util.UUID;
 
@@ -16,6 +17,7 @@ public class ConfigManager {
 
     //
     public void setup() {
+
         playerData.setHeader("PlayerData");
         playerData.save();
 
@@ -46,8 +48,20 @@ public class ConfigManager {
         globalConfig.setString("LinkToLobby", "Lobby-1");
     }
 
-    public void setPlayerRank(UUID uuid, Rank rank){
-        getTeams().setString(uuid.toString() + ".rank" , rank.getName());
+    public void setPlayerRank(UUID uuid, Rank rank) {
+        getPlayerData().setString(uuid.toString() + ".rank", rank.getName().toUpperCase());
+        getPlayerData().save();
+    }
+
+    public Rank getPlayerRank(UUID uuid) {
+        getPlayerData().reload();
+        if (!(EnumUtils.isValidEnum(Rank.class, getTeams().getString(uuid.toString() + ".rank")))) {
+            return Rank.USER;
+        }
+        if (getTeams().getString(uuid.toString() + ".rank") == null) {
+            return Rank.USER;
+        }
+        return Rank.valueOf(getTeams().getString(uuid.toString() + ".rank"));
     }
 
 //    public String getMOTD(){

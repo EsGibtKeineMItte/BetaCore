@@ -21,7 +21,7 @@ public class JoinHandler implements Listener {
     RankSystem rankSystem = new RankSystem();
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent e) { ;
+    public void onJoin(PlayerJoinEvent e) {
         scoreboard(e.getPlayer());
         tablist(e.getPlayer());
         playerTablist(e.getPlayer());
@@ -63,7 +63,7 @@ public class JoinHandler implements Listener {
             sscore.add("&6> &7WSRank");
             sscore.add("&6> &e&l" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId() + ".wsrank"));
         }
-        if (cm.getPlayerData().getString(e.getPlayer().getUniqueId() + ".team").length() != 0) {
+        if (cm.getPlayerData().getString(e.getPlayer().getUniqueId() + ".wsteam") != null) {
             sscore.add("&6> &7Team");
             sscore.add("&6> &e&l" + cm.getPlayerData().getString(e.getPlayer().getUniqueId() + ".team"));
         }
