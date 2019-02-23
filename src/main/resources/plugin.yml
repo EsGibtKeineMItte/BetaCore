@@ -20,3 +20,5 @@ commands:
     description: Command, um seinen GameMode zu wechseln
   team:
   pi:
+  cc:
+    description: Command, um Custom Commands zu erstellen
