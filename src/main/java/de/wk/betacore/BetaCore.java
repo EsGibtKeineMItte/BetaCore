@@ -12,8 +12,11 @@ import de.wk.betacore.util.travel.ArenaCommand;
 import de.wk.betacore.util.travel.BauCommand;
 import de.wk.betacore.util.travel.FastTravelSystem;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -128,5 +131,26 @@ public final class BetaCore extends JavaPlugin {
 
     public static BetaCore getInstance() {
         return instance;
+    }
+
+    @Override
+    public void onLoad() {
+        // Plugin load Logic
+        // Custom Command Eula
+        File f = new File("AGB");
+        YamlConfiguration cfg = YamlConfiguration.loadConfiguration(f);
+        if(!cfg.getBoolean("eula")){
+            try {
+                FileWriter fw = new FileWriter(f);
+                fw.write("# This is the Eula of the Custom Command System\n");
+                fw.write("# You can copy the system but anywhere must be writen that you coppy the System from Chaoscaot444");
+                cfg.set("eula", false);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Bukkit.getConsoleSender().sendMessage("§c[Custom Command] Eula isn't accapted!");
+            Bukkit.shutdown();
+
+        }
     }
 }
