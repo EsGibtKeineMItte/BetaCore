@@ -149,7 +149,7 @@ public final class BetaCore extends JavaPlugin {
                 e.printStackTrace();
             }
             Bukkit.getConsoleSender().sendMessage("§c[Custom Command] Eula isn't accapted!");
-            Bukkit.shutdown();
+           // Bukkit.shutdown();
 
         }
     }
