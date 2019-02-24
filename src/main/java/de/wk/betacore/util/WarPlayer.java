@@ -1,5 +1,7 @@
 package de.wk.betacore.util;
 
+import de.butzlabben.world.gui.GuiCommand;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerLoginEvent;

@@ -26,7 +26,7 @@ public enum Rank {
 
 
     public String getName() {
-        return name.toUpperCase();
+        return name;
     }
 
     public String getColor() {

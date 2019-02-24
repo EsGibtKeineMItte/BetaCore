@@ -6,6 +6,7 @@ import de.wk.betacore.listener.Spigot.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
 import de.wk.betacore.util.ConfigManager;
 import de.wk.betacore.util.misc.CommandRemover;
+import de.wk.betacore.util.mysql.MySQL;
 import de.wk.betacore.util.ranksystem.PermissionManager;
 import de.wk.betacore.util.travel.ArenaCommand;
 import de.wk.betacore.util.travel.BauCommand;
@@ -14,6 +15,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public final class BetaCore extends JavaPlugin {
 
@@ -91,12 +93,19 @@ public final class BetaCore extends JavaPlugin {
 
         removeCommands();
         cm.setup();
-        cm.getPlayerData().getConfig().set("test", "teeeeeeschd");
-        try {
-            cm.getPlayerData().getConfig().save(cm.getPlayerData().toString());
-        }catch (IOException e){
-            System.out.println("test?");
+        cm.setupMySQL();
+
+        MySQL mySQL = new MySQL();
+
+        try{
+            mySQL.openConnection();
+            System.out.println("MySQL Connection erfolgreich.");
+
+        }catch(SQLException x){
+            x.printStackTrace();
         }
+
+
         TestKt.test();
         PermissionManager permissionManager = new PermissionManager();
       //  permissionManager.setupPermissionConfig();

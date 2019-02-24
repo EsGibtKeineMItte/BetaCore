@@ -19,7 +19,7 @@ public class MessageSend implements Listener {
     public static Player[] onlinePlayers() {
         Player[] Online = new Player[Bukkit.getOnlinePlayers().size()];
         Integer PlayerIndex = 0;
-        for (Player all: Bukkit.getOnlinePlayers()) {
+        for (Player all : Bukkit.getOnlinePlayers()) {
             Online[PlayerIndex] = all;
             PlayerIndex++;
         }
@@ -38,9 +38,9 @@ public class MessageSend implements Listener {
         }
         RankSystem rankSystem = new RankSystem();
         if (rankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
-            Chat.sendMessage(e.getPlayer(), onlinePlayers(), e.getMessage(),Rank.USER.getColor() + "(Name)§8 »§f");
+            Chat.sendMessage(e.getPlayer(), onlinePlayers(), e.getMessage(), Rank.USER.getColor() + e.getPlayer().getName() + "§8 »§f");
         } else {
-            Chat.sendMessage(e.getPlayer(), onlinePlayers(), e.getMessage(),rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName().toLowerCase() +"§7| " + " (Name)§8 »", true, true);
+            Chat.sendMessage(e.getPlayer(), onlinePlayers(), e.getMessage(), rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + "§7 | " + rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + " (Name)§8 »" + rankSystem.getRank(e.getPlayer().getUniqueId()).getColor(), true, true);
         }
     }
 

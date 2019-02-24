@@ -29,7 +29,7 @@ public class JoinHandler implements Listener {
         if (rankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.setJoinMessage("");
         } else {
-            e.setJoinMessage(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " " + e.getPlayer().getName() + " &ehat den Server betreten."));
+            e.setJoinMessage(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " §7| " + e.getPlayer().getName() + " &ehat den Server betreten."));
         }
     }
 
@@ -38,7 +38,7 @@ public class JoinHandler implements Listener {
         if (rankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.setQuitMessage("");
         } else {
-            e.setQuitMessage(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " " + e.getPlayer().getName() + " &ehat den Server verlassen"));
+            e.setQuitMessage(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " §7| " + e.getPlayer().getName() + " &ehat den Server verlassen"));
         }
     }
 
@@ -93,7 +93,7 @@ public class JoinHandler implements Listener {
         if (rankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.getPlayer().setPlayerListName(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName()));
         } else {
-            e.getPlayer().setPlayerListName(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " " + e.getPlayer().getName()));
+            e.getPlayer().setPlayerListName(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " §7| " +  rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName()));
         }
     }
 

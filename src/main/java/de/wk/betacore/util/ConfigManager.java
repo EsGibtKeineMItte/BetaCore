@@ -48,25 +48,25 @@ public class ConfigManager {
         globalConfig.setString("LinkToLobby", "Lobby-1");
     }
 
-    public void setPlayerRank(UUID uuid, Rank rank) {
-        getPlayerData().setString(uuid.toString() + ".rank", rank.getName().toUpperCase());
-        getPlayerData().save();
-    }
-
-    public Rank getPlayerRank(UUID uuid) {
-        getPlayerData().reload();
-        if (!(EnumUtils.isValidEnum(Rank.class, getTeams().getString(uuid.toString() + ".rank")))) {
-            return Rank.USER;
+    public void setupMySQL() {
+        if (getGlobalConfig().getString("MySQL.host") == null) {
+            getGlobalConfig().setString("MySQL.host", "");
         }
-        if (getTeams().getString(uuid.toString() + ".rank") == null) {
-            return Rank.USER;
+        if(getGlobalConfig().getString("MySQL.username") == null){
+            getGlobalConfig().setString("MySQL.username", "");
         }
-        return Rank.valueOf(getTeams().getString(uuid.toString() + ".rank"));
-    }
 
-//    public String getMOTD(){
-//        if(config.getBoolean("use"))
-//    }
+        if (getGlobalConfig().getInt("MySQL.port") == 0) {
+            getGlobalConfig().setInt("MySQL.port", 3306);
+        }
+        if (getGlobalConfig().getString("MySQL.database") == null) {
+            getGlobalConfig().setString("MySQL.database", "");
+        }
+
+        if (getGlobalConfig().getString("MySQL.password") == null) {
+            getGlobalConfig().setString("MySQL.password", "");
+        }
+    }
 
 
     public Config getConfig() {
