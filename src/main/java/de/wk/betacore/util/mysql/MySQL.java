@@ -5,10 +5,11 @@ import de.wk.betacore.util.ConfigManager;
 
 ;import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class MySQL {
-    private Connection connection;
+    private static Connection connection;
     ConfigManager cm = new ConfigManager();
 
 
@@ -18,29 +19,25 @@ public class MySQL {
     private String password = cm.getGlobalConfig().getString("MySQL.password");
     private String username = cm.getGlobalConfig().getString("MySQL.username");
 
-        /*
-    if (getGlobalConfig().getString("MySQL.host") == null) {
-            getGlobalConfig().setString("MySQL.host", "");
-        }
-        if (getGlobalConfig().getInt("MySQL.port") == 0) {
-            getGlobalConfig().setInt("MySQL.port", 3306);
-        }
-        if (getGlobalConfig().getString("MySQL.database") == null) {
-            getGlobalConfig().setString("MySQL.database", "");
-        }
-
-        if (getGlobalConfig().getString("MySQL.password") == null) {
-            getGlobalConfig().setString("MySQL.password", "");
-        }
-     */
 
     public void openConnection() throws SQLException {
         if (connection != null && connection.isClosed()) {
             return;
         }
-
         connection = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, this.username, this.password);
     }
+
+    public static PreparedStatement preparedStatement(String query) {
+        PreparedStatement ps = null;
+
+        try{
+            ps = connection.prepareStatement(query);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return ps;
+    }
+
 
 
 }
