@@ -23,6 +23,7 @@ public class WarPlayer {
 
 
     public WarPlayer(UUID uuid) {
+        setupWarPlayer(uuid);
         try {
             ResultSet rs = MySQL.preparedStatement("SELECT COUNT(UUID) FROM PLAYER_INFO WHERE UUID = '" + uuid.toString() + "';").executeQuery();
             rs.next();
