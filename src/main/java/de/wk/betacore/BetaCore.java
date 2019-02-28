@@ -82,26 +82,6 @@ public final class BetaCore extends JavaPlugin {
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new FastTravelSystem());
     }
 
-    @Override
-    public void onLoad() {
-        // Plugin load Logic
-        // Custom Command Eula
-        File f = new File("AGB.yml");
-        YamlConfiguration cfg = YamlConfiguration.loadConfiguration(f);
-        if(!cfg.getBoolean("eula")){
-            try {
-                FileWriter fw = new FileWriter(f);
-                fw.write("# This is the Eula of the Custom Command System\n");
-                fw.write("# You can copy the system but anywhere musst be written that you copy the System from Chaoscaot444");
-                cfg.set("eula", false);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Bukkit.getConsoleSender().sendMessage("§c[Custom Command] Eula isn't accapted!");
-            // Bukkit.shutdown();
-
-        }
-    }
 
     @Override
     public void onEnable() {
@@ -152,6 +132,4 @@ public final class BetaCore extends JavaPlugin {
     public static BetaCore getInstance() {
         return instance;
     }
-
-
 }
