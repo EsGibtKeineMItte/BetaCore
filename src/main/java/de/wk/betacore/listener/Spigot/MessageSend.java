@@ -10,6 +10,7 @@ import de.wk.betacore.util.ranksystem.RankSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -26,7 +27,7 @@ public class MessageSend implements Listener {
         return Online;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onChat(AsyncPlayerChatEvent e) {
         e.setCancelled(true);
         if (cm.getPlayerData().getBoolean(e.getPlayer().getUniqueId().toString() + ".muted")) {

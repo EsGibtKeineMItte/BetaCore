@@ -23,4 +23,5 @@ commands:
   cc:
     description: Command, um Custom Commands zu erstellen
   addperm:
+  pl:
 

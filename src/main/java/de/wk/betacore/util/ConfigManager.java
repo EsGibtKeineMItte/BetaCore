@@ -2,10 +2,10 @@ package de.wk.betacore.util;
 
 
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.util.ranksystem.Rank;
-import org.apache.commons.lang3.EnumUtils;
+import de.wk.betacore.util.data.Misc;
+import org.bukkit.Bukkit;
 
-import java.util.UUID;
+import java.util.ArrayList;
 
 
 public class ConfigManager {
@@ -17,6 +17,8 @@ public class ConfigManager {
 
     //
     public void setup() {
+        ArrayList<String> activeTeams = new ArrayList<>();
+        teams.setList("activeTeams", activeTeams);
 
         playerData.setHeader("PlayerData");
         playerData.save();
@@ -52,7 +54,7 @@ public class ConfigManager {
         if (getGlobalConfig().getString("MySQL.host") == null) {
             getGlobalConfig().setString("MySQL.host", "");
         }
-        if(getGlobalConfig().getString("MySQL.username") == null){
+        if (getGlobalConfig().getString("MySQL.username") == null) {
             getGlobalConfig().setString("MySQL.username", "");
         }
 
@@ -65,6 +67,28 @@ public class ConfigManager {
 
         if (getGlobalConfig().getString("MySQL.password") == null) {
             getGlobalConfig().setString("MySQL.password", "");
+        }
+
+        if (getGlobalConfig().getString("MySQL.host").equals("") || getGlobalConfig().getString("MySQL.username").equals("")
+                || getGlobalConfig().getInt("MySQL.port") == 0 || getGlobalConfig().getString("MySQL.password").equals("") && getGlobalConfig().getBoolean("useMySQL")) {
+            Bukkit.getConsoleSender().sendMessage(Misc.getPREFIX() + "§1Die Verbindung zum MySQL Server ist nicht eingestellt");
+            Bukkit.getScheduler().runTaskLater(BetaCore.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+                    if (getGlobalConfig().getString("MySQL.host").equals("") || getGlobalConfig().getString("MySQL.username").equals("")
+                            || getGlobalConfig().getInt("MySQL.port") == 0 || getGlobalConfig().getString("MySQL.password").equals("") && getGlobalConfig().getBoolean("useMySQL")){
+                        Bukkit.getConsoleSender().sendMessage(Misc.getPREFIX() + "Fahre das Plugin herrunter.");
+                    }
+                }
+            },20L);
+
+
+
+
+
+
+
+            Bukkit.getPluginManager().disablePlugin(BetaCore.getInstance());
         }
     }
 
