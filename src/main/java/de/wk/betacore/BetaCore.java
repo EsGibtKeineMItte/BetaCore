@@ -5,6 +5,7 @@ import de.wk.betacore.commands.spigot.commandmanager.CommandManagerOld;
 import de.wk.betacore.listener.Spigot.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.CommandRemover;
 import de.wk.betacore.util.mysql.MySQL;
 import de.wk.betacore.util.ranksystem.PermissionManager;
@@ -130,5 +131,14 @@ public final class BetaCore extends JavaPlugin {
 
     public static BetaCore getInstance() {
         return instance;
+    }
+
+    public static void log(String message){
+        Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + message);
+    }
+
+    public static void debug(String message){
+        Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + "[DEBUG]" + message);
+        
     }
 }

@@ -270,6 +270,7 @@ public class CommandImplementer {
                     if (your < their || your == 0 || !(sender instanceof Player) || sender.isOp()) {
                         String rank = args[2].toUpperCase();
                       //  cm.setPlayerRank(Bukkit.getOfflinePlayer(args[1]).getUniqueId(), Rank.valueOf(rank));
+                        RankSystem.setRank(Bukkit.getOfflinePlayer(args[1]).getUniqueId(), rank);
                         Info.sendInfo((Player) sender, "&eRank geändert zu " + rank);
                         if (Bukkit.getPlayer(args[1]) != null) {
                             joinHandler.update(Bukkit.getPlayer(args[1]));

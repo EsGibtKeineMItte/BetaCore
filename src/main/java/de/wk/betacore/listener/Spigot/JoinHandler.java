@@ -18,27 +18,28 @@ import org.bukkit.scoreboard.Team;
 import java.util.ArrayList;
 
 public class JoinHandler implements Listener {
-    RankSystem rankSystem = new RankSystem();
+
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
+        System.out.println("Der Rang, der in der MySQL Datenbank für " + e.getPlayer().getName() + " eingetragen ist, ist: " + RankSystem.getRank(e.getPlayer().getUniqueId()));
         scoreboard(e.getPlayer());
         tablist(e.getPlayer());
         playerTablist(e.getPlayer());
         playerTeam(e.getPlayer());
-        if (rankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
+        if (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.setJoinMessage("");
         } else {
-            e.setJoinMessage(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " §7| " + e.getPlayer().getName() + " &ehat den Server betreten."));
+            e.setJoinMessage(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " §7| " + e.getPlayer().getName() + " &ehat den Server betreten."));
         }
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
-        if (rankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
+        if (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.setQuitMessage("");
         } else {
-            e.setQuitMessage(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " §7| " + e.getPlayer().getName() + " &ehat den Server verlassen"));
+            e.setQuitMessage(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " §7| " + e.getPlayer().getName() + " &ehat den Server verlassen"));
         }
     }
 
@@ -57,7 +58,7 @@ public class JoinHandler implements Listener {
         sscore.add("&6> &7Money");
         sscore.add("&6> &e" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId().toString() + ".money"));
         sscore.add("&6> &7Rank");
-        sscore.add("&6> &e" + rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName());
+        sscore.add("&6> &e" + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName());
         if (cm.getPlayerData().getInt(e.getPlayer().getUniqueId() + ".wsrank") < 501) {
             sscore.add("&7");
             sscore.add("&6> &7WSRank");
@@ -90,10 +91,10 @@ public class JoinHandler implements Listener {
 
     public void playerTablist(Player e) {
         e.getPlayer().setDisplayName(e.getPlayer().getName());
-        if (rankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
-            e.getPlayer().setPlayerListName(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName()));
+        if (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
+            e.getPlayer().setPlayerListName(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName()));
         } else {
-            e.getPlayer().setPlayerListName(Color.ConvertColor(rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + rankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " §7| " +  rankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName()));
+            e.getPlayer().setPlayerListName(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " §7| " +  RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName()));
         }
     }
 
