@@ -69,6 +69,7 @@ public final class BetaCore extends JavaPlugin {
         getCommand("pi").setExecutor(new PlayerInfoCommand());
         getCommand("cc").setExecutor(new CustomCommand());
         getCommand("addperm").setExecutor(new ManPermissionAdder());
+        getCommand("si").setExecutor(new ServerInfoCommand());
         getCommand("pl").setExecutor(new PluginCommand());
     }
 
