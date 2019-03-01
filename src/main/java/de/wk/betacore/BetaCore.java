@@ -91,7 +91,6 @@ public final class BetaCore extends JavaPlugin {
         CommandManagerOld commandManager = new CommandManagerOld();
         commandManager.setup();
         CommandImplementer.implementCommands();
-
         regCommands();
         regListeners();
 
