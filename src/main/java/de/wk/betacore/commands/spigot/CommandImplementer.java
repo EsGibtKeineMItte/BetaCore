@@ -5,6 +5,7 @@ import de.wk.betacore.commands.spigot.manager.CommandInterface;
 import de.wk.betacore.commands.spigot.manager.CommandManager;
 import de.wk.betacore.listener.Spigot.JoinHandler;
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.MoneySystem;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
@@ -39,8 +40,14 @@ public class CommandImplementer {
                 if (!(sender.hasPermission("betacore.money"))) {
                     return;
                 }
+
+                if(!(sender instanceof Player)){
+                    Misc.getNOTINCONSOLE();
+                    return;
+                }
+                Player player = (Player) sender;
                 cm.getPlayerData().reload();
-                Info.sendInfo((Player) sender, "&aMoney > " + cm.getPlayerData().getInt(((Player) sender).getUniqueId().toString() + ".money"));
+                Info.sendInfo((Player) sender, "&7Du hast §6 " + MoneySystem.getMoney(player.getUniqueId()) + " §7 Coins.");
                 joinHandler.update((Player) sender);
                 cm.getConfig().save();
             }
@@ -236,14 +243,14 @@ public class CommandImplementer {
                     }
                     int your = rankSystem.getRank(((Player) sender).getUniqueId()).getPriority();
                     ArrayList<String> ranks = new ArrayList<>();
-                    ranks.add(Rank.ADMIN.getName());
-                    ranks.add(Rank.DEV.getName());
-                    ranks.add(Rank.MOD.getName());
-                    ranks.add(Rank.SUPPORTER.getName());
-                    ranks.add(Rank.ARCHI.getName());
-                    ranks.add(Rank.YOU_TUBER.getName());
-                    ranks.add(Rank.PREMIUM.getName());
-                    ranks.add(Rank.USER.getName());
+                    ranks.add(Rank.ADMIN.getName().toUpperCase());
+                    ranks.add(Rank.DEV.getName().toUpperCase());
+                    ranks.add(Rank.MOD.getName().toUpperCase());
+                    ranks.add(Rank.SUPPORTER.getName().toUpperCase());
+                    ranks.add(Rank.ARCHI.getName().toUpperCase());
+                    ranks.add(Rank.YOU_TUBER.getName().toUpperCase());
+                    ranks.add(Rank.PREMIUM.getName().toUpperCase());
+                    ranks.add(Rank.USER.getName().toUpperCase());
 
                     ArrayList<String> priority = new ArrayList<>();
                     priority.add(Rank.ADMIN.getPriority() + "");
@@ -257,19 +264,14 @@ public class CommandImplementer {
 
                     Boolean isRank = true;
                     int their = 0;
-                    for (String name : ranks) {
-                        if (isRank && name.equals(args[2].toUpperCase())) {
-                            isRank = false;
-                            their = Integer.parseInt(priority.get(ranks.indexOf(name)));
-                        }
-                    }
-                    if (isRank) {
-                        Info.sendInfo((Player) sender, "Rank " + args[2].toUpperCase() + " does not exist");
+
+                    if (!(ranks.contains(args[2].toUpperCase()))) {
+                        sender.sendMessage(Misc.Prefix + "§7Dieser Rang existiert nicht");
                         return;
                     }
-                    if (your < their || your == 0 || !(sender instanceof Player) || sender.isOp()) {
+                    if (your < their || your == 0 || sender.isOp()) {
                         String rank = args[2].toUpperCase();
-                      //  cm.setPlayerRank(Bukkit.getOfflinePlayer(args[1]).getUniqueId(), Rank.valueOf(rank));
+                        //  cm.setPlayerRank(Bukkit.getOfflinePlayer(args[1]).getUniqueId(), Rank.valueOf(rank));
                         RankSystem.setRank(Bukkit.getOfflinePlayer(args[1]).getUniqueId(), rank);
                         Info.sendInfo((Player) sender, "&eRank geändert zu " + rank);
                         if (Bukkit.getPlayer(args[1]) != null) {

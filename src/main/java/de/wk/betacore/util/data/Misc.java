@@ -24,11 +24,14 @@ betacore.setrank.admin
 
 public class Misc {
     private static String PREFIX = "§aBetaCore §7| ";
+    public static String Prefix = "§aBetaCore §7| ";
+
     private static String NOPERM = "§cDu hast nicht die benötigten Berechtigungen, um diesen Befehl auszuführen";
+    public static String noPerm = "§cDu hast nicht die benötigten Berechtigungen, um diesen Befehl auszuführen";
     private static String MUTED = "§cDu bist gemuted und kannst keine Nachrichten senden";
     private static String HELP = "§7Benutze §6/help§7 , um Hilfe zu erhalten";
     private static String NOTINCONSOLE = PREFIX + "Du kannst diesen Befehl nicht in der Konsole verwenden";
-    public static String CONSOLEPREFIX = "§8[§aBetaCore§8] ";
+    public static String CONSOLEPREFIX = "§8[§aBetaCore§8]§7 ";
 
 
     public static String getPREFIX() {

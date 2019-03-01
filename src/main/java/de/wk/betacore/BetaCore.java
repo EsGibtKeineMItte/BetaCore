@@ -138,7 +138,7 @@ public final class BetaCore extends JavaPlugin {
     }
 
     public static void debug(String message){
-        Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + "[DEBUG]" + message);
+        Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + "[§eDEBUG]" + message);
         
     }
 }

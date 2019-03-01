@@ -2,6 +2,7 @@ package de.wk.betacore.listener.Spigot;
 
 
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.WarPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,6 +25,7 @@ public class DataSetter implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         PreparedStatement ps;
+        WarPlayer wp = new WarPlayer(player.getUniqueId());
 
 
 

@@ -1,5 +1,6 @@
 package de.wk.betacore.util;
 
+import de.wk.betacore.BetaCore;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.mysql.MySQL;
 import de.wk.betacore.util.ranksystem.Rank;
@@ -19,10 +20,16 @@ public class WarPlayer {
     private String team;
     private String firstjoin;
     private String lastjoin;
+    private String uuid;
+    private String name;
 
 
 
     public WarPlayer(UUID uuid) {
+        if(Bukkit.getOfflinePlayer(uuid) == null){
+            BetaCore.debug("Es wurde versucht, einen WarPlayer mit einer UUID zu kreieren, die zu keinen Minecraft - Account gehört.");
+            return;
+        }
         setupWarPlayer(uuid);
         try {
             ResultSet rs = MySQL.preparedStatement("SELECT COUNT(UUID) FROM PLAYER_INFO WHERE UUID = '" + uuid.toString() + "';").executeQuery();
@@ -46,6 +53,8 @@ public class WarPlayer {
                 this.team = cm.getPlayerData().getString(uuid.toString() + ".team");
                 this.wsrank = cm.getPlayerData().getInt(uuid.toString() + ".wsrank");
                 this.rank = Rank.valueOf(rank);
+                this.uuid = uuid.toString();
+                this.name = Bukkit.getOfflinePlayer(uuid).getName();
             }
 
             System.out.println(MySQL.preparedStatement("SELECT * FROM PLAYER_INFO WHERE UUID = " + "'" + uuid.toString() + "';").executeQuery());
