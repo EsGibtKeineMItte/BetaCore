@@ -43,7 +43,6 @@ public class BetaCoreBungee extends Plugin {
 
                 System.out.println("Es ist " + f  + " Uhr.");
 
-                //TODO Switch?
                 if (f.equalsIgnoreCase("23:00:00")) {
                     ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e60 Minuten §6neu!"));
                     log("§6Das Netzwerk startet in §e60 Minuten §6neu!");
@@ -102,7 +101,7 @@ public class BetaCoreBungee extends Plugin {
                 try {
                     Process prc = new ProcessBuilder("./start.sh").start();
                 } catch (IOException e) {
-                    log("Could not restart the proxy. Is the restart.sh configurated");
+                    log("Could not restart the proxy. Is the start.sh configurated?!");
                     e.printStackTrace();
                 }
             }).start();

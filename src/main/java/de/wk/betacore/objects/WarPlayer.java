@@ -5,6 +5,7 @@ import de.wk.betacore.util.ConfigManager;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.MySQL;
 import de.wk.betacore.util.ranksystem.Rank;
+import de.wk.betacore.util.teamsystem.TeamSystem;
 import org.bukkit.Bukkit;
 
 import java.sql.ResultSet;
@@ -23,6 +24,8 @@ public class WarPlayer {
     private String lastjoin;
     private String uuid;
     private String name;
+    private boolean banned;
+    private boolean muted;
 
 
 
