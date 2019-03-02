@@ -20,7 +20,7 @@ public class CommandRemover {
     }
 
     public static boolean removeCommand(String command) throws Exception {
-        Class<?> serverClass = Class.forName("org.bukkit.craftbukkit." + version + ".CraftServer");
+        Class<?> serverClass = Class.forName("org.bukkit.craftbukkit." + version + ".C7raftServer");
 
         Field f1 = serverClass.getDeclaredField("commandMap");
         f1.setAccessible(true);
