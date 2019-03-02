@@ -46,4 +46,13 @@ public class MoneySystem {
             e.printStackTrace();
         }
     }
+
+
+    public static void decreaseMoney(UUID uuid, int money){
+        setMoney(uuid, getMoney(uuid) - money);
+    }
+
+    public static void increaseMoney(UUID uuid, int money){
+        setMoney(uuid, getMoney(uuid) + money);
+    }
 }
