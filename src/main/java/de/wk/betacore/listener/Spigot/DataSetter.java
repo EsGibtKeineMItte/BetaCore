@@ -2,7 +2,7 @@ package de.wk.betacore.listener.Spigot;
 
 
 import de.wk.betacore.util.ConfigManager;
-import de.wk.betacore.util.WarPlayer;
+import de.wk.betacore.objects.WarPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

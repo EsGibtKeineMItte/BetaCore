@@ -1,8 +1,6 @@
-package de.wk.betacore.util.mysql;
+package de.wk.betacore.util;
 
-import de.butzlabben.world.wrapper.SystemWorld;
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.util.ConfigManager;
 import org.bukkit.Bukkit;
 
 ;import java.sql.*;
@@ -52,7 +50,7 @@ public class MySQL {
                 return true;
             }
         }catch(SQLException e){
-            BetaCore.debug("Es ist ein Fehler, bei dem Versuch zu prüfen, ob sich der Spieler " + Bukkit.getOfflinePlayer(uuid).getName() + " in der Datenbank befindet.");
+            BetaCore.debug("Es ist ein Fehler, bei dem Versuch zu prüfen, ob sich der Spieler " + Bukkit.getOfflinePlayer(uuid).getName() + " in der Datenbank befindet aufgetreten.");
             System.out.println("");
             e.printStackTrace();
             return false;

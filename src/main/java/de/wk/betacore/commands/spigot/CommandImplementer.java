@@ -5,7 +5,7 @@ import de.wk.betacore.commands.spigot.manager.CommandInterface;
 import de.wk.betacore.commands.spigot.manager.CommandManager;
 import de.wk.betacore.listener.Spigot.JoinHandler;
 import de.wk.betacore.util.ConfigManager;
-import de.wk.betacore.util.MoneySystem;
+import de.wk.betacore.util.moneysystem.MoneySystem;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;

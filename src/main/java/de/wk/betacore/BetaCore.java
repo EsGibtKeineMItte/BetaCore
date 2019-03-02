@@ -5,20 +5,16 @@ import de.wk.betacore.commands.spigot.commandmanager.CommandManagerOld;
 import de.wk.betacore.listener.Spigot.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.MySQL;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.CommandRemover;
-import de.wk.betacore.util.mysql.MySQL;
 import de.wk.betacore.util.ranksystem.PermissionManager;
 import de.wk.betacore.util.travel.ArenaCommand;
 import de.wk.betacore.util.travel.BauCommand;
 import de.wk.betacore.util.travel.FastTravelSystem;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.SQLException;
 
 public final class BetaCore extends JavaPlugin {

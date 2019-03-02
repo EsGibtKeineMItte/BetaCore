@@ -2,7 +2,7 @@ package de.wk.betacore.util.ranksystem;
 
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.util.ConfigManager;
-import de.wk.betacore.util.mysql.MySQL;
+import de.wk.betacore.util.MySQL;
 import org.bukkit.Bukkit;
 
 import java.sql.ResultSet;

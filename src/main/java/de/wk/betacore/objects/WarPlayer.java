@@ -1,8 +1,9 @@
-package de.wk.betacore.util;
+package de.wk.betacore.objects;
 
 import de.wk.betacore.BetaCore;
+import de.wk.betacore.util.ConfigManager;
 import de.wk.betacore.util.data.Misc;
-import de.wk.betacore.util.mysql.MySQL;
+import de.wk.betacore.util.MySQL;
 import de.wk.betacore.util.ranksystem.Rank;
 import org.bukkit.Bukkit;
 

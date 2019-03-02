@@ -1,7 +1,7 @@
-package de.wk.betacore.util;
+package de.wk.betacore.util.moneysystem;
 
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.util.mysql.MySQL;
+import de.wk.betacore.util.MySQL;
 import org.bukkit.Bukkit;
 
 import java.sql.ResultSet;
