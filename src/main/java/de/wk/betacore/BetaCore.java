@@ -99,17 +99,17 @@ public final class BetaCore extends JavaPlugin {
 
         MySQL mySQL = new MySQL();
 
-        try{
+        try {
             mySQL.openConnection();
             System.out.println("MySQL Connection erfolgreich.");
 
-        }catch(SQLException x){
+        } catch (SQLException x) {
             x.printStackTrace();
         }
 
 
         PermissionManager permissionManager = new PermissionManager();
-      //  permissionManager.setupPermissionConfig();
+        //  permissionManager.setupPermissionConfig();
         if (!cm.getConfig().getBoolean("useAsBauServer")) {
             getCommand("bau").setExecutor(new BauCommand());
         } else {
@@ -118,6 +118,10 @@ public final class BetaCore extends JavaPlugin {
         if (!cm.getConfig().getBoolean("useAsArena")) {
             getCommand("arena").setExecutor(new ArenaCommand());
             //   getCommand("a").setExecutor(new ArenaCommand());
+        }
+
+        if (cm.getConfig().getBoolean("useAsLobby")) {
+            Bukkit.getPluginManager().registerEvents(new LobbyListener(), this);
         }
     }
 
@@ -131,12 +135,12 @@ public final class BetaCore extends JavaPlugin {
         return instance;
     }
 
-    public static void log(String message){
+    public static void log(String message) {
         Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + message);
     }
 
-    public static void debug(String message){
+    public static void debug(String message) {
         Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + "[§eDEBUG]" + message);
-        
+
     }
 }
