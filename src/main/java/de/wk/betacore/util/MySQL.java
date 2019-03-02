@@ -1,12 +1,10 @@
-package de.wk.betacore.util.mysql;
+package de.wk.betacore.util;
 
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.util.ConfigManager;
+import org.bukkit.Bukkit;
 
-;import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+;import java.sql.*;
+import java.util.UUID;
 
 public class MySQL {
     private static Connection connection;
@@ -36,6 +34,27 @@ public class MySQL {
             e.printStackTrace();
         }
         return ps;
+    }
+
+    public static boolean playerExistis(UUID uuid){
+        if(Bukkit.getOfflinePlayer(uuid) == null){
+            BetaCore.debug("Es wurde versucht in der SQL-Datenbank nach einem Spieler zu suchen, der nicht existiert.");
+            return false;
+        }
+        try {
+            ResultSet rs = MySQL.preparedStatement("SELECT COUNT(UUID) FROM PLAYER_INFO WHERE UUID = '" + uuid.toString() + "';").executeQuery();
+            rs.next();
+            if (rs.getInt(1) == 0) {
+               return false;
+            }else{
+                return true;
+            }
+        }catch(SQLException e){
+            BetaCore.debug("Es ist ein Fehler, bei dem Versuch zu prüfen, ob sich der Spieler " + Bukkit.getOfflinePlayer(uuid).getName() + " in der Datenbank befindet aufgetreten.");
+            System.out.println("");
+            e.printStackTrace();
+            return false;
+        }
     }
 
 

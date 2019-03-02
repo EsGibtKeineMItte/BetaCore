@@ -26,7 +26,7 @@ public class PermissionManager {
     }
 
 
-    public static void removePermissions(Player player) {
+    public void removePermissions(Player player) {
         for (Object perm2 : cm.getPermissions().getList("Admin")) {
             removePermission(perm2.toString(), player);
             System.out.println(perm2.toString());
@@ -51,7 +51,7 @@ public class PermissionManager {
     }
 
 
-    public void setupPermissionConfig() {
+    public static void setupPermissionConfig() {
 
         if (cm.getPermissions().getBoolean("permsSetup")) {
             return;

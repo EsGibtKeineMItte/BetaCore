@@ -1,6 +1,7 @@
 name: BetaCore
 version: ${project.version}
 main: de.wk.betacore.BetaCore
+author: linkskeinemitte
 api-version: 1.13
 description: Ein CoreSystem für Minecraft Server, speziell für WarShip und WarGear Server
 
@@ -20,7 +21,12 @@ commands:
     description: Command, um seinen GameMode zu wechseln
   team:
   pi:
+    description: Command, um sich Informationen über einen Spieler anzeigen zu lassen.
   cc:
     description: Command, um Custom Commands zu erstellen
   addperm:
+    description: Command, um Spielern zusätzlich spezielle Permissions hinzuzufügen.
+  pl:
+    description: Command, um sich die installierten Plugins anzeigen zu lassen, verbessert.
+  si:
 

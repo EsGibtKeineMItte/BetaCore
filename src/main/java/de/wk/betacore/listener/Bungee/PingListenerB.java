@@ -7,12 +7,14 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.event.ProxyPingEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
+import net.md_5.bungee.event.EventPriority;
 
 import java.util.Random;
 
 public class PingListenerB implements Listener {
 
-    @EventHandler
+    @EventHandler(priority= EventPriority.HIGHEST)
+
     public void onPing(ProxyPingEvent e) {
         ServerPing ping = e.getResponse();
         Random rand = new Random();

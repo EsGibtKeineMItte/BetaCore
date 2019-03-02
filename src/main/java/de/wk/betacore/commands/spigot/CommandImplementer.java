@@ -5,6 +5,7 @@ import de.wk.betacore.commands.spigot.manager.CommandInterface;
 import de.wk.betacore.commands.spigot.manager.CommandManager;
 import de.wk.betacore.listener.Spigot.JoinHandler;
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.moneysystem.MoneySystem;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
@@ -13,6 +14,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerLoginEvent;
 
 import java.util.ArrayList;
 
@@ -39,8 +41,14 @@ public class CommandImplementer {
                 if (!(sender.hasPermission("betacore.money"))) {
                     return;
                 }
+
+                if(!(sender instanceof Player)){
+                    Misc.getNOTINCONSOLE();
+                    return;
+                }
+                Player player = (Player) sender;
                 cm.getPlayerData().reload();
-                Info.sendInfo((Player) sender, "&aMoney > " + cm.getPlayerData().getInt(((Player) sender).getUniqueId().toString() + ".money"));
+                Info.sendInfo((Player) sender, "&7Du hast §6 " + MoneySystem.getMoney(player.getUniqueId()) + " §7 Coins.");
                 joinHandler.update((Player) sender);
                 cm.getConfig().save();
             }
@@ -109,6 +117,11 @@ public class CommandImplementer {
                 if (!(sender.hasPermission("betacore.money.pay"))) {
                     return;
                 }
+                if(!(sender instanceof Player)){
+                    sender.sendMessage(Misc.getNOTINCONSOLE());
+                    return;
+                }
+                Player player = (Player) sender;
                 if (args.length != 3) {
                     CommandManager.wrongUsage(sender);
                     return;
@@ -118,12 +131,12 @@ public class CommandImplementer {
                     Info.sendInfo((Player) sender, "&cDiese Anzahl ist nicht erlaubt");
                     return;
                 }
-                cm.getPlayerData().reload();
-                if (cm.getPlayerData().getInt(((Player) sender).getUniqueId().toString() + ".money") >= i) {
-                    cm.getPlayerData().setInt(((Player) sender).getPlayer().getUniqueId().toString() + ".money", cm.getPlayerData().getInt(((Player) sender).getPlayer().getUniqueId().toString() + ".money") - i);
-                    cm.getPlayerData().setInt(Bukkit.getOfflinePlayer(args[1]).getUniqueId().toString() + ".money", cm.getPlayerData().getInt(Bukkit.getOfflinePlayer(args[1]).getUniqueId().toString() + ".money") + i);
+
+                if (MoneySystem.getMoney(player.getUniqueId()) >= i) {
+                    MoneySystem.decreaseMoney(player.getUniqueId(), i);
+                    MoneySystem.increaseMoney(Bukkit.getOfflinePlayer(args[1]).getUniqueId(), i);
                 } else {
-                    Info.sendInfo((Player) sender, "&cNicht genügend Money!");
+                    Info.sendInfo((Player) sender, "§cDazu hast du nicht genügend Gel");
                 }
                 joinHandler.update((Player) sender);
                 joinHandler.update((Player) Bukkit.getOfflinePlayer(args[1]));
@@ -161,8 +174,8 @@ public class CommandImplementer {
                     return;
                 }
                 cm.getPlayerData().reload();
-                cm.getPlayerData().setInt(Bukkit.getOfflinePlayer(args[1]).getUniqueId().toString() + ".money", 0);
-                Info.sendInfo((Player) sender, "&aCleared the Money from " + Bukkit.getOfflinePlayer(args[1]).getPlayer().getName());
+                MoneySystem.setMoney(Bukkit.getOfflinePlayer(args[1]).getUniqueId(), 0);
+                Info.sendInfo((Player) sender, Misc.Prefix + "&7Du hast das Geld von " + Bukkit.getOfflinePlayer(args[1]).getPlayer().getName());
                 joinHandler.update((Player) Bukkit.getOfflinePlayer(args[1]));
                 cm.getConfig().save();
             }
@@ -236,14 +249,14 @@ public class CommandImplementer {
                     }
                     int your = rankSystem.getRank(((Player) sender).getUniqueId()).getPriority();
                     ArrayList<String> ranks = new ArrayList<>();
-                    ranks.add(Rank.ADMIN.getName());
-                    ranks.add(Rank.DEV.getName());
-                    ranks.add(Rank.MOD.getName());
-                    ranks.add(Rank.SUPPORTER.getName());
-                    ranks.add(Rank.ARCHI.getName());
-                    ranks.add(Rank.YOU_TUBER.getName());
-                    ranks.add(Rank.PREMIUM.getName());
-                    ranks.add(Rank.USER.getName());
+                    ranks.add(Rank.ADMIN.getName().toUpperCase());
+                    ranks.add(Rank.DEV.getName().toUpperCase());
+                    ranks.add(Rank.MOD.getName().toUpperCase());
+                    ranks.add(Rank.SUPPORTER.getName().toUpperCase());
+                    ranks.add(Rank.ARCHI.getName().toUpperCase());
+                    ranks.add(Rank.YOU_TUBER.getName().toUpperCase());
+                    ranks.add(Rank.PREMIUM.getName().toUpperCase());
+                    ranks.add(Rank.USER.getName().toUpperCase());
 
                     ArrayList<String> priority = new ArrayList<>();
                     priority.add(Rank.ADMIN.getPriority() + "");
@@ -257,19 +270,14 @@ public class CommandImplementer {
 
                     Boolean isRank = true;
                     int their = 0;
-                    for (String name : ranks) {
-                        if (isRank && name.equals(args[2].toUpperCase())) {
-                            isRank = false;
-                            their = Integer.parseInt(priority.get(ranks.indexOf(name)));
-                        }
-                    }
-                    if (isRank) {
-                        Info.sendInfo((Player) sender, "Rank " + args[2].toUpperCase() + " does not exist");
+
+                    if (!(ranks.contains(args[2].toUpperCase()))) {
+                        sender.sendMessage(Misc.Prefix + "§7Dieser Rang existiert nicht");
                         return;
                     }
-                    if (your < their || your == 0 || !(sender instanceof Player) || sender.isOp()) {
+                    if (your < their || your == 0 || sender.isOp()) {
                         String rank = args[2].toUpperCase();
-                      //  cm.setPlayerRank(Bukkit.getOfflinePlayer(args[1]).getUniqueId(), Rank.valueOf(rank));
+                        RankSystem.setRank(Bukkit.getOfflinePlayer(args[1]).getUniqueId(), rank);
                         Info.sendInfo((Player) sender, "&eRank geändert zu " + rank);
                         if (Bukkit.getPlayer(args[1]) != null) {
                             joinHandler.update(Bukkit.getPlayer(args[1]));

@@ -1,5 +1,6 @@
 package de.wk.betacore.commands.spigot;
 
+import de.wk.betacore.util.ConfigManager;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.teamsystem.Team;
 import de.wk.betacore.util.teamsystem.TeamSystem;
@@ -24,12 +25,19 @@ public class TeamCommandTest implements CommandExecutor {
      */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        ConfigManager cm = new ConfigManager();
         if (args.length == 0) {
 
         }
 
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("info")) {
+            } else if (args[0].equalsIgnoreCase("clear")) {
+                if (sender.hasPermission("betacore.resetteams") || sender.hasPermission("betacore.*")) {
+                    //TODO FORSCHLEIFE ÜBER ALLE SPIELER UND IHRE TEAMZUGEHÖRIGKEIT -> NULL SETZEN
+                    cm.getTeams().clear();
+                    sender.sendMessage("Du hast alle Teams gelöscht.");
+                }
 
             }
 
