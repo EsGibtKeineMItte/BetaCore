@@ -21,7 +21,7 @@ public class Info {
         } else if (replaceGM && !(replaceWorld)) {
             info.replaceAll("\\(GM\\)", p.getGameMode().name());
         }
-        p.sendMessage(Color.ConvertColor(Misc.getPREFIX()) + " §r" + Color.ConvertColor(info));
+        p.sendMessage(Color.ConvertColor(Misc.getPREFIX()) + "§r" + Color.ConvertColor(info));
     }
 
 }

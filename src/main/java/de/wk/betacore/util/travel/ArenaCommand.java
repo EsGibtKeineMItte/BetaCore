@@ -1,6 +1,7 @@
 package de.wk.betacore.util.travel;
 
 
+import de.wk.betacore.BetaCore;
 import de.wk.betacore.util.ConfigManager;
 import de.wk.betacore.util.data.Misc;
 import org.bukkit.command.Command;
@@ -28,8 +29,9 @@ public class ArenaCommand implements CommandExecutor {
             player.sendMessage("§aDu wirst zur Arena§7-§a1 verbunden.");
             fs.connect(player, cm.getGlobalConfig().getString("LinkToArena-1")); //LINK ZU ARENA 1 ANGEBEN
         } else if (args[0].equals("2")) {
-            fs.connect(player, cm.getGlobalConfig().getString("LinkToArena-2"));
             player.sendMessage("§aDu wirst zur Arena§7-§a2 verbunden.");
+            fs.connect(player, cm.getGlobalConfig().getString("LinkToArena-2"));
+            BetaCore.debug(cm.getGlobalConfig().getString("LinkToArena-2"));
         } else {
             player.sendMessage(Misc.getPREFIX() + "§cDiese Arena existiert nicht.");
         }

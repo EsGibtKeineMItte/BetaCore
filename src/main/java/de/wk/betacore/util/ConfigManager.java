@@ -2,6 +2,10 @@ package de.wk.betacore.util;
 
 
 import de.wk.betacore.BetaCore;
+import de.wk.betacore.util.data.Misc;
+import org.bukkit.Bukkit;
+
+import java.util.ArrayList;
 
 
 public class ConfigManager {
@@ -13,6 +17,8 @@ public class ConfigManager {
 
     //
     public void setup() {
+        ArrayList<String> activeTeams = new ArrayList<>();
+        teams.setList("activeTeams", activeTeams);
 
         playerData.setHeader("PlayerData");
         playerData.save();
@@ -36,6 +42,12 @@ public class ConfigManager {
         if (!config.getBoolean("useAntiLaggSystem")) {
             config.setBoolean("useAntiLaggSystem", true);
         }
+
+        if (config.getBoolean("useAsLobby")) {
+            config.setString("BossBarTitle", "§6Willkommen auf §eWarKing");
+            config.setString("actionbarTitle", "§6/bau §7um auf den Bauserver zu kommen ");
+        }
+
         config.save();
 
         globalConfig.setString("LinkToArena-1", "Arena-1");
@@ -44,9 +56,42 @@ public class ConfigManager {
         globalConfig.setString("LinkToLobby", "Lobby-1");
     }
 
-//    public String getMOTD(){
-//        if(config.getBoolean("use"))
-//    }
+    public void setupMySQL() {
+        if (getGlobalConfig().getString("MySQL.host") == null) {
+            getGlobalConfig().setString("MySQL.host", "");
+        }
+        if (getGlobalConfig().getString("MySQL.username") == null) {
+            getGlobalConfig().setString("MySQL.username", "");
+        }
+
+        if (getGlobalConfig().getInt("MySQL.port") == 0) {
+            getGlobalConfig().setInt("MySQL.port", 3306);
+        }
+        if (getGlobalConfig().getString("MySQL.database") == null) {
+            getGlobalConfig().setString("MySQL.database", "");
+        }
+
+        if (getGlobalConfig().getString("MySQL.password") == null) {
+            getGlobalConfig().setString("MySQL.password", "");
+        }
+
+        if (getGlobalConfig().getString("MySQL.host").equals("") || getGlobalConfig().getString("MySQL.username").equals("")
+                || getGlobalConfig().getInt("MySQL.port") == 0 || getGlobalConfig().getString("MySQL.password").equals("") && getGlobalConfig().getBoolean("useMySQL")) {
+            Bukkit.getConsoleSender().sendMessage(Misc.getPREFIX() + "§1Die Verbindung zum MySQL Server ist nicht eingestellt");
+            Bukkit.getScheduler().runTaskLater(BetaCore.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+                    if (getGlobalConfig().getString("MySQL.host").equals("") || getGlobalConfig().getString("MySQL.username").equals("")
+                            || getGlobalConfig().getInt("MySQL.port") == 0 || getGlobalConfig().getString("MySQL.password").equals("") && getGlobalConfig().getBoolean("useMySQL")) {
+                        Bukkit.getConsoleSender().sendMessage(Misc.getPREFIX() + "Fahre das Plugin herrunter.");
+                    }
+                }
+            }, 20L);
+
+
+            Bukkit.getPluginManager().disablePlugin(BetaCore.getInstance());
+        }
+    }
 
 
     public Config getConfig() {

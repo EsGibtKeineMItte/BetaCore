@@ -5,13 +5,18 @@ import de.wk.betacore.commands.spigot.commandmanager.CommandManagerOld;
 import de.wk.betacore.listener.Spigot.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.MySQL;
+import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.CommandRemover;
 import de.wk.betacore.util.ranksystem.PermissionManager;
 import de.wk.betacore.util.travel.ArenaCommand;
 import de.wk.betacore.util.travel.BauCommand;
 import de.wk.betacore.util.travel.FastTravelSystem;
+import de.wk.betacore.util.travel.LobbyCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.sql.SQLException;
 
 public final class BetaCore extends JavaPlugin {
 
@@ -59,6 +64,11 @@ public final class BetaCore extends JavaPlugin {
         getCommand("pc").setExecutor(new PcCommand());
         getCommand("team").setExecutor(new TeamCommandTest());
         getCommand("pi").setExecutor(new PlayerInfoCommand());
+        getCommand("cc").setExecutor(new CustomCommand());
+        getCommand("addperm").setExecutor(new ManPermissionAdder());
+        getCommand("si").setExecutor(new ServerInfoCommand());
+        getCommand("pl").setExecutor(new PluginCommand());
+        getCommand("setspawn").setExecutor(new SetSpawnCommand());
     }
 
     public void regListeners() {
@@ -66,6 +76,8 @@ public final class BetaCore extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new MessageSend(), this);
         Bukkit.getPluginManager().registerEvents(new JoinHandler(), this);
         Bukkit.getPluginManager().registerEvents(new CommandListener(), this);
+        Bukkit.getPluginManager().registerEvents(new CustomCommand(), this);
+        Bukkit.getPluginManager().registerEvents(new PermissionListener(), this);
         this.getServer().getPluginManager().registerEvents(RecordListener.getInstance(), this);
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new FastTravelSystem());
@@ -74,37 +86,91 @@ public final class BetaCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
+        log("§6Enabling BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + ".");
+
+
+        log("§6Setting up command-framework... ");
         instance = this;
         ConfigManager cm = new ConfigManager();
         CommandManagerOld commandManager = new CommandManagerOld();
         commandManager.setup();
         CommandImplementer.implementCommands();
+        log("§aDONE");
 
+        log("§3Registering Commands & Listeners...");
         regCommands();
         regListeners();
-
         removeCommands();
+        log("§aDONE");
+
+        log("§3Setting up Configs... ");
         cm.setup();
-        PermissionManager permissionManager = new PermissionManager();
-        permissionManager.setupPermissionConfig();
+        cm.setupMySQL();
+        log("§aDONE");
+
+        log("§3Establishing MySQL Connection...");
+        MySQL mySQL = new MySQL();
+
+        try {
+            mySQL.openConnection();
+            System.out.println("MySQL Connection erfolgreich.");
+
+        } catch (SQLException x) {
+            log("§4FAILED");
+            System.out.println("");
+            x.printStackTrace();
+        }
+        log("§aDONE");
+
+
+        log("§3Setting up Permissions");
+        PermissionManager.setupPermissionConfig();
+        log("§aDONE");
+
+        log("§3Getting links though servers");
         if (!cm.getConfig().getBoolean("useAsBauServer")) {
             getCommand("bau").setExecutor(new BauCommand());
         } else {
             this.getServer().getPluginManager().registerEvents(new WorldSystemUtil(), this);
+            log("§3Using the server as building server");
         }
+
         if (!cm.getConfig().getBoolean("useAsArena")) {
             getCommand("arena").setExecutor(new ArenaCommand());
-            //   getCommand("a").setExecutor(new ArenaCommand());
+        } else {
+            log("§3Using the server as arena");
         }
+
+        if (!cm.getConfig().getBoolean("useAsLobby")) {
+            getCommand("l").setExecutor(new LobbyCommand());
+            getCommand("hub").setExecutor(new LobbyCommand());
+            Bukkit.getPluginManager().registerEvents(new LobbyListener(), this);
+        } else {
+            log("Using the server as lobby server");
+        }
+
+        log("§aDone");
+
+        log("§6Successfully enabled BetaCore" + Misc.CODENAME + "v." + Misc.VERSION + ".");
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        log("§3Disabling BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + ".");
     }
 
 
     public static BetaCore getInstance() {
         return instance;
+    }
+
+    public static void log(String message) {
+        Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + message);
+    }
+
+    public static void debug(String message) {
+        Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + "[§eDEBUG]" + message);
+
     }
 }

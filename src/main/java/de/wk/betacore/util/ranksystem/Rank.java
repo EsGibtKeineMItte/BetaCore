@@ -6,7 +6,7 @@ public enum Rank {
     DEV("Dev", "§3", 1),
     MOD("Mod", "§c" , 2),
     SUPPORTER("Supp", "§1", 3),
-    ARCHI("Builder", "§a", 4),
+    BUILDER("Builder", "§a", 4),
     YOU_TUBER("YT", "§5", 5),
     PREMIUM("Premium", "§6", 6),
     USER("User", "§7", 7);
@@ -26,7 +26,7 @@ public enum Rank {
 
 
     public String getName() {
-        return name.toUpperCase();
+        return name;
     }
 
     public String getColor() {

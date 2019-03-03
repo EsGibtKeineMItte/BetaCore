@@ -1,6 +1,6 @@
 version: 1.0
-name: AlphaCore
-main: de.wk.BetaCoreBungee
+name: BetaCore
+main: de.wk.betacore.BetaCoreBungee
 
 authors: [linksKeineMitte, YoyoNow, Zeanon]
 
