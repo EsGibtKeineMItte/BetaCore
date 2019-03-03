@@ -124,8 +124,6 @@ public final class BetaCore extends JavaPlugin {
         log("§aDONE");
 
 
-
-
         log("§3Setting up Permissions");
         PermissionManager.setupPermissionConfig();
         log("§aDONE");
@@ -135,16 +133,22 @@ public final class BetaCore extends JavaPlugin {
             getCommand("bau").setExecutor(new BauCommand());
         } else {
             this.getServer().getPluginManager().registerEvents(new WorldSystemUtil(), this);
+            log("§3Using the server as building server");
         }
+
         if (!cm.getConfig().getBoolean("useAsArena")) {
             getCommand("arena").setExecutor(new ArenaCommand());
+            log("§3Using the server as arena");
         }
 
         if (!cm.getConfig().getBoolean("useAsLobby")) {
             getCommand("l").setExecutor(new LobbyCommand());
             getCommand("hub").setExecutor(new LobbyCommand());
             Bukkit.getPluginManager().registerEvents(new LobbyListener(), this);
+        }else{
+            log("Using the server as lobby server");
         }
+
         log("§aDone");
 
         log("§6Successfully enabled BetaCore" + Misc.CODENAME + "v." + Misc.VERSION + ".");

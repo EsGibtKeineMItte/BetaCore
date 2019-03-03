@@ -42,6 +42,12 @@ public class ConfigManager {
         if (!config.getBoolean("useAntiLaggSystem")) {
             config.setBoolean("useAntiLaggSystem", true);
         }
+
+        if (config.getBoolean("useAsLobby")) {
+            config.setString("BossBarTitle", "§6Willkommen auf §eWarKing");
+            config.setString("actionbarTitle", "§6/bau §7um auf den Bauserver zu kommen ");
+        }
+
         config.save();
 
         globalConfig.setString("LinkToArena-1", "Arena-1");
@@ -76,16 +82,11 @@ public class ConfigManager {
                 @Override
                 public void run() {
                     if (getGlobalConfig().getString("MySQL.host").equals("") || getGlobalConfig().getString("MySQL.username").equals("")
-                            || getGlobalConfig().getInt("MySQL.port") == 0 || getGlobalConfig().getString("MySQL.password").equals("") && getGlobalConfig().getBoolean("useMySQL")){
+                            || getGlobalConfig().getInt("MySQL.port") == 0 || getGlobalConfig().getString("MySQL.password").equals("") && getGlobalConfig().getBoolean("useMySQL")) {
                         Bukkit.getConsoleSender().sendMessage(Misc.getPREFIX() + "Fahre das Plugin herrunter.");
                     }
                 }
-            },20L);
-
-
-
-
-
+            }, 20L);
 
 
             Bukkit.getPluginManager().disablePlugin(BetaCore.getInstance());

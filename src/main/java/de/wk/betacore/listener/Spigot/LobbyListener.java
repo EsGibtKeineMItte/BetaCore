@@ -27,8 +27,9 @@ public class LobbyListener implements Listener {
             e.getPlayer().setGameMode(GameMode.ADVENTURE);
             e.getPlayer().setFoodLevel(20);
         }
-
-        bossBar.addPlayer(e.getPlayer());
+        if(cm.getConfig().getBoolean("useAsBauServer")){
+            bossBar.addPlayer(e.getPlayer());
+        }
         e.getPlayer().teleport(cm.getConfig().getLocation("spawn"));
         ActionBar.sendActionBar(e.getPlayer(), cm.getConfig().getString("actionbarTitle"));
 

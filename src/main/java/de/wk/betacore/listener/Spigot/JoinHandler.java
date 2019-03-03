@@ -24,21 +24,23 @@ public class JoinHandler implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
+        setPrefix();
         if (cm.getConfig().getLocation("Spawn") != null) {
             BetaCore.debug("WAR HIER");
+            System.out.println(cm.getConfig().getLocation("Spawn"));
             e.getPlayer().teleport(cm.getConfig().getLocation("Spawn"));
         }
 
 
         System.out.println("Der Rang, der in der MySQL Datenbank für " + e.getPlayer().getName() + " eingetragen ist, ist: " + RankSystem.getRank(e.getPlayer().getUniqueId()));
-        scoreboard(e.getPlayer());
+        if (cm.getConfig().getBoolean("useAsLobby")) {
+            scoreboard(e.getPlayer());
+        }
         tablist(e.getPlayer());
-        playerTablist(e.getPlayer());
-        playerTeam(e.getPlayer());
         if (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.setJoinMessage("");
         } else {
-            e.setJoinMessage(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + "§7| " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor()  + e.getPlayer().getName() + " &ehat den Server betreten."));
+            e.setJoinMessage(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + "§7| " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName() + " &ehat den Server betreten."));
         }
     }
 
@@ -54,8 +56,7 @@ public class JoinHandler implements Listener {
     public void update(Player e) {
         scoreboard(e);
         tablist(e);
-        playerTablist(e);
-        playerTeam(e);
+        setPrefix();
     }
 
     public void scoreboard(Player e) {
@@ -98,7 +99,7 @@ public class JoinHandler implements Listener {
     }
 
     public void playerTablist(Player e) {
-        e.getPlayer().setDisplayName(e.getPlayer().getName());
+        e.getPlayer().setDisplayName(RankSystem.getRank(e.getUniqueId()).getColor() + RankSystem.getRank(e.getUniqueId()).getName());
         if (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.getPlayer().setPlayerListName(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName()));
         } else {
@@ -106,7 +107,7 @@ public class JoinHandler implements Listener {
         }
     }
 
-    public void playerTeam(Player e) {
+    public void setPrefix() {
 
         Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
         Team Admin = board.registerNewTeam("01Admin");
@@ -118,8 +119,7 @@ public class JoinHandler implements Listener {
         Team Premium = board.registerNewTeam("08Premium");
         Team User = board.registerNewTeam("09User");
 
-        Admin.setPrefix(Rank.ADMIN.getColor() + Rank.ADMIN.getName() + " §7| " + Rank.ADMIN.getColor());
-        Admin.setSuffix("§e §7[§eTeam§7]");
+        Admin.setPrefix(Rank.ADMIN.getColor() + Rank.ADMIN.getName() + " §7| test" + Rank.ADMIN.getColor());
         Dev.setPrefix(Rank.DEV.getColor() + Rank.DEV.getName() + " §7| " + Rank.DEV.getColor());
         Mod.setPrefix(Rank.MOD.getColor() + Rank.MOD.getName() + " §7| " + Rank.MOD.getColor());
         Supp.setPrefix(Rank.SUPPORTER.getColor() + Rank.SUPPORTER.getName() + " §7| " + Rank.SUPPORTER.getColor());
@@ -129,35 +129,41 @@ public class JoinHandler implements Listener {
         User.setPrefix(Rank.USER.getColor() + "");
 
         RankSystem rankSystem = new RankSystem();
+        Bukkit.getOnlinePlayers().forEach(p -> {
+            switch (RankSystem.getRank(p.getUniqueId())) {
 
-        switch (rankSystem.getRank(e.getUniqueId())) {
+                case ADMIN:
+                    Admin.addEntry(p.getName());
+                    break;
+                case DEV:
+                    Dev.addEntry(p.getName());
+                    break;
+                case MOD:
+                    Mod.addEntry(p.getName());
+                    break;
+                case SUPPORTER:
+                    Supp.addEntry(p.getName());
+                    break;
+                case BUILDER:
+                    Archi.addEntry(p.getName());
+                    break;
+                case YOU_TUBER:
+                    YouTuber.addEntry(p.getName());
+                    break;
+                case PREMIUM:
+                    Premium.addEntry(p.getName());
+                    break;
+                case USER:
+                    User.addEntry(p.getName());
+                    break;
+                default:
+                    User.addEntry(p.getName());
+                    BetaCore.debug("Hier hat ein Spieler keinen Rang zugewiesen. Das ist nicht gut.");
+            }
+            p.setScoreboard(board);
+        });
 
-            case ADMIN:
-                Admin.addEntry(e.getName());
-                break;
-            case DEV:
-                Dev.addEntry(e.getName());
-                break;
-            case MOD:
-                Mod.addEntry(e.getName());
-                break;
-            case SUPPORTER:
-                Supp.addEntry(e.getName());
-                break;
-            case BUILDER:
-                Archi.addEntry(e.getName());
-                break;
-            case YOU_TUBER:
-                YouTuber.addEntry(e.getName());
-                break;
-            case PREMIUM:
-                Premium.addEntry(e.getName());
-                break;
-            case USER:
-                User.addEntry(e.getName());
-                break;
-        }
-        e.setScoreboard(board);
+
     }
 
 }
