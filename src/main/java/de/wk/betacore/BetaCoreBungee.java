@@ -28,11 +28,16 @@ public class BetaCoreBungee extends Plugin {
 
     @Override
     public void onEnable() {
+        log("§3Enabling BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + ".");
+        log("");
 
 
         instance = this;
+
+        log("§3Registering commands & listeners... ");
         regCommands();
         regListeners();
+        log("§aDONE");
         ProxyServer.getInstance().getScheduler().schedule(this, new Runnable() {
 
             private int timer = 0;
@@ -89,10 +94,13 @@ public class BetaCoreBungee extends Plugin {
                 }
             }
         }, 1, 1, TimeUnit.SECONDS);
+
+        log("§3BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + "successfully enabled.");
     }
 
     @Override
     public void onDisable() {
+        log("§3Dialing BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + ".");
 
         if (restart) {
             new Thread(() -> {

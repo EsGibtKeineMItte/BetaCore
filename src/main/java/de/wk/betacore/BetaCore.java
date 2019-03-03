@@ -85,18 +85,29 @@ public final class BetaCore extends JavaPlugin {
     @Override
     public void onEnable() {
 
+        log("§6Enabling BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + ".");
+
+
+        log("§6Setting up command-framework... ");
         instance = this;
         ConfigManager cm = new ConfigManager();
         CommandManagerOld commandManager = new CommandManagerOld();
         commandManager.setup();
         CommandImplementer.implementCommands();
+        log("§aDONE");
+
+        log("§3Registering Commands & Listeners...");
         regCommands();
         regListeners();
-
         removeCommands();
+        log("§aDONE");
+
+        log("§3Setting up Configs... ");
         cm.setup();
         cm.setupMySQL();
+        log("§aDONE");
 
+        log("§3Establishing MySQL Connection...");
         MySQL mySQL = new MySQL();
 
         try {
@@ -104,12 +115,20 @@ public final class BetaCore extends JavaPlugin {
             System.out.println("MySQL Connection erfolgreich.");
 
         } catch (SQLException x) {
+            log("§4FAILED");
+            System.out.println("");
             x.printStackTrace();
         }
+        log("§aDONE");
 
 
+
+
+        log("§3Setting up Permissions");
         PermissionManager permissionManager = new PermissionManager();
-        //  permissionManager.setupPermissionConfig();
+        log("§aDONE");
+
+        log("§3Getting links though servers");
         if (!cm.getConfig().getBoolean("useAsBauServer")) {
             getCommand("bau").setExecutor(new BauCommand());
         } else {
@@ -123,10 +142,12 @@ public final class BetaCore extends JavaPlugin {
         if (cm.getConfig().getBoolean("useAsLobby")) {
             Bukkit.getPluginManager().registerEvents(new LobbyListener(), this);
         }
+        log("§aDone");
     }
 
     @Override
     public void onDisable() {
+        log("§3Disabling BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + ".");
         // Plugin shutdown logic
     }
 

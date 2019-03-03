@@ -31,6 +31,8 @@ public class Misc {
     public static String HELP = "§7Benutze §6/help§7 , um Hilfe zu erhalten";
     public static String NOTINCONSOLE = PREFIX + "Du kannst diesen Befehl nicht in der Konsole verwenden";
     public static String CONSOLEPREFIX = "§8[§aBetaCore§8]§7 ";
+    public static String CODENAME = "Brass ";
+    public static String VERSION = "0.3 ";
 
 
     public static String getPREFIX() {
