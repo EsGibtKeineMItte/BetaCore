@@ -18,10 +18,16 @@ import org.bukkit.scoreboard.Team;
 import java.util.ArrayList;
 
 public class JoinHandler implements Listener {
+    ConfigManager cm = new ConfigManager();
 
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
+        if (cm.getConfig().getLocation("Spawn") != null) {
+            e.getPlayer().teleport(cm.getConfig().getLocation("Spawn"));
+        }
+
+
         System.out.println("Der Rang, der in der MySQL Datenbank für " + e.getPlayer().getName() + " eingetragen ist, ist: " + RankSystem.getRank(e.getPlayer().getUniqueId()));
         scoreboard(e.getPlayer());
         tablist(e.getPlayer());
@@ -94,7 +100,7 @@ public class JoinHandler implements Listener {
         if (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.getPlayer().setPlayerListName(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName()));
         } else {
-            e.getPlayer().setPlayerListName(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " §7| " +  RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName()));
+            e.getPlayer().setPlayerListName(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " §7| " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName()));
         }
     }
 
