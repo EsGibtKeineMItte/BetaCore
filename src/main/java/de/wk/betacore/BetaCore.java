@@ -12,6 +12,7 @@ import de.wk.betacore.util.ranksystem.PermissionManager;
 import de.wk.betacore.util.travel.ArenaCommand;
 import de.wk.betacore.util.travel.BauCommand;
 import de.wk.betacore.util.travel.FastTravelSystem;
+import de.wk.betacore.util.travel.LobbyCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -67,6 +68,7 @@ public final class BetaCore extends JavaPlugin {
         getCommand("addperm").setExecutor(new ManPermissionAdder());
         getCommand("si").setExecutor(new ServerInfoCommand());
         getCommand("pl").setExecutor(new PluginCommand());
+        getCommand("setspawn").setExecutor(new SetSpawnCommand());
     }
 
     public void regListeners() {
@@ -125,7 +127,7 @@ public final class BetaCore extends JavaPlugin {
 
 
         log("§3Setting up Permissions");
-        PermissionManager permissionManager = new PermissionManager();
+        PermissionManager.setupPermissionConfig();
         log("§aDONE");
 
         log("§3Getting links though servers");
@@ -136,10 +138,11 @@ public final class BetaCore extends JavaPlugin {
         }
         if (!cm.getConfig().getBoolean("useAsArena")) {
             getCommand("arena").setExecutor(new ArenaCommand());
-            //   getCommand("a").setExecutor(new ArenaCommand());
         }
 
-        if (cm.getConfig().getBoolean("useAsLobby")) {
+        if (!cm.getConfig().getBoolean("useAsLobby")) {
+            getCommand("l").setExecutor(new LobbyCommand());
+            getCommand("hub").setExecutor(new LobbyCommand());
             Bukkit.getPluginManager().registerEvents(new LobbyListener(), this);
         }
         log("§aDone");
@@ -150,7 +153,6 @@ public final class BetaCore extends JavaPlugin {
     @Override
     public void onDisable() {
         log("§3Disabling BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + ".");
-        // Plugin shutdown logic
     }
 
 

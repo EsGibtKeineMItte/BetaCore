@@ -43,7 +43,13 @@ public class RankSystem {
             } else {
                 ResultSet rs2 = MySQL.preparedStatement("SELECT * FROM PLAYER_INFO WHERE UUID = '" + uuid.toString() + "';").executeQuery();
                 rs2.next();
-                return Rank.valueOf(rs2.getString("RANK"));
+                try{
+                    return Rank.valueOf(rs2.getString("RANK"));
+                }catch (IllegalArgumentException e){
+                    BetaCore.debug("Für den Spieler mit der UUID " + uuid.toString() + " ist in der MySQL Datenbank ein Rang eingetragen, der nicht existiert.");
+                    return Rank.USER;
+                }
+
             }
         } catch (SQLException x) {
             BetaCore.debug("Fehler beim Abfragen des Ranges von " + Bukkit.getOfflinePlayer(uuid).getName());

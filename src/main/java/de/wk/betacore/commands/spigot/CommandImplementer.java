@@ -12,9 +12,9 @@ import de.wk.betacore.util.ranksystem.RankSystem;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerLoginEvent;
 
 import java.util.ArrayList;
 
@@ -84,7 +84,12 @@ public class CommandImplementer {
                     return;
                 }
                 cm.getPlayerData().reload();
-                int i = Integer.parseInt(args[1]);
+
+                if(!(StringUtils.isNumeric(args[2]))){
+                    sender.sendMessage("Du musst eine Ganzzahl als Betrag angeben.");
+                    return;
+                }
+                int i = Integer.parseInt(args[2]);
                 cm.getPlayerData().setInt(((Player) sender).getPlayer().getUniqueId().toString() + ".money", i);
                 Info.sendInfo((Player) sender, "&aMoney set to > " + cm.getPlayerData().getInt(((Player) sender).getUniqueId().toString() + ".money"));
                 joinHandler.update((Player) sender);
@@ -136,7 +141,7 @@ public class CommandImplementer {
                     MoneySystem.decreaseMoney(player.getUniqueId(), i);
                     MoneySystem.increaseMoney(Bukkit.getOfflinePlayer(args[1]).getUniqueId(), i);
                 } else {
-                    Info.sendInfo((Player) sender, "§cDazu hast du nicht genügend Gel");
+                    Info.sendInfo((Player) sender, "§cDazu hast du nicht genügend Geld");
                 }
                 joinHandler.update((Player) sender);
                 joinHandler.update((Player) Bukkit.getOfflinePlayer(args[1]));
@@ -242,28 +247,33 @@ public class CommandImplementer {
 
             @Override
             public void run(CommandSender sender, String[] args) {
-                if (sender.hasPermission("betacore.core.setrank")) {
+
+                if(!(sender.hasPermission("betacore.setrank")) && (!(sender.hasPermission("betacore.*")))){
+                    sender.sendMessage(Misc.NOPERM);
+                    return;
+                }
+
                     if (args.length != 3) {
                         CommandManager.wrongUsage(sender);
                         return;
                     }
                     int your = rankSystem.getRank(((Player) sender).getUniqueId()).getPriority();
                     ArrayList<String> ranks = new ArrayList<>();
-                    ranks.add(Rank.ADMIN.getName().toUpperCase());
-                    ranks.add(Rank.DEV.getName().toUpperCase());
-                    ranks.add(Rank.MOD.getName().toUpperCase());
-                    ranks.add(Rank.SUPPORTER.getName().toUpperCase());
-                    ranks.add(Rank.ARCHI.getName().toUpperCase());
-                    ranks.add(Rank.YOU_TUBER.getName().toUpperCase());
-                    ranks.add(Rank.PREMIUM.getName().toUpperCase());
-                    ranks.add(Rank.USER.getName().toUpperCase());
+                    ranks.add(Rank.ADMIN.toString().toUpperCase());
+                    ranks.add(Rank.DEV.toString().toUpperCase());
+                    ranks.add(Rank.MOD.toString().toUpperCase());
+                    ranks.add(Rank.SUPPORTER.toString().toUpperCase());
+                    ranks.add(Rank.BUILDER.toString().toUpperCase());
+                    ranks.add(Rank.YOU_TUBER.toString().toUpperCase());
+                    ranks.add(Rank.PREMIUM.toString().toUpperCase());
+                    ranks.add(Rank.USER.toString().toUpperCase());
 
                     ArrayList<String> priority = new ArrayList<>();
                     priority.add(Rank.ADMIN.getPriority() + "");
                     priority.add(Rank.DEV.getPriority() + "");
                     priority.add(Rank.MOD.getPriority() + "");
                     priority.add(Rank.SUPPORTER.getPriority() + "");
-                    priority.add(Rank.ARCHI.getPriority() + "");
+                    priority.add(Rank.BUILDER.getPriority() + "");
                     priority.add(Rank.YOU_TUBER.getPriority() + "");
                     priority.add(Rank.PREMIUM.getPriority() + "");
                     priority.add(Rank.USER.getPriority() + "");
@@ -275,15 +285,58 @@ public class CommandImplementer {
                         sender.sendMessage(Misc.Prefix + "§7Dieser Rang existiert nicht");
                         return;
                     }
+                    if(!(sender.hasPermission("betacore.setrank"))&& (!(sender.hasPermission("betacore.*")))) {
+                        sender.sendMessage(Misc.NOPERM);
+                        return;
+                    }
+                    if(Bukkit.getOfflinePlayer(args[1]) == null){
+                        sender.sendMessage("§cDieser Spieler existiert nicht");
+                        return;
+                    }
+
+                OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
+
                     if (your < their || your == 0 || sender.isOp()) {
                         String rank = args[2].toUpperCase();
-                        RankSystem.setRank(Bukkit.getOfflinePlayer(args[1]).getUniqueId(), rank);
+                        switch (args[2]){
+                            case("Admin"):
+                                RankSystem.setRank(target.getUniqueId(), "ADMIN");
+                                sender.sendMessage(Misc.Prefix + "§aRang geändert");
+                                break;
+                            case("DEV"):
+                                RankSystem.setRank(target.getUniqueId(), "DEV");
+                                sender.sendMessage(Misc.Prefix + "§aRang geändert");
+                                break;
+                            case("MOD"):
+                                RankSystem.setRank(target.getUniqueId(), "MOD");
+                                sender.sendMessage(Misc.Prefix + "§aRang geändert");
+                                break;
+                            case("SUPP"):
+                                RankSystem.setRank(target.getUniqueId(), "SUPPORTER");
+                                sender.sendMessage(Misc.Prefix + "§aRang geändert");
+                                break;
+                            case("ARCHI"):
+                                RankSystem.setRank(target.getUniqueId(), "BUILDER");
+                                sender.sendMessage(Misc.Prefix + "§aRang geändert");
+                                break;
+                            case("YT"):
+                                RankSystem.setRank(target.getUniqueId(), "YOU_TUBER");
+                            case("PREMIUM"):
+                                RankSystem.setRank(target.getUniqueId(), "PREMIUM");
+                            case("USER"):
+                                RankSystem.setRank(target.getUniqueId(), "USER");
+                            default:
+                                sender.sendMessage(Misc.Prefix + "§7Dieser Rang existiert nicht.");
+                        }
+
+
+
                         Info.sendInfo((Player) sender, "&eRank geändert zu " + rank);
                         if (Bukkit.getPlayer(args[1]) != null) {
                             joinHandler.update(Bukkit.getPlayer(args[1]));
                         }
                     }
-                }
+
             }
 
             @Override

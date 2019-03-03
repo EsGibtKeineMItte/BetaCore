@@ -17,6 +17,11 @@ public class BauCommand implements CommandExecutor {
             sender.sendMessage(Misc.getNOTINCONSOLE());
             return false;
         }
+        if(args.length != 0){
+            sender.sendMessage("§7Benutung: §6/bau");
+            return false;
+        }
+
         Player player = (Player) sender;
         fs.connect(player,cm.getGlobalConfig().getString("LinkToBau") );
 

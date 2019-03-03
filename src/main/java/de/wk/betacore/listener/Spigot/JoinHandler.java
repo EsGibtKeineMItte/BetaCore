@@ -1,5 +1,6 @@
 package de.wk.betacore.listener.Spigot;
 
+import de.wk.betacore.BetaCore;
 import de.wk.betacore.appearance.Color;
 import de.wk.betacore.appearance.ScoreboardUtils;
 import de.wk.betacore.appearance.Tablist;
@@ -24,6 +25,7 @@ public class JoinHandler implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         if (cm.getConfig().getLocation("Spawn") != null) {
+            BetaCore.debug("WAR HIER");
             e.getPlayer().teleport(cm.getConfig().getLocation("Spawn"));
         }
 
@@ -36,7 +38,7 @@ public class JoinHandler implements Listener {
         if (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.setJoinMessage("");
         } else {
-            e.setJoinMessage(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " §7| " + e.getPlayer().getName() + " &ehat den Server betreten."));
+            e.setJoinMessage(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + "§7| " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor()  + e.getPlayer().getName() + " &ehat den Server betreten."));
         }
     }
 
@@ -45,7 +47,7 @@ public class JoinHandler implements Listener {
         if (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.setQuitMessage("");
         } else {
-            e.setQuitMessage(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " §7| " + e.getPlayer().getName() + " &ehat den Server verlassen"));
+            e.setQuitMessage(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + "§7| " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName() + " &ehat den Server verlassen"));
         }
     }
 
@@ -121,7 +123,7 @@ public class JoinHandler implements Listener {
         Dev.setPrefix(Rank.DEV.getColor() + Rank.DEV.getName() + " §7| " + Rank.DEV.getColor());
         Mod.setPrefix(Rank.MOD.getColor() + Rank.MOD.getName() + " §7| " + Rank.MOD.getColor());
         Supp.setPrefix(Rank.SUPPORTER.getColor() + Rank.SUPPORTER.getName() + " §7| " + Rank.SUPPORTER.getColor());
-        Archi.setPrefix(Rank.ARCHI.getColor() + Rank.ARCHI.getName() + " §7| " + Rank.ARCHI.getColor());
+        Archi.setPrefix(Rank.BUILDER.getColor() + Rank.BUILDER.getName() + " §7| " + Rank.BUILDER.getColor());
         YouTuber.setPrefix(Rank.YOU_TUBER.getColor() + Rank.YOU_TUBER.getName() + " §7| " + Rank.YOU_TUBER.getColor());
         Premium.setPrefix(Rank.PREMIUM.getColor() + Rank.PREMIUM.getName() + " §7| " + Rank.PREMIUM.getColor());
         User.setPrefix(Rank.USER.getColor() + "");
@@ -142,7 +144,7 @@ public class JoinHandler implements Listener {
             case SUPPORTER:
                 Supp.addEntry(e.getName());
                 break;
-            case ARCHI:
+            case BUILDER:
                 Archi.addEntry(e.getName());
                 break;
             case YOU_TUBER:

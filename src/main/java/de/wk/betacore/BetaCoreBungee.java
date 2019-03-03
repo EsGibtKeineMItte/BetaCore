@@ -47,8 +47,6 @@ public class BetaCoreBungee extends Plugin {
                 SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
                 Date d = new Date();
                 String f = df.format(d);
-
-                System.out.println("Es ist " + f + " Uhr.");
                 switch (f) {
                     case ("23:00:00"):
                         ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e60 Minuten §6neu!"));

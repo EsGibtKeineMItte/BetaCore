@@ -29,4 +29,6 @@ commands:
   pl:
     description: Command, um sich die installierten Plugins anzeigen zu lassen, verbessert.
   si:
+  setspawn:
+  hub:
 
