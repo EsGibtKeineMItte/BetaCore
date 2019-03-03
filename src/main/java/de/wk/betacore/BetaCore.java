@@ -143,6 +143,8 @@ public final class BetaCore extends JavaPlugin {
             Bukkit.getPluginManager().registerEvents(new LobbyListener(), this);
         }
         log("§aDone");
+
+        log("§6Successfully enabled BetaCore" + Misc.CODENAME + "v." + Misc.VERSION + ".");
     }
 
     @Override
