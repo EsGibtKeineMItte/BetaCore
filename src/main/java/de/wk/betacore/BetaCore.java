@@ -138,6 +138,7 @@ public final class BetaCore extends JavaPlugin {
 
         if (!cm.getConfig().getBoolean("useAsArena")) {
             getCommand("arena").setExecutor(new ArenaCommand());
+        } else {
             log("§3Using the server as arena");
         }
 
@@ -145,7 +146,7 @@ public final class BetaCore extends JavaPlugin {
             getCommand("l").setExecutor(new LobbyCommand());
             getCommand("hub").setExecutor(new LobbyCommand());
             Bukkit.getPluginManager().registerEvents(new LobbyListener(), this);
-        }else{
+        } else {
             log("Using the server as lobby server");
         }
 
