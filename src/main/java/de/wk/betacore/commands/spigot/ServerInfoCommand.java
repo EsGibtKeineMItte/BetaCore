@@ -1,6 +1,7 @@
 package de.wk.betacore.commands.spigot;
 
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,6 +16,11 @@ public class ServerInfoCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+        if (!(sender.hasPermission("betacore.serverinfo")) && (!(sender.hasPermission("betacore.*")))) {
+            sender.sendMessage(Misc.NOPERM);
+            return false;
+        }
 
         long usage = Runtime.getRuntime().maxMemory() - Runtime.getRuntime().freeMemory();
         String server = ChatColor.GRAY + Bukkit.getServer().getServerName();

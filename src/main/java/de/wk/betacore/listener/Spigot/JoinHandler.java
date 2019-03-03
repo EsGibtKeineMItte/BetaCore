@@ -61,9 +61,7 @@ public class JoinHandler implements Listener {
     }
 
     public void update(Player e) {
-        if (cm.getConfig().getBoolean("useAsLobby")) {
-            scoreboard(e);
-        }
+        scoreboard(e);
         tablist(e);
         setPrefix();
     }
