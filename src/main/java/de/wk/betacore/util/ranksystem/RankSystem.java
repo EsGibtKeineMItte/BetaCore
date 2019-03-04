@@ -20,6 +20,7 @@ public class RankSystem {
             if (rs.getInt(1) == 0) {
                 MySQL.preparedStatement("INSERT INTO PLAYER_INFO(UUID, RANK, MONEY, JOIN_DATE) VALUES ('" + uuid.toString() + "'," + "DEFAULT, DEFAULT, DEFAULT);").executeUpdate();
                 MySQL.preparedStatement("UPDATE PLAYER_INFO SET RANK = '" + rank + "'" + " WHERE UUID = '" + uuid.toString() + "';").executeUpdate();
+                BetaCore.debug("Es wurde ein Rang eines Spielers gesetzt, der noch auf dem Netzwerk war.");
 
             } else {
                 MySQL.preparedStatement("UPDATE PLAYER_INFO SET RANK = '" + rank + "'" + " WHERE UUID = '" + uuid.toString() + "';").executeUpdate();
@@ -43,7 +44,14 @@ public class RankSystem {
             } else {
                 ResultSet rs2 = MySQL.preparedStatement("SELECT * FROM PLAYER_INFO WHERE UUID = '" + uuid.toString() + "';").executeQuery();
                 rs2.next();
-                return Rank.valueOf(rs2.getString("RANK"));
+                try{
+                    return Rank.valueOf(rs2.getString("RANK"));
+                }catch (IllegalArgumentException e){
+                    BetaCore.debug("Fehler 000");
+                    BetaCore.debug("Für den Spieler mit der UUID " + uuid.toString() + " ist in der MySQL Datenbank ein Rang eingetragen, der nicht existiert.");
+                    return Rank.USER;
+                }
+
             }
         } catch (SQLException x) {
             BetaCore.debug("Fehler beim Abfragen des Ranges von " + Bukkit.getOfflinePlayer(uuid).getName());

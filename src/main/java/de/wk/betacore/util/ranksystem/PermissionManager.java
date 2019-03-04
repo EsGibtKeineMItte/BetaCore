@@ -1,5 +1,6 @@
 package de.wk.betacore.util.ranksystem;
 
+import com.google.common.annotations.Beta;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.util.ConfigManager;
 import org.bukkit.entity.Player;
@@ -43,8 +44,8 @@ public class PermissionManager {
 
     private void permissionsSetter(UUID uuid) {
         PermissionAttachment attachment = this.playerPermissions.get(uuid);
-        RankSystem rankSystem = new RankSystem();
-        for (Object permissions : cm.getPermissions().getList(rankSystem.getRank(uuid).toString())) { //Hier wird wohl die Liste nicht gefunden werden.
+        BetaCore.debug(RankSystem.getRank(uuid).toString());
+        for (Object permissions : cm.getPermissions().getList(RankSystem.getRank(uuid).toString())) { //Hier wird wohl die Liste nicht gefunden werden.
             System.out.print(permissions.toString());
             attachment.setPermission(permissions.toString(), true);
         }

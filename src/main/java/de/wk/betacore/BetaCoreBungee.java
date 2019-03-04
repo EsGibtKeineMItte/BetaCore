@@ -28,9 +28,16 @@ public class BetaCoreBungee extends Plugin {
 
     @Override
     public void onEnable() {
+        log("§3Enabling BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + ".");
+        log("");
+
+
         instance = this;
+
+        log("§3Registering commands & listeners... ");
         regCommands();
         regListeners();
+        log("§aDONE");
         ProxyServer.getInstance().getScheduler().schedule(this, new Runnable() {
 
             private int timer = 0;
@@ -40,62 +47,60 @@ public class BetaCoreBungee extends Plugin {
                 SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
                 Date d = new Date();
                 String f = df.format(d);
+                switch (f) {
+                    case ("23:00:00"):
+                        ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e60 Minuten §6neu!"));
+                        log("§6Das Netzwerk startet in §e60  Minuten §6neu!");
+                    case ("23:30:00"):
+                        ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e Minuten §6neu!"));
+                        log("§6Das Netzwerk startet in §e  Minuten §6neu!");
+                    case ("23:45:00"):
+                        ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e Minuten §6neu!"));
+                        log("§6Das Netzwerk startet in §e  Minuten §6neu!");
+                    case ("23:50:00"):
+                        ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e Minuten §6neu!"));
+                        log("§6Das Netzwerk startet in §e  Minuten §6neu!");
+                    case ("23:55:00"):
+                        ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e Minuten §6neu!"));
+                        log("§6Das Netzwerk startet in §e  Minuten §6neu!");
+                    case ("23:59:00"):
+                        ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e Minuten §6neu!"));
+                        log("§6Das Netzwerk startet in §e  Minuten §6neu!");
+                    case ("23:59:50"):
+                        ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e Sekunden§6neu!"));
+                        log("§6Das Netzwerk startet in §e  Sekunden §6neu!");
+                    case ("23:59:55"):
+                        ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e Sekunden§6neu!"));
+                        log("§6Das Netzwerk startet in §e  Sekunden §6neu!");
+                    case ("23:59:56"):
+                        ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e Sekunden§6neu!"));
+                        log("§6Das Netzwerk startet in §e  Sekunden §6neu!");
+                    case ("23:59:57"):
+                        ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e Sekunden§6neu!"));
+                        log("§6Das Netzwerk startet in §e  Sekunden §6neu!");
+                    case ("23:59:58"):
+                        ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e Sekunden§6neu!"));
+                        log("§6Das Netzwerk startet in §e  Sekunden §6neu!");
+                    case ("23:59:59"):
+                        ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e Sekunden§6neu!"));
+                        log("§6Das Netzwerk startet in §e  Sekunden §6neu!");
+                    case ("00:00:00"):
+                        ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet neu!"));
+                        BetaCoreBungee.getInstance().getProxy().stop(Misc.Prefix + "§cDas Netzwerk startet neu. Wir sind gleich wieder da:)");
+                        restart = true;
 
-                System.out.println("Es ist " + f  + " Uhr.");
-
-                if (f.equalsIgnoreCase("23:00:00")) {
-                    ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e60 Minuten §6neu!"));
-                    log("§6Das Netzwerk startet in §e60 Minuten §6neu!");
-                } else if (f.equalsIgnoreCase("23:30:00")) {
-                    ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e30 Minuten §6neu!"));
-                    log("§6Das Netzwerk startet in §e30 Minuten §6neu!\"");
-                } else if (f.equalsIgnoreCase("23:45:00")) {
-                    ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e15 Minuten §6neu!"));
-                    log("§6Das Netzwerk startet in §e15 Minuten §6neu!");
-                } else if (f.equalsIgnoreCase("23:50:00")) {
-                    ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e10 Minuten §6neu!"));
-                    log("§6Das Netzwerk startet in §e10 Minuten §6neu!");
-                } else if (f.equalsIgnoreCase("23:55:00")) {
-                    ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e5 Minuten §6neu!"));
-                    log("§6Das Netzwerk startet in §e5 Minuten §6neu!");
-                } else if (f.equalsIgnoreCase("23:59:00")) {
-                    ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §eeiner Minute §6neu!"));
-                    log("§6Das Netzwerk startet in §eeiner Minute §6neu!");
-                } else if (f.equalsIgnoreCase("23:59:30")) {
-                    ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e30 Sekunden §6neu!"));
-                    log("§6Das Netzwerk startet in §e30 Sekunden §6neu!");
-                } else if (f.equalsIgnoreCase("23:59:50")) {
-                    ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e10 Sekunden §6neu!"));
-                    log("§6Das Netzwerk startet in §e10 Sekunden §6neu!");
-                } else if (f.equalsIgnoreCase("23:59:55")) {
-                    ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e5 Sekunden §6neu!"));
-                    log("§6Das Netzwerk startet in §e5 Sekunden §6neu!");
-                } else if (f.equalsIgnoreCase("23:59:56")) {
-                    ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e4 Sekunden §6neu!"));
-                    log("§6Das Netzwerk startet in §e4 Sekunden §6neu!");
-                } else if (f.equalsIgnoreCase("23:59:57")) {
-                    ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e3 Sekunden §6neu!"));
-                    log("§6Das Netzwerk startet in §e3 Sekunden §6neu!");
-                } else if (f.equalsIgnoreCase("23:59:58")) {
-                    ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §e2 Sekunden §6neu!"));
-                    log("§6Das Netzwerk startet in §e2 Sekunden §6neu!");
-                } else if (f.equalsIgnoreCase("23:59:59")) {
-                    ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet in §eeiner Sekunde §6neu!"));
-                    log("§6Das Netzwerk startet in §eeiner Sekunde §6neu!");
-                } else if (f.equalsIgnoreCase("00:00:00")) {
-                    ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet neu!"));
-                    BetaCoreBungee.getInstance().getProxy().stop();
-                    restart = true;
                 }
-
             }
         }, 1, 1, TimeUnit.SECONDS);
+
+        log("§3BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + "successfully enabled.");
     }
 
     @Override
     public void onDisable() {
+        log("§3Dialing BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + ".");
 
-        if(restart){
+        if (restart) {
             new Thread(() -> {
                 log("Restarting Proxy");
                 try {
@@ -111,7 +116,7 @@ public class BetaCoreBungee extends Plugin {
     }
     //
 
-    public static void log(String message){
+    public static void log(String message) {
         ProxyServer.getInstance().getConsole().sendMessage(new TextComponent(Misc.CONSOLEPREFIX + message));
     }
 

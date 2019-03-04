@@ -12,6 +12,7 @@ import de.wk.betacore.util.ranksystem.PermissionManager;
 import de.wk.betacore.util.travel.ArenaCommand;
 import de.wk.betacore.util.travel.BauCommand;
 import de.wk.betacore.util.travel.FastTravelSystem;
+import de.wk.betacore.util.travel.LobbyCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -67,6 +68,8 @@ public final class BetaCore extends JavaPlugin {
         getCommand("addperm").setExecutor(new ManPermissionAdder());
         getCommand("si").setExecutor(new ServerInfoCommand());
         getCommand("pl").setExecutor(new PluginCommand());
+        getCommand("setspawn").setExecutor(new SetSpawnCommand());
+        getCommand("rl").setExecutor(new ReloadCommand());
     }
 
     public void regListeners() {
@@ -85,45 +88,77 @@ public final class BetaCore extends JavaPlugin {
     @Override
     public void onEnable() {
 
+        log("§6Enabling BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + ".");
+
+
+        log("§6Setting up command-framework... ");
         instance = this;
         ConfigManager cm = new ConfigManager();
         CommandManagerOld commandManager = new CommandManagerOld();
         commandManager.setup();
         CommandImplementer.implementCommands();
+        log("§aDONE");
+
+        log("§3Registering Commands & Listeners...");
         regCommands();
         regListeners();
-
         removeCommands();
+        log("§aDONE");
+
+        log("§3Setting up Configs... ");
         cm.setup();
         cm.setupMySQL();
+        log("§aDONE");
 
+        log("§3Establishing MySQL Connection...");
         MySQL mySQL = new MySQL();
 
-        try{
+        try {
             mySQL.openConnection();
             System.out.println("MySQL Connection erfolgreich.");
 
-        }catch(SQLException x){
+        } catch (SQLException x) {
+            log("§4FAILED");
+            System.out.println("");
             x.printStackTrace();
         }
+        log("§aDONE");
 
 
-        PermissionManager permissionManager = new PermissionManager();
-      //  permissionManager.setupPermissionConfig();
+        log("§3Setting up Permissions");
+        PermissionManager.setupPermissionConfig();
+        log("§aDONE");
+
+        log("§3Getting links though servers");
         if (!cm.getConfig().getBoolean("useAsBauServer")) {
             getCommand("bau").setExecutor(new BauCommand());
         } else {
             this.getServer().getPluginManager().registerEvents(new WorldSystemUtil(), this);
+            log("§3Using the server as building server");
         }
+
         if (!cm.getConfig().getBoolean("useAsArena")) {
             getCommand("arena").setExecutor(new ArenaCommand());
-            //   getCommand("a").setExecutor(new ArenaCommand());
+        } else {
+            log("§3Using the server as arena");
         }
+
+        if (!cm.getConfig().getBoolean("useAsLobby")) {
+            getCommand("l").setExecutor(new LobbyCommand());
+            getCommand("hub").setExecutor(new LobbyCommand());
+            Bukkit.getPluginManager().registerEvents(new LobbyListener(), this);
+        } else {
+            log("Using the server as lobby server");
+        }
+
+        log("§aDone");
+
+        log("§6Successfully enabled BetaCore" + Misc.CODENAME + "v." + Misc.VERSION + ".");
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        log("§3Disabling BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + ".");
     }
 
 
@@ -131,12 +166,12 @@ public final class BetaCore extends JavaPlugin {
         return instance;
     }
 
-    public static void log(String message){
+    public static void log(String message) {
         Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + message);
     }
 
-    public static void debug(String message){
+    public static void debug(String message) {
         Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + "[§eDEBUG]" + message);
-        
+
     }
 }

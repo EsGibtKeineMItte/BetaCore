@@ -26,6 +26,8 @@ public class DataSetter implements Listener {
         Player player = e.getPlayer();
         PreparedStatement ps;
         WarPlayer wp = new WarPlayer(player.getUniqueId());
+        wp.syncWithConfigs();
+
 
 
 
