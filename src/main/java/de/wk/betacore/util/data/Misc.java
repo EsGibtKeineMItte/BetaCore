@@ -22,6 +22,12 @@ betacore.setrank.admin
  */
 
 
+/*
+Fehler:
+000: Hat einen Rang, der nicht existiert
+001: Hat keinen Rang
+ */
+
 public class Misc {
     private static String PREFIX = "§aBetaCore §7| ";
     public static String Prefix = "§aBetaCore §7| ";

@@ -29,6 +29,9 @@ public class JoinHandler implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
+        if (cm.getConfig().getBoolean("useAsLobby")) {
+            scoreboard(e.getPlayer());
+        }
         setPrefix();
         tablist(e.getPlayer());
         if (cm.getConfig().getBoolean("useAsLobby")) {
@@ -38,10 +41,6 @@ public class JoinHandler implements Listener {
 
         if (cm.getConfig().getLocation("Spawn") != null) {
             e.getPlayer().teleport(cm.getConfig().getLocation("Spawn"));
-        }
-
-        if (cm.getConfig().getBoolean("useAsLobby")) {
-            scoreboard(e.getPlayer());
         }
 
         if (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
