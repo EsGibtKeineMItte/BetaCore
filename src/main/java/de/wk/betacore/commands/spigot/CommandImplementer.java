@@ -1,6 +1,5 @@
 package de.wk.betacore.commands.spigot;
 
-import de.wk.betacore.BetaCore;
 import de.wk.betacore.appearance.Info;
 import de.wk.betacore.commands.spigot.manager.CommandInterface;
 import de.wk.betacore.commands.spigot.manager.CommandManager;
@@ -182,7 +181,7 @@ public class CommandImplementer {
                 }
                 cm.getPlayerData().reload();
                 MoneySystem.setMoney(Bukkit.getOfflinePlayer(args[1]).getUniqueId(), 0);
-                Info.sendInfo((Player) sender, Misc.Prefix + "&7Du hast das Geld von " + Bukkit.getOfflinePlayer(args[1]).getPlayer().getName());
+                Info.sendInfo((Player) sender, Misc.PREFIX + "&7Du hast das Geld von " + Bukkit.getOfflinePlayer(args[1]).getPlayer().getName());
                 joinHandler.update((Player) Bukkit.getOfflinePlayer(args[1]));
                 cm.getConfig().save();
             }
@@ -290,37 +289,37 @@ public class CommandImplementer {
                         switch (args[2].toLowerCase()){
                             case("admin"):
                                 RankSystem.setRank(target.getUniqueId(), "ADMIN");
-                                sender.sendMessage(Misc.Prefix + "§aRang geändert");
+                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
                                 break;
                             case("dev"):
                                 RankSystem.setRank(target.getUniqueId(), "DEV");
-                                sender.sendMessage(Misc.Prefix + "§aRang geändert");
+                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
                                 break;
                             case("mod"):
                                 RankSystem.setRank(target.getUniqueId(), "MOD");
-                                sender.sendMessage(Misc.Prefix + "§aRang geändert");
+                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
                                 break;
                             case("supp"):
                                 RankSystem.setRank(target.getUniqueId(), "SUPPORTER");
-                                sender.sendMessage(Misc.Prefix + "§aRang geändert");
+                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
                                 break;
                             case("builder"):
                                 RankSystem.setRank(target.getUniqueId(), "BUILDER");
-                                sender.sendMessage(Misc.Prefix + "§aRang geändert");
+                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
                                 break;
                             case("yt"):
-                                sender.sendMessage(Misc.Prefix + "§aRang geändert");
+                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
                                 RankSystem.setRank(target.getUniqueId(), "YOU_TUBER");
                             case("premium"):
-                                sender.sendMessage(Misc.Prefix + "§aRang geändert");
+                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
                                 RankSystem.setRank(target.getUniqueId(), "PREMIUM");
                                 break;
                             case("user"):
-                                sender.sendMessage(Misc.Prefix + "§aRang geändert");
+                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
                                 RankSystem.setRank(target.getUniqueId(), "USER");
                                 break;
                             default:
-                                sender.sendMessage(Misc.Prefix + "§7Dieser Rang existiert nicht.");
+                                sender.sendMessage(Misc.PREFIX + "§7Dieser Rang existiert nicht.");
                                 break;
                         }
                         if (Bukkit.getPlayer(args[1]) != null) {

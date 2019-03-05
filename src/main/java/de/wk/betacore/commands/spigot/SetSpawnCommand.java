@@ -29,7 +29,7 @@ public class SetSpawnCommand implements CommandExecutor {
         player.getWorld().setSpawnLocation(loc);
         Bukkit.getWorld("world").setSpawnLocation(loc);
         cm.getConfig().setLocation("Spawn", loc);
-        player.sendMessage(Misc.Prefix + "§7Du hast den Spawn gesetzt.");
+        player.sendMessage(Misc.PREFIX + "§7Du hast den Spawn gesetzt.");
         return false;
     }
 

@@ -19,7 +19,7 @@ public class LagCommand implements CommandExecutor {
             return false;
         }
         as.removeLaggs();
-        sender.sendMessage(Misc.Prefix + "§7Die Laggs müssten jetzt reduziert worden sein.");
+        sender.sendMessage(Misc.PREFIX + "§7Die Laggs müssten jetzt reduziert worden sein.");
         return true;
     }
 }

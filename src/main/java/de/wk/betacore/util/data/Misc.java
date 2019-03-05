@@ -25,16 +25,15 @@ Fehler:
  */
 
 public class Misc {
-    private static String PREFIX = "§aBetaCore §7| ";
-    public static String Prefix = "§aBetaCore §7| ";
-
-    public static String NOPERM = "§cDu hast nicht die benötigten Berechtigungen, um diesen Befehl auszuführen";
-    public static String MUTED = "§cDu bist gemuted und kannst keine Nachrichten senden";
-    public static String HELP = "§7Benutze §6/help§7 , um Hilfe zu erhalten";
-    public static String NOTINCONSOLE = PREFIX + "Du kannst diesen Befehl nicht in der Konsole verwenden";
-    public static String CONSOLEPREFIX = "§8[§aBetaCore§8]§7 ";
-    public static String CODENAME = "Brass ";
-    public static String VERSION = "0.3 ";
+    public final static String PREFIX = "§aBetaCore §7| ";
+    public static final String S_PREFIX = "§aBetaCore §7|";
+    public static final String NOPERM = "§cDu hast nicht die benötigten Berechtigungen, um diesen Befehl auszuführen";
+    public static final String MUTED = "§cDu bist gemuted und kannst keine Nachrichten senden";
+    public static final String HELP = "§7Benutze §6/help§7 , um Hilfe zu erhalten";
+    public static final String NOTINCONSOLE = PREFIX + "Du kannst diesen Befehl nicht in der Konsole verwenden";
+    public static final String CONSOLEPREFIX = "§8[§aBetaCore§8]§7 ";
+    public static final String CODENAME = "Brass ";
+    public static final String VERSION = "0.3 ";
 
 
     public static String getPREFIX() {

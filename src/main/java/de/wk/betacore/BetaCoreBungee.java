@@ -86,7 +86,7 @@ public class BetaCoreBungee extends Plugin {
                         log("§6Das Netzwerk startet in §e  Sekunden §6neu!");
                     case ("00:00:00"):
                         ProxyServer.getInstance().broadcast(new TextComponent("§6Das Netzwerk startet neu!"));
-                        BetaCoreBungee.getInstance().getProxy().stop(Misc.Prefix + "§cDas Netzwerk startet neu. Wir sind gleich wieder da:)");
+                        BetaCoreBungee.getInstance().getProxy().stop(Misc.PREFIX + "§cDas Netzwerk startet neu. Wir sind gleich wieder da:)");
                         restart = true;
 
                 }

@@ -1,9 +1,7 @@
 package de.wk.betacore.commands.bungee;
 
-import de.wk.betacore.BetaCore;
 import de.wk.betacore.BetaCoreBungee;
 import de.wk.betacore.util.data.Misc;
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -43,7 +41,7 @@ public class KickSystem extends Command {
             player.disconnect();
 
         } else {
-            sender.sendMessage(new TextComponent(Misc.Prefix + "§7Benutzung: §6/kick <Spieler> <Grund>"));
+            sender.sendMessage(new TextComponent(Misc.PREFIX + "§7Benutzung: §6/kick <Spieler> <Grund>"));
         }
 
 
