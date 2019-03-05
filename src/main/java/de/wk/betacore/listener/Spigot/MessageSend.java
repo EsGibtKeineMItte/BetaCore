@@ -50,7 +50,7 @@ public class MessageSend implements Listener {
         if (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             Chat.sendMessage(e.getPlayer(), onlinePlayers(), e.getMessage(), Rank.USER.getColor() + e.getPlayer().getName() + "§8 »§f");
         } else {
-            Chat.sendMessage(e.getPlayer(), onlinePlayers(), e.getMessage(), RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + "§7| " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + " (Name)§8 »" + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor(), true, true);
+            Chat.sendMessage(e.getPlayer(), onlinePlayers(), e.getMessage(), RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + "§7 |" + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + " (Name)§8 »" + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor(), true, true);
         }
     }
 

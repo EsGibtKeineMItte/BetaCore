@@ -7,18 +7,14 @@ beta.core.*
 
 betacore.gm.self
 betacore.gm.other
+betacore.money
+betacore.money.set
+betacore.money.pay
+betacore.money.clear
+betacore.core
+betacore.clearlagg
 
-
-betacore.setrank.*
-betacore.setrank.user
-betacore.setrank.premium
-betacore.setrank.youtuber
-betacore.setrank.archi
-betacore.setrank.supp
-betacore.setrank.mod
-betacore.setrank.dev
-betacore.setrank.admin
-
+betacore.setrank.
  */
 
 

@@ -14,7 +14,7 @@ public class LagCommand implements CommandExecutor {
     AntiLaggSystem as = new AntiLaggSystem();
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (!sender.hasPermission("alphacore.clearlagg")) {
+        if (!(sender.hasPermission("betacore.clearlagg") && sender.hasPermission("betacore.*"))) {
             sender.sendMessage(Misc.NOPERM);
             return false;
         }

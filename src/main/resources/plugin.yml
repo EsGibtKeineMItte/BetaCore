@@ -1,7 +1,7 @@
 name: BetaCore
 version: ${project.version}
 main: de.wk.betacore.BetaCore
-author: linksKeineMitte, YooyoNow, Zeanon, Chaoscaot
+author: linksKeineMitte, YoyoNow, Zeanon, Chaoscaot444
 api-version: 1.13
 description: Ein CoreSystem für Minecraft Server, speziell für WarShip und WarGear Server
 
@@ -32,4 +32,5 @@ commands:
   setspawn:
   hub:
   rl:
+  lag:
 

@@ -1,44 +1,62 @@
 package de.wk.betacore.listener.Spigot;
 
-import de.wk.betacore.appearance.ActionBar;
+import de.wk.betacore.appearance.ScoreboardUtils;
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.ranksystem.RankSystem;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import java.util.ArrayList;
 
 public class LobbyListener implements Listener {
 
-    ConfigManager cm = new ConfigManager();
-
-    BossBar bossBar = Bukkit.createBossBar(cm.getConfig().getString("BossBarTitle"), BarColor.BLUE, BarStyle.SEGMENTED_20);
-
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-
-        if (e.getPlayer().isOp()) {
-            e.getPlayer().setGameMode(GameMode.CREATIVE);
-        } else {
-            e.getPlayer().setGameMode(GameMode.ADVENTURE);
-            e.getPlayer().setFoodLevel(20);
-        }
-        if(cm.getConfig().getBoolean("useAsBauServer")){
-            bossBar.addPlayer(e.getPlayer());
-        }
-        e.getPlayer().teleport(cm.getConfig().getLocation("spawn"));
-        ActionBar.sendActionBar(e.getPlayer(), cm.getConfig().getString("actionbarTitle"));
-
+        ConfigManager cm = new ConfigManager();
+        BossBar bossBar = Bukkit.createBossBar(cm.getConfig().getString("BossBarTitle"), BarColor.BLUE, BarStyle.SEGMENTED_20);
+        bossBar.addPlayer(e.getPlayer());
+        scoreboard(e.getPlayer());
     }
-        @EventHandler
-        public void onDeath (PlayerDeathEvent e1){
-            e1.setDeathMessage("");
-            e1.setKeepInventory(true);
-            e1.getEntity().teleport(cm.getConfig().getLocation("spawn"));
-        }
 
+
+    public void scoreboard(Player e) {
+        ConfigManager cm = new ConfigManager();
+
+        ArrayList<String> sscore = new ArrayList<>();
+        sscore.add("&6");
+        sscore.add("&6> &7Money");
+        sscore.add("&6> &e" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId().toString() + ".money"));
+        sscore.add("&6> &7Rank");
+        sscore.add("&6> &e" + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName());
+        if (cm.getPlayerData().getInt(e.getPlayer().getUniqueId() + ".wsrank") < 501) {
+            sscore.add("&7");
+            sscore.add("&6> &7WSRank");
+            sscore.add("&6> &e&l" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId() + ".wsrank"));
+        }
+        if (cm.getPlayerData().getString(e.getPlayer().getUniqueId() + ".wsteam") != null) {
+            sscore.add("&6> &7Team");
+            sscore.add("&6> &e&l" + cm.getPlayerData().getString(e.getPlayer().getUniqueId() + ".team"));
+        }
+        sscore.add("&8");
+        sscore.add("&6> &7Joins");
+        sscore.add("&6> &e(Joins)");
+        sscore.add("&6> &7Play Time");
+        sscore.add("&6> &e(PlayTime)");
+        sscore.add("&9");
+        sscore.add("&6TheWarking.de");
+
+        String[] st = new String[sscore.size()];
+        int i = 0;
+        for (String string : sscore) {
+            st[i] = string;
+            i++;
+        }
+        ScoreboardUtils.updateScoreboard("&aTheWarKing", st, e.getPlayer());
     }
+}

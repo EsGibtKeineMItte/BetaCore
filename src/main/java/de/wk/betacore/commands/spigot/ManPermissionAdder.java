@@ -16,7 +16,7 @@ alphacore.setperm
  */
 
 public class ManPermissionAdder implements CommandExecutor {
-ConfigManager cm = new ConfigManager();
+    ConfigManager cm = new ConfigManager();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -25,15 +25,19 @@ ConfigManager cm = new ConfigManager();
             System.out.println("Noch kannst du diesen Befehl so nicht nutzen");
             return false;
         }
+
+        if (Bukkit.getPlayer(args[0]) == null) {
+            sender.sendMessage("§cDieser Spieler ist nicht online.");
+            return false;
+        }
+
+
+        Player target = Bukkit.getPlayer(args[0]);
         Player player = (Player) sender;
-        if (player.hasPermission("alphacore.setperms") || player.hasPermission("alphacore.*")) {
-          Player target = Bukkit.getPlayer(args[0]);
-          if(target != null){
-              PermissionManager.addPermission(args[1], target);
-              player.sendMessage(Misc.getPREFIX() + "§7Du hast dem Spieler: §6" + target.getName() + "§7 die Permission: §6 " + args[1] + " §7 hinzugefügt.");
-          }else{
-              player.sendMessage(Misc.getPREFIX() + "§cDieser Spieler nicht online");
-          }
+
+        if (player.hasPermission("betacore.setperms") || player.hasPermission("betacore.*")) {
+            PermissionManager.addPermission(args[1], target);
+            player.sendMessage(Misc.getPREFIX() + "§7Du hast dem Spieler: §6" + target.getName() + "§7 die Permission: §6 " + args[1] + " §7 hinzugefügt.");
         } else {
             player.sendMessage(Misc.getNOPERM());
         }

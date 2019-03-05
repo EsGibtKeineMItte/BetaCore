@@ -70,6 +70,7 @@ public final class BetaCore extends JavaPlugin {
         getCommand("pl").setExecutor(new PluginCommand());
         getCommand("setspawn").setExecutor(new SetSpawnCommand());
         getCommand("rl").setExecutor(new ReloadCommand());
+        getCommand("lag").setExecutor(new LagCommand());
     }
 
     public void regListeners() {
@@ -146,8 +147,8 @@ public final class BetaCore extends JavaPlugin {
         if (!cm.getConfig().getBoolean("useAsLobby")) {
             getCommand("l").setExecutor(new LobbyCommand());
             getCommand("hub").setExecutor(new LobbyCommand());
-            Bukkit.getPluginManager().registerEvents(new LobbyListener(), this);
         } else {
+            Bukkit.getPluginManager().registerEvents(new LobbyListener(), this);
             log("Using the server as lobby server");
         }
 

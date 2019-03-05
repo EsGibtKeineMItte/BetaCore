@@ -81,7 +81,7 @@ public class CommandImplementer {
 
             @Override
             public void run(CommandSender sender, String[] args) {
-                if (!(sender.hasPermission("betacore.money.set"))) {
+                if (!(sender.hasPermission("betacore.money.set") && sender.hasPermission("betacore.*"))) {
                     return;
                 }
                 cm.getPlayerData().reload();
@@ -120,7 +120,8 @@ public class CommandImplementer {
 
             @Override
             public void run(CommandSender sender, String[] args) {
-                if (!(sender.hasPermission("betacore.money.pay"))) {
+                if (!(sender.hasPermission("betacore.money.pay") && sender.hasPermission("betacore.*"))) {
+                    sender.sendMessage(Misc.NOPERM);
                     return;
                 }
                 if(!(sender instanceof Player)){

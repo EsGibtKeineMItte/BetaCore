@@ -24,20 +24,14 @@ import java.util.ArrayList;
 public class JoinHandler implements Listener {
     ConfigManager cm = new ConfigManager();
 
-    BossBar bossBar = Bukkit.createBossBar(cm.getConfig().getString("BossBarTitle"), BarColor.BLUE, BarStyle.SEGMENTED_20);
-
-
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        if (cm.getConfig().getBoolean("useAsLobby")) {
+            BossBar bossBar = Bukkit.createBossBar(cm.getConfig().getString("BossBarTitle"), BarColor.BLUE, BarStyle.SEGMENTED_20);
+            bossBar.addPlayer(e.getPlayer());
             scoreboard(e.getPlayer());
-        }
+
         setPrefix();
         tablist(e.getPlayer());
-        if (cm.getConfig().getBoolean("useAsLobby")) {
-            bossBar.addPlayer(e.getPlayer());
-        }
-
 
         if (cm.getConfig().getLocation("Spawn") != null) {
             e.getPlayer().teleport(cm.getConfig().getLocation("Spawn"));
@@ -46,7 +40,7 @@ public class JoinHandler implements Listener {
         if (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.setJoinMessage("");
         } else {
-            e.setJoinMessage(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + "§7| " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName() + " &ehat den Server betreten."));
+            e.setJoinMessage(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + "§7 | " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName() + " &ehat den Server betreten."));
         }
     }
 
@@ -55,14 +49,28 @@ public class JoinHandler implements Listener {
         if (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.setQuitMessage("");
         } else {
-            e.setQuitMessage(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + "§7| " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName() + " &ehat den Server verlassen"));
+            e.setQuitMessage(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + "§7 | " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName() + " &ehat den Server verlassen"));
         }
     }
 
     public void update(Player e) {
-        scoreboard(e);
+        scoreboard(e.getPlayer());
         tablist(e);
         setPrefix();
+    }
+
+
+    public void tablist(Player e) {
+        Tablist.Tablist("&aTheWarKing(n)&7dein WarShip Server", "&7Viel Spaß auf dem Server(n)&e(Name)&7!", e.getPlayer());
+    }
+
+    public void playerTablist(Player e) {
+        e.getPlayer().setDisplayName(RankSystem.getRank(e.getUniqueId()).getColor() + RankSystem.getRank(e.getUniqueId()).getName());
+        if (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
+            e.getPlayer().setPlayerListName(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName()));
+        } else {
+            e.getPlayer().setPlayerListName(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " §7| " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName()));
+        }
     }
 
     public void scoreboard(Player e) {
@@ -98,19 +106,6 @@ public class JoinHandler implements Listener {
             i++;
         }
         ScoreboardUtils.updateScoreboard("&aTheWarKing", st, e.getPlayer());
-    }
-
-    public void tablist(Player e) {
-        Tablist.Tablist("&aTheWarKing(n)&7dein WarShip Server", "&7Viel Spaß auf dem Server(n)&e(Name)&7!", e.getPlayer());
-    }
-
-    public void playerTablist(Player e) {
-        e.getPlayer().setDisplayName(RankSystem.getRank(e.getUniqueId()).getColor() + RankSystem.getRank(e.getUniqueId()).getName());
-        if (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
-            e.getPlayer().setPlayerListName(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName()));
-        } else {
-            e.getPlayer().setPlayerListName(Color.ConvertColor(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + " §7| " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName()));
-        }
     }
 
     public void setPrefix() {
