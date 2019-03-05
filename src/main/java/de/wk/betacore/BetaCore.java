@@ -2,6 +2,7 @@ package de.wk.betacore;
 
 import de.wk.betacore.commands.spigot.*;
 import de.wk.betacore.commands.spigot.commandmanager.CommandManagerOld;
+import de.wk.betacore.environment.Environment;
 import de.wk.betacore.listener.Spigot.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
 import de.wk.betacore.util.ConfigManager;
@@ -155,6 +156,11 @@ public final class BetaCore extends JavaPlugin {
         log("§aDone");
 
         log("§6Successfully enabled BetaCore" + Misc.CODENAME + "v." + Misc.VERSION + ".");
+        try {
+            Environment.getCurrent().restartDaily();
+        }catch (NullPointerException e){
+            debug("Fehler 002: Beim Restarten des Servers ist ein Fehler aufgetreten");
+        }
     }
 
     @Override

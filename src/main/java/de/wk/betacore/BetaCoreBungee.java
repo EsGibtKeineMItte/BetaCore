@@ -16,7 +16,7 @@ public class BetaCoreBungee extends Plugin {
 
 
     private static BetaCoreBungee instance;
-    private boolean restart;
+    public boolean restart;
 
     public void regCommands() {
         this.getProxy().getPluginManager().registerCommand(this, new PingCommand());

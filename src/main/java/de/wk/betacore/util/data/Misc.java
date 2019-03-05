@@ -22,6 +22,8 @@ betacore.setrank.
 Fehler:
 000: Hat einen Rang, der nicht existiert
 001: Hat keinen Rang
+
+002: Beim Restarten des Servers ist ein Fehler aufgetreten : Nullpointer Exception, es konnte keine passende Umgebung(Spigot oder Bungee gefunden werden.)
  */
 
 public class Misc {
@@ -39,15 +41,19 @@ public class Misc {
     public static String getPREFIX() {
         return PREFIX;
     }
+
     public static String getNOPERM() {
         return NOPERM;
     }
+
     public static String getMUTED() {
         return MUTED;
     }
+
     public static String getNOTINCONSOLE() {
         return NOTINCONSOLE;
     }
+
     public static String getHELP() {
         return HELP;
     }
