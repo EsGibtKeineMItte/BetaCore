@@ -32,5 +32,4 @@ public class customcommands {
         CommandManager.setImplemented("start", false);
         CommandManager.setImplemented("dict", false);
     }
-
 }
