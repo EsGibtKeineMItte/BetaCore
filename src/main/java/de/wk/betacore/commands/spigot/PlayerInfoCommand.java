@@ -17,7 +17,7 @@ public class PlayerInfoCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         ConfigManager cm = new ConfigManager();
 
-        if (!(sender.hasPermission("betacore.playerinfo") || (!(sender.hasPermission("betacore.*"))))) {
+        if (!(sender.hasPermission("betacore.playerinfo") && sender.hasPermission("betacore.*"))) {
             sender.sendMessage(Misc.getNOPERM());
             return false;
         }
