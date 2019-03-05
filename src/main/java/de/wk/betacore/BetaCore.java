@@ -2,6 +2,7 @@ package de.wk.betacore;
 
 import de.wk.betacore.commands.spigot.*;
 import de.wk.betacore.commands.spigot.commandmanager.CommandManagerOld;
+import de.wk.betacore.environment.Environment;
 import de.wk.betacore.listener.Spigot.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
 import de.wk.betacore.util.ConfigManager;
@@ -69,6 +70,9 @@ public final class BetaCore extends JavaPlugin {
         getCommand("si").setExecutor(new ServerInfoCommand());
         getCommand("pl").setExecutor(new PluginCommand());
         getCommand("setspawn").setExecutor(new SetSpawnCommand());
+        getCommand("rl").setExecutor(new ReloadCommand());
+        getCommand("lag").setExecutor(new LagCommand());
+        getCommand("dev").setExecutor(new TeamSzoneServer());
     }
 
     public void regListeners() {
@@ -145,14 +149,19 @@ public final class BetaCore extends JavaPlugin {
         if (!cm.getConfig().getBoolean("useAsLobby")) {
             getCommand("l").setExecutor(new LobbyCommand());
             getCommand("hub").setExecutor(new LobbyCommand());
-            Bukkit.getPluginManager().registerEvents(new LobbyListener(), this);
         } else {
+            Bukkit.getPluginManager().registerEvents(new LobbyListener(), this);
             log("Using the server as lobby server");
         }
 
         log("§aDone");
 
         log("§6Successfully enabled BetaCore" + Misc.CODENAME + "v." + Misc.VERSION + ".");
+        try {
+            Environment.getCurrent().restartDaily();
+        }catch (NullPointerException e){
+            debug("Fehler 002: Beim Restarten des Servers ist ein Fehler aufgetreten");
+        }
     }
 
     @Override

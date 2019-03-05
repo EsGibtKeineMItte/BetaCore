@@ -38,7 +38,7 @@ public class CommandImplementer {
 
             @Override
             public void run(CommandSender sender, String[] args) {
-                if (!(sender.hasPermission("betacore.money"))) {
+                if (!(sender.hasPermission("betacore.money")) && (!(sender.hasPermission("betacore.*")))) {
                     return;
                 }
 
@@ -80,7 +80,7 @@ public class CommandImplementer {
 
             @Override
             public void run(CommandSender sender, String[] args) {
-                if (!(sender.hasPermission("betacore.money.set"))) {
+                if (!(sender.hasPermission("betacore.money.set") && sender.hasPermission("betacore.*"))) {
                     return;
                 }
                 cm.getPlayerData().reload();
@@ -119,7 +119,8 @@ public class CommandImplementer {
 
             @Override
             public void run(CommandSender sender, String[] args) {
-                if (!(sender.hasPermission("betacore.money.pay"))) {
+                if (!(sender.hasPermission("betacore.money.pay") && sender.hasPermission("betacore.*"))) {
+                    sender.sendMessage(Misc.NOPERM);
                     return;
                 }
                 if(!(sender instanceof Player)){
@@ -180,7 +181,7 @@ public class CommandImplementer {
                 }
                 cm.getPlayerData().reload();
                 MoneySystem.setMoney(Bukkit.getOfflinePlayer(args[1]).getUniqueId(), 0);
-                Info.sendInfo((Player) sender, Misc.Prefix + "&7Du hast das Geld von " + Bukkit.getOfflinePlayer(args[1]).getPlayer().getName());
+                Info.sendInfo((Player) sender, Misc.PREFIX + "&7Du hast das Geld von " + Bukkit.getOfflinePlayer(args[1]).getPlayer().getName());
                 joinHandler.update((Player) Bukkit.getOfflinePlayer(args[1]));
                 cm.getConfig().save();
             }
@@ -258,15 +259,6 @@ public class CommandImplementer {
                         return;
                     }
                     int your = rankSystem.getRank(((Player) sender).getUniqueId()).getPriority();
-                    ArrayList<String> ranks = new ArrayList<>();
-                    ranks.add(Rank.ADMIN.toString().toUpperCase());
-                    ranks.add(Rank.DEV.toString().toUpperCase());
-                    ranks.add(Rank.MOD.toString().toUpperCase());
-                    ranks.add(Rank.SUPPORTER.toString().toUpperCase());
-                    ranks.add(Rank.BUILDER.toString().toUpperCase());
-                    ranks.add(Rank.YOU_TUBER.toString().toUpperCase());
-                    ranks.add(Rank.PREMIUM.toString().toUpperCase());
-                    ranks.add(Rank.USER.toString().toUpperCase());
 
                     ArrayList<String> priority = new ArrayList<>();
                     priority.add(Rank.ADMIN.getPriority() + "");
@@ -281,10 +273,6 @@ public class CommandImplementer {
                     Boolean isRank = true;
                     int their = 0;
 
-                    if (!(ranks.contains(args[2].toUpperCase()))) {
-                        sender.sendMessage(Misc.Prefix + "§7Dieser Rang existiert nicht");
-                        return;
-                    }
                     if(!(sender.hasPermission("betacore.setrank"))&& (!(sender.hasPermission("betacore.*")))) {
                         sender.sendMessage(Misc.NOPERM);
                         return;
@@ -298,40 +286,42 @@ public class CommandImplementer {
 
                     if (your < their || your == 0 || sender.isOp()) {
                         String rank = args[2].toUpperCase();
-                        switch (args[2]){
-                            case("Admin"):
+                        switch (args[2].toLowerCase()){
+                            case("admin"):
                                 RankSystem.setRank(target.getUniqueId(), "ADMIN");
-                                sender.sendMessage(Misc.Prefix + "§aRang geändert");
+                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
                                 break;
-                            case("DEV"):
+                            case("dev"):
                                 RankSystem.setRank(target.getUniqueId(), "DEV");
-                                sender.sendMessage(Misc.Prefix + "§aRang geändert");
+                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
                                 break;
-                            case("MOD"):
+                            case("mod"):
                                 RankSystem.setRank(target.getUniqueId(), "MOD");
-                                sender.sendMessage(Misc.Prefix + "§aRang geändert");
+                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
                                 break;
-                            case("SUPP"):
+                            case("supp"):
                                 RankSystem.setRank(target.getUniqueId(), "SUPPORTER");
-                                sender.sendMessage(Misc.Prefix + "§aRang geändert");
+                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
                                 break;
-                            case("ARCHI"):
+                            case("builder"):
                                 RankSystem.setRank(target.getUniqueId(), "BUILDER");
-                                sender.sendMessage(Misc.Prefix + "§aRang geändert");
+                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
                                 break;
-                            case("YT"):
+                            case("yt"):
+                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
                                 RankSystem.setRank(target.getUniqueId(), "YOU_TUBER");
-                            case("PREMIUM"):
+                            case("premium"):
+                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
                                 RankSystem.setRank(target.getUniqueId(), "PREMIUM");
-                            case("USER"):
+                                break;
+                            case("user"):
+                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
                                 RankSystem.setRank(target.getUniqueId(), "USER");
+                                break;
                             default:
-                                sender.sendMessage(Misc.Prefix + "§7Dieser Rang existiert nicht.");
+                                sender.sendMessage(Misc.PREFIX + "§7Dieser Rang existiert nicht.");
+                                break;
                         }
-
-
-
-                        Info.sendInfo((Player) sender, "&eRank geändert zu " + rank);
                         if (Bukkit.getPlayer(args[1]) != null) {
                             joinHandler.update(Bukkit.getPlayer(args[1]));
                         }
@@ -465,8 +455,8 @@ public class CommandImplementer {
                         sender.sendMessage("Nicht in der Console ausführbar");
                         return;
                     }
-                    if (!(sender.hasPermission("betacore.gm.self"))) {
-                        Info.sendInfo((Player) sender, "&cDu hast keine Rechte dazu!");
+                    if (!(sender.hasPermission("betacore.gm.self")) && (!(sender.hasPermission("betacore.*")))) {
+                        Info.sendInfo((Player) sender, Misc.NOPERM);
                         return;
                     }
                     if (!(StringUtils.isNumeric(args[0]))) {
@@ -494,7 +484,7 @@ public class CommandImplementer {
                         sender.sendMessage("Nicht in der Console ausführbar");
                         return;
                     }
-                    if (!(sender.hasPermission("betacore.gm.other"))) {
+                    if (!(sender.hasPermission("betacore.gm.other")) && (!(sender.hasPermission("betacore.*")))) {
                         Info.sendInfo((Player) sender, Misc.getNOPERM());
                         return;
                     }

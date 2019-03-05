@@ -21,7 +21,7 @@ public class TeamSystem {
                 BetaCore.debug("Hier wurde gerade versucht ein Team zu erstellen, dass es schon gibt, von einem Spieler, der nicht existiert?!");
                 return;
             }
-            teamAdmin.sendMessage(Misc.Prefix + "§7Dieses Team existiert bereits.");
+            teamAdmin.sendMessage(Misc.PREFIX + "§7Dieses Team existiert bereits.");
             return;
         }
 

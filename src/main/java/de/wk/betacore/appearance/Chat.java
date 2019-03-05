@@ -33,7 +33,7 @@ public class Chat {
         prefix = prefix.replaceAll("\\(World\\)", p.getWorld().getName()).replaceAll("\\(Name\\)", p.getName()).replaceAll("&?", "");
         System.out.println(Color.ConvertColor(Color.ConvertSpecial(prefix)));
         prefix = Color.ConvertColor(Color.ConvertSpecial(prefix));
-        if (allowColor  == true && allowSpecial == true) {
+        if (allowColor&& allowSpecial) {
             message = Color.ConvertColor(Color.ConvertSpecial(message));
         } else if (allowColor  == false && allowSpecial == true) {
             message = Color.ConvertSpecial(message);
@@ -42,7 +42,7 @@ public class Chat {
         } else {
 
         }
-        p.sendMessage(prefix + " §r" + message);
+        p.sendMessage(prefix + "§r" + message);
     }
 
     private static void send(Player[] all, Player p, String message, String prefix, Boolean allowColor, Boolean allowSpecial) {
@@ -58,10 +58,10 @@ public class Chat {
         } else {
 
         }
-        p.sendMessage(prefix + " §r" + message);
+        p.sendMessage(prefix + "§r" + message);
         for (Player a : all) {
             if (a != p) {
-                a.sendMessage(prefix + " §r" + message);
+                a.sendMessage(prefix + "§r" + message);
             }
         }
     }

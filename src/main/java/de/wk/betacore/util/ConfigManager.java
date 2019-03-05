@@ -43,10 +43,10 @@ public class ConfigManager {
             config.setBoolean("useAntiLaggSystem", true);
         }
 
-        if (config.getBoolean("useAsLobby")) {
-            config.setString("BossBarTitle", "§6Willkommen auf §eWarKing");
-            config.setString("actionbarTitle", "§6/bau §7um auf den Bauserver zu kommen ");
-        }
+
+        config.setString("BossBarTitle", "§6Willkommen auf §eWarKing");
+        config.setString("actionbarTitle", "§6/bau §7um auf den Bauserver zu kommen ");
+
 
         config.save();
 

@@ -14,12 +14,12 @@ public class LagCommand implements CommandExecutor {
     AntiLaggSystem as = new AntiLaggSystem();
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (!sender.hasPermission("alphacore.clearlagg")) {
+        if (!(sender.hasPermission("betacore.clearlagg") && sender.hasPermission("betacore.*"))) {
             sender.sendMessage(Misc.NOPERM);
             return false;
         }
         as.removeLaggs();
-        sender.sendMessage(Misc.Prefix + "§7Die Laggs müssten jetzt reduziert worden sein.");
+        sender.sendMessage(Misc.PREFIX + "§7Die Laggs müssten jetzt reduziert worden sein.");
         return true;
     }
 }

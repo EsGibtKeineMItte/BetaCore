@@ -28,14 +28,14 @@ public class AntiLaggSystem {
                 }
             }
         }
-        Bukkit.broadcastMessage(Misc.Prefix + "§7Aufgrund der aktuellen TPS-Zahlen wurden§6 " + removedEntities + " §7Entities entfernt.");
+        Bukkit.broadcastMessage(Misc.PREFIX + "§7Aufgrund der aktuellen TPS-Zahlen wurden§6 " + removedEntities + " §7Entities entfernt.");
         Bukkit.getScheduler().scheduleSyncDelayedTask(BetaCore.getInstance(), new Runnable() {
             @Override
             public void run() {
 
                 if (cm.getConfig().getBoolean("useAsBauServer") && Lag.getTPS() < 18) {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stoplag");
-                    Bukkit.broadcastMessage(Misc.Prefix + "§7Aufgrund der aktuellen TPS Zahlen wurde Stoplag aktiviert!");
+                    Bukkit.broadcastMessage(Misc.PREFIX + "§7Aufgrund der aktuellen TPS Zahlen wurde Stoplag aktiviert!");
                 }
             }
         }, 20 * 11);
