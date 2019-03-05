@@ -8,9 +8,6 @@ import de.wk.betacore.util.ConfigManager;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
 import org.bukkit.Bukkit;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,8 +23,6 @@ public class JoinHandler implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-            BossBar bossBar = Bukkit.createBossBar(cm.getConfig().getString("BossBarTitle"), BarColor.BLUE, BarStyle.SEGMENTED_20);
-            bossBar.addPlayer(e.getPlayer());
             scoreboard(e.getPlayer());
 
         setPrefix();

@@ -24,17 +24,17 @@ public class DataSetter implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        PreparedStatement ps;
         WarPlayer wp = new WarPlayer(player.getUniqueId());
         wp.syncWithConfigs();
-
-
 
 
         LocalDate today = LocalDate.now();
         if (cm.getPlayerData().getString(e.getPlayer().getUniqueId().toString() + ".firstjoin") == null) {
             cm.getPlayerData().setString(e.getPlayer().getUniqueId().toString() + ".firstjoin", today.toString());
             return;
+        }
+        if (cm.getPlayerData().getString(e.getPlayer().getUniqueId().toString() + ".name") == null) {
+            cm.getPlayerData().setString(e.getPlayer().getUniqueId().toString() + "name", e.getPlayer().getName());
         }
         cm.getPlayerData().setString(e.getPlayer().getUniqueId().toString() + ".lastjoin", today.toString());
     }

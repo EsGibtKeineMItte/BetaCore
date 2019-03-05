@@ -15,11 +15,14 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import java.util.ArrayList;
 
 public class LobbyListener implements Listener {
+    ConfigManager cm = new ConfigManager();
+
+    BossBar bossBar = Bukkit.createBossBar(cm.getConfig().getString("BossBarTitle"), BarColor.BLUE, BarStyle.SEGMENTED_20);
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        ConfigManager cm = new ConfigManager();
-        BossBar bossBar = Bukkit.createBossBar(cm.getConfig().getString("BossBarTitle"), BarColor.BLUE, BarStyle.SEGMENTED_20);
+
+
         bossBar.addPlayer(e.getPlayer());
         scoreboard(e.getPlayer());
     }

@@ -17,7 +17,7 @@ public class ReloadCommand implements CommandExecutor {
 
 
         if (args.length != 0) {
-            sender.sendMessage("§7Benutzung: §6/reload");
+            sender.sendMessage("§7Benutzung: §6/rl");
             return false;
         }
 
@@ -32,6 +32,7 @@ public class ReloadCommand implements CommandExecutor {
             Player player = (Player) sender;
             player.setGameMode(GameMode.CREATIVE);
             if (cm.getConfig().getLocation("Spawn") != null) {
+                player.sendMessage("§aDu wurdest zum Spawn teleportiert.");
                 player.teleport(cm.getConfig().getLocation("Spawn"));
             }
         }
