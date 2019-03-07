@@ -18,6 +18,6 @@ public class PingCommand extends Command {
           sender.sendMessage(new TextComponent(Misc.getNOTINCONSOLE()));
       }
       ProxiedPlayer player = (ProxiedPlayer) sender;
-      player.sendMessage(new TextComponent("§7Dein Ping ist: §6" + player.getPing() + " §7ms."));
+      player.sendMessage(new TextComponent("§7Du hast einen Ping von §6" + player.getPing() + " §7ms."));
     }
 }

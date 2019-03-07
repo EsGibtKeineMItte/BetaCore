@@ -31,7 +31,6 @@ public class Chat {
 
     private static void send(Player p, String message, String prefix, Boolean allowColor, Boolean allowSpecial) {
         prefix = prefix.replaceAll("\\(World\\)", p.getWorld().getName()).replaceAll("\\(Name\\)", p.getName()).replaceAll("&?", "");
-        System.out.println(Color.ConvertColor(Color.ConvertSpecial(prefix)));
         prefix = Color.ConvertColor(Color.ConvertSpecial(prefix));
         if (allowColor&& allowSpecial) {
             message = Color.ConvertColor(Color.ConvertSpecial(message));

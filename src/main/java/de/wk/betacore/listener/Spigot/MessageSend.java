@@ -1,13 +1,16 @@
 package de.wk.betacore.listener.Spigot;
 
+import com.google.common.annotations.Beta;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.appearance.Chat;
 import de.wk.betacore.appearance.Info;
 import de.wk.betacore.commands.spigot.CustomCommand;
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.DataManager;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
+import io.bluecube.thunderbolt.io.ThunderFile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -19,7 +22,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 
 public class MessageSend implements Listener {
-    ConfigManager cm = new ConfigManager();
+    ThunderFile data = DataManager.getPlayerData();
 
     public static Player[] onlinePlayers() {
         Player[] Online = new Player[Bukkit.getOnlinePlayers().size()];
@@ -34,7 +37,7 @@ public class MessageSend implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onChat(AsyncPlayerChatEvent e) {
         e.setCancelled(true);
-        if (cm.getPlayerData().getBoolean(e.getPlayer().getUniqueId().toString() + ".muted")) {
+        if (data.getBoolean(e.getPlayer().getUniqueId().toString() + ".muted")) {
             Info.sendInfo(e.getPlayer(), Misc.getMUTED());
             return;
         }
@@ -48,10 +51,10 @@ public class MessageSend implements Listener {
         }
 
         if (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
-            Chat.sendMessage(e.getPlayer(), onlinePlayers(), e.getMessage(), Rank.USER.getColor() + e.getPlayer().getName() + "§8 »§f");
+            Chat.sendMessage(e.getPlayer(), onlinePlayers(), e.getMessage(), Rank.USER.getColor() + e.getPlayer().getName() + "§8 » §f");
+            BetaCore.log(Rank.USER.getColor() + e.getPlayer().getName() + "§8 » §f" + e.getMessage());
         } else {
-            Chat.sendMessage(e.getPlayer(), onlinePlayers(), e.getMessage(), RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + "§7 | " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + "(Name)§8 »" + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor(), true, true);
-        }
+            Chat.sendMessage(e.getPlayer(), onlinePlayers(), e.getMessage(), RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + "§7 | " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + "(Name)§8 » " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor(), true, true);        }
+            BetaCore.log(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + "§7 | " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + "(Name)§8 » " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getMessage());
     }
-
 }

@@ -100,24 +100,24 @@ public class WarPlayer {
 
     }
 
-    public void manuellsetup(UUID uuid) {
+    public void manuellsetup() {
 
-        if (data.getString(uuid.toString() + ".name") == null) {
-            data.set(uuid.toString() + ".name", Bukkit.getOfflinePlayer(uuid).getName());
+        if (data.getString(uuid + ".name") == null) {
+            data.set(uuid+ ".name", Bukkit.getOfflinePlayer(uuid).getName());
         }
-        if (data.getString(uuid.toString() + ".rank") == null) {
-            data.set(uuid.toString() + ".rank", "USER");
-        }
-
-        if (data.getInt(uuid.toString() + ".money") == 0) {
-            data.set(uuid.toString() + ".money", 0);
+        if (data.getString(uuid + ".rank") == null) {
+            data.set(uuid + ".rank", "USER");
         }
 
-        if (data.getInt(uuid.toString() + ".wsrank") == 0) {
-            data.set(uuid.toString() + ".wsrank", -1);
+        if (data.getInt(uuid + ".money") == 0) {
+            data.set(uuid + ".money", 0);
         }
-        if (!data.getBoolean(uuid.toString() + ".muted")) {
-            data.set(uuid.toString() + ".muted", false);
+
+        if (data.getInt(uuid + ".wsrank") == 0) {
+            data.set(uuid + ".wsrank", -1);
+        }
+        if (!data.getBoolean(uuid + ".muted")) {
+            data.set(uuid + ".muted", false);
         }
 
         if (!data.getBoolean(uuid.toString() + ".banned")) {

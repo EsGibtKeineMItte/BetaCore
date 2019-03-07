@@ -2,9 +2,11 @@ package de.wk.betacore.commands.spigot;
 
 
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.DataManager;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.StringUtils;
 import de.wk.betacore.util.ranksystem.RankSystem;
+import io.bluecube.thunderbolt.io.ThunderFile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -12,6 +14,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class PlayerInfoCommand implements CommandExecutor {
+    ThunderFile data = DataManager.getPlayerData();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -38,15 +41,15 @@ public class PlayerInfoCommand implements CommandExecutor {
 
         sender.sendMessage("§6UUID: §7" + Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString());
         sender.sendMessage("§6Rank: §7" + RankSystem.getRank(Bukkit.getOfflinePlayer(args[0]).getUniqueId()).getColor() + RankSystem.getRank(Bukkit.getOfflinePlayer(args[0]).getUniqueId()));
-        if (cm.getPlayerData().getBoolean(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".muted")) {
+        if (data.getBoolean(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".muted")) {
             sender.sendMessage("§6Muted: §aTRUE");
         } else {
             sender.sendMessage("§6Muted: §cFALSE");
         }
-        sender.sendMessage("§6First Join: §7" + cm.getPlayerData().getString(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".firstjoin"));
-        sender.sendMessage("§6Last Join: §7" + cm.getPlayerData().getString(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".lastjoin"));
-        if (cm.getPlayerData().getString(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".wsteam") != null) {
-            sender.sendMessage("§6WS-Team: §7 " + cm.getPlayerData().getString(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".wsteam"));
+        sender.sendMessage("§6First Join: §7" + data.getString(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".firstjoin"));
+        sender.sendMessage("§6Last Join: §7" + data.getString(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".lastjoin"));
+        if (data.getString(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".wsteam") != null) {
+            sender.sendMessage("§6WS-Team: §7 " + data.getString(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".wsteam"));
         }
         return false;
     }

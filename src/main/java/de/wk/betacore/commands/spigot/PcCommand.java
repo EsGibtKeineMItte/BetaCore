@@ -1,7 +1,6 @@
 package de.wk.betacore.commands.spigot;
 
-;
-import de.wk.betacore.util.Player.WarPlayer;
+
 import de.wk.betacore.util.Record;
 import de.wk.betacore.util.data.Misc;
 import org.bukkit.command.Command;
