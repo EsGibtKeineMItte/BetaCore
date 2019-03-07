@@ -2,10 +2,12 @@ package de.wk.betacore.commands.spigot;
 
 import de.wk.betacore.objects.WarPlayer;
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.DataManager;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.StringUtils;
 import de.wk.betacore.util.teamsystem.Team;
 import de.wk.betacore.util.teamsystem.TeamSystem;
+import io.bluecube.thunderbolt.io.ThunderFile;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,6 +16,7 @@ import org.bukkit.entity.Player;
 
 public class TeamCommandTest implements CommandExecutor {
     TeamSystem teamSystem = new TeamSystem();
+    ThunderFile teams = DataManager.getTeams();
 /*
 betacore.teamlist
  */
@@ -23,6 +26,7 @@ betacore.teamlist
           0      1
     /team info <eigenes|anderes> 2
     /team join <Teamname> 2
+    /team create Teamname shortname 3
     /team leave 1
     /team setadmin <Spielername> 2
     /team getworld 2
@@ -58,15 +62,35 @@ betacore.teamlist
                     player.sendMessage(Misc.PREFIX + "§7Du bist in keinem WarShip-Team.");
                 }
             } else if (args[0].equalsIgnoreCase("list")) {
-                if (sender.hasPermission("betacore.teamlist") || sender.hasPermission("betacore.*")) {
-
+                if (!(sender.hasPermission("betacore.teamlist") || sender.hasPermission("betacore.*"))) {
+                    sender.sendMessage(Misc.NOPERM);
+                    return false;
+                }
+                sender.sendMessage(StringUtils.centerText("Aktive WarShip Teams:"));
+                for (String wst : TeamSystem.getActiveTeams()) {
+                    sender.sendMessage(wst);
+                }
+            } else if (args[0].equalsIgnoreCase("gs")) {
+                if (TeamSystem.isActiveWarShipTeam(wp.getTeam())) {
+                    sender.sendMessage("Diese Funktion kommt bald.");
                 }
 
+            } else {
+                sender.sendMessage("§7Nutze §6/team§7, um Hilfe zu erhalten");
             }
 
         }
 
         if (args.length == 2) {
+            if (args[0].equalsIgnoreCase("join")) {
+                if (TeamSystem.isActiveWarShipTeam(wp.getTeam())) {
+                    sender.sendMessage("§7Du bist bereits in einem WarShip Team.");
+                    return false;
+                }
+                TeamSystem ts = new TeamSystem();
+
+                sender.sendMessage("§7Du bist dem Team§6 " + args[1] + " §7 beigetreten.");
+            }
 
         }
 

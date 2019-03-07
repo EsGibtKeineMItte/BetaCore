@@ -107,23 +107,6 @@ public class TeamSystem {
         return playerData.getString(player.getUniqueId().toString() + ".wsteam");
     }
 
-    public void invitePlayer(String teamName, Player player) {
-        if (!(teamExists(teamName))) {
-            throw new NullPointerException("Das Team " + teamName + " existiert nicht.");
-        }
-        ArrayList<String> invitations = new ArrayList<>(teams.getStringList(teamName + ".invitations"));
-        invitations.add(player.getUniqueId().toString());
-
-        teams.set(teamName + "invitations", invitations);
-
-        try {
-            teams.save();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
 
     public void joinTeam(String teamName, Player player) {
         if (!(teamExists(teamName))) {
@@ -138,6 +121,11 @@ public class TeamSystem {
 
     }
 
+    public static ArrayList<String> getActiveTeams() {
+        return new ArrayList<>(teams.getStringList("activeTeams"));
+    }
+
+
     public static boolean isActiveWarShipTeam(String teamName) {
         if (teamName == null) {
             return false;
@@ -146,14 +134,31 @@ public class TeamSystem {
     }
 
 
-    public static ArrayList<String> getActiveTeams() {
-        return new ArrayList<>(teams.getStringList("activeTeams"));
-    }
-
     public boolean teamExists(String teamName) {
         return teams.getString(teamName + ".admin") == null || (!getActiveTeams().contains(teamName));
     }
 
+
+    //Invitations
+    public void invitePlayer(String teamName, Player player) {
+        if (!(teamExists(teamName))) {
+            throw new NullPointerException("Das Team " + teamName + " existiert nicht.");
+        }
+        ArrayList<String> invitations = new ArrayList<>(teams.getStringList(teamName + ".invitations"));
+        invitations.add(player.getUniqueId().toString());
+
+        teams.set(teamName + "invitations", invitations);
+
+        try {
+            teams.save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<String> getInvitations(String teamName) {
+        return new ArrayList<>(teams.getStringList(teamName + ".invitations"));
+    }
 
     /*
        public void createTeam(String teamName, String kuerzel, Player teamAdmin) {
