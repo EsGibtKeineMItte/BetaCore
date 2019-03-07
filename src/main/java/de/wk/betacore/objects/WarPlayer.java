@@ -147,7 +147,7 @@ public class WarPlayer {
 
 
     public String getWarShipTeam() {
-        return null;
+        return data.getString(uuid + ".wsteam");
     }
 
 

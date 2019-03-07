@@ -1,5 +1,6 @@
 package de.wk.betacore.commands.spigot;
 
+import de.wk.betacore.BetaCore;
 import de.wk.betacore.appearance.Info;
 import de.wk.betacore.commands.spigot.manager.CommandInterface;
 import de.wk.betacore.commands.spigot.manager.CommandManager;
@@ -42,12 +43,11 @@ public class CommandImplementer {
                     return;
                 }
 
-                if(!(sender instanceof Player)){
+                if (!(sender instanceof Player)) {
                     Misc.getNOTINCONSOLE();
                     return;
                 }
                 Player player = (Player) sender;
-                cm.getPlayerData().reload();
                 Info.sendInfo((Player) sender, "&7Du hast §6 " + MoneySystem.getMoney(player.getUniqueId()) + " §7 Coins.");
                 joinHandler.update((Player) sender);
                 cm.getConfig().save();
@@ -83,17 +83,22 @@ public class CommandImplementer {
                 if (!(sender.hasPermission("betacore.money.set") && sender.hasPermission("betacore.*"))) {
                     return;
                 }
-                cm.getPlayerData().reload();
+                //Core set money linkskeinemitte 100
 
-                if(!(StringUtils.isNumeric(args[2]))){
+                if (!(StringUtils.isNumeric(args[3]))) {
                     sender.sendMessage("Du musst eine Ganzzahl als Betrag angeben.");
                     return;
                 }
-                int i = Integer.parseInt(args[2]);
-                cm.getPlayerData().setInt(((Player) sender).getPlayer().getUniqueId().toString() + ".money", i);
-                Info.sendInfo((Player) sender, "&aMoney set to > " + cm.getPlayerData().getInt(((Player) sender).getUniqueId().toString() + ".money"));
+                if (Bukkit.getOfflinePlayer(args[2]) == null) {
+                    sender.sendMessage("§7Der angebene Spieler ist nicht online.");
+                    return;
+                }
+                OfflinePlayer target = Bukkit.getOfflinePlayer(args[2]);
+
+                int i = Integer.parseInt(args[3]);
+                MoneySystem.setMoney(target.getUniqueId(), i);
+                Info.sendInfo((Player) sender, "&aMoney auf §6" + MoneySystem.getMoney(target.getUniqueId()) + " §a gesetzt");
                 joinHandler.update((Player) sender);
-                cm.getConfig().save();
             }
 
             @Override
@@ -123,7 +128,7 @@ public class CommandImplementer {
                     sender.sendMessage(Misc.NOPERM);
                     return;
                 }
-                if(!(sender instanceof Player)){
+                if (!(sender instanceof Player)) {
                     sender.sendMessage(Misc.getNOTINCONSOLE());
                     return;
                 }
@@ -179,7 +184,6 @@ public class CommandImplementer {
                     CommandManager.wrongUsage(sender);
                     return;
                 }
-                cm.getPlayerData().reload();
                 MoneySystem.setMoney(Bukkit.getOfflinePlayer(args[1]).getUniqueId(), 0);
                 Info.sendInfo((Player) sender, Misc.PREFIX + "&7Du hast das Geld von " + Bukkit.getOfflinePlayer(args[1]).getPlayer().getName());
                 joinHandler.update((Player) Bukkit.getOfflinePlayer(args[1]));
@@ -249,83 +253,83 @@ public class CommandImplementer {
             @Override
             public void run(CommandSender sender, String[] args) {
 
-                if(!(sender.hasPermission("betacore.setrank")) && (!(sender.hasPermission("betacore.*")))){
+                if (!(sender.hasPermission("betacore.setrank")) && (!(sender.hasPermission("betacore.*")))) {
                     sender.sendMessage(Misc.NOPERM);
                     return;
                 }
 
-                    if (args.length != 3) {
-                        CommandManager.wrongUsage(sender);
-                        return;
-                    }
-                    int your = rankSystem.getRank(((Player) sender).getUniqueId()).getPriority();
+                if (args.length != 3) {
+                    CommandManager.wrongUsage(sender);
+                    return;
+                }
+                int your = rankSystem.getRank(((Player) sender).getUniqueId()).getPriority();
 
-                    ArrayList<String> priority = new ArrayList<>();
-                    priority.add(Rank.ADMIN.getPriority() + "");
-                    priority.add(Rank.DEV.getPriority() + "");
-                    priority.add(Rank.MOD.getPriority() + "");
-                    priority.add(Rank.SUPPORTER.getPriority() + "");
-                    priority.add(Rank.BUILDER.getPriority() + "");
-                    priority.add(Rank.YOU_TUBER.getPriority() + "");
-                    priority.add(Rank.PREMIUM.getPriority() + "");
-                    priority.add(Rank.USER.getPriority() + "");
+                ArrayList<String> priority = new ArrayList<>();
+                priority.add(Rank.ADMIN.getPriority() + "");
+                priority.add(Rank.DEV.getPriority() + "");
+                priority.add(Rank.MOD.getPriority() + "");
+                priority.add(Rank.SUPPORTER.getPriority() + "");
+                priority.add(Rank.BUILDER.getPriority() + "");
+                priority.add(Rank.YOU_TUBER.getPriority() + "");
+                priority.add(Rank.PREMIUM.getPriority() + "");
+                priority.add(Rank.USER.getPriority() + "");
 
-                    Boolean isRank = true;
-                    int their = 0;
+                Boolean isRank = true;
+                int their = 0;
 
-                    if(!(sender.hasPermission("betacore.setrank"))&& (!(sender.hasPermission("betacore.*")))) {
-                        sender.sendMessage(Misc.NOPERM);
-                        return;
-                    }
-                    if(Bukkit.getOfflinePlayer(args[1]) == null){
-                        sender.sendMessage("§cDieser Spieler existiert nicht");
-                        return;
-                    }
+                if (!(sender.hasPermission("betacore.setrank")) && (!(sender.hasPermission("betacore.*")))) {
+                    sender.sendMessage(Misc.NOPERM);
+                    return;
+                }
+                if (Bukkit.getOfflinePlayer(args[1]) == null) {
+                    sender.sendMessage("§cDieser Spieler existiert nicht");
+                    return;
+                }
 
                 OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 
-                    if (your < their || your == 0 || sender.isOp()) {
-                        String rank = args[2].toUpperCase();
-                        switch (args[2].toLowerCase()){
-                            case("admin"):
-                                RankSystem.setRank(target.getUniqueId(), "ADMIN");
-                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
-                                break;
-                            case("dev"):
-                                RankSystem.setRank(target.getUniqueId(), "DEV");
-                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
-                                break;
-                            case("mod"):
-                                RankSystem.setRank(target.getUniqueId(), "MOD");
-                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
-                                break;
-                            case("supp"):
-                                RankSystem.setRank(target.getUniqueId(), "SUPPORTER");
-                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
-                                break;
-                            case("builder"):
-                                RankSystem.setRank(target.getUniqueId(), "BUILDER");
-                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
-                                break;
-                            case("yt"):
-                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
-                                RankSystem.setRank(target.getUniqueId(), "YOU_TUBER");
-                            case("premium"):
-                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
-                                RankSystem.setRank(target.getUniqueId(), "PREMIUM");
-                                break;
-                            case("user"):
-                                sender.sendMessage(Misc.PREFIX + "§aRang geändert");
-                                RankSystem.setRank(target.getUniqueId(), "USER");
-                                break;
-                            default:
-                                sender.sendMessage(Misc.PREFIX + "§7Dieser Rang existiert nicht.");
-                                break;
-                        }
-                        if (Bukkit.getPlayer(args[1]) != null) {
-                            joinHandler.update(Bukkit.getPlayer(args[1]));
-                        }
+                if (your < their || your == 0 || sender.isOp()) {
+                    String rank = args[2].toUpperCase();
+                    switch (args[2].toLowerCase()) {
+                        case ("admin"):
+                            RankSystem.setRank(target.getUniqueId(), "ADMIN");
+                            sender.sendMessage(Misc.PREFIX + "§aRang geändert");
+                            break;
+                        case ("dev"):
+                            RankSystem.setRank(target.getUniqueId(), "DEV");
+                            sender.sendMessage(Misc.PREFIX + "§aRang geändert");
+                            break;
+                        case ("mod"):
+                            RankSystem.setRank(target.getUniqueId(), "MOD");
+                            sender.sendMessage(Misc.PREFIX + "§aRang geändert");
+                            break;
+                        case ("supp"):
+                            RankSystem.setRank(target.getUniqueId(), "SUPPORTER");
+                            sender.sendMessage(Misc.PREFIX + "§aRang geändert");
+                            break;
+                        case ("builder"):
+                            RankSystem.setRank(target.getUniqueId(), "BUILDER");
+                            sender.sendMessage(Misc.PREFIX + "§aRang geändert");
+                            break;
+                        case ("yt"):
+                            sender.sendMessage(Misc.PREFIX + "§aRang geändert");
+                            RankSystem.setRank(target.getUniqueId(), "YOU_TUBER");
+                        case ("premium"):
+                            sender.sendMessage(Misc.PREFIX + "§aRang geändert");
+                            RankSystem.setRank(target.getUniqueId(), "PREMIUM");
+                            break;
+                        case ("user"):
+                            sender.sendMessage(Misc.PREFIX + "§aRang geändert");
+                            RankSystem.setRank(target.getUniqueId(), "USER");
+                            break;
+                        default:
+                            sender.sendMessage(Misc.PREFIX + "§7Dieser Rang existiert nicht.");
+                            break;
                     }
+                    if (Bukkit.getPlayer(args[1]) != null) {
+                        joinHandler.update(Bukkit.getPlayer(args[1]));
+                    }
+                }
 
             }
 
@@ -356,6 +360,7 @@ public class CommandImplementer {
                     sender.sendMessage(Misc.NOPERM);
                     return;
                 }
+                de.wk.betacore.util.misc.StringUtils.centerText("§3BetaCore " + Misc.VERSION);
                 Info.sendInfo((Player) sender, "&6/core help &7Zeigt diese Nachricht an");
                 Info.sendInfo((Player) sender, "&6/core setrank <User> <Rank>&7Setzte den Rank eines Users");
                 Info.sendInfo((Player) sender, "&6/core info §7Zeigt Informationen über den Core an");
