@@ -1,10 +1,15 @@
 package de.wk.betacore.util;
 
 
+import com.google.common.annotations.Beta;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.util.data.Misc;
+import io.bluecube.thunderbolt.Thunderbolt;
+import io.bluecube.thunderbolt.exceptions.FileLoadException;
+import io.bluecube.thunderbolt.io.ThunderFile;
 import org.bukkit.Bukkit;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -15,8 +20,12 @@ public class ConfigManager {
     private Config teams = new Config("../../../Data/Teams.yml", BetaCore.getInstance());
     private Config permissions = new Config("../../../Data/Permissions.yml", BetaCore.getInstance());
 
+
     //
     public void setup() {
+
+
+
         ArrayList<String> activeTeams = new ArrayList<>();
         teams.setList("activeTeams", activeTeams);
 
@@ -49,12 +58,18 @@ public class ConfigManager {
 
 
         config.save();
-
         globalConfig.setString("LinkToArena-1", "Arena-1");
         globalConfig.setString("LinkToArena-2", "Arena-2");
         globalConfig.setString("LinkToBau", "Bau");
         globalConfig.setString("LinkToLobby", "Lobby-1");
+        if(globalConfig.getString("PathToData") == null){
+            globalConfig.setString("PathToDataFolder", "/home/netuser/BungeeCord-1.12/Data");
+            BetaCore.debug("Der Pfad zur den Daten wurde auf: /home/netuser/BungeeCord-1.12/Data \ngesetzt.");
+        }
+        globalConfig.setBoolean("setup", true);
+
     }
+
 
     public void setupMySQL() {
         if (getGlobalConfig().getString("MySQL.host") == null) {
@@ -113,6 +128,4 @@ public class ConfigManager {
     public Config getPermissions() {
         return permissions;
     }
-
-
 }

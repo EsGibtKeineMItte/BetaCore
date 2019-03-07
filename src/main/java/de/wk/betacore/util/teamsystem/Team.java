@@ -15,6 +15,7 @@ public class Team extends TeamSystem {
 
     public Team(String teamName, String shortName, Player teamAdmin) {
 
+
         createTeam(teamName, shortName, teamAdmin);
         this.teamName = teamName;
         this.shortName = shortName;

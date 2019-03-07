@@ -24,6 +24,7 @@ Fehler:
 001: Hat keinen Rang
 
 002: Beim Restarten des Servers ist ein Fehler aufgetreten : Nullpointer Exception, es konnte keine passende Umgebung(Spigot oder Bungee gefunden werden.)
+003: TeamAdmin existiert nicht.
  */
 
 public class Misc {

@@ -149,6 +149,13 @@
             <systemPath>${basedir}/lib/WorldSystem.jar</systemPath>
         </dependency>
         <dependency>
+            <artifactId>Thunderbolt</artifactId>
+            <version>LATEST</version>
+            <groupId>org.bluecube</groupId>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/Thunderbolt.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>${kotlin.version}</version>
