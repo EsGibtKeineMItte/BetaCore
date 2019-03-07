@@ -352,17 +352,14 @@ public class CommandImplementer {
 
             @Override
             public void run(CommandSender sender, String[] args) {
-                if (!(sender.hasPermission("betacore.core.help"))) {
+                if (!(sender.hasPermission("betacore.core.help") && sender.hasPermission("betacore.*"))) {
+                    sender.sendMessage(Misc.NOPERM);
                     return;
                 }
-                Info.sendInfo((Player) sender, "&7/core help");
-                Info.sendInfo((Player) sender, "&7Zeigt diese Nachricht an");
-                Info.sendInfo((Player) sender, "&7/core setrank [User] [Rank]");
-                Info.sendInfo((Player) sender, "&7Setzte den Rank eines Users");
-                Info.sendInfo((Player) sender, "&7/core info");
-                Info.sendInfo((Player) sender, "&7Zeigt Informationen über den Server an");
-                Info.sendInfo((Player) sender, "&7/core reload");
-                Info.sendInfo((Player) sender, "&7Reloade alle Config files");
+                Info.sendInfo((Player) sender, "&6/core help &7Zeigt diese Nachricht an");
+                Info.sendInfo((Player) sender, "&6/core setrank <User> <Rank>&7Setzte den Rank eines Users");
+                Info.sendInfo((Player) sender, "&6/core info §7Zeigt Informationen über den Core an");
+                Info.sendInfo((Player) sender, "&6/core reload §7Reloadet den Core &alle Configfiles");
             }
 
             @Override
