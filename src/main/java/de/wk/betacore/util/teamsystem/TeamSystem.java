@@ -15,7 +15,7 @@ import java.util.List;
 public class TeamSystem {
     ThunderFile cfg;
 
-    ThunderFile teams = DataManager.getTeams();
+    static ThunderFile teams = DataManager.getTeams();
     ThunderFile playerData = DataManager.getPlayerData();
 
 
@@ -59,9 +59,6 @@ public class TeamSystem {
         }
 
     }
-    /*
-    DataSetter -> Teams erstellen.
-     */
 
     public void addTeamMember(String teamName, Player player) {
         if (!(teamExists(teamName))) {
@@ -111,13 +108,13 @@ public class TeamSystem {
     }
 
     public void invitePlayer(String teamName, Player player) {
-     if(!(teamExists(teamName))){
-         throw new NullPointerException("Das Team " + teamName + " existiert nicht.");
-     }
-     ArrayList<String> invitations = new ArrayList<>(teams.getStringList(teamName + ".invitations"));
-     invitations.add(player.getUniqueId().toString());
+        if (!(teamExists(teamName))) {
+            throw new NullPointerException("Das Team " + teamName + " existiert nicht.");
+        }
+        ArrayList<String> invitations = new ArrayList<>(teams.getStringList(teamName + ".invitations"));
+        invitations.add(player.getUniqueId().toString());
 
-     teams.set(teamName + "invitations", invitations);
+        teams.set(teamName + "invitations", invitations);
 
         try {
             teams.save();
@@ -137,14 +134,20 @@ public class TeamSystem {
         }
         ArrayList<String> invitations = new ArrayList<>(teams.getStringList(teamName + ".invitations")); //Kann die null sein?
         invitations.remove(player.getUniqueId().toString());
-        //addTeamMember(teamName, player)
+        addTeamMember(teamName, player);
 
     }
 
+    public static boolean isActiveWarShipTeam(String teamName) {
+        if (teamName == null) {
+            return false;
+        }
+        return getActiveTeams().contains(teamName);
+    }
 
-    public ArrayList<String> getActiveTeams() {
-        ArrayList<String> activeTeams = new ArrayList<>(teams.getStringList("activeTeams"));
-        return activeTeams;
+
+    public static ArrayList<String> getActiveTeams() {
+        return new ArrayList<>(teams.getStringList("activeTeams"));
     }
 
     public boolean teamExists(String teamName) {

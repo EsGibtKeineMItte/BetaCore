@@ -1,12 +1,17 @@
 package de.wk.betacore.util.teamsystem;
 
 import de.wk.betacore.BetaCore;
+import de.wk.betacore.util.DataManager;
+import io.bluecube.thunderbolt.io.ThunderFile;
 import org.bukkit.entity.Player;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Team extends TeamSystem {
+
+    ThunderFile teams = DataManager.getTeams();
 
     private String teamName, shortName, dateOfCreation, world;
     private int rank, wonPrivateFights, wonPublicFights, wonEvents;
@@ -29,71 +34,92 @@ public class Team extends TeamSystem {
             throw new NullPointerException();
         }
         this.teamName = teamName;
-        this.shortName = cm.getTeams().getString(teamName + ".short");
-        this.dateOfCreation = cm.getTeams().getString(teamName + ".dateofCreation");
-        this.rank = cm.getTeams().getInt(teamName + ".rank");
-        this.wonPrivateFights = cm.getTeams().getInt(teamName + ".wonPrivateFights");
-        this.wonPublicFights = cm.getTeams().getInt(teamName + ".wonPublicFights");
-        this.wonEvents = cm.getTeams().getInt(teamName + ".wonEvents");
-        this.world = cm.getTeams().getString(teamName + ".world");
+        this.shortName = teams.getString(teamName + ".short");
+        this.dateOfCreation = teams.getString(teamName + ".dateofCreation");
+        this.rank = teams.getInt(teamName + ".rank");
+        this.wonPrivateFights = teams.getInt(teamName + ".wonPrivateFights");
+        this.wonPublicFights = teams.getInt(teamName + ".wonPublicFights");
+        this.wonEvents = teams.getInt(teamName + ".wonEvents");
+        this.world = teams.getString(teamName + ".world");
         this.teamName = teamName;
     }
 
 
-
     public void setShortName(String shortName) {
         this.shortName = shortName;
-        cm.getTeams().setString(teamName + ".short", shortName);
+        teams.set(teamName + ".short", shortName);
+        try {
+            teams.save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
     public void setDateOfCreation(String dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
-        cm.getTeams().setString(teamName + ".dateOfCreation", dateOfCreation);
+        teams.set(teamName + ".dateOfCreation", dateOfCreation);
+        try {
+            teams.save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
-    public void setWorld(String world) {
+    public void setWorld(String world) throws IOException {
         this.world = world;
-        cm.getTeams().setString(teamName + ".world", world);
+        teams.set(teamName + ".world", world);
+
+        teams.save();
+
     }
 
 
-    public void setRank(int rank) {
+    public void setRank(int rank) throws IOException {
         this.rank = rank;
-        cm.getTeams().setInt(teamName + ".rank", rank);
+        teams.set(teamName + ".rank", rank);
+
+        teams.save();
     }
 
     public void setWonPrivateFights(int wonPrivateFights) {
         this.wonPrivateFights = wonPrivateFights;
-        cm.getTeams().setInt(teamName + ".wonPrivateFights", wonPrivateFights);
+        teams.set(teamName + ".wonPrivateFights", wonPrivateFights);
+        try {
+            teams.save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
-    public void setWonPublicFights(int wonPublicFights) {
+    public void setWonPublicFights(int wonPublicFights) throws IOException {
         this.wonPublicFights = wonPublicFights;
-        cm.getTeams().setInt(teamName + ".wonPublicFights", wonPublicFights);
+        teams.set(teamName + ".wonPublicFights", wonPublicFights);
+        teams.save();
     }
 
 
-    public void setWonEvents(int wonEvents) {
+    public void setWonEvents(int wonEvents) throws IOException {
         this.wonEvents = wonEvents;
-        cm.getTeams().setInt(teamName + ".wonEvents", wonEvents);
+        teams.set(teamName + ".wonEvents", wonEvents);
+        teams.save();
     }
 
 
-    public void setTeamMembers(List<String> teamMembers) {
+    public void setTeamMembers(List<String> teamMembers) throws IOException {
         this.teamMembers = teamMembers;
-        cm.getTeams().setList(teamName + ".members", teamMembers);
+        teams.set(teamName + ".members", teamMembers);
+        teams.save();
     }
 
 
-    public void setTeamAdmin(Player teamAdmin) {
+    public void setTeamAdmin(Player teamAdmin) throws IOException {
         this.teamAdmin = teamAdmin;
-        cm.getTeams().setString(teamName + ".admin", teamAdmin.getUniqueId().toString());
+        teams.set(teamName + ".admin", teamAdmin.getUniqueId().toString());
+        teams.save();
     }
-
-
 
 
     public String getTeamName() {
@@ -142,11 +168,9 @@ public class Team extends TeamSystem {
 
 
 
-/*
+    /*
 
- */
-
-
+     */
 
 
 }

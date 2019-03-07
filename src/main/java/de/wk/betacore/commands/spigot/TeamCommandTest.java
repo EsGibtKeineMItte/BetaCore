@@ -21,12 +21,17 @@ public class TeamCommandTest implements CommandExecutor {
     /team setadmin <Spielername>
     /team getworld
     /team challenge <teamname> -> Wenn angenommen wird zu einen privaten Arena gesendet.
+    /team buy gs
+    /team gs
            0          1
+           3
      */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         ConfigManager cm = new ConfigManager();
         if (args.length == 0) {
+
+
 
         }
 

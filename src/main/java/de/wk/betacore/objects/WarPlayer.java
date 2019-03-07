@@ -2,18 +2,22 @@ package de.wk.betacore.objects;
 
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.DataManager;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.MySQL;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.teamsystem.TeamSystem;
+import io.bluecube.thunderbolt.io.ThunderFile;
 import org.bukkit.Bukkit;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
 public class WarPlayer {
     static ConfigManager cm = new ConfigManager();
+    ThunderFile data = DataManager.getPlayerData();
 
 
     private int wsrank;
@@ -39,10 +43,14 @@ public class WarPlayer {
             rs.next();
 
             if (rs.getInt(1) == 0) {
+                data.set(uuid.toString() + ".name", Bukkit.getOfflinePlayer(uuid).getName());
+                data.set(uuid.toString() + ".rank", "USER");
+                data.set(uuid.toString() + ".money", 0);
+                data.set(uuid.toString() + ".wsrank", -1);
+                data.set(uuid.toString() + ".muted", false);
+                data.set(uuid.toString() + ".banned", false);
 
-                cm.getPlayerData().setString(uuid.toString() + ".name", Bukkit.getOfflinePlayer(uuid).getName());
-                cm.getPlayerData().setBoolean(uuid.toString() + ".muted", false);
-                cm.getPlayerData().setInt(uuid.toString() + ".wsrank", -1);
+                data.save();
                 //Ist nicht im System.
                 MySQL.preparedStatement("INSERT INTO PLAYER_INFO(UUID, RANK, MONEY, JOIN_DATE) VALUES ('" + uuid.toString() + "'," + "DEFAULT, DEFAULT, DEFAULT);").executeUpdate();
 
@@ -51,17 +59,18 @@ public class WarPlayer {
                 rs2.next();
                 String rank = rs2.getString("RANK");
                 this.money = rs2.getInt("MONEY");
-                this.firstjoin = rs2.getTimestamp("JOIN_DATE").toString();
-                this.lastjoin = cm.getPlayerData().getString(uuid.toString() + ".lastjoin");
-                this.team = cm.getPlayerData().getString(uuid.toString() + ".team");
-                this.wsrank = cm.getPlayerData().getInt(uuid.toString() + ".wsrank");
+                this.firstjoin = data.getString(uuid.toString() + ".firstjoin");
+                this.lastjoin = data.getString(uuid.toString() + ".lastjoin");
+                this.team = data.getString(uuid.toString() + ".wsteam");
+                this.wsrank = data.getInt(uuid.toString() + ".wsrank");
                 this.rank = Rank.valueOf(rank);
                 this.uuid = uuid.toString();
                 this.name = Bukkit.getOfflinePlayer(uuid).getName();
             }
 
             System.out.println(MySQL.preparedStatement("SELECT * FROM PLAYER_INFO WHERE UUID = " + "'" + uuid.toString() + "';").executeQuery());
-        } catch (SQLException x) {
+        } catch (SQLException | IOException x) {
+            BetaCore.debug("Es ist ein Fehler, beim Erstellen des WarPlayers: " + Bukkit.getOfflinePlayer(uuid) + " aufgetreten.");
             x.printStackTrace();
         }
     }
@@ -73,12 +82,17 @@ public class WarPlayer {
             if (!(rs.getInt(1) == 0)) {
                 return;
             }
-            cm.getPlayerData().setString(uuid.toString() + ".name", Bukkit.getOfflinePlayer(uuid).getName());
-            cm.getPlayerData().setBoolean(uuid.toString() + ".muted", false);
-            cm.getPlayerData().setInt(uuid.toString() + ".wsrank", -1);
+            data.set(uuid.toString() + ".name", Bukkit.getOfflinePlayer(uuid).getName());
+            data.set(uuid.toString() + ".rank", "USER");
+            data.set(uuid.toString() + ".money", 0);
+            data.set(uuid.toString() + ".wsrank", -1);
+            data.set(uuid.toString() + ".muted", false);
+            data.set(uuid.toString() + ".banned", false);
+
+            data.save();
             //Ist nicht im System.
             MySQL.preparedStatement("INSERT INTO PLAYER_INFO(UUID, RANK, MONEY, JOIN_DATE) VALUES ('" + uuid.toString() + "'," + "DEFAULT, DEFAULT, DEFAULT);").executeUpdate();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             System.out.println(Misc.getPREFIX() + "Es ist ein Fehler beim Setzen der MySQL Werte für den Spieler " + Bukkit.getOfflinePlayer(uuid).getName() + " aufgetreten");
             System.out.println("");
             e.printStackTrace();
@@ -87,25 +101,32 @@ public class WarPlayer {
     }
 
     public void manuellsetup(UUID uuid) {
-        if (cm.getPlayerData().getString(uuid.toString() + ".rank") == null) {
-            cm.getPlayerData().setString(uuid.toString() + ".rank", "USER");
+
+        if (data.getString(uuid.toString() + ".name") == null) {
+            data.set(uuid.toString() + ".name", Bukkit.getOfflinePlayer(uuid).getName());
         }
-        if (cm.getPlayerData().getString(uuid.toString() + ".money") == null) {
-            cm.getPlayerData().setInt(uuid.toString() + ".money", 0);
+        if (data.getString(uuid.toString() + ".rank") == null) {
+            data.set(uuid.toString() + ".rank", "USER");
         }
-        //Name
-        if (cm.getPlayerData().getString(uuid.toString() + ".name") == null) {
-            cm.getPlayerData().setString(uuid.toString() + ".name", Bukkit.getOfflinePlayer(uuid).getName());
+
+        if (data.getInt(uuid.toString() + ".money") == 0) {
+            data.set(uuid.toString() + ".money", 0);
         }
-        if (!(cm.getPlayerData().getBoolean(uuid.toString() + ".muted"))) {
-            cm.getPlayerData().setBoolean(uuid.toString() + ".muted", false);
+
+        if (data.getInt(uuid.toString() + ".wsrank") == 0) {
+            data.set(uuid.toString() + ".wsrank", -1);
         }
-        if (cm.getPlayerData().getInt(uuid.toString() + ".wsrank") == 0) {
-            cm.getPlayerData().setInt(uuid.toString() + ".wsrank", 900);
+        if (!data.getBoolean(uuid.toString() + ".muted")) {
+            data.set(uuid.toString() + ".muted", false);
+        }
+
+        if (!data.getBoolean(uuid.toString() + ".banned")) {
+            data.set(uuid.toString() + ".banned", false);
         }
         try {
+            data.save();
             MySQL.preparedStatement("INSERT INTO PLAYER_INFO(UUID, RANK, MONEY, JOIN_DATE) VALUES ('" + uuid.toString() + "'," + "DEFAULT, DEFAULT, DEFAULT);").executeUpdate();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             System.out.println(Misc.getPREFIX() + "Es ist ein Fehler beim Setzen der SpielerDaten für den Spieler " + Bukkit.getOfflinePlayer(uuid).getName());
             System.out.println("");
             e.printStackTrace();
@@ -113,14 +134,17 @@ public class WarPlayer {
 
     }
 
-    public void setWarShipTeam() {
-
+    public void setWarShipTeam(String teamName) {
+      data.set(uuid + ".wsteam", teamName);
+        try {
+            data.save();
+        } catch (IOException e) {
+            BetaCore.debug("Es ist ein Fehler beim setzen des WarShip-Teams von " + name + " aufgetreten.");
+            e.printStackTrace();
+        }
     }
 
-    public void syncWithConfigs() {
-        cm.getPlayerData().setString(this.uuid + ".rank", rank.toString());
-        cm.getPlayerData().setInt(this.uuid + ".money", money);
-    }
+
 
     public String getWarShipTeam() {
         return null;
@@ -134,7 +158,6 @@ public class WarPlayer {
     public void ban(String reason, String time) {
 
     }
-
 
 
     public void mute(int muteID) {

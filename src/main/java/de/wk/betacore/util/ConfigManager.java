@@ -1,36 +1,20 @@
 package de.wk.betacore.util;
 
-
-import com.google.common.annotations.Beta;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.util.data.Misc;
-import io.bluecube.thunderbolt.Thunderbolt;
-import io.bluecube.thunderbolt.exceptions.FileLoadException;
-import io.bluecube.thunderbolt.io.ThunderFile;
 import org.bukkit.Bukkit;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class ConfigManager {
     private Config config = new Config("config.yml", BetaCore.getInstance());
     private Config globalConfig = new Config("../../../Data/gconfig.yml", BetaCore.getInstance());
-    private Config playerData = new Config("../../../Data/PlayerData.yml", BetaCore.getInstance());
     private Config teams = new Config("../../../Data/Teams.yml", BetaCore.getInstance());
     private Config permissions = new Config("../../../Data/Permissions.yml", BetaCore.getInstance());
 
 
     //
     public void setup() {
-
-
-
-        ArrayList<String> activeTeams = new ArrayList<>();
-        teams.setList("activeTeams", activeTeams);
-
-        playerData.setHeader("PlayerData");
-        playerData.save();
 
         if (!config.getBoolean("useGlobalConfig")) {
             config.setBoolean("useGlobalConfig", true);
@@ -117,9 +101,7 @@ public class ConfigManager {
         return globalConfig;
     }
 
-    public Config getPlayerData() {
-        return playerData;
-    }
+
 
     public Config getTeams() {
         return teams;

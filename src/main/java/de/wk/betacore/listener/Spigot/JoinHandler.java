@@ -5,8 +5,11 @@ import de.wk.betacore.appearance.Color;
 import de.wk.betacore.appearance.ScoreboardUtils;
 import de.wk.betacore.appearance.Tablist;
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.DataManager;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
+import de.wk.betacore.util.teamsystem.TeamSystem;
+import io.bluecube.thunderbolt.io.ThunderFile;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 
 public class JoinHandler implements Listener {
     ConfigManager cm = new ConfigManager();
+    ThunderFile data = DataManager.getPlayerData();
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
@@ -74,24 +78,20 @@ public class JoinHandler implements Listener {
         ArrayList<String> sscore = new ArrayList<>();
         sscore.add("&6");
         sscore.add("&6> &7Money");
-        sscore.add("&6> &e" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId().toString() + ".money"));
+        sscore.add("&6> &e" + data.getInt(e.getUniqueId().toString() + ".money"));
         sscore.add("&6> &7Rank");
         sscore.add("&6> &e" + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName());
-        if (cm.getPlayerData().getInt(e.getPlayer().getUniqueId() + ".wsrank") < 501) {
+        if (data.getInt(e.getPlayer().getUniqueId().toString() + ".wsrank") < 501) {
             sscore.add("&7");
             sscore.add("&6> &7WSRank");
-            sscore.add("&6> &e&l" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId() + ".wsrank"));
+            sscore.add("&6> &e&l" + data.getInt(e.getPlayer().getUniqueId().toString() + ".wsrank"));
         }
-        if (cm.getPlayerData().getString(e.getPlayer().getUniqueId() + ".wsteam") != null) {
-            sscore.add("&6> &7Team");
-            sscore.add("&6> &e&l" + cm.getPlayerData().getString(e.getPlayer().getUniqueId() + ".team"));
+        if (TeamSystem.isActiveWarShipTeam(data.getString(e.getUniqueId().toString() + ".wsteam"))) {
+            sscore.add("&6> &7Team: &e&l" + data.getString(e.getUniqueId() + ".wsteam"));
         }
         sscore.add("&8");
-        sscore.add("&6> &7Joins");
-        sscore.add("&6> &e(Joins)");
-        sscore.add("&6> &7Play Time");
-        sscore.add("&6> &e(PlayTime)");
-        sscore.add("&9");
+        sscore.add("&6> &7Joins &e(Joins)");
+        sscore.add("&6> &7Play Time &e(PlayTime)");
         sscore.add("&6TheWarking.de");
 
         String[] st = new String[sscore.size()];
