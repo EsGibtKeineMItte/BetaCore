@@ -6,6 +6,7 @@ import de.wk.betacore.environment.Environment;
 import de.wk.betacore.listener.Spigot.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.DataManager;
 import de.wk.betacore.util.MySQL;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.CommandRemover;
@@ -14,10 +15,13 @@ import de.wk.betacore.util.travel.ArenaCommand;
 import de.wk.betacore.util.travel.BauCommand;
 import de.wk.betacore.util.travel.FastTravelSystem;
 import de.wk.betacore.util.travel.LobbyCommand;
+import io.bluecube.thunderbolt.exceptions.FileLoadException;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public final class BetaCore extends JavaPlugin {
 
@@ -108,9 +112,14 @@ public final class BetaCore extends JavaPlugin {
         removeCommands();
         log("§aDONE");
 
-        log("§3Setting up Configs... ");
+        log("§3Setting up Files... ");
         cm.setup();
         cm.setupMySQL();
+        try {
+            DataManager.setup();
+        } catch (IOException | FileLoadException e) {
+            e.printStackTrace();
+        }
         log("§aDONE");
 
         log("§3Establishing MySQL Connection...");
@@ -158,7 +167,7 @@ public final class BetaCore extends JavaPlugin {
 
         log("§6Successfully enabled BetaCore" + Misc.CODENAME + "v." + Misc.VERSION + ".");
         try {
-            Environment.getCurrent().restartDaily();
+            Objects.requireNonNull(Environment.getCurrent()).restartDaily();
         }catch (NullPointerException e){
             debug("Fehler 002: Beim Restarten des Servers ist ein Fehler aufgetreten");
         }

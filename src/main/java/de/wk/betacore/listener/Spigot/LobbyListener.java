@@ -1,8 +1,11 @@
 package de.wk.betacore.listener.Spigot;
 
 import de.wk.betacore.appearance.ScoreboardUtils;
+import de.wk.betacore.util.Config;
 import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.util.DataManager;
 import de.wk.betacore.util.ranksystem.RankSystem;
+import io.bluecube.thunderbolt.io.ThunderFile;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -16,6 +19,7 @@ import java.util.ArrayList;
 
 public class LobbyListener implements Listener {
     ConfigManager cm = new ConfigManager();
+    ThunderFile data = DataManager.getPlayerData();
 
     BossBar bossBar = Bukkit.createBossBar(cm.getConfig().getString("BossBarTitle"), BarColor.BLUE, BarStyle.SEGMENTED_20);
 
@@ -29,22 +33,21 @@ public class LobbyListener implements Listener {
 
 
     public void scoreboard(Player e) {
-        ConfigManager cm = new ConfigManager();
 
         ArrayList<String> sscore = new ArrayList<>();
         sscore.add("&6");
         sscore.add("&6> &7Money");
-        sscore.add("&6> &e" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId().toString() + ".money"));
+        sscore.add("&6> &e" + data.getInt(e.getPlayer().getUniqueId().toString() + ".money"));
         sscore.add("&6> &7Rank");
         sscore.add("&6> &e" + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName());
-        if (cm.getPlayerData().getInt(e.getPlayer().getUniqueId() + ".wsrank") < 501) {
+        if (data.getInt(e.getPlayer().getUniqueId() + ".wsrank") < 501) {
             sscore.add("&7");
             sscore.add("&6> &7WSRank");
-            sscore.add("&6> &e&l" + cm.getPlayerData().getInt(e.getPlayer().getUniqueId() + ".wsrank"));
+            sscore.add("&6> &e&l" + data.getInt(e.getPlayer().getUniqueId() + ".wsrank"));
         }
-        if (cm.getPlayerData().getString(e.getPlayer().getUniqueId() + ".wsteam") != null) {
+        if (data.getString(e.getPlayer().getUniqueId() + ".wsteam") != null) {
             sscore.add("&6> &7Team");
-            sscore.add("&6> &e&l" + cm.getPlayerData().getString(e.getPlayer().getUniqueId() + ".team"));
+            sscore.add("&6> &e&l" + data.getString(e.getPlayer().getUniqueId() + ".team"));
         }
         sscore.add("&8");
         sscore.add("&6> &7Joins");
