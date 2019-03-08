@@ -47,8 +47,8 @@ public class ConfigManager {
         globalConfig.setString("LinkToBau", "Bau");
         globalConfig.setString("LinkToLobby", "Lobby-1");
         if(globalConfig.getString("PathToData") == null){
-            globalConfig.setString("PathToDataFolder", "/home/netuser/BungeeCord-1.12/Data");
-            BetaCore.debug("Der Pfad zur den Daten wurde auf: /home/netuser/BungeeCord-1.12/Data \ngesetzt.");
+            globalConfig.setString("PathToDataFolder", "/home/netuser/BUNGEECORD-1.12/Data");
+            BetaCore.debug("Der Pfad zur den Daten wurde auf: /home/netuser/BUNGEECORD-1.12/Data \ngesetzt.");
         }
         globalConfig.setBoolean("setup", true);
 

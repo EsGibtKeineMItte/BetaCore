@@ -7,6 +7,7 @@ import de.wk.betacore.util.*;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.Rank;
 import io.bluecube.thunderbolt.io.ThunderFile;
+
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -122,7 +123,7 @@ public class WarPlayer {
             data.save();
             MySQL.preparedStatement("INSERT INTO PLAYER_INFO(UUID, RANK, MONEY, JOIN_DATE) VALUES ('" + uuid.toString() + "'," + "DEFAULT, DEFAULT, DEFAULT);").executeUpdate();
         } catch (SQLException | IOException e) {
-            System.out.println(Misc.getPREFIX() + "Es ist ein Fehler beim Setzen der SpielerDaten für den Spieler " + Bukkit.getOfflinePlayer(uuid).getName());
+            System.out.println(Misc.getPREFIX() + "Es ist ein Fehler beim Setzen der SpielerDaten für den Spieler " + NameFetcher.getName(uuid));
             System.out.println("");
             e.printStackTrace();
         }
@@ -144,11 +145,11 @@ public class WarPlayer {
         return data.getString(uuid + ".wsteam");
     }
 
-    public boolean isBanned(){
+    public boolean isBanned() {
         return banned;
     }
 
-    public boolean isMuted(){
+    public boolean isMuted() {
         return muted;
     }
 

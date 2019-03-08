@@ -7,7 +7,6 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,16 +26,6 @@ public enum Environment {
         }
     }
 
-    public String getPathToDataFolder() {
-        if (this == BUNGEECORD) {
-            String pluginDataFolder = BetaCoreBungee.getInstance().getDataFolder().getAbsolutePath();
-            String path = pluginDataFolder + "/../../../Data";
-            return path;
-        }
-        String pluginDatafolder = BetaCore.getInstance().getDataFolder().getAbsolutePath();
-        String path = pluginDatafolder + "/../../../Data";
-        return path;
-    }
 
     public void restartServer() {
         if (this == SPIGOT) {
@@ -52,8 +41,8 @@ public enum Environment {
 
 
     public void restartDaily() {
-        if (this == SPIGOT) {
-            Bukkit.getScheduler().scheduleSyncRepeatingTask(BetaCore.getInstance(), () -> {
+        if(this == SPIGOT){
+            Bukkit.getScheduler().scheduleSyncRepeatingTask(BetaCore.getInstance(), () ->{
                 SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
                 Date d = new Date();
                 String f = df.format(d);
@@ -86,7 +75,7 @@ public enum Environment {
                         restartServer();
                 }
             }, 0L, 20);
-        } else if (this == BUNGEECORD) {
+        }else if(this == BUNGEECORD){
             ProxyServer.getInstance().getScheduler().schedule(BetaCoreBungee.getInstance(), new Runnable() {
 
                 private int timer = 0;
@@ -143,6 +132,4 @@ public enum Environment {
 
         }
     }
-
-
 }

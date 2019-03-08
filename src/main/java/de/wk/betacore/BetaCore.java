@@ -3,6 +3,7 @@ package de.wk.betacore;
 import de.wk.betacore.commands.spigot.*;
 import de.wk.betacore.commands.spigot.commandmanager.CommandManagerOld;
 import de.wk.betacore.environment.Environment;
+import de.wk.betacore.environment.EnvironmentManager;
 import de.wk.betacore.listener.Spigot.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
 import de.wk.betacore.datamanager.ConfigManager;
@@ -16,6 +17,7 @@ import de.wk.betacore.util.travel.FastTravelSystem;
 import de.wk.betacore.util.travel.LobbyCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -83,8 +85,8 @@ public final class BetaCore extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new CustomCommand(), this);
         Bukkit.getPluginManager().registerEvents(new PermissionListener(), this);
         this.getServer().getPluginManager().registerEvents(RecordListener.getInstance(), this);
-        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-        this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new FastTravelSystem());
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BUNGEECORD");
+        this.getServer().getMessenger().registerIncomingPluginChannel(this, "BUNGEECORD", new FastTravelSystem());
     }
 
 
@@ -92,7 +94,7 @@ public final class BetaCore extends JavaPlugin {
     public void onEnable() {
 
         log("§6Enabling BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + "...");
-
+        EnvironmentManager.setSpigot(true);
 
         log("§6Setting up command-framework... ");
         instance = this;
@@ -157,11 +159,9 @@ public final class BetaCore extends JavaPlugin {
         log("§aDone");
 
         log("§6Successfully enabled BetaCore" + Misc.CODENAME + "v." + Misc.VERSION + ".");
-        try {
-            Objects.requireNonNull(Environment.getCurrent()).restartDaily();
-        } catch (NullPointerException e) {
-            debug("Fehler 002: Beim Restarten des Servers ist ein Fehler aufgetreten");
-        }
+
+
+      //  Objects.requireNonNull(Environment.getCurrent()).restartDaily();
     }
 
     @Override

@@ -12,12 +12,12 @@ By ThexXTURBOXx
  */
 
 /*
-Uncomment this if you want the helper method for BungeeCord:
+Uncomment this if you want the helper method for BUNGEECORD:
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 */
 
 /*
-Uncomment this if you want the helper method for Bukkit/Spigot:
+Uncomment this if you want the helper method for Bukkit/SPIGOT:
 import org.bukkit.entity.Player;
 */
 
@@ -30,7 +30,7 @@ public class UUIDFetcher {
      * @param player The player
      * @return The UUID of the given player
      */
-    //Uncomment this if you want the helper method for BungeeCord:
+    //Uncomment this if you want the helper method for BUNGEECORD:
 	/*
 	public static UUID getUUID(ProxiedPlayer player) {
 		return getUUID(player.getName());
@@ -41,7 +41,7 @@ public class UUIDFetcher {
      * @param player The player
      * @return The UUID of the given player
      */
-    //Uncomment this if you want the helper method for Bukkit/Spigot:
+    //Uncomment this if you want the helper method for Bukkit/SPIGOT:
 	/*
 	public static UUID getUUID(Player player) {
 		return getUUID(player.getName());

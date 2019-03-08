@@ -30,7 +30,7 @@ public class PingListenerB implements Listener {
         }
         ServerPing.PlayerInfo[] pi = new ServerPing.PlayerInfo[]{new ServerPing.PlayerInfo("§6Dein offizieller WarShip Server", "0"), new ServerPing.PlayerInfo("§eServerversion: §a1.12-1.13", "0"),new ServerPing.PlayerInfo("§e", "0"),new ServerPing.PlayerInfo("", "0")};
         ping.setPlayers(new ServerPing.Players(250, BetaCoreBungee.getInstance().getProxy().getOnlineCount(), pi));
-      //  ping.setVersion(new Protocol("BungeeCord 1.12-1.13", 404));
+      //  ping.setVersion(new Protocol("BUNGEECORD 1.12-1.13", 404));
         e.setResponse(ping);
     }
 

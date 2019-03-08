@@ -11,7 +11,7 @@ public class FastTravelSystem implements PluginMessageListener {
 
     @Override
     public void onPluginMessageReceived(String channel, Player player, byte[] message) {
-        if(!channel.equals("BungeeCord"))return;
+        if(!channel.equals("BUNGEECORD"))return;
         ByteArrayDataInput input = ByteStreams.newDataInput(message);
         String subchannel = input.readUTF();
     }
@@ -20,6 +20,6 @@ public class FastTravelSystem implements PluginMessageListener {
         ByteArrayDataOutput output = ByteStreams.newDataOutput();
         output.writeUTF("Connect");
         output.writeUTF(server);
-        player.sendPluginMessage(BetaCore.getInstance(), "BungeeCord", output.toByteArray());
+        player.sendPluginMessage(BetaCore.getInstance(), "BUNGEECORD", output.toByteArray());
     }
 }

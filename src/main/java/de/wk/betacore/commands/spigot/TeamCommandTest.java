@@ -100,7 +100,11 @@ betacore.teamlist
                 }
                 TeamSystem ts = new TeamSystem();
                 ts.joinTeam(args[1], player);
-                sender.sendMessage("§7Du bist dem Team§6 " + args[1] + " §7 beigetreten.");
+                player.sendMessage("§7Du bist dem Team§6 " + args[1] + " §7 beigetreten.");
+            } else if (args[0].equalsIgnoreCase("challenge")) {
+                player.sendMessage("Dieser Command kommt noch.");
+            } else {
+                player.sendMessage("§7Nutze §6/team§7, um Hilfe zu erhalten");
             }
         }
 

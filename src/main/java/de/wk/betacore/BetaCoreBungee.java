@@ -2,6 +2,7 @@ package de.wk.betacore;
 
 import de.wk.betacore.commands.bungee.PingCommand;
 import de.wk.betacore.datamanager.DataManager;
+import de.wk.betacore.environment.EnvironmentManager;
 import de.wk.betacore.listener.Bungee.PingListenerB;
 import de.wk.betacore.util.data.Misc;
 import io.bluecube.thunderbolt.exceptions.FileLoadException;
@@ -33,6 +34,7 @@ public class BetaCoreBungee extends Plugin {
     public void onEnable() {
         log("§3Enabling BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + "...");
         log("");
+        EnvironmentManager.setBungeecord(true);
 
 
         instance = this;
