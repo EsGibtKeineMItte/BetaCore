@@ -16,7 +16,7 @@ public class DataManager {
 
     public static void setup() throws IOException, FileLoadException {
         String pluginDatafolder = BetaCore.getInstance().getDataFolder().getAbsolutePath();
-        String path = pluginDatafolder + "../../../Data";
+        String path = pluginDatafolder + "/../../../Data";
         BetaCore.debug(path);
 
         playerData = Thunderbolt.load("playerdata", path);

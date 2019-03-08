@@ -13,11 +13,12 @@ import org.bukkit.Bukkit;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class WarPlayer {
     static ConfigManager cm = new ConfigManager();
-    ThunderFile data = DataManager.getPlayerData();
+    static ThunderFile data = DataManager.getPlayerData();
 
 
     private int wsrank;
@@ -43,12 +44,16 @@ public class WarPlayer {
             rs.next();
 
             if (rs.getInt(1) == 0) {
+                LocalDate now = LocalDate.now();
                 data.set(uuid.toString() + ".name", Bukkit.getOfflinePlayer(uuid).getName());
                 data.set(uuid.toString() + ".rank", "USER");
                 data.set(uuid.toString() + ".money", 0);
                 data.set(uuid.toString() + ".wsrank", -1);
                 data.set(uuid.toString() + ".muted", false);
                 data.set(uuid.toString() + ".banned", false);
+                data.set(uuid.toString() + "firstjoin", now.toString());
+                data.set(uuid.toString() + "lastjoin", now.toString());
+
 
                 data.save();
                 //Ist nicht im System.
@@ -82,12 +87,15 @@ public class WarPlayer {
             if (!(rs.getInt(1) == 0)) {
                 return;
             }
+            LocalDate now = LocalDate.now();
             data.set(uuid.toString() + ".name", Bukkit.getOfflinePlayer(uuid).getName());
             data.set(uuid.toString() + ".rank", "USER");
             data.set(uuid.toString() + ".money", 0);
             data.set(uuid.toString() + ".wsrank", -1);
             data.set(uuid.toString() + ".muted", false);
             data.set(uuid.toString() + ".banned", false);
+            data.set(uuid + "firstjoin", now.toString());
+            data.set(uuid + "lastjoin", now.toString());
 
             data.save();
             //Ist nicht im System.
@@ -100,29 +108,20 @@ public class WarPlayer {
 
     }
 
-    public void manuellsetup() {
+    public static void manuellsetup(UUID uuid) {
+        LocalDate now = LocalDate.now();
 
-        if (data.getString(uuid + ".name") == null) {
-            data.set(uuid+ ".name", Bukkit.getOfflinePlayer(uuid).getName());
-        }
-        if (data.getString(uuid + ".rank") == null) {
-            data.set(uuid + ".rank", "USER");
-        }
+        data.set(uuid + ".name", Bukkit.getOfflinePlayer(uuid).getName());
+        data.set(uuid + ".money", 0);
+        data.set(uuid + ".wsrank", -1);
+        data.set(uuid + ".wsteam", "");
+        data.set(uuid + "firstjoin", now.toString());
+        data.set(uuid + "lastjoin", now.toString());
 
-        if (data.getInt(uuid + ".money") == 0) {
-            data.set(uuid + ".money", 0);
-        }
 
-        if (data.getInt(uuid + ".wsrank") == 0) {
-            data.set(uuid + ".wsrank", -1);
-        }
-        if (!data.getBoolean(uuid + ".muted")) {
-            data.set(uuid + ".muted", false);
-        }
+        data.set(uuid + ".muted", false);
 
-        if (!data.getBoolean(uuid.toString() + ".banned")) {
-            data.set(uuid.toString() + ".banned", false);
-        }
+        data.set(uuid.toString() + ".banned", false);
         try {
             data.save();
             MySQL.preparedStatement("INSERT INTO PLAYER_INFO(UUID, RANK, MONEY, JOIN_DATE) VALUES ('" + uuid.toString() + "'," + "DEFAULT, DEFAULT, DEFAULT);").executeUpdate();
@@ -135,7 +134,7 @@ public class WarPlayer {
     }
 
     public void setWarShipTeam(String teamName) {
-      data.set(uuid + ".wsteam", teamName);
+        data.set(uuid + ".wsteam", teamName);
         try {
             data.save();
         } catch (IOException e) {
@@ -143,7 +142,6 @@ public class WarPlayer {
             e.printStackTrace();
         }
     }
-
 
 
     public String getWarShipTeam() {
