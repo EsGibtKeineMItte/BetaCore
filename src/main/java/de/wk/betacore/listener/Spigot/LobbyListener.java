@@ -1,8 +1,8 @@
 package de.wk.betacore.listener.Spigot;
 
 import de.wk.betacore.appearance.ScoreboardUtils;
-import de.wk.betacore.util.ConfigManager;
-import de.wk.betacore.util.DataManager;
+import de.wk.betacore.datamanager.ConfigManager;
+import de.wk.betacore.datamanager.DataManager;
 import de.wk.betacore.util.ranksystem.RankSystem;
 import io.bluecube.thunderbolt.io.ThunderFile;
 import org.bukkit.Bukkit;

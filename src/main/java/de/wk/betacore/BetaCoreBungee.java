@@ -1,11 +1,14 @@
 package de.wk.betacore;
 
 import de.wk.betacore.commands.bungee.PingCommand;
+import de.wk.betacore.datamanager.DataManager;
 import de.wk.betacore.listener.Bungee.PingListenerB;
 import de.wk.betacore.util.data.Misc;
+import io.bluecube.thunderbolt.exceptions.FileLoadException;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
+import org.bukkit.Bukkit;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -28,7 +31,7 @@ public class BetaCoreBungee extends Plugin {
 
     @Override
     public void onEnable() {
-        log("§3Enabling BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + ".");
+        log("§3Enabling BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + "...");
         log("");
 
 
@@ -38,6 +41,16 @@ public class BetaCoreBungee extends Plugin {
         regCommands();
         regListeners();
         log("§aDONE");
+
+        log("§3Setting up datafiles...");
+        try {
+            DataManager.setup();
+        } catch (IOException | FileLoadException e) {
+            e.printStackTrace();
+        }
+        log("§aDone");
+
+
         ProxyServer.getInstance().getScheduler().schedule(this, new Runnable() {
 
             private int timer = 0;
@@ -120,8 +133,13 @@ public class BetaCoreBungee extends Plugin {
         ProxyServer.getInstance().getConsole().sendMessage(new TextComponent(Misc.CONSOLEPREFIX + message));
     }
 
+    public static void debug(String message) {
+        ProxyServer.getInstance().getConsole().sendMessage(new TextComponent(Misc.CONSOLEPREFIX + "[§eDEBUG]" + message));
+
+    }
 
     public static BetaCoreBungee getInstance() {
         return instance;
     }
+
 }

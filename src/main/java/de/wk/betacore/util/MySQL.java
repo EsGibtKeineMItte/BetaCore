@@ -1,6 +1,7 @@
 package de.wk.betacore.util;
 
 import de.wk.betacore.BetaCore;
+import de.wk.betacore.datamanager.ConfigManager;
 import org.bukkit.Bukkit;
 
 ;import java.sql.*;

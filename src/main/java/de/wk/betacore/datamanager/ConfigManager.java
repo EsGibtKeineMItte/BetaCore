@@ -1,9 +1,9 @@
-package de.wk.betacore.util;
+package de.wk.betacore.datamanager;
 
 import de.wk.betacore.BetaCore;
+import de.wk.betacore.datamanager.Config;
 import de.wk.betacore.util.data.Misc;
 import org.bukkit.Bukkit;
-import java.util.ArrayList;
 
 
 public class ConfigManager {

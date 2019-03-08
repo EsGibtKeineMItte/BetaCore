@@ -1,7 +1,7 @@
 package de.wk.betacore.util.ranksystem;
 
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.datamanager.ConfigManager;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 

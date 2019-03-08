@@ -1,7 +1,9 @@
-package de.wk.betacore.util;
+package de.wk.betacore.datamanager;
 
 import de.wk.betacore.BetaCore;
+import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.environment.Environment;
+import de.wk.betacore.util.teamsystem.TeamSystem;
 import io.bluecube.thunderbolt.Thunderbolt;
 import io.bluecube.thunderbolt.exceptions.FileLoadException;
 import io.bluecube.thunderbolt.io.ThunderFile;
@@ -58,7 +60,7 @@ public class DataManager {
     }
 
     public static void setupTeamFile(){
-        ArrayList<String> activeWarShipTeams = new ArrayList<>();
+        ArrayList<String> activeWarShipTeams = new ArrayList<>(TeamSystem.getActiveTeams());
         getTeams().set("activeTeams", activeWarShipTeams);
     }
 

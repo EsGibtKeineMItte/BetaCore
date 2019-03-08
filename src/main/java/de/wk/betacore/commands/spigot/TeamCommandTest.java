@@ -1,8 +1,8 @@
 package de.wk.betacore.commands.spigot;
 
 import de.wk.betacore.objects.WarPlayer;
-import de.wk.betacore.util.ConfigManager;
-import de.wk.betacore.util.DataManager;
+import de.wk.betacore.datamanager.ConfigManager;
+import de.wk.betacore.datamanager.DataManager;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.StringUtils;
 import de.wk.betacore.util.teamsystem.Team;
@@ -29,7 +29,7 @@ betacore.teamlist
     /team create Teamname shortname 3
     /team leave 1
     /team setadmin <Spielername> 2
-    /team getworld 2
+    /team getworld 1
     /team challenge <teamname> -> Wenn angenommen wird zu einen privaten Arena gesendet. 2
     /team buy gs
     /team gs
@@ -58,6 +58,7 @@ betacore.teamlist
             if (args[0].equalsIgnoreCase("info")) {
                 if (TeamSystem.isActiveWarShipTeam(wp.getTeam())) {
                     player.sendMessage(Misc.PREFIX + "§7Du bist im WarShip-Team §6 " + wp.getTeam() + "§7.");
+                    //INFOS
                 } else {
                     player.sendMessage(Misc.PREFIX + "§7Du bist in keinem WarShip-Team.");
                 }
@@ -73,8 +74,14 @@ betacore.teamlist
             } else if (args[0].equalsIgnoreCase("gs")) {
                 if (TeamSystem.isActiveWarShipTeam(wp.getTeam())) {
                     sender.sendMessage("Diese Funktion kommt bald.");
+                    return false;
                 }
 
+            } else if (args[0].equalsIgnoreCase("leave")) {
+                player.sendMessage("Diese Funktion kommt bald");
+                return false;
+            } else if (args[0].equalsIgnoreCase("getworld")) {
+                player.sendMessage("Dieser Command kommt noch.");
             } else {
                 sender.sendMessage("§7Nutze §6/team§7, um Hilfe zu erhalten");
             }
@@ -84,14 +91,17 @@ betacore.teamlist
         if (args.length == 2) {
             if (args[0].equalsIgnoreCase("join")) {
                 if (TeamSystem.isActiveWarShipTeam(wp.getTeam())) {
-                    sender.sendMessage("§7Du bist bereits in einem WarShip Team.");
+                    player.sendMessage("§7Du bist bereits in einem WarShip Team.");
+                    return false;
+                }
+                if (!(TeamSystem.isActiveWarShipTeam(args[1]))) {
+                    player.sendMessage("§cDieses WarShip Team existiert nicht.");
                     return false;
                 }
                 TeamSystem ts = new TeamSystem();
-
+                ts.joinTeam(args[1], player);
                 sender.sendMessage("§7Du bist dem Team§6 " + args[1] + " §7 beigetreten.");
             }
-
         }
 
 

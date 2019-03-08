@@ -1,7 +1,7 @@
 package de.wk.betacore.util.antilaggsystem;
 
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.util.data.Misc;
 import org.bukkit.Bukkit;
 import org.bukkit.World;

@@ -1,6 +1,8 @@
 package de.wk.betacore.objects;
 
 import de.wk.betacore.BetaCore;
+import de.wk.betacore.datamanager.ConfigManager;
+import de.wk.betacore.datamanager.DataManager;
 import de.wk.betacore.util.*;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.Rank;

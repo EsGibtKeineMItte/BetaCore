@@ -1,10 +1,9 @@
 package de.wk.betacore.commands.spigot;
 
 
-import de.wk.betacore.util.ConfigManager;
-import de.wk.betacore.util.DataManager;
+import de.wk.betacore.datamanager.ConfigManager;
+import de.wk.betacore.datamanager.DataManager;
 import de.wk.betacore.util.data.Misc;
-import de.wk.betacore.util.misc.StringUtils;
 import de.wk.betacore.util.ranksystem.RankSystem;
 import io.bluecube.thunderbolt.io.ThunderFile;
 import org.bukkit.Bukkit;

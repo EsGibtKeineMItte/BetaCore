@@ -1,7 +1,7 @@
 package de.wk.betacore.util.teamsystem;
 
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.util.DataManager;
+import de.wk.betacore.datamanager.DataManager;
 import io.bluecube.thunderbolt.io.ThunderFile;
 import org.bukkit.entity.Player;
 

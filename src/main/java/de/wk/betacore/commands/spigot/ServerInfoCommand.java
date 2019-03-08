@@ -1,6 +1,6 @@
 package de.wk.betacore.commands.spigot;
 
-import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.StringUtils;
 import org.bukkit.Bukkit;

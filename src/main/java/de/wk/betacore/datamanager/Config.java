@@ -1,4 +1,4 @@
-package de.wk.betacore.util;
+package de.wk.betacore.datamanager;
 
 
 import java.io.File;

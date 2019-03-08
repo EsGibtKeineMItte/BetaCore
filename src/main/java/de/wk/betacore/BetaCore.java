@@ -5,7 +5,7 @@ import de.wk.betacore.commands.spigot.commandmanager.CommandManagerOld;
 import de.wk.betacore.environment.Environment;
 import de.wk.betacore.listener.Spigot.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
-import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.util.MySQL;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.CommandRemover;
@@ -91,7 +91,7 @@ public final class BetaCore extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        log("§6Enabling BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + ".");
+        log("§6Enabling BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + "...");
 
 
         log("§6Setting up command-framework... ");

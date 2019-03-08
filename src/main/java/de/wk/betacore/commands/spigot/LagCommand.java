@@ -1,7 +1,7 @@
 package de.wk.betacore.commands.spigot;
 
 
-import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.util.antilaggsystem.AntiLaggSystem;
 import de.wk.betacore.util.data.Misc;
 import org.bukkit.command.Command;

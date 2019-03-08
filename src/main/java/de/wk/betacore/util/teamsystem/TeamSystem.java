@@ -1,8 +1,8 @@
 package de.wk.betacore.util.teamsystem;
 
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.util.ConfigManager;
-import de.wk.betacore.util.DataManager;
+import de.wk.betacore.datamanager.ConfigManager;
+import de.wk.betacore.datamanager.DataManager;
 import io.bluecube.thunderbolt.io.ThunderFile;
 import org.bukkit.entity.Player;
 
@@ -116,6 +116,10 @@ public class TeamSystem {
             throw new NullPointerException("Der Spieler, der versucht hat, dem Team " + teamName + " beizutreten, existiert nicht.");
         }
         ArrayList<String> invitations = new ArrayList<>(teams.getStringList(teamName + ".invitations")); //Kann die null sein?
+        if (!(invitations.contains(player.getUniqueId().toString()))) {
+            player.sendMessage("Du bist nicht in dieses Team eingeladen.");
+            return;
+        }
         invitations.remove(player.getUniqueId().toString());
         addTeamMember(teamName, player);
 

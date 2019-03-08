@@ -1,7 +1,7 @@
 package de.wk.betacore.util.teamsystem;
 
 import de.butzlabben.world.wrapper.SystemWorld;
-import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.datamanager.ConfigManager;
 public class WorldSystemUtil {
 
     public boolean createWorldForTeam(String teamName) {

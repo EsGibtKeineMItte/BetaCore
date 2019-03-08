@@ -2,7 +2,7 @@ package de.wk.betacore.util.travel;
 
 
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.util.ConfigManager;
+import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.util.data.Misc;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
