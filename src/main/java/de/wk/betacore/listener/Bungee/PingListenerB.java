@@ -33,4 +33,6 @@ public class PingListenerB implements Listener {
       //  ping.setVersion(new Protocol("BungeeCord 1.12-1.13", 404));
         e.setResponse(ping);
     }
+
+
 }
