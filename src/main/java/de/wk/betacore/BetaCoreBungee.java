@@ -47,6 +47,7 @@ public class BetaCoreBungee extends Plugin {
         log("§3Setting up datafiles...");
         try {
             DataManager.setup();
+            DataManager.getPlayerData().save();
         } catch (IOException | FileLoadException e) {
             e.printStackTrace();
         }
@@ -113,7 +114,7 @@ public class BetaCoreBungee extends Plugin {
 
     @Override
     public void onDisable() {
-        log("§3Dialing BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + ".");
+        log("§3Successfully diabled BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + ".");
 
         if (restart) {
             new Thread(() -> {
