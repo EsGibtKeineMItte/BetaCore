@@ -3,7 +3,7 @@ package de.wk.betacore.objects;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.DataManager;
-import de.wk.betacore.util.*;
+import de.wk.betacore.util.MySQL;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.Rank;
 import io.bluecube.thunderbolt.io.ThunderFile;
@@ -31,12 +31,7 @@ public class WarPlayer {
     private boolean muted;
 
 
-    public WarPlayer(UUID uuid) {
-
-        if (NameFetcher.getName(uuid) == null) {
-            BetaCore.debug("Es wurde versucht, einen WarPlayer mit einer UUID zu kreieren, die zu keinen Minecraft - Account gehört.");
-            return;
-        }
+    public WarPlayer(UUID uuid, String name) {
         setupWarPlayer(uuid);
         try {
             ResultSet rs = MySQL.preparedStatement("SELECT COUNT(UUID) FROM PLAYER_INFO WHERE UUID = '" + uuid.toString() + "';").executeQuery();
@@ -44,7 +39,7 @@ public class WarPlayer {
 
             if (rs.getInt(1) == 0) {
                 LocalDate now = LocalDate.now();
-                data.set(uuid.toString() + ".name", NameFetcher.getName(uuid));
+                data.set(uuid.toString() + ".name", name);
                 data.set(uuid.toString() + ".rank", "USER");
                 data.set(uuid.toString() + ".money", 0);
                 data.set(uuid.toString() + ".wsrank", -1);
@@ -69,12 +64,19 @@ public class WarPlayer {
                 this.wsrank = data.getInt(uuid.toString() + ".wsrank");
                 this.rank = Rank.valueOf(rank);
                 this.uuid = uuid.toString();
-                this.name = NameFetcher.getName(uuid);
+                this.name = name;
+                this.banned = data.getBoolean(uuid.toString() + ".banned");
+                this.muted = data.getBoolean(uuid.toString() + ".muted");
+
+                data.set(uuid.toString() + ".money", this.money);
+                data.set(uuid.toString() + ".rank", rank);
+
+                data.save();
             }
 
             System.out.println(MySQL.preparedStatement("SELECT * FROM PLAYER_INFO WHERE UUID = " + "'" + uuid.toString() + "';").executeQuery());
         } catch (SQLException | IOException x) {
-            BetaCore.debug("Es ist ein Fehler, beim Erstellen des WarPlayers: " + NameFetcher.getName(uuid) + " aufgetreten.");
+            BetaCore.debug("Es ist ein Fehler, beim Erstellen des WarPlayers: " + name + " aufgetreten.");
             x.printStackTrace();
         }
     }
@@ -87,7 +89,7 @@ public class WarPlayer {
                 return;
             }
             LocalDate now = LocalDate.now();
-            data.set(uuid.toString() + ".name", NameFetcher.getName(uuid));
+            data.set(uuid.toString() + ".name", name);
             data.set(uuid.toString() + ".rank", "USER");
             data.set(uuid.toString() + ".money", 0);
             data.set(uuid.toString() + ".wsrank", -1);
@@ -100,17 +102,17 @@ public class WarPlayer {
             //Ist nicht im System.
             MySQL.preparedStatement("INSERT INTO PLAYER_INFO(UUID, RANK, MONEY, JOIN_DATE) VALUES ('" + uuid.toString() + "'," + "DEFAULT, DEFAULT, DEFAULT);").executeUpdate();
         } catch (SQLException | IOException e) {
-            System.out.println(Misc.getPREFIX() + "Es ist ein Fehler beim Setzen der MySQL Werte für den Spieler " + NameFetcher.getName(uuid) + " aufgetreten");
+            System.out.println(Misc.getPREFIX() + "Es ist ein Fehler beim Setzen der MySQL Werte für den Spieler " + name + " aufgetreten");
             System.out.println("");
             e.printStackTrace();
         }
 
     }
 
-    public static void manuellsetup(UUID uuid) {
+    public static void manuellsetup(UUID uuid, String name) {
         LocalDate now = LocalDate.now();
 
-        data.set(uuid + ".name", NameFetcher.getName(uuid));
+        data.set(uuid + ".name", name);
         data.set(uuid + ".money", 0);
         data.set(uuid + ".wsrank", -1);
         data.set(uuid + ".wsteam", "");
@@ -123,7 +125,7 @@ public class WarPlayer {
             data.save();
             MySQL.preparedStatement("INSERT INTO PLAYER_INFO(UUID, RANK, MONEY, JOIN_DATE) VALUES ('" + uuid.toString() + "'," + "DEFAULT, DEFAULT, DEFAULT);").executeUpdate();
         } catch (SQLException | IOException e) {
-            System.out.println(Misc.getPREFIX() + "Es ist ein Fehler beim Setzen der SpielerDaten für den Spieler " + NameFetcher.getName(uuid));
+            System.out.println(Misc.getPREFIX() + "Es ist ein Fehler beim Setzen der SpielerDaten für den Spieler " + name);
             System.out.println("");
             e.printStackTrace();
         }

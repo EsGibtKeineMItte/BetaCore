@@ -4,6 +4,7 @@ import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.DataManager;
 import io.bluecube.thunderbolt.io.ThunderFile;
+import io.bluecube.thunderbolt.org.json.JSONException;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -126,7 +127,13 @@ public class TeamSystem {
     }
 
     public static ArrayList<String> getActiveTeams() {
-        return new ArrayList<>(teams.getStringList("activeTeams"));
+        try{
+            return new ArrayList<>(teams.getStringList("activeTeams"));
+
+        }catch(JSONException e){
+            DataManager.setupTeamFile();
+            return new ArrayList<>(teams.getStringList("activeTeams"));
+        }
     }
 
 

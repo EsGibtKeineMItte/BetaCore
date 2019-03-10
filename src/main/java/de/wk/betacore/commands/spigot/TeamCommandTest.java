@@ -44,7 +44,7 @@ betacore.teamlist
             return false;
         }
         Player player = (Player) sender;
-        WarPlayer wp = new WarPlayer(player.getUniqueId());
+        WarPlayer wp = new WarPlayer(player.getUniqueId(), player.getName());
 
 
         if (args.length == 0) {

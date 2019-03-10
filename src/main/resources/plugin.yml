@@ -16,10 +16,14 @@ commands:
     description: Command, um sich zum Bau zu teleportieren
     aliases: hub
   money:
+    description: Command für das MoneySystem.
   pc:
+    description: Command, um Kanonen automatisch zu beladen.
   gm:
     description: Command, um seinen GameMode zu wechseln
   team:
+    description: Command, um WarShip-Teams zu erstellen und zu verwalten
+    aliases: t
   pi:
     description: Command, um sich Informationen über einen Spieler anzeigen zu lassen.
   cc:
@@ -29,9 +33,17 @@ commands:
   pl:
     description: Command, um sich die installierten Plugins anzeigen zu lassen, verbessert.
   si:
+    description: Command. um den Spawn zu setzen.
+    aliases: serverinfo
   setspawn:
+    description: Command, um den Spawn zu setzen
   hub:
   rl:
+    description: Ein Core-internen reload Command.
   lag:
+    description: Ein Command, um durch Entitys reduzierte Laggs zu reduzieren.
   dev:
+    description: Command, um auf den/einen Dev-Server gesenden zu werden.
+  setup:
+    description: Command, um Spieler in die Datenbank einzufügen, falls diese durch Fehler nicht in eingefügt wurden.
 

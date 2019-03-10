@@ -75,6 +75,7 @@ public final class BetaCore extends JavaPlugin {
         getCommand("rl").setExecutor(new ReloadCommand());
         getCommand("lag").setExecutor(new LagCommand());
         getCommand("dev").setExecutor(new TeamSzoneServer());
+        getCommand("setup").setExecutor(new SetSpawnCommand());
     }
 
     public void regListeners() {

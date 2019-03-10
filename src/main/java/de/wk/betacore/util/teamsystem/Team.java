@@ -3,12 +3,13 @@ package de.wk.betacore.util.teamsystem;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.DataManager;
 import io.bluecube.thunderbolt.io.ThunderFile;
+import lombok.Getter;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+@Getter
 public class Team extends TeamSystem {
 
     ThunderFile teams = DataManager.getTeams();
