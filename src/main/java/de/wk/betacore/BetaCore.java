@@ -158,7 +158,6 @@ public final class BetaCore extends JavaPlugin {
         log("§aDone");
 
         log("§6Successfully enabled BetaCore" + Misc.CODENAME + "v." + Misc.VERSION + ".");
-        log("Ich bin Krass!");
 
 
         //  Objects.requireNonNull(Environment.getCurrent()).restartDaily();
