@@ -14,6 +14,8 @@ import org.bukkit.entity.Player;
 alphacore.setperm
  */
 
+//Ich denke, also bin ich.
+
 public class ManPermissionAdder implements CommandExecutor {
     ConfigManager cm = new ConfigManager();
 

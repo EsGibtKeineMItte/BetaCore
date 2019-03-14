@@ -2,7 +2,7 @@ package de.wk.betacore;
 
 import de.wk.betacore.commands.spigot.*;
 import de.wk.betacore.commands.spigot.commandmanager.CommandManagerOld;
-import de.wk.betacore.environment.Environment;
+import de.wk.betacore.datamanager.DataManager;
 import de.wk.betacore.environment.EnvironmentManager;
 import de.wk.betacore.listener.Spigot.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
@@ -17,9 +17,7 @@ import de.wk.betacore.util.travel.FastTravelSystem;
 import de.wk.betacore.util.travel.LobbyCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.sql.SQLException;
-import java.util.Objects;
 
 public final class BetaCore extends JavaPlugin {
 
@@ -75,7 +73,7 @@ public final class BetaCore extends JavaPlugin {
         getCommand("rl").setExecutor(new ReloadCommand());
         getCommand("lag").setExecutor(new LagCommand());
         getCommand("dev").setExecutor(new TeamSzoneServer());
-        getCommand("setup").setExecutor(new SetSpawnCommand());
+        getCommand("setup").setExecutor(new SetupCommand());
     }
 
     public void regListeners() {
@@ -160,6 +158,7 @@ public final class BetaCore extends JavaPlugin {
         log("§aDone");
 
         log("§6Successfully enabled BetaCore" + Misc.CODENAME + "v." + Misc.VERSION + ".");
+        log("Ich bin Krass!");
 
 
         //  Objects.requireNonNull(Environment.getCurrent()).restartDaily();
@@ -167,6 +166,9 @@ public final class BetaCore extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        log("§3Unloading Files...");
+        DataManager.unloadFiles();
+
         log("§3Successfully disabled " + Misc.CODENAME + "v." + Misc.VERSION + ".");
     }
 

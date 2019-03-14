@@ -13,6 +13,8 @@ betacore.money.pay
 betacore.money.clear
 betacore.core
 betacore.clearlagg
+betacore.setupplayer
+betacore.debug
 
 betacore.setrank.
  */
@@ -36,7 +38,7 @@ public class Misc {
     public static final String NOTINCONSOLE = PREFIX + "Du kannst diesen Befehl nicht in der Konsole verwenden";
     public static final String CONSOLEPREFIX = "§8[§aBetaCore§8]§7 ";
     public static final String CODENAME = "Brass ";
-    public static final String VERSION = "0.3 ";
+    public static final String VERSION = "0.3";
 
 
     public static String getPREFIX() {

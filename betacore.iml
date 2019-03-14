@@ -27,8 +27,8 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
-    <output url="file:///home/classes" />
-    <output-test url="file:///home/test-classes" />
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$USER_HOME$/Dropbox">
       <sourceFolder url="file://$USER_HOME$/Dropbox" type="java-resource" />
     </content>

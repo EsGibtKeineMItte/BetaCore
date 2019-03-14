@@ -45,8 +45,8 @@ public class WarPlayer {
                 data.set(uuid.toString() + ".wsrank", -1);
                 data.set(uuid.toString() + ".muted", false);
                 data.set(uuid.toString() + ".banned", false);
-                data.set(uuid.toString() + "firstjoin", now.toString());
-                data.set(uuid.toString() + "lastjoin", now.toString());
+                data.set(uuid.toString() + ".firstjoin", now.toString());
+                data.set(uuid.toString() + ".lastjoin", now.toString());
 
 
                 data.save();
@@ -111,13 +111,12 @@ public class WarPlayer {
 
     public static void manuellsetup(UUID uuid, String name) {
         LocalDate now = LocalDate.now();
-
         data.set(uuid + ".name", name);
         data.set(uuid + ".money", 0);
         data.set(uuid + ".wsrank", -1);
         data.set(uuid + ".wsteam", "");
-        data.set(uuid + "firstjoin", now.toString());
-        data.set(uuid + "lastjoin", now.toString());
+        data.set(uuid + ".firstjoin", now.toString());
+        data.set(uuid + ".lastjoin", now.toString());
         data.set(uuid + ".muted", false);
         data.set(uuid.toString() + ".banned", false);
 
@@ -205,6 +204,5 @@ public class WarPlayer {
     public String getLastjoin() {
         return lastjoin;
     }
-
 
 }

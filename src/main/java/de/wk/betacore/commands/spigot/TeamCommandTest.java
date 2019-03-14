@@ -50,6 +50,16 @@ betacore.teamlist
         if (args.length == 0) {
             StringUtils.centerText("§dTeamSystem - BetaCore");
             sender.sendMessage("§6/team §7Zeigt diese Nachricht an.");
+            /*
+            help
+            info
+            list
+            gs
+            getworld
+            join
+            invite
+            leave
+             */
 
 
         }
@@ -58,9 +68,11 @@ betacore.teamlist
             if (args[0].equalsIgnoreCase("info")) {
                 if (TeamSystem.isActiveWarShipTeam(wp.getTeam())) {
                     player.sendMessage(Misc.PREFIX + "§7Du bist im WarShip-Team §6 " + wp.getTeam() + "§7.");
+                    return false;
                     //INFOS
                 } else {
                     player.sendMessage(Misc.PREFIX + "§7Du bist in keinem WarShip-Team.");
+                    return false;
                 }
             } else if (args[0].equalsIgnoreCase("list")) {
                 if (!(sender.hasPermission("betacore.teamlist") || sender.hasPermission("betacore.*"))) {
@@ -115,6 +127,9 @@ betacore.teamlist
                 //      0        1          2
                 Team team = new Team(args[1], args[2], player);
                 player.sendMessage(Misc.getPREFIX() + "§7Du hast das Team §6" + args[1] + " §7mit dem Kürzel §6" + args[2] + "§7 erstellt.");
+                return false;
+            }else{
+                player.sendMessage("§6/team für alle TeamCommands.");
             }
         }
         return false;

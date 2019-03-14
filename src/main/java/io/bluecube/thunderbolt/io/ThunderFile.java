@@ -40,12 +40,10 @@ public class ThunderFile {
 		if (!f.exists()){
 			try {
 				f.createNewFile();
-				System.out.println("[Thunderbolt] Created new file " + name + ".json at " + path);
 			} catch(IOException e) {
 				e.printStackTrace();
 			}
 		}else{
-			System.out.println("[Thunderbolt] A file named '" + name + ".json' already exists at the specified path, " + path);
 		}
 	}
 	

@@ -395,7 +395,6 @@ public class CommandImplementer {
                 for (Player e : Bukkit.getOnlinePlayers()) {
                     joinHandler.update(e);
                 }
-                // TODO: hier muss noch das ganze reload zeug hin!
                 Info.sendInfo((Player) sender, "&eCore System reloaded");
             }
 

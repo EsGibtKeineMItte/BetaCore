@@ -20,6 +20,7 @@ public class DataSetter implements Listener {
         Player player = e.getPlayer();
     }
 
+
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();

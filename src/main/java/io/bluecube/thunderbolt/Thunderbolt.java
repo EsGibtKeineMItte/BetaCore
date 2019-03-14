@@ -103,7 +103,7 @@ public abstract class Thunderbolt {
     /**
 	 * Unload a file from memory. 
 	 * 
-	 * @param name : The name of the file to unload
+	 * @param name : The name of the file to unloadFiles
 	 * @throws IllegalArgumentException
 	 */
     public static void unload(String name) {

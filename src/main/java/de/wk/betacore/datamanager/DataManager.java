@@ -1,28 +1,28 @@
 package de.wk.betacore.datamanager;
 
-import de.wk.betacore.BetaCore;
-import de.wk.betacore.datamanager.ConfigManager;
-import de.wk.betacore.environment.Environment;
+
 import de.wk.betacore.environment.EnvironmentManager;
-import de.wk.betacore.util.teamsystem.TeamSystem;
 import io.bluecube.thunderbolt.Thunderbolt;
 import io.bluecube.thunderbolt.exceptions.FileLoadException;
 import io.bluecube.thunderbolt.io.ThunderFile;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
+
 
 
 public class DataManager {
-    ConfigManager cm = new ConfigManager();
-
-
     private static ThunderFile playerData;
     private static ThunderFile teams;
+    ConfigManager cm = new ConfigManager();
+
+    private DataManager(){
+
+    }
+
+
+
 
     public static void setup() throws IOException, FileLoadException {
-        //    String pluginDatafolder = BetaCore.getInstance().getDataFolder().getAbsolutePath();
         String path = EnvironmentManager.getPathToDataFolder();
         playerData = Thunderbolt.load("playerdata", path);
         teams = Thunderbolt.load("teams", path);
@@ -60,8 +60,13 @@ public class DataManager {
     }
 
     public static void setupTeamFile() {
-        ArrayList<String> activeWarShipTeams = new ArrayList<>(TeamSystem.getActiveTeams());
+        ArrayList<String> activeWarShipTeams = new ArrayList<>();
         getTeams().set("activeTeams", activeWarShipTeams);
+    }
+
+    public static void unloadFiles(){
+        Thunderbolt.unload("playerdata");
+        Thunderbolt.unload("teams");
     }
 
 }

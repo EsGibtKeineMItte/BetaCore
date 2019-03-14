@@ -83,6 +83,11 @@ public class TeamSystem {
 
 
     public List<String> getTeamMembers(String teamName) {
+        try {
+            teams.getStringList(teamName + ".members");
+        } catch (JSONException e) {
+            return null;
+        }
         return teams.getStringList(teamName + ".members");
     }
 
@@ -105,6 +110,11 @@ public class TeamSystem {
     }
 
     public String getTeamFromPlayer(Player player) {
+        try {
+            playerData.getString(player.getUniqueId().toString() + ".wsteam");
+        } catch (JSONException e) {
+            return null;
+        }
         return playerData.getString(player.getUniqueId().toString() + ".wsteam");
     }
 
@@ -127,10 +137,9 @@ public class TeamSystem {
     }
 
     public static ArrayList<String> getActiveTeams() {
-        try{
+        try {
             return new ArrayList<>(teams.getStringList("activeTeams"));
-
-        }catch(JSONException e){
+        } catch (JSONException e) {
             DataManager.setupTeamFile();
             return new ArrayList<>(teams.getStringList("activeTeams"));
         }
@@ -146,7 +155,7 @@ public class TeamSystem {
 
 
     public boolean teamExists(String teamName) {
-        return teams.getString(teamName + ".admin") == null || (!getActiveTeams().contains(teamName));
+        return (!getActiveTeams().contains(teamName));
     }
 
 
@@ -168,6 +177,11 @@ public class TeamSystem {
     }
 
     public ArrayList<String> getInvitations(String teamName) {
+        try {
+            teams.getStringList(teamName + ".invitations");
+        } catch (JSONException e) {
+            return null;
+        }
         return new ArrayList<>(teams.getStringList(teamName + ".invitations"));
     }
 

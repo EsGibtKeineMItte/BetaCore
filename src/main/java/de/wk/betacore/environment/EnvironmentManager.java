@@ -19,7 +19,6 @@ public class EnvironmentManager {
         } else if (spigot) {
             String pluginDatafolder = BetaCore.getInstance().getDataFolder().getAbsolutePath();
             String path = pluginDatafolder + "/../../../Data";
-            BetaCore.debug("Path to datafolder " + path);
             return path;
         }
         return null;
