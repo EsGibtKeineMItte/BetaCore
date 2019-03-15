@@ -10,6 +10,11 @@ import java.util.UUID;
 
 public class MoneySystem {
 
+    private MoneySystem(){
+
+    }
+
+
     public static int getMoney(UUID uuid){
         try {
             ResultSet rs = MySQL.preparedStatement("SELECT COUNT(UUID) FROM PLAYER_INFO WHERE UUID = '" + uuid.toString() + "';").executeQuery();

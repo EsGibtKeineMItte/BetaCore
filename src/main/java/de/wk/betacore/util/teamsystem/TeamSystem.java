@@ -14,6 +14,8 @@ import java.util.List;
 
 
 public class TeamSystem {
+
+
     ThunderFile cfg;
 
     static ThunderFile teams = DataManager.getTeams();
@@ -32,33 +34,35 @@ public class TeamSystem {
         if (teamAdmin == null) {
             throw new NullPointerException("Fehler 004: Der TeamAdmin ist nicht online/existiert nicht -> ist null");
         }
-
-        playerData.set(teamName + ".wsteam", teamName);
-
-        teams.set(teamName + ".admin", teamAdmin.getUniqueId().toString());
-        teams.set(teamName + ".short", kuerzel);
-        teams.set(teamName + ".dataOfCreation", dateOfTeamCreation.toString());
-        teams.set(teamName + ".teamrank", -1);//PrivateFight *3 + wonEvents*5 + wonpublicfights
-        teams.set(teamName + "wonPublicFights", 0);
-        teams.set(teamName + ".wonPrivateFights", 0);
-        teams.set(teamName + ".wonEvents", 0);
-        teams.set(teamName + ".world", null);
-        teams.set(teamName + ".teamws", null);
-
-        ArrayList<String> activeTeams = getActiveTeams();
-
-        activeTeams.add(teamName);
-
-        teams.set("activeTeams", teamName);
-
         try {
+            playerData.set(teamAdmin.getUniqueId().toString() + ".wsteam", teamName);
+
+            teams.set(teamName + ".admin", teamAdmin.getUniqueId().toString());
+            teams.set(teamName + ".short", kuerzel);
+            teams.set(teamName + ".dataOfCreation", dateOfTeamCreation.toString());
+            teams.set(teamName + ".teamrank", -1);//PrivateFight *3 + wonEvents*5 + wonpublicfights
+            teams.set(teamName + "wonPublicFights", 0);
+            teams.set(teamName + ".wonPrivateFights", 0);
+            teams.set(teamName + ".wonEvents", 0);
+            teams.set(teamName + ".world", null);
+            teams.set(teamName + ".teamws", null);
+            teams.save();
+
+            ArrayList<String> activeTeams = getActiveTeams();
+
+            activeTeams.add(teamName);
+
+            teams.set("activeTeams", activeTeams);
+
+
             playerData.save();
             teams.save();
         } catch (IOException e) {
             BetaCore.debug("Es ist ein Fehler beim kreieren des Teams " + teamName + " ausgetreten.");
             e.printStackTrace();
         }
-
+        System.out.println(teamName + kuerzel + teamAdmin.getName());
+        BetaCore.debug("Das Team " + teamName + " wurde erstellt.");
     }
 
     public void addTeamMember(String teamName, Player player) {
@@ -155,7 +159,7 @@ public class TeamSystem {
 
 
     public boolean teamExists(String teamName) {
-        return (!getActiveTeams().contains(teamName));
+        return getActiveTeams().contains(teamName);
     }
 
 

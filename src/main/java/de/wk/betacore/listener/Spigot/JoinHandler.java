@@ -6,6 +6,7 @@ import de.wk.betacore.appearance.ScoreboardUtils;
 import de.wk.betacore.appearance.Tablist;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.DataManager;
+import de.wk.betacore.util.moneysystem.MoneySystem;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
 import de.wk.betacore.util.teamsystem.TeamSystem;
@@ -78,7 +79,7 @@ public class JoinHandler implements Listener {
         ArrayList<String> sscore = new ArrayList<>();
         sscore.add("&6");
         sscore.add("&6> &7Money");
-        sscore.add("&6> &e" + data.getInt(e.getUniqueId().toString() + ".money"));
+        sscore.add("&6> &e" + MoneySystem.getMoney(e.getUniqueId()));
         sscore.add("&6> &7Rank");
         sscore.add("&6> &e" + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName());
         if (data.getInt(e.getPlayer().getUniqueId().toString() + ".wsrank") < 501) {

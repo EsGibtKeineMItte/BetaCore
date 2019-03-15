@@ -11,6 +11,7 @@ import de.wk.betacore.util.MySQL;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.CommandRemover;
 import de.wk.betacore.util.ranksystem.PermissionManager;
+import de.wk.betacore.util.teamsystem.TeamSystem;
 import de.wk.betacore.util.travel.ArenaCommand;
 import de.wk.betacore.util.travel.BauCommand;
 import de.wk.betacore.util.travel.FastTravelSystem;
@@ -156,6 +157,9 @@ public final class BetaCore extends JavaPlugin {
         }
 
         log("§aDone");
+        TeamSystem ts = new TeamSystem();
+
+
 
         log("§6Successfully enabled BetaCore" + Misc.CODENAME + "v." + Misc.VERSION + ".");
 

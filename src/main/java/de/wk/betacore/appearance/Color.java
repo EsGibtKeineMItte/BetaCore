@@ -50,38 +50,37 @@ public class Color {
         return string;
     }
 
+
     /**
      * Convert between &k-o or &? to Bold or Rainbow Text
      *
-     * @param string Your String Array to Convert
+     * @param msg Your String Array to Convert
      * @return Your converted String Array
      */
 
-    public static String[] ConvertSpecial(String[] string) {
+    public static String[] ConvertSpecial(String[] msg) {
         boolean isRainbow = false;
 
-        for (int j = 0; j < string.length; j++) {
-            if (string[j].contains("&?")) {
+        for (int j = 0; j < msg.length; j++) {
+            if (msg[j].contains("&?")) {
                 isRainbow = true;
                 break;
             }
         }
 
-        Integer stringlenght = string.length;
+        Integer stringLenght = msg.length;
         Integer stringIndex = 0;
 
-        if (isRainbow == true) {
+        if (isRainbow) {
             String string2 = "";
-            for (int i = 0; i < string.length; i++) {
-                string[i] = ConvertColor(string[i]);
-                string[i] = string[i].replaceAll("§([a-f0-9])", "");
-                string[i] = string[i].replaceAll("&([k-o])", "");
-                string[i] = string[i].replaceAll("&r", "");
-                string[i] = string[i].replaceAll("&\\?", "");
-                string2 += string[i];
-                if (i < string.length) {
-                    string2 += " ";
-                }
+            for (int i = 0; i < msg.length; i++) {
+                msg[i] = ConvertColor(msg[i]);
+                msg[i] = msg[i].replaceAll("§([a-f0-9])", "");
+                msg[i] = msg[i].replaceAll("&([k-o])", "");
+                msg[i] = msg[i].replaceAll("&r", "");
+                msg[i] = msg[i].replaceAll("&\\?", "");
+                string2 += msg[i];
+                string2 += " ";
             }
             string2 = ConvertRainbow(string2);
 
@@ -91,8 +90,8 @@ public class Color {
 
             for (int i = 0; i < chars.length; i++) {
                 if (chars[i] == space[0]) {
-                    if (stringIndex < stringlenght) {
-                        string[stringIndex] = string3;
+                    if (stringIndex < stringLenght) {
+                        msg[stringIndex] = string3;
                         stringIndex++;
                         string3 = "";
                     }
@@ -102,12 +101,12 @@ public class Color {
             }
 
         } else {
-            for (int i = 0; i < string.length; i++) {
-                string[i] = string[i].replaceAll("&([k-o])", "§$1");
-                string[i] = string[i].replaceAll("&r", "§r");
+            for (int i = 0; i < msg.length; i++) {
+                msg[i] = msg[i].replaceAll("&([k-o])", "§$1");
+                msg[i] = msg[i].replaceAll("&r", "§r");
             }
         }
-        return string;
+        return msg;
     }
 
     /**
