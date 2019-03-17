@@ -24,7 +24,6 @@ public class DataSetter implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        WarPlayer.manuellsetup(e.getPlayer().getUniqueId(), e.getPlayer().getName());
         WarPlayer wp = new WarPlayer(player.getUniqueId(), e.getPlayer().getName());
 
 

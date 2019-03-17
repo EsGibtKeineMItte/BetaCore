@@ -2,6 +2,8 @@ package de.wk.betacore.datamanager;
 
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.Config;
+import de.wk.betacore.environment.Environment;
+import de.wk.betacore.environment.EnvironmentManager;
 import de.wk.betacore.util.data.Misc;
 import org.bukkit.Bukkit;
 
@@ -42,19 +44,34 @@ public class ConfigManager {
 
 
         config.save();
-        globalConfig.setString("LinkToArena-1", "Arena-1");
-        globalConfig.setString("LinkToArena-2", "Arena-2");
-        globalConfig.setString("LinkToBau", "Bau");
-        globalConfig.setString("LinkToLobby", "Lobby-1");
-        if(globalConfig.getString("PathToData") == null){
-            globalConfig.setString("PathToDataFolder", "/home/netuser/BUNGEECORD-1.12/Data");
-        }
-        globalConfig.setBoolean("setup", true);
 
+
+        if (!globalConfig.getBoolean("UseMySQL")) {
+            globalConfig.setBoolean("UseMySQL", false);
+        }
+        if (globalConfig.getString("LinkToArena-1") == null) {
+            globalConfig.setString("LinkToArena-1", "Arena-1");
+        }
+        if (globalConfig.getString("LinkToArena-2") == null) {
+            globalConfig.setString("LinkToArena-2", "Arena-2");
+        }
+        if (globalConfig.getString("LinkToBau") == null) {
+            globalConfig.setString("LinkToBau", "Bau");
+        }
+        if (globalConfig.getString("LinkToLobby") == null) {
+            globalConfig.setString("LinkToLobby", "Lobby-1");
+        }
     }
 
 
-    public void setupMySQL() {
+    public void setupMySQL() { //Eigene MYSQL Config?
+        if (!(globalConfig.getBoolean("UseMySQL"))) {
+            EnvironmentManager.setMysql(false);
+            return;
+        }
+        globalConfig.setBoolean("UseMySQL", true);
+
+
         if (getGlobalConfig().getString("MySQL.host") == null) {
             getGlobalConfig().setString("MySQL.host", "");
         }
@@ -99,7 +116,6 @@ public class ConfigManager {
     public Config getGlobalConfig() {
         return globalConfig;
     }
-
 
 
     public Config getTeams() {

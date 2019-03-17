@@ -1,7 +1,7 @@
 package de.wk.betacore.util.teamsystem;
 
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.datamanager.DataManager;
+import de.wk.betacore.datamanager.FileManager;
 import io.bluecube.thunderbolt.io.ThunderFile;
 import lombok.Getter;
 import org.bukkit.entity.Player;
@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 public class Team extends TeamSystem {
 
-    ThunderFile teams = DataManager.getTeams();
+    ThunderFile teams = FileManager.getTeams();
 
     private String teamName, shortName, dateOfCreation, world;
     private int rank, wonPrivateFights, wonPublicFights, wonEvents;

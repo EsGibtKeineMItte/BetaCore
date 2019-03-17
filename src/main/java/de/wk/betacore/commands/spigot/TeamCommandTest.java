@@ -2,7 +2,7 @@ package de.wk.betacore.commands.spigot;
 
 import de.wk.betacore.objects.WarPlayer;
 import de.wk.betacore.datamanager.ConfigManager;
-import de.wk.betacore.datamanager.DataManager;
+import de.wk.betacore.datamanager.FileManager;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.StringUtils;
 import de.wk.betacore.util.teamsystem.Team;
@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 
 public class TeamCommandTest implements CommandExecutor {
     TeamSystem teamSystem = new TeamSystem();
-    ThunderFile teams = DataManager.getTeams();
+    ThunderFile teams = FileManager.getTeams();
 /*
 betacore.teamlist
  */

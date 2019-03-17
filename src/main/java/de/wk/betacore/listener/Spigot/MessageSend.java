@@ -4,7 +4,7 @@ import de.wk.betacore.BetaCore;
 import de.wk.betacore.appearance.Chat;
 import de.wk.betacore.appearance.Info;
 import de.wk.betacore.commands.spigot.CustomCommand;
-import de.wk.betacore.datamanager.DataManager;
+import de.wk.betacore.datamanager.FileManager;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
@@ -20,7 +20,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 
 public class MessageSend implements Listener {
-    ThunderFile data = DataManager.getPlayerData();
+    ThunderFile data = FileManager.getPlayerData();
 
     public static Player[] onlinePlayers() {
         Player[] Online = new Player[Bukkit.getOnlinePlayers().size()];

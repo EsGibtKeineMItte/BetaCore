@@ -1,7 +1,7 @@
 package de.wk.betacore;
 
 import de.wk.betacore.commands.bungee.PingCommand;
-import de.wk.betacore.datamanager.DataManager;
+import de.wk.betacore.datamanager.FileManager;
 import de.wk.betacore.environment.EnvironmentManager;
 import de.wk.betacore.listener.Bungee.PingListenerB;
 import de.wk.betacore.util.data.Misc;
@@ -44,8 +44,8 @@ public class BetaCoreBungee extends Plugin {
 
         log("§3Setting up datafiles...");
         try {
-            DataManager.setup();
-            DataManager.getPlayerData().save();
+            FileManager.setup();
+            FileManager.getPlayerData().save();
         } catch (IOException | FileLoadException e) {
             e.printStackTrace();
         }

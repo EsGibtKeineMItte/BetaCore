@@ -10,12 +10,12 @@ import java.util.ArrayList;
 
 
 
-public class DataManager {
+public class FileManager {
     private static ThunderFile playerData;
     private static ThunderFile teams;
     ConfigManager cm = new ConfigManager();
 
-    private DataManager(){
+    private FileManager(){
 
     }
 
@@ -33,9 +33,7 @@ public class DataManager {
             try {
                 setup();
                 return teams;
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (FileLoadException e) {
+            } catch (IOException | FileLoadException e) {
                 e.printStackTrace();
             }
         }

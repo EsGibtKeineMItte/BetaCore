@@ -5,7 +5,7 @@ import de.wk.betacore.appearance.Color;
 import de.wk.betacore.appearance.ScoreboardUtils;
 import de.wk.betacore.appearance.Tablist;
 import de.wk.betacore.datamanager.ConfigManager;
-import de.wk.betacore.datamanager.DataManager;
+import de.wk.betacore.datamanager.FileManager;
 import de.wk.betacore.util.moneysystem.MoneySystem;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class JoinHandler implements Listener {
     ConfigManager cm = new ConfigManager();
-    ThunderFile data = DataManager.getPlayerData();
+    ThunderFile data = FileManager.getPlayerData();
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {

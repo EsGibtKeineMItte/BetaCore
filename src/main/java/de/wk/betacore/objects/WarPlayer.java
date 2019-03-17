@@ -2,7 +2,8 @@ package de.wk.betacore.objects;
 
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.ConfigManager;
-import de.wk.betacore.datamanager.DataManager;
+import de.wk.betacore.datamanager.FileManager;
+import de.wk.betacore.datamanager.PlayerDataFactory;
 import de.wk.betacore.util.MySQL;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.Rank;
@@ -14,13 +15,16 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public class WarPlayer {
+public class WarPlayer implements PlayerDataFactory {
+
+
     static ConfigManager cm = new ConfigManager();
-    static ThunderFile data = DataManager.getPlayerData();
+    static ThunderFile data = FileManager.getPlayerData();
 
 
     private int wsrank;
     private int money;
+    private int fights;
     private Rank rank;
     private String team;
     private String firstjoin;
@@ -32,28 +36,12 @@ public class WarPlayer {
 
 
     public WarPlayer(UUID uuid, String name) {
-        setupWarPlayer(uuid);
+        setupPlayer(uuid, name);
         try {
             ResultSet rs = MySQL.preparedStatement("SELECT COUNT(UUID) FROM PLAYER_INFO WHERE UUID = '" + uuid.toString() + "';").executeQuery();
             rs.next();
 
-            if (rs.getInt(1) == 0) {
-                LocalDate now = LocalDate.now();
-                data.set(uuid.toString() + ".name", name);
-                data.set(uuid.toString() + ".rank", "USER");
-                data.set(uuid.toString() + ".money", 0);
-                data.set(uuid.toString() + ".wsrank", -1);
-                data.set(uuid.toString() + ".muted", false);
-                data.set(uuid.toString() + ".banned", false);
-                data.set(uuid.toString() + ".firstjoin", now.toString());
-                data.set(uuid.toString() + ".lastjoin", now.toString());
-
-
-                data.save();
-                //Ist nicht im System.
-                MySQL.preparedStatement("INSERT INTO PLAYER_INFO(UUID, RANK, MONEY, JOIN_DATE) VALUES ('" + uuid.toString() + "'," + "DEFAULT, DEFAULT, DEFAULT);").executeUpdate();
-
-            } else {
+            if (!(rs.getInt(1) == 0)) {
                 ResultSet rs2 = MySQL.preparedStatement("SELECT * FROM PLAYER_INFO WHERE UUID = '" + uuid.toString() + "';").executeQuery();
                 rs2.next();
                 String rank = rs2.getString("RANK");
@@ -62,6 +50,8 @@ public class WarPlayer {
                 this.lastjoin = data.getString(uuid.toString() + ".lastjoin");
                 this.team = data.getString(uuid.toString() + ".wsteam");
                 this.wsrank = data.getInt(uuid.toString() + ".wsrank");
+                this.fights = data.getInt(uuid.toString() + ".fights");
+
                 this.rank = Rank.valueOf(rank);
                 this.uuid = uuid.toString();
                 this.name = name;
@@ -70,65 +60,15 @@ public class WarPlayer {
 
                 data.set(uuid.toString() + ".money", this.money);
                 data.set(uuid.toString() + ".rank", rank);
-
                 data.save();
+            } else {
+                throw new NullPointerException("Es wurde versucht einen War-Plaser zu erstellen, welcher nicht in den Datenbanken existiert.");
             }
-
             System.out.println(MySQL.preparedStatement("SELECT * FROM PLAYER_INFO WHERE UUID = " + "'" + uuid.toString() + "';").executeQuery());
         } catch (SQLException | IOException x) {
-            BetaCore.debug("Es ist ein Fehler, beim Erstellen des WarPlayers: " + name + " aufgetreten.");
+            BetaCore.debug("[MYSQL | JSON-FILES]Es ist ein Fehler, beim Erstellen des WarPlayers: " + name + " aufgetreten.");
             x.printStackTrace();
         }
-    }
-
-    public void setupWarPlayer(UUID uuid) {
-        try {
-            ResultSet rs = MySQL.preparedStatement("SELECT COUNT(UUID) FROM PLAYER_INFO WHERE UUID = '" + uuid.toString() + "';").executeQuery();
-            rs.next();
-            if (!(rs.getInt(1) == 0)) {
-                return;
-            }
-            LocalDate now = LocalDate.now();
-            data.set(uuid.toString() + ".name", name);
-            data.set(uuid.toString() + ".rank", "USER");
-            data.set(uuid.toString() + ".money", 0);
-            data.set(uuid.toString() + ".wsrank", -1);
-            data.set(uuid.toString() + ".muted", false);
-            data.set(uuid.toString() + ".banned", false);
-            data.set(uuid + "firstjoin", now.toString());
-            data.set(uuid + "lastjoin", now.toString());
-
-            data.save();
-            //Ist nicht im System.
-            MySQL.preparedStatement("INSERT INTO PLAYER_INFO(UUID, RANK, MONEY, JOIN_DATE) VALUES ('" + uuid.toString() + "'," + "DEFAULT, DEFAULT, DEFAULT);").executeUpdate();
-        } catch (SQLException | IOException e) {
-            System.out.println(Misc.getPREFIX() + "Es ist ein Fehler beim Setzen der MySQL Werte für den Spieler " + name + " aufgetreten");
-            System.out.println("");
-            e.printStackTrace();
-        }
-
-    }
-
-    public static void manuellsetup(UUID uuid, String name) {
-        LocalDate now = LocalDate.now();
-        data.set(uuid + ".name", name);
-        data.set(uuid + ".money", 0);
-        data.set(uuid + ".wsrank", -1);
-        data.set(uuid + ".wsteam", "");
-        data.set(uuid + ".firstjoin", now.toString());
-        data.set(uuid + ".lastjoin", now.toString());
-        data.set(uuid + ".muted", false);
-        data.set(uuid.toString() + ".banned", false);
-
-        try {
-            data.save();
-            MySQL.preparedStatement("INSERT INTO PLAYER_INFO(UUID, RANK, MONEY, JOIN_DATE) VALUES ('" + uuid.toString() + "'," + "DEFAULT, DEFAULT, DEFAULT);").executeUpdate();
-        } catch (SQLException | IOException e) {
-            System.out.println(Misc.getPREFIX() + "Es ist ein Fehler beim Setzen der SpielerDaten für den Spieler " + name);
-            System.out.println("");
-            e.printStackTrace();
-        }
-
     }
 
     public void setWarShipTeam(String teamName) {
@@ -136,13 +76,12 @@ public class WarPlayer {
         try {
             data.save();
         } catch (IOException e) {
-            BetaCore.debug("Es ist ein Fehler beim setzen des WarShip-Teams von " + name + " aufgetreten.");
+            BetaCore.debug("[JSON-FILES]Es ist ein Fehler beim setzen des WarShip-Teams von " + name + " aufgetreten.");
             e.printStackTrace();
         }
     }
 
-
-    public String getWarShipTeam() {
+    public String getTeam() {
         return data.getString(uuid + ".wsteam");
     }
 
@@ -156,11 +95,11 @@ public class WarPlayer {
 
 
     public void ban(int banID) {
-        //TODO BannSystem einfügen
+        this.banned = true;
     }
 
     public void ban(String reason, String time) {
-
+        this.banned = true;
     }
 
 
@@ -169,40 +108,61 @@ public class WarPlayer {
     }
 
     public void mute(String reason, String time) {
-
+        this.muted = true;
     }
 
-    public void unban() {
-
+    @Override
+    public int getWsRank(UUID uuid) {
+        return this.wsrank;
     }
 
-    public void unmute() {
-
+    @Override
+    public int getMoney(UUID uuid) {
+        return this.money;
     }
 
-
-    public int getWsrank() {
-        return wsrank;
+    @Override
+    public int getFights(UUID uuid) {
+        return this.fights;
     }
 
-    public int getMoney() {
-        return money;
+    @Override
+    public Rank getRank(UUID uuid) {
+        return this.rank;
     }
 
-    public Rank getRank() {
-        return rank;
+    @Override
+    public String getFirstJoin(UUID uuid) {
+        return this.firstjoin;
     }
 
-    public String getTeam() {
-        return team;
+    @Override
+    public String getLastJoin(UUID uuid) {
+        return null;
     }
 
-    public String getFirstjoin() {
-        return firstjoin;
+    @Override
+    public String getName(UUID uuid) {
+        return this.name;
     }
 
-    public String getLastjoin() {
-        return lastjoin;
+    @Override
+    public boolean isBanned(UUID uuid) {
+        return this.banned;
     }
 
+    @Override
+    public boolean isMuted(UUID uuid) {
+        return this.muted;
+    }
+
+    @Override
+    public void unmute(UUID uuid) {
+        this.muted = false;
+    }
+
+    @Override
+    public void unban(UUID uuid) {
+        this.muted = false;
+    }
 }

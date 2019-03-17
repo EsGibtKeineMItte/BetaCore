@@ -2,7 +2,7 @@ package de.wk.betacore;
 
 import de.wk.betacore.commands.spigot.*;
 import de.wk.betacore.commands.spigot.commandmanager.CommandManagerOld;
-import de.wk.betacore.datamanager.DataManager;
+import de.wk.betacore.datamanager.FileManager;
 import de.wk.betacore.environment.EnvironmentManager;
 import de.wk.betacore.listener.Spigot.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
@@ -118,6 +118,7 @@ public final class BetaCore extends JavaPlugin {
         log("§3Establishing MySQL Connection...");
         MySQL mySQL = new MySQL();
 
+
         try {
             mySQL.openConnection();
             System.out.println("MySQL Connection erfolgreich.");
@@ -170,7 +171,7 @@ public final class BetaCore extends JavaPlugin {
     @Override
     public void onDisable() {
         log("§3Unloading Files...");
-        DataManager.unloadFiles();
+        FileManager.unloadFiles();
 
         log("§3Successfully disabled " + Misc.CODENAME + "v." + Misc.VERSION + ".");
     }

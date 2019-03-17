@@ -1,6 +1,5 @@
 package de.wk.betacore.commands.spigot;
 
-import de.wk.betacore.objects.WarPlayer;
 import de.wk.betacore.util.data.Misc;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -12,7 +11,7 @@ betacore.debug
 betacore.setupplayer
  */
 
-public class SetupCommand implements CommandExecutor {
+public class SetupCommand implements CommandExecutor{
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length != 1) {
@@ -25,7 +24,7 @@ public class SetupCommand implements CommandExecutor {
             sender.sendMessage("§cDieser Spieler existiert nicht.");
             return false;
         }
-        WarPlayer.manuellsetup(Bukkit.getOfflinePlayer(args[0]).getUniqueId(), Bukkit.getOfflinePlayer(args[0]).getName());
+
         sender.sendMessage(Misc.PREFIX + "Du die Daten für den Spieler " +  Bukkit.getOfflinePlayer(args[0]).getName() + " erfolgreich gesetzt" );
         return false;
     }

@@ -2,7 +2,7 @@ package de.wk.betacore.util.teamsystem;
 
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.ConfigManager;
-import de.wk.betacore.datamanager.DataManager;
+import de.wk.betacore.datamanager.FileManager;
 import io.bluecube.thunderbolt.io.ThunderFile;
 import io.bluecube.thunderbolt.org.json.JSONException;
 import org.bukkit.entity.Player;
@@ -18,8 +18,8 @@ public class TeamSystem {
 
     ThunderFile cfg;
 
-    static ThunderFile teams = DataManager.getTeams();
-    ThunderFile playerData = DataManager.getPlayerData();
+    static ThunderFile teams = FileManager.getTeams();
+    ThunderFile playerData = FileManager.getPlayerData();
 
 
     public void createTeam(String teamName, String kuerzel, Player teamAdmin) {
@@ -144,7 +144,7 @@ public class TeamSystem {
         try {
             return new ArrayList<>(teams.getStringList("activeTeams"));
         } catch (JSONException e) {
-            DataManager.setupTeamFile();
+            FileManager.setupTeamFile();
             return new ArrayList<>(teams.getStringList("activeTeams"));
         }
     }

@@ -9,6 +9,15 @@ public class EnvironmentManager {
     private static boolean spigot;
     private static boolean bungeecord;
 
+
+    private static boolean mysql;
+
+
+    private EnvironmentManager(){
+
+    }
+
+
     public static String getPathToDataFolder() {
         if (bungeecord) {
             String pluginDataFolder = BetaCoreBungee.getInstance().getDataFolder().getAbsolutePath();
@@ -38,5 +47,13 @@ public class EnvironmentManager {
 
     public static void setBungeecord(boolean bungeecord) {
         EnvironmentManager.bungeecord = bungeecord;
+    }
+
+    public static boolean isMysql() {
+        return mysql;
+    }
+
+    public static void setMysql(boolean mysql) {
+        EnvironmentManager.mysql = mysql;
     }
 }

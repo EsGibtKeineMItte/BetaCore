@@ -41,9 +41,9 @@ public class Chat {
     }
 
     private static String getString(String message, Boolean allowColor, Boolean allowSpecial) {
-        if (allowColor  == false && allowSpecial == true) {
+        if (!allowColor && allowSpecial) {
             message = Color.ConvertSpecial(message);
-        } else if (allowColor  == true && allowSpecial == false) {
+        } else if (allowColor && !allowSpecial) {
             message = Color.ConvertColor(message);
         } else {
 
