@@ -7,6 +7,9 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 public class KickSystem extends Command {
 
@@ -38,7 +41,9 @@ public class KickSystem extends Command {
 
         if (args.length > 1) {
 
-            player.disconnect();
+            ArrayList<String> reason = new ArrayList<>(Arrays.asList(args));
+
+            player.disconnect(new TextComponent(reason.toString()));
 
         } else {
             sender.sendMessage(new TextComponent(Misc.PREFIX + "§7Benutzung: §6/kick <Spieler> <Grund>"));

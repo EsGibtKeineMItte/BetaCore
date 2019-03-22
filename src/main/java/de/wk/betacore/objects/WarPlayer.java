@@ -7,6 +7,7 @@ import de.wk.betacore.datamanager.PlayerDataFactory;
 import de.wk.betacore.util.MySQL;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.Rank;
+import de.wk.betacore.util.teamsystem.Team;
 import io.bluecube.thunderbolt.io.ThunderFile;
 
 import java.io.IOException;
@@ -33,6 +34,7 @@ public class WarPlayer implements PlayerDataFactory {
     private String name;
     private boolean banned;
     private boolean muted;
+    private Team wsteam;
 
 
     public WarPlayer(UUID uuid, String name) {
@@ -51,6 +53,7 @@ public class WarPlayer implements PlayerDataFactory {
                 this.team = data.getString(uuid.toString() + ".wsteam");
                 this.wsrank = data.getInt(uuid.toString() + ".wsrank");
                 this.fights = data.getInt(uuid.toString() + ".fights");
+                this.wsteam = new Team(team);
 
                 this.rank = Rank.valueOf(rank);
                 this.uuid = uuid.toString();
@@ -62,7 +65,7 @@ public class WarPlayer implements PlayerDataFactory {
                 data.set(uuid.toString() + ".rank", rank);
                 data.save();
             } else {
-                throw new NullPointerException("Es wurde versucht einen War-Plaser zu erstellen, welcher nicht in den Datenbanken existiert.");
+                throw new NullPointerException("Es wurde versucht einen War-Player zu erstellen, welcher nicht in den Datenbanken existiert.");
             }
             System.out.println(MySQL.preparedStatement("SELECT * FROM PLAYER_INFO WHERE UUID = " + "'" + uuid.toString() + "';").executeQuery());
         } catch (SQLException | IOException x) {
@@ -81,7 +84,7 @@ public class WarPlayer implements PlayerDataFactory {
         }
     }
 
-    public String getTeam() {
+    public String getTeamName() {
         return data.getString(uuid + ".wsteam");
     }
 
@@ -147,6 +150,11 @@ public class WarPlayer implements PlayerDataFactory {
     }
 
     @Override
+    public Team getTeam(UUID uuid) {
+        return this.wsteam;
+    }
+
+    @Override
     public boolean isBanned(UUID uuid) {
         return this.banned;
     }
@@ -165,4 +173,6 @@ public class WarPlayer implements PlayerDataFactory {
     public void unban(UUID uuid) {
         this.muted = false;
     }
+
+
 }

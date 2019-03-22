@@ -49,7 +49,13 @@ betacore.teamlist
 
         if (args.length == 0) {
             StringUtils.centerText("§dTeamSystem - BetaCore");
-            sender.sendMessage("§6/team §7Zeigt diese Nachricht an.");
+            sender.sendMessage("§6/team info §7<§6Teamname§7> §7Zeigt die Informationen über dein oder ein anderes WarShip-Team an.");
+            sender.sendMessage("§6/team list §7Zeigt alle aktiven WarShip-Teams an.");
+            sender.sendMessage("§6/team join §7<§6Teamname§7> §7Trete einem Team bei.");
+            sender.sendMessage("§6/team invite §7<§6Spieler§7> §7Läd einen Spieler in dein WarShip-Team ein");
+            sender.sendMessage("§6/team leave §7Verlässt ein WarShip-Team");
+            sender.sendMessage("§6/team gs §7Teleportiert dich zu deinem Teamgrundstück.");
+            sender.sendMessage("§6/team getworld §7Erstellt deinem WarShip-Team ein Teamgrundstück");
             /*
             help
             info
@@ -66,8 +72,9 @@ betacore.teamlist
 
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("info")) {
-                if (TeamSystem.isActiveWarShipTeam(wp.getTeam())) {
-                    player.sendMessage(Misc.PREFIX + "§7Du bist im WarShip-Team §6 " + wp.getTeam() + "§7.");
+                if (TeamSystem.isActiveWarShipTeam(wp.getTeamName())) {
+                    player.sendMessage("§6" + wp.getTeamName());
+                    player.sendMessage("§6" + wp.getTeam(player.getUniqueId()));
                     return false;
                     //INFOS
                 } else {
@@ -79,12 +86,13 @@ betacore.teamlist
                     sender.sendMessage(Misc.NOPERM);
                     return false;
                 }
-                sender.sendMessage(StringUtils.centerText("Aktive WarShip Teams:"));
+                sender.sendMessage("§7Aktive WarShip Teams:");
                 for (String wst : TeamSystem.getActiveTeams()) {
-                    sender.sendMessage(wst);
+                    String index = String.valueOf(TeamSystem.getActiveTeams().indexOf(wst) + 1);
+                    sender.sendMessage("§6" + index + "§7: " + wst);
                 }
             } else if (args[0].equalsIgnoreCase("gs")) {
-                if (TeamSystem.isActiveWarShipTeam(wp.getTeam())) {
+                if (TeamSystem.isActiveWarShipTeam(wp.getTeamName())) {
                     sender.sendMessage("Diese Funktion kommt bald.");
                     return false;
                 }
@@ -102,7 +110,7 @@ betacore.teamlist
 
         if (args.length == 2) {
             if (args[0].equalsIgnoreCase("join")) {
-                if (TeamSystem.isActiveWarShipTeam(wp.getTeam())) {
+                if (TeamSystem.isActiveWarShipTeam(wp.getTeamName())) {
                     player.sendMessage("§7Du bist bereits in einem WarShip Team.");
                     return false;
                 }
@@ -123,12 +131,10 @@ betacore.teamlist
 
         if (args.length == 3) {
             if (args[0].equalsIgnoreCase("create")) {
-                //Team create abstract_artZ aaZ
-                //      0        1          2
                 Team team = new Team(args[1], args[2], player);
                 player.sendMessage(Misc.getPREFIX() + "§7Du hast das Team §6" + args[1] + " §7mit dem Kürzel §6" + args[2] + "§7 erstellt.");
                 return false;
-            }else{
+            } else {
                 player.sendMessage("§6/team für alle TeamCommands.");
             }
         }

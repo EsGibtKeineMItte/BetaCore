@@ -1,6 +1,8 @@
 package io.bluecube.thunderbolt.io;
 
+import de.wk.betacore.BetaCore;
 import io.bluecube.thunderbolt.org.json.JSONArray;
+import io.bluecube.thunderbolt.org.json.JSONException;
 import io.bluecube.thunderbolt.org.json.JSONObject;
 import io.bluecube.thunderbolt.utils.Validator;
 
@@ -9,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -73,6 +76,12 @@ public class ThunderFile {
 	 * @return The path to the file
 	 */
 	public String getPath(){
+		try{
+
+		}catch(JSONException e){
+			BetaCore.debug("");
+		}
+
 		return path;
 	}
 	
@@ -93,6 +102,11 @@ public class ThunderFile {
 	 * @return The object associated with this key
 	 */
 	public Object get(String key){
+		try{
+
+		}catch(JSONException e){
+			BetaCore.debug("");
+		}
 		return jo.get(key);
 	}
 	
@@ -103,6 +117,11 @@ public class ThunderFile {
 	 * @return The String associated with this key
 	 */
 	public String getString(String key){
+		try{
+
+		}catch(JSONException e){
+			BetaCore.debug("");
+		}
 		return (String)jo.get(key);
 	}
 	
@@ -113,6 +132,11 @@ public class ThunderFile {
 	 * @return The Byte associated with this key
 	 */
 	public byte getByte(String key){
+		try{
+
+		}catch(JSONException e){
+			BetaCore.debug("");
+		}
 		return (byte)jo.get(key);
 	}
 	
@@ -123,6 +147,11 @@ public class ThunderFile {
 	 * @return The Short associated with this key
 	 */
 	public short getShort(String key){
+		try{
+
+		}catch(JSONException e){
+			BetaCore.debug("");
+		}
 		return (short)jo.get(key);
 	}
 	
@@ -133,7 +162,12 @@ public class ThunderFile {
 	 * @return The Integer associated with this key
 	 */
 	public int getInt(String key){
-		return (int)jo.get(key);
+		try{
+			return (int)jo.get(key);
+		}catch(JSONException e){
+			BetaCore.debug("Ein aus den Datenbanken abgefragter int existiert nicht.");
+			return 0;
+		}
 	}
 	
 	/**
@@ -143,7 +177,12 @@ public class ThunderFile {
 	 * @return The Double associated with this key
 	 */
 	public double getDouble(String key){
-		return (double)jo.get(key);
+		try{
+			return (double)jo.get(key);
+		}catch(JSONException e){
+			BetaCore.debug("Ein aus den Datenbanken abgefragter double existiert nicht.");
+			return 0.0;
+		}
 	}
 	
 	/**
@@ -163,6 +202,11 @@ public class ThunderFile {
 	 * @return The Float associated with this key
 	 */
 	public float getFloat(String key){
+		try{
+
+		}catch(JSONException e){
+			BetaCore.debug("");
+		}
 		return (float)jo.get(key);
 	}
 	
@@ -184,7 +228,12 @@ public class ThunderFile {
         for (int i = 0; i < ja.length(); i++){
         	l.add(ja.get(i));
         }
-        return l;
+		try{
+			return l;
+		}catch(JSONException e){
+			BetaCore.debug("Ein aus den Datenbanken abgefragte Liste existiert nicht.");
+			return new ArrayList<>();
+		}
     }
     
 	/**
@@ -201,7 +250,13 @@ public class ThunderFile {
     			list.add(String.valueOf(o));
     		}
     	}
-    	return list;
+		try{
+			return list;
+		}catch(JSONException e){
+			BetaCore.debug("Ein aus den Datenbanken abgefragte StringListe existiert nicht.");
+			return new ArrayList<>();
+
+		}
     }
     
     /**
@@ -220,7 +275,13 @@ public class ThunderFile {
     			list.add(Byte.valueOf((String)o));
     		}
     	}
-    	return list;
+		try{
+			return list;
+		}catch(JSONException e){
+			BetaCore.debug("Ein aus den Datenbanken abgefragte  ByteListe existiert nicht.");
+			return new ArrayList<>();
+
+		}
     }
     
     /**
@@ -239,7 +300,13 @@ public class ThunderFile {
     			list.add(Short.valueOf((String)o));
     		}
     	}
-    	return list;
+		try{
+			return list;
+		}catch(JSONException e){
+			BetaCore.debug("Ein aus den Datenbanken abgefragte ShortListe existiert nicht.");
+			return new ArrayList<>();
+
+		}
     }
     
     /**
@@ -258,7 +325,13 @@ public class ThunderFile {
     			list.add(Integer.valueOf((String)o));
     		}
     	}
-    	return list;
+		try{
+			return list;
+		}catch(JSONException e){
+			BetaCore.debug("Ein aus den Datenbanken abgefragte Int-Liste existiert nicht.");
+			return new ArrayList<>();
+
+		}
     }
     
     /**
@@ -277,7 +350,12 @@ public class ThunderFile {
     			list.add(Double.valueOf((String)o));
     		}
     	}
-    	return list;
+		try{
+			return list;
+		}catch(JSONException e){
+			BetaCore.debug("Ein aus den Datenbanken abgefragte DoubleListe existiert nicht.");
+			return new ArrayList<>();
+		}
     }
     
     /**
@@ -296,7 +374,13 @@ public class ThunderFile {
     			list.add(Long.valueOf((String)o));
     		}
     	}
-    	return list;
+		try{
+			return list;
+		}catch(JSONException e){
+			BetaCore.debug("Ein aus den Datenbanken abgefragte LongListe existiert nicht.");
+			return new ArrayList<>();
+
+		}
     }
     
     /**
@@ -315,7 +399,13 @@ public class ThunderFile {
     			list.add(Float.valueOf((String)o));
     		}
     	}
-    	return list;
+		try{
+			return list;
+		}catch(JSONException e){
+			BetaCore.debug("Ein aus den Datenbanken abgefragte FloatListe existiert nicht.");
+			return new ArrayList<>();
+
+		}
     }
     
     /**

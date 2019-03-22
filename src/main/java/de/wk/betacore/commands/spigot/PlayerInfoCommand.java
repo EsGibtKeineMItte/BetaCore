@@ -38,9 +38,7 @@ public class PlayerInfoCommand implements CommandExecutor {
         String playerName = ChatColor.GRAY + Bukkit.getOfflinePlayer(args[0]).getName() + ":";
         String uuid = Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString();
         try {
-
             sender.sendMessage(RankSystem.getRank(Bukkit.getOfflinePlayer(args[0]).getUniqueId()).getColor() + playerName + "§7:");
-
             sender.sendMessage("§6Rank: §7" + RankSystem.getRank(Bukkit.getOfflinePlayer(args[0]).getUniqueId()).getColor() + RankSystem.getRank(Bukkit.getOfflinePlayer(args[0]).getUniqueId()));
             sender.sendMessage("§6Erster Join: §7" + data.getString(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".firstjoin"));
             sender.sendMessage("§6Letzer Join: §7" + data.getString(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".lastjoin"));

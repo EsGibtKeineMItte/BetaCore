@@ -27,6 +27,7 @@ public class DataSetter implements Listener {
         WarPlayer wp = new WarPlayer(player.getUniqueId(), e.getPlayer().getName());
 
 
+
         LocalDate today = LocalDate.now();
     }
 }

@@ -43,20 +43,7 @@ public final class BetaCore extends JavaPlugin {
 
     private static BetaCore instance;
 
-    private void removeCommands() {
-        Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> {
-            try {
-                CommandRemover.removeAll("tell", "libsdisguises:", "turnier", "bukkit:pl",
-                        "bukkit:plugins", "ver", "bukkit:ver", "bukkit:seed", "bukkit:msg", "bukkit:w",
-                        "bukkit:tell", "bukkit:list", "version", "bukkit:version", "?", "bukkit:?", "me",
-                        "bukkit:help", "minecraft:help", "about", "bukkit:about", "icanhasbukkit", "me", "msg",
-                        "bukkit:kill", "bukkit:me", "plugins", "minecraft:me", "eval", "evaluate", "solve", "calc",
-                        "calculate", "/eval", "/evaluate", "/solve", "/calc", "/calculate", "w", "minecraft:w", "list", "minecraft:list");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }, 30);
-    }
+
 
 
     public void regCommands() {
@@ -83,11 +70,34 @@ public final class BetaCore extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new JoinHandler(), this);
         Bukkit.getPluginManager().registerEvents(new CommandListener(), this);
         Bukkit.getPluginManager().registerEvents(new CustomCommand(), this);
+        Bukkit.getPluginManager().registerEvents(new CommandListener("tell", "libsdisguises:", "turnier", "bukkit:pl",
+                "bukkit:plugins", "ver", "bukkit:ver", "bukkit:seed", "bukkit:msg", "bukkit:w",
+                "bukkit:tell", "bukkit:list", "version", "bukkit:version", "?", "bukkit:?", "help", "me",
+                "bukkit:help", "minecraft:help", "about", "bukkit:about", "icanhasbukkit", "me", "msg",
+                "bukkit:kill", "bukkit:me", "plugins", "minecraft:me", "eval", "evaluate", "solve", "calc",
+                "calculate", "/eval", "/evaluate", "/solve", "/calc", "/calculate", "w", "minecraft:w", "list", "minecraft:list"), this);
         Bukkit.getPluginManager().registerEvents(new PermissionListener(), this);
         this.getServer().getPluginManager().registerEvents(RecordListener.getInstance(), this);
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BUNGEECORD");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BUNGEECORD", new FastTravelSystem());
     }
+
+    // Remove annoying Native MC Commands
+    private void removeCommands() {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> {
+            try {
+                CommandRemover.removeAll("tell", "libsdisguises:", "turnier", "bukkit:pl",
+                        "bukkit:plugins", "ver", "bukkit:ver", "bukkit:seed", "bukkit:msg", "bukkit:w",
+                        "bukkit:tell", "bukkit:list", "version", "bukkit:version", "?", "bukkit:?", "help", "me",
+                        "bukkit:help", "minecraft:help", "about", "bukkit:about", "icanhasbukkit", "me", "msg",
+                        "bukkit:kill", "bukkit:me", "plugins", "minecraft:me", "eval", "evaluate", "solve", "calc",
+                        "calculate", "/eval", "/evaluate", "/solve", "/calc", "/calculate", "w", "minecraft:w", "list", "minecraft:list");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, 30);
+    }
+
 
 
     @Override
@@ -187,6 +197,5 @@ public final class BetaCore extends JavaPlugin {
 
     public static void debug(String message) {
         Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + "[§eDEBUG]" + message);
-
     }
 }

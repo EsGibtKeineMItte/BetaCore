@@ -3,6 +3,7 @@ package de.wk.betacore.util.antilaggsystem;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.util.data.Misc;
+import net.minecraft.server.v1_12_R1.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -28,12 +29,12 @@ public class AntiLaggSystem {
                 }
             }
         }
-        Bukkit.broadcastMessage(Misc.PREFIX + "§7Aufgrund der aktuellen TPS-Zahlen wurden§6 " + removedEntities + " §7Entities entfernt.");
+        Bukkit.broadcastMessage(Misc.PREFIX + "§7Es wurden §6 " + removedEntities + " §7Entities entfernt.");
         Bukkit.getScheduler().scheduleSyncDelayedTask(BetaCore.getInstance(), new Runnable() {
             @Override
             public void run() {
 
-                if (cm.getConfig().getBoolean("useAsBauServer") && Lag.getTPS() < 18) {
+                if (cm.getConfig().getBoolean("useAsBauServer") && MinecraftServer.getServer().recentTps[2] < 18) {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stoplag");
                     Bukkit.broadcastMessage(Misc.PREFIX + "§7Aufgrund der aktuellen TPS Zahlen wurde Stoplag aktiviert!");
                 }

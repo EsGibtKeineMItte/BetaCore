@@ -11,10 +11,11 @@ public class WorldSystemUtil implements Listener {
     public void onCmd(PlayerCommandPreprocessEvent e) {
 
         Player player = e.getPlayer();
+        String msg = e.getMessage().toLowerCase();
 
-        if (e.getMessage().toLowerCase().startsWith("/bau")) {
+        if (msg.startsWith("/bau")) {
             e.setCancelled(true);
-            String message = e.getMessage().replaceAll("/bau", "ws");
+            String message = msg.replaceAll("/bau", "ws");
             player.performCommand(message);
         }
     }
