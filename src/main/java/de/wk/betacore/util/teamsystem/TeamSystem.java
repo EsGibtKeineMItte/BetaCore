@@ -5,6 +5,7 @@ import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.FileManager;
 import io.bluecube.thunderbolt.io.ThunderFile;
 import io.bluecube.thunderbolt.org.json.JSONException;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class TeamSystem {
     ThunderFile playerData = FileManager.getPlayerData();
 
 
-    public void createTeam(String teamName, String kuerzel, Player teamAdmin) {
+    public void createTeam(String teamName, String kuerzel, OfflinePlayer teamAdmin) {
         ConfigManager cm = new ConfigManager();
         LocalDate dateOfTeamCreation = LocalDate.now();
 

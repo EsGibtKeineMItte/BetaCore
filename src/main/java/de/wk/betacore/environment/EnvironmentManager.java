@@ -6,11 +6,8 @@ import de.wk.betacore.BetaCoreBungee;
 public class EnvironmentManager {
 
 
-    private static boolean spigot;
-    private static boolean bungeecord;
+    private static boolean spigot, bungeecord, mysql, maintenance;
 
-
-    private static boolean mysql;
 
 
     private EnvironmentManager(){
@@ -32,6 +29,17 @@ public class EnvironmentManager {
         }
         return null;
     }
+
+    public static void debug(String msg){
+        if(bungeecord){
+            BetaCoreBungee.debug(msg);
+        }else{
+            BetaCore.debug(msg);
+        }
+    }
+
+
+
 
     public static boolean isSpigot() {
         return spigot;
@@ -55,5 +63,9 @@ public class EnvironmentManager {
 
     public static void setMysql(boolean mysql) {
         EnvironmentManager.mysql = mysql;
+    }
+
+    public static boolean isMaintenance() {
+        return maintenance;
     }
 }

@@ -4,6 +4,7 @@ import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.FileManager;
 import io.bluecube.thunderbolt.io.ThunderFile;
 import lombok.Getter;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class Team extends TeamSystem {
     private String teamName, shortName, dateOfCreation, world;
     private int rank, wonPrivateFights, wonPublicFights, wonEvents;
     private List<String> teamMembers = new ArrayList<>();
-    private Player teamAdmin;
+    private OfflinePlayer teamAdmin;
 
     public Team(String teamName, String shortName, Player teamAdmin) {
 
@@ -156,7 +157,7 @@ public class Team extends TeamSystem {
         return wonEvents;
     }
 
-    public Player getTeamAdmin() {
+    public OfflinePlayer getTeamAdmin() {
         return teamAdmin;
     }
 

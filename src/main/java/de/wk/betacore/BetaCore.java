@@ -19,6 +19,7 @@ import de.wk.betacore.util.travel.LobbyCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public final class BetaCore extends JavaPlugin {
 
@@ -123,6 +124,8 @@ public final class BetaCore extends JavaPlugin {
         log("§3Setting up Files... ");
         cm.setup();
         cm.setupMySQL();
+        cm.getConfig().setString("build", LocalDate.now().toString());
+        cm.getConfig().save();
         log("§aDONE");
 
         log("§3Establishing MySQL Connection...");

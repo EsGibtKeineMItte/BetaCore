@@ -73,8 +73,9 @@ betacore.teamlist
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("info")) {
                 if (TeamSystem.isActiveWarShipTeam(wp.getTeamName())) {
-                    player.sendMessage("§6" + wp.getTeamName());
-                    player.sendMessage("§6" + wp.getTeam(player.getUniqueId()));
+                    player.sendMessage("§7Team:" + wp.getTeamName());
+                    player.sendMessage("§7Admin:" + wp.getTeam(player.getUniqueId()).getTeamAdmin().getName());
+                    player.sendMessage("§7");
                     return false;
                     //INFOS
                 } else {

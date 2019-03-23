@@ -5,6 +5,7 @@ import de.wk.betacore.commands.bungee.KickSystem;
 import de.wk.betacore.commands.bungee.PingCommand;
 import de.wk.betacore.datamanager.FileManager;
 import de.wk.betacore.environment.EnvironmentManager;
+import de.wk.betacore.listener.Bungee.ConnectionListener;
 import de.wk.betacore.listener.Bungee.PingListenerB;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.teamsystem.TeamSystem;
@@ -16,7 +17,6 @@ import net.md_5.bungee.api.plugin.Plugin;
 import java.io.IOException;
 
 public class BetaCoreBungee extends Plugin {
-    TeamSystem ts = new TeamSystem();
 
 
     private static BetaCoreBungee instance;
@@ -30,6 +30,7 @@ public class BetaCoreBungee extends Plugin {
 
     public void regListeners() {
         this.getProxy().getPluginManager().registerListener(this, new PingListenerB());
+        this.getProxy().getPluginManager().registerListener(this, new ConnectionListener());
     }
 
     @Override
@@ -64,7 +65,6 @@ public class BetaCoreBungee extends Plugin {
     @Override
     public void onDisable() {
         log("§3Successfully diabled BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + ".");
-
     }
     //
 
@@ -73,8 +73,9 @@ public class BetaCoreBungee extends Plugin {
     }
 
     public static void debug(String message) {
-        ProxyServer.getInstance().getConsole().sendMessage(new TextComponent(Misc.CONSOLEPREFIX + "[§eDEBUG]" + message));
 
+        //TODO wenn in config debug angestellt ist dann...
+        ProxyServer.getInstance().getConsole().sendMessage(new TextComponent(Misc.CONSOLEPREFIX + "[§eDEBUG]" + message));
     }
 
     public static BetaCoreBungee getInstance() {

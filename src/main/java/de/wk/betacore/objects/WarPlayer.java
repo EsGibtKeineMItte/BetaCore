@@ -19,9 +19,9 @@ import java.util.UUID;
 public class WarPlayer implements PlayerDataFactory {
 
 
-    static ConfigManager cm = new ConfigManager();
     static ThunderFile data = FileManager.getPlayerData();
 
+    public final String UUID;
 
     private int wsrank;
     private int money;
@@ -39,6 +39,7 @@ public class WarPlayer implements PlayerDataFactory {
 
     public WarPlayer(UUID uuid, String name) {
         setupPlayer(uuid, name);
+        this.UUID = uuid.toString();
         try {
             ResultSet rs = MySQL.preparedStatement("SELECT COUNT(UUID) FROM PLAYER_INFO WHERE UUID = '" + uuid.toString() + "';").executeQuery();
             rs.next();

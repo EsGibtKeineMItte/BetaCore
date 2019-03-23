@@ -10,7 +10,8 @@ import java.util.ArrayList;
 
 
 
-public class FileManager {
+public class
+FileManager {
     private static ThunderFile playerData;
     private static ThunderFile teams;
     ConfigManager cm = new ConfigManager();
@@ -18,6 +19,7 @@ public class FileManager {
     private FileManager(){
 
     }
+
 
 
 

@@ -70,8 +70,9 @@ public interface PlayerDataFactory {
                 if(PLAYER_DATA.getInt(uuid.toString() + ".wsrank") == 0){
                     PLAYER_DATA.set(uuid.toString() + ".wsrank", 900);
                 }
-                if(PLAYER_DATA.getString("wsteam").equalsIgnoreCase("")){
+                if(PLAYER_DATA.getString(uuid.toString() + ".wsteam").equalsIgnoreCase("")){
                     PLAYER_DATA.set(uuid.toString() + ".wsteam", " ");
+
                 }
                 if(PLAYER_DATA.getString(uuid.toString() + ".name") == null){
                     PLAYER_DATA.set(uuid.toString() + ".name", name);

@@ -81,19 +81,19 @@ public class CommandImplementer {
                 if (!(sender.hasPermission("betacore.money.set") && sender.hasPermission("betacore.*"))) {
                     return;
                 }
-                //Core set money linkskeinemitte 100
+                // set money linkskeinemitte 100
 
-                if (!(StringUtils.isNumeric(args[3]))) {
+                if (!(StringUtils.isNumeric(args[2]))) {
                     sender.sendMessage("Du musst eine Ganzzahl als Betrag angeben.");
                     return;
                 }
-                if (Bukkit.getOfflinePlayer(args[2]) == null) {
+                if (Bukkit.getOfflinePlayer(args[1]) == null) {
                     sender.sendMessage("§7Der angebene Spieler ist nicht online.");
                     return;
                 }
-                OfflinePlayer target = Bukkit.getOfflinePlayer(args[2]);
+                OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 
-                int i = Integer.parseInt(args[3]);
+                int i = Integer.parseInt(args[2]);
                 MoneySystem.setMoney(target.getUniqueId(), i);
                 Info.sendInfo((Player) sender, "&aMoney auf §6" + MoneySystem.getMoney(target.getUniqueId()) + " §a gesetzt");
                 joinHandler.update((Player) sender);
@@ -358,7 +358,8 @@ public class CommandImplementer {
                     sender.sendMessage(Misc.NOPERM);
                     return;
                 }
-                de.wk.betacore.util.misc.StringUtils.centerText("§3BetaCore " + Misc.VERSION);
+                sender.sendMessage(de.wk.betacore.util.misc.StringUtils.centerText("§3BetaCore " + Misc.VERSION));
+                sender.sendMessage(de.wk.betacore.util.misc.StringUtils.centerText("§eBuild " + cm.getConfig().getString("build")));
                 Info.sendInfo((Player) sender, "&6/core help &7Zeigt diese Nachricht an");
                 Info.sendInfo((Player) sender, "&6/core setrank <User> <Rank>&7Setzte den Rank eines Users");
                 Info.sendInfo((Player) sender, "&6/core info §7Zeigt Informationen über den Core an");

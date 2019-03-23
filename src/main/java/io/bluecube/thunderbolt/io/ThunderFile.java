@@ -118,11 +118,11 @@ public class ThunderFile {
 	 */
 	public String getString(String key){
 		try{
-
+			return (String)jo.get(key);
 		}catch(JSONException e){
-			BetaCore.debug("");
+			BetaCore.debug("Ein aus den Datenbanken abgefragter String existiert nicht. " + key);
+			return null;
 		}
-		return (String)jo.get(key);
 	}
 	
 	/**
@@ -133,11 +133,11 @@ public class ThunderFile {
 	 */
 	public byte getByte(String key){
 		try{
-
+			return (byte)jo.get(key);
 		}catch(JSONException e){
-			BetaCore.debug("");
+			BetaCore.debug("Ein aus den Datenbanken abgefragter int existiert nicht." + key);
+			return 0;
 		}
-		return (byte)jo.get(key);
 	}
 	
 	/**
@@ -148,11 +148,12 @@ public class ThunderFile {
 	 */
 	public short getShort(String key){
 		try{
-
+			return (short)jo.get(key);
 		}catch(JSONException e){
-			BetaCore.debug("");
+			BetaCore.debug("Ein aus den Datenbanken abgefragter byte existiert nicht." + key);
+			return 0;
 		}
-		return (short)jo.get(key);
+
 	}
 	
 	/**
@@ -165,7 +166,7 @@ public class ThunderFile {
 		try{
 			return (int)jo.get(key);
 		}catch(JSONException e){
-			BetaCore.debug("Ein aus den Datenbanken abgefragter int existiert nicht.");
+			BetaCore.debug("Ein aus den Datenbanken abgefragter int existiert nicht." + key);
 			return 0;
 		}
 	}
@@ -180,7 +181,7 @@ public class ThunderFile {
 		try{
 			return (double)jo.get(key);
 		}catch(JSONException e){
-			BetaCore.debug("Ein aus den Datenbanken abgefragter double existiert nicht.");
+			BetaCore.debug("Ein aus den Datenbanken abgefragter double existiert nicht." + key);
 			return 0.0;
 		}
 	}
@@ -231,7 +232,7 @@ public class ThunderFile {
 		try{
 			return l;
 		}catch(JSONException e){
-			BetaCore.debug("Ein aus den Datenbanken abgefragte Liste existiert nicht.");
+			BetaCore.debug("Ein aus den Datenbanken abgefragte Liste existiert nicht." + key);
 			return new ArrayList<>();
 		}
     }
@@ -253,7 +254,7 @@ public class ThunderFile {
 		try{
 			return list;
 		}catch(JSONException e){
-			BetaCore.debug("Ein aus den Datenbanken abgefragte StringListe existiert nicht.");
+			BetaCore.debug("Ein aus den Datenbanken abgefragte StringListe existiert nicht." + key);
 			return new ArrayList<>();
 
 		}
@@ -278,7 +279,7 @@ public class ThunderFile {
 		try{
 			return list;
 		}catch(JSONException e){
-			BetaCore.debug("Ein aus den Datenbanken abgefragte  ByteListe existiert nicht.");
+			BetaCore.debug("Ein aus den Datenbanken abgefragte  ByteListe existiert nicht." + key);
 			return new ArrayList<>();
 
 		}
@@ -303,7 +304,7 @@ public class ThunderFile {
 		try{
 			return list;
 		}catch(JSONException e){
-			BetaCore.debug("Ein aus den Datenbanken abgefragte ShortListe existiert nicht.");
+			BetaCore.debug("Ein aus den Datenbanken abgefragte ShortListe existiert nicht." + key);
 			return new ArrayList<>();
 
 		}
@@ -328,7 +329,7 @@ public class ThunderFile {
 		try{
 			return list;
 		}catch(JSONException e){
-			BetaCore.debug("Ein aus den Datenbanken abgefragte Int-Liste existiert nicht.");
+			BetaCore.debug("Ein aus den Datenbanken abgefragte Int-Liste existiert nicht." + key);
 			return new ArrayList<>();
 
 		}
@@ -353,7 +354,7 @@ public class ThunderFile {
 		try{
 			return list;
 		}catch(JSONException e){
-			BetaCore.debug("Ein aus den Datenbanken abgefragte DoubleListe existiert nicht.");
+			BetaCore.debug("Ein aus den Datenbanken abgefragte DoubleListe existiert nicht." + key);
 			return new ArrayList<>();
 		}
     }
@@ -377,7 +378,7 @@ public class ThunderFile {
 		try{
 			return list;
 		}catch(JSONException e){
-			BetaCore.debug("Ein aus den Datenbanken abgefragte LongListe existiert nicht.");
+			BetaCore.debug("Ein aus den Datenbanken abgefragte LongListe existiert nicht." + key);
 			return new ArrayList<>();
 
 		}
@@ -402,7 +403,7 @@ public class ThunderFile {
 		try{
 			return list;
 		}catch(JSONException e){
-			BetaCore.debug("Ein aus den Datenbanken abgefragte FloatListe existiert nicht.");
+			BetaCore.debug("Ein aus den Datenbanken abgefragte FloatListe existiert nicht." + key);
 			return new ArrayList<>();
 
 		}

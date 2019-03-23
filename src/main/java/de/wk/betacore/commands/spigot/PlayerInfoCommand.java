@@ -52,7 +52,7 @@ public class PlayerInfoCommand implements CommandExecutor {
             if (data.getBoolean(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".banned")) {
                 sender.sendMessage("§6Banned: §aTRUE");
             } else {
-                sender.sendMessage("§6Muted: §cFALSE");
+                sender.sendMessage("§6Banned: §cFALSE");
             }
 
 
