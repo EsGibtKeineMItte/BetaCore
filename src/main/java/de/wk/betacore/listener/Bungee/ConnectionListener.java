@@ -9,12 +9,12 @@ import net.md_5.bungee.event.EventHandler;
 public class ConnectionListener implements Listener {
 
 
-    @EventHandler
+   //EVENTHANDLER WIEDER ADDEN!
     public void onLogin(PreLoginEvent e){
         try {
             WarPlayer wp = new WarPlayer(e.getConnection().getUniqueId(), e.getConnection().getName());
         }catch (Exception x){
-            BetaCoreBungee.debug("Es ist ein Fehler, beim erstellen, des Spielers " + e.getConnection().getName() + " aufgetreten.");
+            BetaCoreBungee.debug("Es ist ein Fehler, beim erstellen, des WarPlayers " + e.getConnection().getName() + " aufgetreten.");
         }
 
     }

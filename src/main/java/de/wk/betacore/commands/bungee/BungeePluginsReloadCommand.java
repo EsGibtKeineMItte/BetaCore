@@ -15,8 +15,8 @@ import java.util.logging.Handler;
 public class BungeePluginsReloadCommand extends Command {
 
 
-    public BungeePluginsReloadCommand(String name, String permission, String... aliases) {
-        super(name, permission, aliases);
+    public BungeePluginsReloadCommand(String name) {
+        super(name);
     }
 
     @Override

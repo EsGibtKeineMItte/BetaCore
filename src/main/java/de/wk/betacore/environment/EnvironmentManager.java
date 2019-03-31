@@ -20,7 +20,6 @@ public class EnvironmentManager {
             String pluginDataFolder = BetaCoreBungee.getInstance().getDataFolder().getAbsolutePath();
             String DataFolder = pluginDataFolder.replaceAll("BetaCore", "..");
             String path = DataFolder + "/../Data";
-            BetaCoreBungee.debug("Path to datafolder " + path);
             return path;
         } else if (spigot) {
             String pluginDatafolder = BetaCore.getInstance().getDataFolder().getAbsolutePath();

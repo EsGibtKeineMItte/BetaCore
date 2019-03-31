@@ -1,72 +1,61 @@
 package de.wk.betacore.datamanager;
 
 
+import de.leonhard.storage.Json;
 import de.wk.betacore.environment.EnvironmentManager;
-import io.bluecube.thunderbolt.Thunderbolt;
-import io.bluecube.thunderbolt.exceptions.FileLoadException;
-import io.bluecube.thunderbolt.io.ThunderFile;
+
 import java.io.IOException;
-import java.util.ArrayList;
 
 
+public class FileManager {
 
-public class
-FileManager {
-    private static ThunderFile playerData;
-    private static ThunderFile teams;
+    private static Json playerData;
+    private static Json teams;
+    private static Json settings;
+
+    private static Json bungeePerms;
     ConfigManager cm = new ConfigManager();
 
-    private FileManager(){
+    private FileManager() {
 
     }
 
 
-
-
-
-    public static void setup() throws IOException, FileLoadException {
+    public static void setup() throws IOException {
         String path = EnvironmentManager.getPathToDataFolder();
-        playerData = Thunderbolt.load("playerdata", path);
-        teams = Thunderbolt.load("teams", path);
+        playerData = new Json("playerdata", path);
+        teams = new Json("teams", path);
+        settings = new Json("settings", path);
+        bungeePerms = new Json("bungeeperms", path);
     }
 
-    public static ThunderFile getPlayerData() {
-        if (playerData == null) {
-            try {
-                setup();
-                return teams;
-            } catch (IOException | FileLoadException e) {
-                e.printStackTrace();
-            }
-        }
-        return playerData;
-    }
 
-    public static ThunderFile getTeams() {
-        if (teams == null) {
+    private static Json getJson(Json json) {
+        if (json == null) {
             try {
                 setup();
-                if (teams.getStringList("activeTeams") == null) {
-                    setupTeamFile();
-                }
-                return teams;
+                return json;
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (FileLoadException e) {
-                e.printStackTrace();
             }
         }
-        return teams;
+        return json;
     }
 
-    public static void setupTeamFile() {
-        ArrayList<String> activeWarShipTeams = new ArrayList<>();
-        getTeams().set("activeTeams", activeWarShipTeams);
+    public static Json getPlayerData() {
+        return getJson(playerData);
+
     }
 
-    public static void unloadFiles(){
-        Thunderbolt.unload("playerdata");
-        Thunderbolt.unload("teams");
+    public static Json getTeams() {
+        return getJson(teams);
     }
 
+    public static Json getSettings() {
+        return getJson(settings);
+    }
+
+    public static Json getBungeePerms() {
+        return getJson(bungeePerms);
+    }
 }

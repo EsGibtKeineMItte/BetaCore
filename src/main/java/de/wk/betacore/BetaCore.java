@@ -177,14 +177,10 @@ public final class BetaCore extends JavaPlugin {
 
         log("§6Successfully enabled BetaCore" + Misc.CODENAME + "v." + Misc.VERSION + ".");
 
-
-        //  Objects.requireNonNull(Environment.getCurrent()).restartDaily();
     }
 
     @Override
     public void onDisable() {
-        log("§3Unloading Files...");
-        FileManager.unloadFiles();
 
         log("§3Successfully disabled " + Misc.CODENAME + "v." + Misc.VERSION + ".");
     }

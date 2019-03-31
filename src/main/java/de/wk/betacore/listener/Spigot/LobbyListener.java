@@ -1,10 +1,10 @@
 package de.wk.betacore.listener.Spigot;
 
+import de.leonhard.storage.Json;
 import de.wk.betacore.appearance.ScoreboardUtils;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.FileManager;
 import de.wk.betacore.util.ranksystem.RankSystem;
-import io.bluecube.thunderbolt.io.ThunderFile;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class LobbyListener implements Listener {
     ConfigManager cm = new ConfigManager();
-    ThunderFile data = FileManager.getPlayerData();
+    Json data = FileManager.getPlayerData();
 
     BossBar bossBar = Bukkit.createBossBar(cm.getConfig().getString("BossBarTitle"), BarColor.BLUE, BarStyle.SEGMENTED_20);
 

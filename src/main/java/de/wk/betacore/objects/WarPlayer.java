@@ -1,39 +1,29 @@
 package de.wk.betacore.objects;
 
+import de.leonhard.storage.Json;
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.FileManager;
 import de.wk.betacore.datamanager.PlayerDataFactory;
 import de.wk.betacore.util.MySQL;
-import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.teamsystem.Team;
-import io.bluecube.thunderbolt.io.ThunderFile;
-
-import java.io.IOException;
+import de.wk.betacore.util.teamsystem.TeamSystem;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.UUID;
 
 public class WarPlayer implements PlayerDataFactory {
 
 
-    static ThunderFile data = FileManager.getPlayerData();
+    static Json data = FileManager.getPlayerData();
 
     public final String UUID;
 
-    private int wsrank;
-    private int money;
-    private int fights;
+    private int wsrank, money, fights;
     private Rank rank;
-    private String team;
-    private String firstjoin;
-    private String lastjoin;
-    private String uuid;
-    private String name;
-    private boolean banned;
-    private boolean muted;
+    private String team, firstjoin, lastjoin, uuid, name;
+    private boolean banned, muted;
+    private boolean inWarShipTeam;
     private Team wsteam;
 
 
@@ -54,7 +44,9 @@ public class WarPlayer implements PlayerDataFactory {
                 this.team = data.getString(uuid.toString() + ".wsteam");
                 this.wsrank = data.getInt(uuid.toString() + ".wsrank");
                 this.fights = data.getInt(uuid.toString() + ".fights");
-                this.wsteam = new Team(team);
+                if (isInWarShipTeam()) {
+                    this.wsteam = new Team(team);
+                }
 
                 this.rank = Rank.valueOf(rank);
                 this.uuid = uuid.toString();
@@ -64,25 +56,19 @@ public class WarPlayer implements PlayerDataFactory {
 
                 data.set(uuid.toString() + ".money", this.money);
                 data.set(uuid.toString() + ".rank", rank);
-                data.save();
             } else {
                 throw new NullPointerException("Es wurde versucht einen War-Player zu erstellen, welcher nicht in den Datenbanken existiert.");
             }
             System.out.println(MySQL.preparedStatement("SELECT * FROM PLAYER_INFO WHERE UUID = " + "'" + uuid.toString() + "';").executeQuery());
-        } catch (SQLException | IOException x) {
-            BetaCore.debug("[MYSQL | JSON-FILES]Es ist ein Fehler, beim Erstellen des WarPlayers: " + name + " aufgetreten.");
+        } catch (SQLException x) {
+            BetaCore.debug("[MYSQL] Es ist ein Fehler, beim Erstellen des WarPlayers: " + name + " aufgetreten.");
             x.printStackTrace();
         }
     }
 
     public void setWarShipTeam(String teamName) {
         data.set(uuid + ".wsteam", teamName);
-        try {
-            data.save();
-        } catch (IOException e) {
-            BetaCore.debug("[JSON-FILES]Es ist ein Fehler beim setzen des WarShip-Teams von " + name + " aufgetreten.");
-            e.printStackTrace();
-        }
+
     }
 
     public String getTeamName() {
@@ -173,6 +159,11 @@ public class WarPlayer implements PlayerDataFactory {
     @Override
     public void unban(UUID uuid) {
         this.muted = false;
+    }
+
+
+    public boolean isInWarShipTeam() {
+        return TeamSystem.isActiveWarShipTeam(team);
     }
 
 

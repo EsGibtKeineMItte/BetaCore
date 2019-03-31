@@ -1,5 +1,6 @@
 package de.wk.betacore.commands.spigot;
 
+import de.leonhard.storage.Json;
 import de.wk.betacore.objects.WarPlayer;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.FileManager;
@@ -7,7 +8,7 @@ import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.StringUtils;
 import de.wk.betacore.util.teamsystem.Team;
 import de.wk.betacore.util.teamsystem.TeamSystem;
-import io.bluecube.thunderbolt.io.ThunderFile;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,7 +17,7 @@ import org.bukkit.entity.Player;
 
 public class TeamCommandTest implements CommandExecutor {
     TeamSystem teamSystem = new TeamSystem();
-    ThunderFile teams = FileManager.getTeams();
+    Json teams = FileManager.getTeams();
 /*
 betacore.teamlist
  */
@@ -73,9 +74,9 @@ betacore.teamlist
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("info")) {
                 if (TeamSystem.isActiveWarShipTeam(wp.getTeamName())) {
-                    player.sendMessage("§7Team:" + wp.getTeamName());
-                    player.sendMessage("§7Admin:" + wp.getTeam(player.getUniqueId()).getTeamAdmin().getName());
-                    player.sendMessage("§7");
+                    player.sendMessage("§6Team: §7" + wp.getTeamName());
+                    player.sendMessage("§6Admin: §7" + Bukkit.getOfflinePlayer(wp.getTeam(player.getUniqueId()).getTeamAdmin()).getName());
+                    player.sendMessage("§6");
                     return false;
                     //INFOS
                 } else {

@@ -1,13 +1,12 @@
 package de.wk.betacore.datamanager;
 
+import de.leonhard.storage.Json;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.environment.EnvironmentManager;
 import de.wk.betacore.util.MySQL;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.teamsystem.Team;
-import io.bluecube.thunderbolt.io.ThunderFile;
 
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -16,8 +15,8 @@ import java.util.UUID;
 
 public interface PlayerDataFactory {
     String PATH = EnvironmentManager.getPathToDataFolder();
-    ThunderFile PLAYER_DATA = FileManager.getPlayerData();
-    ThunderFile TEAMS = FileManager.getTeams();
+    Json PLAYER_DATA = FileManager.getPlayerData();
+    Json TEAMS = FileManager.getTeams();
 
 
     int getWsRank(UUID uuid);
@@ -65,14 +64,20 @@ public interface PlayerDataFactory {
                 PLAYER_DATA.set(uuid.toString() + ".fights", 0);
                 PLAYER_DATA.set(uuid.toString() + ".firstjoin", joinDate);
                 PLAYER_DATA.set(uuid.toString() + ".lastjoin", joinDate);
-                PLAYER_DATA.save();
             }else{
+
+                /*
+                PERMS!!!
+                 */
+
+
+
                 if(PLAYER_DATA.getInt(uuid.toString() + ".wsrank") == 0){
                     PLAYER_DATA.set(uuid.toString() + ".wsrank", 900);
                 }
+
                 if(PLAYER_DATA.getString(uuid.toString() + ".wsteam").equalsIgnoreCase("")){
                     PLAYER_DATA.set(uuid.toString() + ".wsteam", " ");
-
                 }
                 if(PLAYER_DATA.getString(uuid.toString() + ".name") == null){
                     PLAYER_DATA.set(uuid.toString() + ".name", name);
@@ -87,14 +92,9 @@ public interface PlayerDataFactory {
                     PLAYER_DATA.set(uuid.toString() + ".fights", 0);
                 }
                 PLAYER_DATA.set(uuid.toString() + ".lastjoin", joinDate);
-
-                PLAYER_DATA.save();
             }
         }catch(SQLException e){
             BetaCore.debug("[MYSQL]Es ist ein Fehler, beim Erstellen des WarPlayers: " + name + " aufgetreten.");
-        } catch (IOException e) {
-            BetaCore.debug("[JSON-FILES]Es ist ein Fehler, beim Erstellen des WarPlayers: " + name + " aufgetreten.");
-            e.printStackTrace();
         }
 
     }

@@ -1,14 +1,13 @@
 package de.wk.betacore.util.teamsystem;
 
+import de.leonhard.storage.Json;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.FileManager;
-import io.bluecube.thunderbolt.io.ThunderFile;
-import io.bluecube.thunderbolt.org.json.JSONException;
+
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +16,10 @@ import java.util.List;
 public class TeamSystem {
 
 
-    ThunderFile cfg;
+    Json cfg;
 
-    static ThunderFile teams = FileManager.getTeams();
-    ThunderFile playerData = FileManager.getPlayerData();
+    static Json teams = FileManager.getTeams();
+    Json playerData = FileManager.getPlayerData();
 
 
     public void createTeam(String teamName, String kuerzel, OfflinePlayer teamAdmin) {
@@ -35,33 +34,25 @@ public class TeamSystem {
         if (teamAdmin == null) {
             throw new NullPointerException("Fehler 004: Der TeamAdmin ist nicht online/existiert nicht -> ist null");
         }
-        try {
-            playerData.set(teamAdmin.getUniqueId().toString() + ".wsteam", teamName);
+        playerData.set(teamAdmin.getUniqueId().toString() + ".wsteam", teamName);
 
-            teams.set(teamName + ".admin", teamAdmin.getUniqueId().toString());
-            teams.set(teamName + ".short", kuerzel);
-            teams.set(teamName + ".dataOfCreation", dateOfTeamCreation.toString());
-            teams.set(teamName + ".teamrank", -1);//PrivateFight *3 + wonEvents*5 + wonpublicfights
-            teams.set(teamName + "wonPublicFights", 0);
-            teams.set(teamName + ".wonPrivateFights", 0);
-            teams.set(teamName + ".wonEvents", 0);
-            teams.set(teamName + ".world", null);
-            teams.set(teamName + ".teamws", null);
-            teams.save();
+        teams.set(teamName + ".admin", teamAdmin.getUniqueId().toString());
+        teams.set(teamName + ".short", kuerzel);
+        teams.set(teamName + ".dataOfCreation", dateOfTeamCreation.toString());
+        teams.set(teamName + ".teamrank", -1);//PrivateFight *3 + wonEvents*5 + wonpublicfights
+        teams.set(teamName + ".wonPublicFights", 0);
+        teams.set(teamName + ".wonPrivateFights", 0);
+        teams.set(teamName + ".wonEvents", 0);
+        teams.set(teamName + ".world", null);
+        teams.set(teamName + ".teamws", null);
 
-            ArrayList<String> activeTeams = getActiveTeams();
+        ArrayList<String> activeTeams = getActiveTeams();
 
-            activeTeams.add(teamName);
+        activeTeams.add(teamName);
 
-            teams.set("activeTeams", activeTeams);
+        teams.set("activeTeams", activeTeams);
 
 
-            playerData.save();
-            teams.save();
-        } catch (IOException e) {
-            BetaCore.debug("Es ist ein Fehler beim kreieren des Teams " + teamName + " ausgetreten.");
-            e.printStackTrace();
-        }
         System.out.println(teamName + kuerzel + teamAdmin.getName());
         BetaCore.debug("Das Team " + teamName + " wurde erstellt.");
     }
@@ -78,21 +69,12 @@ public class TeamSystem {
         teamMembers.add(player.getUniqueId().toString());
         teams.set(teamName + ".members", teamMembers);
         teamMembers.clear();
-        try {
-            teams.save();
-            playerData.save();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
 
     public List<String> getTeamMembers(String teamName) {
-        try {
-            teams.getStringList(teamName + ".members");
-        } catch (JSONException e) {
-            return null;
-        }
+
         return teams.getStringList(teamName + ".members");
     }
 
@@ -101,12 +83,6 @@ public class TeamSystem {
         teamMembers.remove(player.getUniqueId().toString());
         teams.set(teamName + ".members", teamMembers);
         teamMembers.clear();
-
-        try {
-            teams.save();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void promoteUser(String Teamname, Player player) {
@@ -115,12 +91,9 @@ public class TeamSystem {
     }
 
     public String getTeamFromPlayer(Player player) {
-        try {
-            playerData.getString(player.getUniqueId().toString() + ".wsteam");
-        } catch (JSONException e) {
-            return null;
-        }
+
         return playerData.getString(player.getUniqueId().toString() + ".wsteam");
+
     }
 
 
@@ -142,12 +115,9 @@ public class TeamSystem {
     }
 
     public static ArrayList<String> getActiveTeams() {
-        try {
-            return new ArrayList<>(teams.getStringList("activeTeams"));
-        } catch (JSONException e) {
-            FileManager.setupTeamFile();
-            return new ArrayList<>(teams.getStringList("activeTeams"));
-        }
+
+        return new ArrayList<>(teams.getStringList("activeTeams"));
+
     }
 
 
@@ -174,130 +144,13 @@ public class TeamSystem {
 
         teams.set(teamName + "invitations", invitations);
 
-        try {
-            teams.save();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
-    public ArrayList<String> getInvitations(String teamName) {
-        try {
-            teams.getStringList(teamName + ".invitations");
-        } catch (JSONException e) {
-            return null;
-        }
-        return new ArrayList<>(teams.getStringList(teamName + ".invitations"));
-    }
+    public List<String> getInvitations(String teamName) {
 
-    /*
-       public void createTeam(String teamName, String kuerzel, Player teamAdmin) {
-        ConfigManager cm = new ConfigManager();
-        LocalDate dateOfTeamCreation = LocalDate.now();
-
-        if (teamExists(teamName)) {
-            if (teamAdmin == null) {
-                BetaCore.debug("Hier wurde gerade versucht ein Team zu erstellen, dass es schon gibt, von einem Spieler, der nicht existiert?!");
-                return;
-            }
-            teamAdmin.sendMessage(Misc.PREFIX + "§7Dieses Team existiert bereits.");
-            return;
-        }
-
-        cm.getPlayerData().setString(teamAdmin.getUniqueId().toString() + ".wsteam", teamName);
-        cm.getPlayerData().save();
-        cm.getTeams().setString(teamName + ".admin", teamAdmin.getUniqueId().toString());
-        cm.getTeams().setString(teamName + ".short", kuerzel);
-        cm.getTeams().setString(teamName + ".dateOfCreation", dateOfTeamCreation.toString());
-        cm.getTeams().setInt(teamName + ".teamrank", -1);//PrivateFight *3 + wonEvents*5 + wonpublicfights
-        cm.getTeams().setInt(teamName + ".wonPrivateFights", 0);
-        cm.getTeams().setInt(teamName + ".wonPublicFights", 0);
-        cm.getTeams().setInt(teamName + ".wonEvents", 0);
-        cm.getTeams().setString(teamName + ".world", null);
-        cm.getTeams().setString(teamName + ".teamws", null);
-        cm.getTeams().save();
-
-        getActiveTeams().add(teamName);
+        return teams.getStringList(teamName + ".invitations");
 
     }
-
-    public void addTeamMember(String teamName, Player player) {
-        setup();
-        if (cm.getTeams().getList(teamName + ".admins") == null) {
-            System.out.println("Dem Team konnten keine Member hinzugefügt werden, da es nicht existiert");
-            return;
-        }
-        cm.getPlayerData().setString(player.getUniqueId().toString() + ".wsteam", teamName);
-        ArrayList<String> teamMembers = new ArrayList<String>();
-        teamMembers.add(player.getUniqueId().toString());
-        cm.getTeams().setList(teamName + ".members", teamMembers);
-        teamMembers.clear();
-    }
-
-    public ArrayList<String> getTeamMembers(String teamName) {
-        setup();
-        ArrayList<String> teamMembers = new ArrayList<String>();
-
-        for (Object obj : cm.getTeams().getList(teamName + ".members")) {
-            teamMembers.add(obj.toString());
-        }
-        return teamMembers;
-    }
-
-    public void removeTeammember(String teamName, Player player) {
-        setup();
-        ArrayList<String> teamMembers = new ArrayList<>();
-
-        for (Object members : cm.getTeams().getList(teamName + ".members")) {
-            teamMembers.add(members.toString());
-        }
-        teamMembers.remove(player.getUniqueId().toString());
-        cm.getTeams().setList(teamName + ".members", teamMembers);
-        cm.getTeams().save();
-        teamMembers.clear();
-    }
-
-    public void promoteUser(String Teamname, Player player) {
-
-
-    }
-
-    public String getTeamFromPlayer(Player player) {
-        return cm.getPlayerData().getString(player.getUniqueId().toString() + ".wsteam");
-    }
-
-    public void invitePlayer(String teamName, Player player) {
-        if (cm.getTeams().getString(teamName) == null) {
-            System.out.println("Dieses Team existiert nicht");
-            return;
-        }
-        ArrayList<String> invitations = new ArrayList<>();
-        invitations.add(player.getUniqueId().toString());
-        cm.getTeams().setList(teamName + ".invations", invitations);
-        invitations.clear();
-    }
-
-    public boolean joinTeam(String teamName, Player player) {
-        ArrayList<String> invs = new ArrayList<>();
-        if (!(cm.getTeams().getList(teamName + ".invations").contains(player.getUniqueId().toString()))) {
-            return false;
-        }
-        for (Object invitations : cm.getTeams().getList(teamName + ".invitations")) {
-            invs.add(invitations.toString());
-        }
-        cm.getTeams().setList(teamName + ".invitations", invs);
-        addTeamMember(teamName, player);
-        return true;
-    }
-
-    public ArrayList<String> getActiveTeams() {
-        ArrayList<String> activeTeams = new ArrayList<>();
-        for (Object obj : cm.getTeams().getList("activeTeams")) {
-            activeTeams.add(obj.toString());
-        }
-        cm.getTeams().setList("activeTeams", activeTeams);
-        return activeTeams;
-    }
-
-     */
 }
+
+

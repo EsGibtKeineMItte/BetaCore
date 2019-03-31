@@ -44,7 +44,7 @@ public class PermissionManager {
     private void permissionsSetter(UUID uuid) {
         PermissionAttachment attachment = this.playerPermissions.get(uuid);
         BetaCore.debug(RankSystem.getRank(uuid).toString());
-        for (Object permissions : cm.getPermissions().getList(RankSystem.getRank(uuid).toString())) { //Hier wird wohl die Liste nicht gefunden werden.
+        for (Object permissions : cm.getPermissions().getList(RankSystem.getRank(uuid).toString())) {
             System.out.print(permissions.toString());
             attachment.setPermission(permissions.toString(), true);
         }

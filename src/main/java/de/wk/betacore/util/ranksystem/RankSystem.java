@@ -13,7 +13,6 @@ public class RankSystem {
     ConfigManager cm = new ConfigManager();
 
     public static void setRank(UUID uuid, String rank) {
-
         try {
             ResultSet rs = MySQL.preparedStatement("SELECT COUNT(UUID) FROM PLAYER_INFO WHERE UUID = '" + uuid.toString() + "';").executeQuery();
             rs.next();

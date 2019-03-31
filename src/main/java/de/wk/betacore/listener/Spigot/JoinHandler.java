@@ -1,5 +1,6 @@
 package de.wk.betacore.listener.Spigot;
 
+import de.leonhard.storage.Json;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.appearance.Color;
 import de.wk.betacore.appearance.ScoreboardUtils;
@@ -10,7 +11,6 @@ import de.wk.betacore.util.moneysystem.MoneySystem;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
 import de.wk.betacore.util.teamsystem.TeamSystem;
-import io.bluecube.thunderbolt.io.ThunderFile;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class JoinHandler implements Listener {
     ConfigManager cm = new ConfigManager();
-    ThunderFile data = FileManager.getPlayerData();
+    Json data = FileManager.getPlayerData();
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {

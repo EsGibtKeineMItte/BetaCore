@@ -1,4 +1,4 @@
-package io.bluecube.thunderbolt.org.json;
+package org.json;
 
 /**
  * Beans that support customized output of JSON text shall implement this interface.  

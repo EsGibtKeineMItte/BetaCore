@@ -88,7 +88,6 @@ public class Config {
             this.loaded = true;
         }
         this.loaded = true;
-        return;
     }
 
     public Config(String configname, String resourcefile, Plugin plugin) {

@@ -19,7 +19,7 @@ public class KickSystem extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (!sender.hasPermission("alphacore.kick")) {
+        if (!sender.hasPermission("betacore.kick")) {
             sender.sendMessage(new TextComponent(Misc.NOPERM));
             return;
         }

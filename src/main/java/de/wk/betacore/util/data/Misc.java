@@ -32,7 +32,7 @@ Fehler:
 public class Misc {
     public final static String PREFIX = "§aBetaCore §7| ";
     public static final String S_PREFIX = "§aBetaCore §7|";
-    public static final String NOPERM = "§cDu hast nicht die benötigten Berechtigungen, um diesen Befehl auszuführen";
+    public static final String NOPERM = "§cDu hast nicht die benötigten Berechtigungen, um diesen Befehl§c auszuführen";
     public static final String MUTED = "§cDu bist gemuted und kannst keine Nachrichten senden";
     public static final String HELP = "§7Benutze §6/help§7 , um Hilfe zu erhalten";
     public static final String NOTINCONSOLE = PREFIX + "Du kannst diesen Befehl nicht in der Konsole verwenden";

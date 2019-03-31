@@ -1,39 +1,36 @@
 package de.wk.betacore.util.teamsystem;
 
-import de.wk.betacore.BetaCore;
+import de.leonhard.storage.Json;
 import de.wk.betacore.datamanager.FileManager;
-import io.bluecube.thunderbolt.io.ThunderFile;
 import lombok.Getter;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 @Getter
 public class Team extends TeamSystem {
 
-    ThunderFile teams = FileManager.getTeams();
+    Json teams = FileManager.getTeams();
 
     private String teamName, shortName, dateOfCreation, world;
     private int rank, wonPrivateFights, wonPublicFights, wonEvents;
     private List<String> teamMembers = new ArrayList<>();
-    private OfflinePlayer teamAdmin;
+    private UUID teamAdmin;
 
     public Team(String teamName, String shortName, Player teamAdmin) {
-
-
         createTeam(teamName, shortName, teamAdmin);
         this.teamName = teamName;
         this.shortName = shortName;
-        this.teamAdmin = teamAdmin;
+        this.teamAdmin = teamAdmin.getUniqueId();
         this.teamMembers = getTeamMembers(teamName);
     }
 
     public Team(String teamName) {
         if (!(teamExists(teamName))) {
-            BetaCore.debug("Hier wurde versucht, auf ein Team zu referenzieren, dass nicht existiert.");
-            throw new NullPointerException();
+            throw new NullPointerException("Hier wurde versucht, auf ein Team zu referenzieren, dass nicht existiert.");
         }
         this.teamName = teamName;
         this.shortName = teams.getString(teamName + ".short");
@@ -44,83 +41,61 @@ public class Team extends TeamSystem {
         this.wonEvents = teams.getInt(teamName + ".wonEvents");
         this.world = teams.getString(teamName + ".world");
         this.teamName = teamName;
+        this.teamAdmin = UUID.fromString(teams.getString(teamName + ".admin"));
     }
 
 
     public void setShortName(String shortName) {
         this.shortName = shortName;
         teams.set(teamName + ".short", shortName);
-        try {
-            teams.save();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 
     public void setDateOfCreation(String dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
         teams.set(teamName + ".dateOfCreation", dateOfCreation);
-        try {
-            teams.save();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
 
     public void setWorld(String world) throws IOException {
         this.world = world;
         teams.set(teamName + ".world", world);
-
-        teams.save();
-
     }
 
 
     public void setRank(int rank) throws IOException {
         this.rank = rank;
         teams.set(teamName + ".rank", rank);
-
-        teams.save();
     }
 
     public void setWonPrivateFights(int wonPrivateFights) {
         this.wonPrivateFights = wonPrivateFights;
         teams.set(teamName + ".wonPrivateFights", wonPrivateFights);
-        try {
-            teams.save();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 
     public void setWonPublicFights(int wonPublicFights) throws IOException {
         this.wonPublicFights = wonPublicFights;
         teams.set(teamName + ".wonPublicFights", wonPublicFights);
-        teams.save();
     }
 
 
     public void setWonEvents(int wonEvents) throws IOException {
         this.wonEvents = wonEvents;
         teams.set(teamName + ".wonEvents", wonEvents);
-        teams.save();
     }
 
 
-    public void setTeamMembers(List<String> teamMembers) throws IOException {
+    public void setTeamMembers(List<String> teamMembers) {
         this.teamMembers = teamMembers;
         teams.set(teamName + ".members", teamMembers);
-        teams.save();
     }
 
 
-    public void setTeamAdmin(Player teamAdmin) throws IOException {
+    public void setTeamAdmin(UUID uuid) {
         this.teamAdmin = teamAdmin;
-        teams.set(teamName + ".admin", teamAdmin.getUniqueId().toString());
-        teams.save();
+        teams.set(teamName + ".admin", teamAdmin.toString());
     }
 
 
@@ -157,7 +132,10 @@ public class Team extends TeamSystem {
         return wonEvents;
     }
 
-    public OfflinePlayer getTeamAdmin() {
+    public UUID getTeamAdmin() {
+        if (teamAdmin == null) {
+            throw new NullPointerException("WTF?! WARUM IS DER TEAM ADMIN NULL?!");
+        }
         return teamAdmin;
     }
 

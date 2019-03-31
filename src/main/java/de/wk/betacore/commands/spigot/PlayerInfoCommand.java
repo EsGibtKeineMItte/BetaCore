@@ -1,21 +1,20 @@
 package de.wk.betacore.commands.spigot;
 
 
+import de.leonhard.storage.Json;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.FileManager;
 import de.wk.betacore.util.data.Misc;
-import de.wk.betacore.util.misc.StringUtils;
 import de.wk.betacore.util.ranksystem.RankSystem;
-import io.bluecube.thunderbolt.io.ThunderFile;
-import io.bluecube.thunderbolt.org.json.JSONException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.json.JSONException;
 
 public class PlayerInfoCommand implements CommandExecutor {
-    ThunderFile data = FileManager.getPlayerData();
+    Json data = FileManager.getPlayerData();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -35,10 +34,9 @@ public class PlayerInfoCommand implements CommandExecutor {
             return false;
         }
 
-        String playerName = ChatColor.GRAY + Bukkit.getOfflinePlayer(args[0]).getName() + ":";
         String uuid = Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString();
         try {
-            sender.sendMessage(RankSystem.getRank(Bukkit.getOfflinePlayer(args[0]).getUniqueId()).getColor() + playerName + "§7:");
+            sender.sendMessage(RankSystem.getRank(Bukkit.getOfflinePlayer(args[0]).getUniqueId()).getColor() + Bukkit.getOfflinePlayer(args[0]).getName() + "§7:");
             sender.sendMessage("§6Rank: §7" + RankSystem.getRank(Bukkit.getOfflinePlayer(args[0]).getUniqueId()).getColor() + RankSystem.getRank(Bukkit.getOfflinePlayer(args[0]).getUniqueId()));
             sender.sendMessage("§6Erster Join: §7" + data.getString(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".firstjoin"));
             sender.sendMessage("§6Letzer Join: §7" + data.getString(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".lastjoin"));
