@@ -56,6 +56,7 @@ public class WarPlayer implements PlayerDataFactory {
 
                 data.set(uuid.toString() + ".money", this.money);
                 data.set(uuid.toString() + ".rank", rank);
+                data.set(uuid.toString() + ".name", name);
             } else {
                 throw new NullPointerException("Es wurde versucht einen War-Player zu erstellen, welcher nicht in den Datenbanken existiert.");
             }
