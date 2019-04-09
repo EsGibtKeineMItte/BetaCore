@@ -24,6 +24,9 @@ public class KickSystem extends Command {
             return;
         }
 
+
+
+
         if (BetaCoreBungee.getInstance().getProxy().getPlayers().size() == 0) {
             sender.sendMessage(new TextComponent("Es sind gerade keine Spieler zum kicken online."));
             return;

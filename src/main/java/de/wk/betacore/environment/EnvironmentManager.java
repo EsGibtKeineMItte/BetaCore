@@ -5,7 +5,6 @@ import de.wk.betacore.BetaCoreBungee;
 
 public class EnvironmentManager {
 
-
     private static boolean spigot, bungeecord, mysql, maintenance;
 
 
@@ -29,13 +28,23 @@ public class EnvironmentManager {
         return null;
     }
 
-    public static void debug(String msg){
+    public static void debug(final String msg){
         if(bungeecord){
             BetaCoreBungee.debug(msg);
         }else{
             BetaCore.debug(msg);
         }
     }
+
+    public static <T> T getInstance(){
+        if(spigot){
+            return (T) BetaCore.getInstance();
+        }else{
+            return (T) BetaCoreBungee.getInstance();
+        }
+    }
+
+
 
 
 

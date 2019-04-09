@@ -17,6 +17,7 @@ public class ConnectionListener implements Listener {
             BetaCoreBungee.debug("Es ist ein Fehler, beim erstellen, des WarPlayers " + e.getConnection().getName() + " aufgetreten.");
         }
 
+
     }
 
 

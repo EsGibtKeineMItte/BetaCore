@@ -12,9 +12,8 @@ public class FileManager {
     private static Json playerData;
     private static Json teams;
     private static Json settings;
-
     private static Json bungeePerms;
-    ConfigManager cm = new ConfigManager();
+    private static Json mysql;
 
     private FileManager() {
 
@@ -57,5 +56,9 @@ public class FileManager {
 
     public static Json getBungeePerms() {
         return getJson(bungeePerms);
+    }
+
+    public static Json getMysql(){
+        return getJson(mysql);
     }
 }
