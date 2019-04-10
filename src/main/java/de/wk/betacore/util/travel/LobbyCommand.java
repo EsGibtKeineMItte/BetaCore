@@ -23,7 +23,7 @@ public class LobbyCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        fs.connect(player, cm.getGlobalConfig().getString("LinkToLobby"));
+        fs.connect(player, "Lobby-1");
 
         return false;
     }

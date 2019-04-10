@@ -5,55 +5,86 @@ import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.FileManager;
 import de.wk.betacore.environment.EnvironmentManager;
 import lombok.Getter;
+
 import java.sql.*;
 import java.util.UUID;
 
 public class MySQL {
     private static Connection connection;
-    ConfigManager cm = new ConfigManager();
+    private static ConfigManager cm = new ConfigManager();
+    private static Json mysql = FileManager.getMysql();
+    private static boolean isSetup;
 
     @Getter
-    private int port;
+    private static int port;
     @Getter
-    private String host;
+    private static String host;
     @Getter
-    private String database;
+    private static String database;
     @Getter
-    private String password;
+    private static String password;
     @Getter
-    private String username;
+    private static String username;
 
-    Json mysql = FileManager.getMysql();
 
-    public MySQL() {
 
+    /*
+    Für später: Mit setup im Konstruktor, bzw getter per .getInstance neu schreiben.
+     */
+
+    public static void setup() {
         if (EnvironmentManager.isSpigot()) {
-            this.port = cm.getGlobalConfig().getInt("MySQL.port");
-            this.host = cm.getGlobalConfig().getString("MySQL.host");
-            this.database = cm.getGlobalConfig().getString("MySQL.database");
-            this.password = cm.getGlobalConfig().getString("MySQL.password");
-            this.username = cm.getGlobalConfig().getString("MySQL.username");
+            port = cm.getGlobalConfig().getInt("MySQL.port");
+            host = cm.getGlobalConfig().getString("MySQL.host");
+            database = cm.getGlobalConfig().getString("MySQL.database");
+            password = cm.getGlobalConfig().getString("MySQL.password");
+            username = cm.getGlobalConfig().getString("MySQL.username");
         } else {
-            this.port = mysql.getInt("MySQL.port");
-            this.host = mysql.getString("MySQL.host");
-            this.database = mysql.getString("MySQL.database");
-            this.password = mysql.getString("MySQL.password");
-            this.username = mysql.getString("MySQL.username");
+            port = mysql.getInt("MySQL.port");
+            host = mysql.getString("MySQL.host");
+            database = mysql.getString("MySQL.database");
+            password = mysql.getString("MySQL.password");
+            username = mysql.getString("MySQL.username");
         }
+        try {
+            if (connection != null && connection.isClosed()) {
+                return;
+            }
+
+            connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        isSetup = true;
     }
 
 
-    public void openConnection() throws SQLException {
+    public MySQL() {
+        setup();
+    }
+
+
+    public static void openConnection() throws SQLException {
         if (connection != null && connection.isClosed()) {
             return;
         }
-        connection = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, this.username, this.password);
+        connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
     }
 
+
     public static PreparedStatement preparedStatement(String query) {
+        if (!(isSetup)) {
+            setup();
+        }
+
         PreparedStatement ps = null;
 
         try {
+            if (connection == null) {
+                connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
+            }
             ps = connection.prepareStatement(query);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,14 +93,13 @@ public class MySQL {
     }
 
     public static boolean playerExistis(UUID uuid) {
+        if (!(isSetup)) {
+            setup();
+        }
         try {
             ResultSet rs = MySQL.preparedStatement("SELECT COUNT(UUID) FROM PLAYER_INFO WHERE UUID = '" + uuid.toString() + "';").executeQuery();
             rs.next();
-            if (rs.getInt(1) == 0) {
-                return false;
-            } else {
-                return true;
-            }
+            return rs.getInt(1) != 0;
         } catch (SQLException e) {
             EnvironmentManager.debug("Es ist ein Fehler, beim Versuch zu prüfen, ob sich der Spieler " + uuid + " in der Datenbank befindet aufgetreten.");
             System.out.println("");
@@ -77,6 +107,4 @@ public class MySQL {
             return false;
         }
     }
-
-
 }

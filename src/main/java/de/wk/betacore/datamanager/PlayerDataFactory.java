@@ -1,5 +1,6 @@
 package de.wk.betacore.datamanager;
 
+import com.google.common.base.Strings;
 import de.leonhard.storage.Json;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.environment.EnvironmentManager;
@@ -9,8 +10,10 @@ import de.wk.betacore.util.teamsystem.Team;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Calendar;
 import java.util.UUID;
 
 public interface PlayerDataFactory {
@@ -19,36 +22,45 @@ public interface PlayerDataFactory {
     Json TEAMS = FileManager.getTeams();
 
 
-    int getWsRank(UUID uuid);
+    int getWsRank(final UUID uuid);
 
-    int getMoney(UUID uuid);
+    int getMoney(final UUID uuid);
 
-    int getFights(UUID uuid);
+    int getFights(final UUID uuid);
 
-    Rank getRank(UUID uuid);
+    Rank getRank(final UUID uuid);
 
-    String getFirstJoin(UUID uuid);
+    String getFirstJoin(final UUID uuid);
 
-    String getLastJoin(UUID uuid);
+    String getLastJoin(final UUID uuid);
 
-    String getName(UUID uuid);
+    String getName(final UUID uuid);
 
-    Team getTeam(UUID uuid);
+    Team getTeam(final UUID uuid);
 
-    boolean isBanned(UUID uuid);
+    boolean isBanned(final UUID uuid);
 
-    boolean isMuted(UUID uuid);
-    
-    void unmute(UUID uuid);
-    
-    void unban(UUID uuid);
+    boolean isMuted(final UUID uuid);
+
+    void unmute(final UUID uuid);
+
+    void unban(final UUID uuid);
 
 
     default void setupPlayer(UUID uuid, String name) {
         LocalDate now = LocalDate.now();
-        LocalTime time = LocalTime.now();
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        String time = sdf.format(cal.getTime());
 
-        String joinDate = now.toString() + "-" + time.toString();
+
+        String joinDate = now.toString() + "-" + time;
+
+        if (!(EnvironmentManager.isMysql())) {
+            setupWarPlayer(uuid, name, joinDate);
+            return;
+        }
+
         try {
             ResultSet rs = MySQL.preparedStatement("SELECT COUNT(UUID) FROM PLAYER_INFO WHERE UUID = '" + uuid.toString() + "';").executeQuery();
             rs.next();
@@ -56,46 +68,66 @@ public interface PlayerDataFactory {
 
                 //Ist nicht im System.
                 MySQL.preparedStatement("INSERT INTO PLAYER_INFO(UUID, RANK, MONEY, JOIN_DATE) VALUES ('" + uuid.toString() + "'," + "DEFAULT, DEFAULT, DEFAULT);").executeUpdate();
-                PLAYER_DATA.set(uuid.toString() + ".wsrank", 900);
-                PLAYER_DATA.set(uuid.toString() + ".wsteam", "");
-                PLAYER_DATA.set(uuid.toString() + ".name", name);
-                PLAYER_DATA.set(uuid.toString() + ".banned", false);
-                PLAYER_DATA.set(uuid.toString() + ".muted", false);
-                PLAYER_DATA.set(uuid.toString() + ".fights", 0);
-                PLAYER_DATA.set(uuid.toString() + ".firstjoin", joinDate);
-                PLAYER_DATA.set(uuid.toString() + ".lastjoin", joinDate);
-            }else{
+                setPlayerData(uuid, name, joinDate);
+            } else {
 
                 /*
-                PERMS!!!
+                PERMS
                  */
 
-
-
-                if(PLAYER_DATA.getInt(uuid.toString() + ".wsrank") == 0){
-                    PLAYER_DATA.set(uuid.toString() + ".wsrank", 900);
-                }
-
-                if(PLAYER_DATA.getString(uuid.toString() + ".wsteam").equalsIgnoreCase("")){
-                    PLAYER_DATA.set(uuid.toString() + ".wsteam", " ");
-                }
-                if(PLAYER_DATA.getString(uuid.toString() + ".name") == null){
-                    PLAYER_DATA.set(uuid.toString() + ".name", name);
-                }
-                if(!PLAYER_DATA.getBoolean(uuid.toString() + ".banned")){
-                    PLAYER_DATA.set(uuid.toString() + ".banned", false);
-                }
-                if(!PLAYER_DATA.getBoolean(uuid.toString() + ".muted")){
-                    PLAYER_DATA.set(uuid.toString() + ".muted", false);
-                }
-                if(PLAYER_DATA.getInt(uuid.toString() + ".fights") == 0){
-                    PLAYER_DATA.set(uuid.toString() + ".fights", 0);
-                }
-                PLAYER_DATA.set(uuid.toString() + ".lastjoin", joinDate);
+                setupWarPlayer(uuid, name, joinDate);
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             BetaCore.debug("[MYSQL]Es ist ein Fehler, beim Erstellen des WarPlayers: " + name + " aufgetreten.");
         }
 
     }
+
+    default void setupWarPlayer(UUID uuid, String name, String joinDate) {
+
+        if (Strings.isNullOrEmpty(PLAYER_DATA.getString(uuid.toString() + ".name"))) {
+            PLAYER_DATA.set(uuid.toString() + ".name", name);
+        }
+
+        if (Strings.isNullOrEmpty(PLAYER_DATA.getString(uuid.toString() + ".wsteam"))) {
+            PLAYER_DATA.set(uuid.toString() + ".wsteam", " ");
+        }
+
+
+        if (Strings.isNullOrEmpty(PLAYER_DATA.getString(uuid.toString() + ".rank"))) {
+            PLAYER_DATA.set(uuid.toString() + ".rank", "USER");
+        }
+
+        if (Strings.isNullOrEmpty(PLAYER_DATA.getString(uuid.toString() + ".firstjoin"))) {
+            PLAYER_DATA.set(uuid.toString() + ".firstjoin", joinDate);
+        }
+
+        if (PLAYER_DATA.getInt(uuid.toString() + ".wsrank") == 0) {
+            PLAYER_DATA.set(uuid.toString() + ".wsrank", 900);
+        }
+
+        if (!PLAYER_DATA.getBoolean(uuid.toString() + ".banned")) {
+            PLAYER_DATA.set(uuid.toString() + ".banned", false);
+        }
+        if (!PLAYER_DATA.getBoolean(uuid.toString() + ".muted")) {
+            PLAYER_DATA.set(uuid.toString() + ".muted", false);
+        }
+        if (PLAYER_DATA.getInt(uuid.toString() + ".fights") == 0) {
+            PLAYER_DATA.set(uuid.toString() + ".fights", 0);
+        }
+        PLAYER_DATA.set(uuid.toString() + ".lastjoin", joinDate);
+    }
+
+
+    static void setPlayerData(final UUID uuid, final String name, final String joinDate) {
+        PLAYER_DATA.set(uuid.toString() + ".wsrank", 900);
+        PLAYER_DATA.set(uuid.toString() + ".wsteam", "");
+        PLAYER_DATA.set(uuid.toString() + ".name", name);
+        PLAYER_DATA.set(uuid.toString() + ".banned", false);
+        PLAYER_DATA.set(uuid.toString() + ".muted", false);
+        PLAYER_DATA.set(uuid.toString() + ".fights", 0);
+        PLAYER_DATA.set(uuid.toString() + ".firstjoin", joinDate);
+        PLAYER_DATA.set(uuid.toString() + ".lastjoin", joinDate);
+    }
+
 }

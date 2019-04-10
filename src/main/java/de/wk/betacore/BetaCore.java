@@ -1,5 +1,6 @@
 package de.wk.betacore;
 
+import com.minnymin.command.CommandFramework;
 import de.wk.betacore.commands.spigot.*;
 import de.wk.betacore.commands.spigot.commandmanager.CommandManagerOld;
 import de.wk.betacore.datamanager.FileManager;
@@ -11,6 +12,7 @@ import de.wk.betacore.util.MySQL;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.CommandRemover;
 import de.wk.betacore.util.ranksystem.PermissionManager;
+import de.wk.betacore.util.ranksystem.PermissionsListener;
 import de.wk.betacore.util.teamsystem.TeamSystem;
 import de.wk.betacore.util.travel.ArenaCommand;
 import de.wk.betacore.util.travel.BauCommand;
@@ -18,6 +20,7 @@ import de.wk.betacore.util.travel.FastTravelSystem;
 import de.wk.betacore.util.travel.LobbyCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -45,8 +48,6 @@ public final class BetaCore extends JavaPlugin {
     private static BetaCore instance;
 
 
-
-
     public void regCommands() {
         getCommand("money").setExecutor(new Money());
         getCommand("core").setExecutor(new Core());
@@ -71,13 +72,8 @@ public final class BetaCore extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new JoinHandler(), this);
         Bukkit.getPluginManager().registerEvents(new CommandListener(), this);
         Bukkit.getPluginManager().registerEvents(new CustomCommand(), this);
-        Bukkit.getPluginManager().registerEvents(new CommandListener("tell", "libsdisguises:", "turnier", "bukkit:pl",
-                "bukkit:plugins", "ver", "bukkit:ver", "bukkit:seed", "bukkit:msg", "bukkit:w",
-                "bukkit:tell", "bukkit:list", "version", "bukkit:version", "?", "bukkit:?", "help", "me",
-                "bukkit:help", "minecraft:help", "about", "bukkit:about", "icanhasbukkit", "me", "msg",
-                "bukkit:kill", "bukkit:me", "plugins", "minecraft:me", "eval", "evaluate", "solve", "calc",
-                "calculate", "/eval", "/evaluate", "/solve", "/calc", "/calculate", "w", "minecraft:w", "list", "minecraft:list"), this);
         Bukkit.getPluginManager().registerEvents(new PermissionListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PermissionsListener("/help", "/bau", "/arena-1", "/arena-2", "/hub", "/l", "/r", "/msg"), this);
         this.getServer().getPluginManager().registerEvents(RecordListener.getInstance(), this);
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BUNGEECORD");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BUNGEECORD", new FastTravelSystem());
@@ -100,16 +96,15 @@ public final class BetaCore extends JavaPlugin {
     }
 
 
-
     @Override
     public void onEnable() {
 
         log("§6Enabling BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + "...");
         EnvironmentManager.setSpigot(true);
 
+
         log("§6Setting up command-framework... ");
         instance = this;
-        ConfigManager cm = new ConfigManager();
         CommandManagerOld commandManager = new CommandManagerOld();
         commandManager.setup();
         CommandImplementer.implementCommands();
@@ -119,7 +114,10 @@ public final class BetaCore extends JavaPlugin {
         regCommands();
         regListeners();
         removeCommands();
+        CommandFramework framework = new CommandFramework(this);
+        framework.registerCommands(new Update());
         log("§aDONE");
+        ConfigManager cm = new ConfigManager();
 
         log("§3Setting up Files... ");
         cm.setup();
@@ -129,19 +127,22 @@ public final class BetaCore extends JavaPlugin {
         log("§aDONE");
 
         log("§3Establishing MySQL Connection...");
-        MySQL mySQL = new MySQL();
 
+        if (cm.getGlobalConfig().getBoolean("useMySQL")) {
+            try {
+                MySQL.openConnection();
+                System.out.println("MySQL Connection erfolgreich.");
 
-        try {
-            mySQL.openConnection();
-            System.out.println("MySQL Connection erfolgreich.");
-
-        } catch (SQLException x) {
-            log("§4FAILED");
-            System.out.println("");
-            x.printStackTrace();
+            } catch (SQLException x) {
+                log("§4FAILED");
+                System.out.println("");
+                x.printStackTrace();
+            }
+            EnvironmentManager.setMysql(true);
+            log("§aDONE");
+        } else {
+            EnvironmentManager.setMysql(false);//Neeeded?
         }
-        log("§aDONE");
 
 
         log("§3Setting up Permissions");
@@ -151,28 +152,37 @@ public final class BetaCore extends JavaPlugin {
         log("§3Getting links though servers");
         if (!cm.getConfig().getBoolean("useAsBauServer")) {
             getCommand("bau").setExecutor(new BauCommand());
-        } else {
-            this.getServer().getPluginManager().registerEvents(new WorldSystemUtil(), this);
-            log("§3Using the server as building server");
-        }
-
-        if (!cm.getConfig().getBoolean("useAsArena")) {
             getCommand("arena").setExecutor(new ArenaCommand());
-        } else {
-            log("§3Using the server as arena");
-        }
-
-        if (!cm.getConfig().getBoolean("useAsLobby")) {
             getCommand("l").setExecutor(new LobbyCommand());
             getCommand("hub").setExecutor(new LobbyCommand());
+            log("Using the server as normal server.");
         } else {
-            Bukkit.getPluginManager().registerEvents(new LobbyListener(), this);
-            log("Using the server as lobby server");
+            this.getServer().getPluginManager().registerEvents(new WorldSystemUtil(), this);
+            getCommand("arena").setExecutor(new ArenaCommand());
+            getCommand("l").setExecutor(new LobbyCommand());
+            getCommand("hub").setExecutor(new LobbyCommand());
+            log("§3Using the server as building server");
         }
-
         log("§aDone");
-        TeamSystem ts = new TeamSystem();
 
+        log("§7=====§eBUILDINFORMATIONEN§7======");
+
+
+        System.out.println("");
+
+        log("§eGlobal-Settings:");
+
+        log("MySQL: " + (cm.getGlobalConfig().getBoolean("useMySQL") ? "§atrue" : "§cfalse"));
+
+
+        log("Chatfilter: " + (cm.getConfig().getBoolean("useDefaultChatFilter") ? " §atrue" : "§cfalse"));
+        log("Anti-LaggSystem: " + (cm.getConfig().getBoolean("useAntiLaggSystem") ? "§atrue" : "§cfalse"));
+
+        log("§eServer-Settings:");
+
+        log("Nutzung als Bau-Server: " + (!cm.getConfig().getBoolean("useAsBauServer") ? "§cfalse" : "§atrue"));
+        log("Nutzung als Arena: " + (!cm.getConfig().getBoolean("useAsArena") ? "§cfalse" : "§atrue"));
+        log("Nutzung als Lobby: " + (!cm.getConfig().getBoolean("useAsLobby") ? "§cfalse" : "§atrue"));
 
 
         log("§6Successfully enabled BetaCore" + Misc.CODENAME + "v." + Misc.VERSION + ".");
@@ -195,6 +205,6 @@ public final class BetaCore extends JavaPlugin {
     }
 
     public static void debug(String message) {
-        Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + "[§eDEBUG]" + message);
+        Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + "[§eDEBUG§7]" + message);
     }
 }

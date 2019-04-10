@@ -4,10 +4,12 @@ import de.leonhard.storage.Json;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.FileManager;
 import de.wk.betacore.datamanager.PlayerDataFactory;
+import de.wk.betacore.environment.EnvironmentManager;
 import de.wk.betacore.util.MySQL;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.teamsystem.Team;
 import de.wk.betacore.util.teamsystem.TeamSystem;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
@@ -30,6 +32,30 @@ public class WarPlayer implements PlayerDataFactory {
     public WarPlayer(UUID uuid, String name) {
         setupPlayer(uuid, name);
         this.UUID = uuid.toString();
+
+        if (!(EnvironmentManager.isMysql())) {
+            //Data from Json
+            this.firstjoin = data.getString(uuid.toString() + ".firstjoin");
+            this.rank = Rank.valueOf(data.getString(uuid.toString() + ".rank"));
+            this.money = data.getInt(uuid.toString() + ".money");
+            this.firstjoin = data.getString(uuid.toString() + ".firstjoin");
+            this.lastjoin = data.getString(uuid.toString() + ".lastjoin");
+            this.team = data.getString(uuid.toString() + ".wsteam");
+            this.wsrank = data.getInt(uuid.toString() + ".wsrank");
+            this.fights = data.getInt(uuid.toString() + ".fights");
+
+
+            //Assigments
+            this.uuid = uuid.toString();
+            this.name = name;
+
+            if (isInWarShipTeam()) {
+                this.wsteam = new Team(team);
+            }
+
+            return;
+        }
+
         try {
             ResultSet rs = MySQL.preparedStatement("SELECT COUNT(UUID) FROM PLAYER_INFO WHERE UUID = '" + uuid.toString() + "';").executeQuery();
             rs.next();
@@ -73,6 +99,7 @@ public class WarPlayer implements PlayerDataFactory {
     }
 
     public String getTeamName() {
+        EnvironmentManager.debug("UUID: "  + uuid);
         return data.getString(uuid + ".wsteam");
     }
 

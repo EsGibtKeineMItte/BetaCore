@@ -2,6 +2,8 @@ package de.wk.betacore.util.ranksystem;
 
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.ConfigManager;
+import de.wk.betacore.environment.EnvironmentManager;
+import org.apache.commons.lang.ObjectUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 
@@ -44,10 +46,15 @@ public class PermissionManager {
     private void permissionsSetter(UUID uuid) {
         PermissionAttachment attachment = this.playerPermissions.get(uuid);
         BetaCore.debug(RankSystem.getRank(uuid).toString());
-        for (Object permissions : cm.getPermissions().getList(RankSystem.getRank(uuid).toString())) {
-            System.out.print(permissions.toString());
-            attachment.setPermission(permissions.toString(), true);
+        try{
+            for (Object permissions : cm.getPermissions().getList(RankSystem.getRank(uuid).toString())) {
+                System.out.print(permissions.toString());
+                attachment.setPermission(permissions.toString(), true);
+            }
+        }catch(NullPointerException e){
+            EnvironmentManager.debug("Die Permissions wurden noch nicht eingetragen.");
         }
+
     }
 
 

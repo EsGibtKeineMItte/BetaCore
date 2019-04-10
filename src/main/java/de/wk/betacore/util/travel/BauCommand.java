@@ -23,7 +23,8 @@ public class BauCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        fs.connect(player,cm.getGlobalConfig().getString("LinkToBau") );
+        player.sendMessage("§aConnecting to Bau.");
+        fs.connect(player, "Bau");
 
         return false;
     }

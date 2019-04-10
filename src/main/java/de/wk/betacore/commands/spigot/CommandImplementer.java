@@ -47,7 +47,7 @@ public class CommandImplementer {
                     return;
                 }
                 Player player = (Player) sender;
-                Info.sendInfo((Player) sender, "&7Du hast §6 " + MoneySystem.getMoney(player.getUniqueId()) + " §7Coins.");
+                Info.sendInfo((Player) sender, "&7Du hast §6" + MoneySystem.getMoney(player.getUniqueId()) + " §7Coins.");
                 joinHandler.update((Player) sender);
             }
 

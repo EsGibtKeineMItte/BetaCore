@@ -5,13 +5,16 @@ import de.wk.betacore.datamanager.Config;
 import de.wk.betacore.environment.Environment;
 import de.wk.betacore.environment.EnvironmentManager;
 import de.wk.betacore.util.data.Misc;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 
 
 public class ConfigManager {
+    @Getter
     private Config config = new Config("config.yml", BetaCore.getInstance());
+    @Getter
     private Config globalConfig = new Config("../../../Data/gconfig.yml", BetaCore.getInstance());
-    private Config teams = new Config("../../../Data/Teams.yml", BetaCore.getInstance());
+    @Getter
     private Config permissions = new Config("../../../Data/Permissions.yml", BetaCore.getInstance());
 
 
@@ -40,7 +43,7 @@ public class ConfigManager {
 
 
         config.setString("BossBarTitle", "§6Willkommen auf §eWarKing");
-        config.setString("actionbarTitle", "§6/bau §7um auf den Bauserver zu kommen ");
+        config.setString("actionbarTitle", "§6/bau §7um auf den Bauserver zu kommen.");
 
 
         config.save();
@@ -109,20 +112,4 @@ public class ConfigManager {
     }
 
 
-    public Config getConfig() {
-        return config;
-    }
-
-    public Config getGlobalConfig() {
-        return globalConfig;
-    }
-
-
-    public Config getTeams() {
-        return teams;
-    }
-
-    public Config getPermissions() {
-        return permissions;
-    }
 }

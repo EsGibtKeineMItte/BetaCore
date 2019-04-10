@@ -22,13 +22,13 @@ public class TeamSystem {
     Json playerData = FileManager.getPlayerData();
 
 
-    public void createTeam(String teamName, String kuerzel, OfflinePlayer teamAdmin) {
+    public boolean createTeam(String teamName, String kuerzel, OfflinePlayer teamAdmin) {
         ConfigManager cm = new ConfigManager();
         LocalDate dateOfTeamCreation = LocalDate.now();
 
         if (teamExists(teamName)) {
             BetaCore.debug("Es wurde gerade versucht, ein Team zu erstellen, welches bereits existiert: " + teamName);
-            return;
+            return false;
         }
 
         if (teamAdmin == null) {
@@ -55,6 +55,7 @@ public class TeamSystem {
 
         System.out.println(teamName + kuerzel + teamAdmin.getName());
         BetaCore.debug("Das Team " + teamName + " wurde erstellt.");
+        return true;
     }
 
     public void addTeamMember(String teamName, Player player) {

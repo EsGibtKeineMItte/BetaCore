@@ -1,6 +1,7 @@
 package de.wk.betacore.commands.spigot;
 
 import de.leonhard.storage.Json;
+import de.wk.betacore.BetaCore;
 import de.wk.betacore.objects.WarPlayer;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.FileManager;
@@ -73,13 +74,14 @@ betacore.teamlist
 
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("info")) {
-                if (TeamSystem.isActiveWarShipTeam(wp.getTeamName())) {
+                if (wp.isInWarShipTeam()) {
                     player.sendMessage("§6Team: §7" + wp.getTeamName());
                     player.sendMessage("§6Admin: §7" + Bukkit.getOfflinePlayer(wp.getTeam(player.getUniqueId()).getTeamAdmin()).getName());
                     player.sendMessage("§6");
                     return false;
                     //INFOS
                 } else {
+                    BetaCore.debug("Team des Spielers: " + wp.getTeamName());
                     player.sendMessage(Misc.PREFIX + "§7Du bist in keinem WarShip-Team.");
                     return false;
                 }

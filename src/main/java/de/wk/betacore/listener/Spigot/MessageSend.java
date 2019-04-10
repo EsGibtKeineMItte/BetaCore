@@ -1,5 +1,6 @@
 package de.wk.betacore.listener.Spigot;
 
+import de.leonhard.lib.lib.Commons;
 import de.leonhard.storage.Json;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.appearance.Chat;
@@ -16,7 +17,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-
 
 
 public class MessageSend implements Listener {
@@ -42,7 +42,7 @@ public class MessageSend implements Listener {
         if (e.getPlayer().equals(CustomCommand.edit)) {
             return;
         }
-        if(RankSystem.getRank(e.getPlayer().getUniqueId()) == null){
+        if (RankSystem.getRank(e.getPlayer().getUniqueId()) == null) {
             e.getPlayer().sendMessage("§4Du hast keinen Rang und kannst somit auch keine Nachrichten in den Chat senden. \nNormalerweise sollte das ein Fehler sein.");
             BetaCore.debug("Fehler 001");
             BetaCore.debug(ChatColor.GRAY + e.getPlayer().getName() + " hat keinen Rang.");
@@ -50,9 +50,12 @@ public class MessageSend implements Listener {
 
         if (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             Chat.sendMessage(e.getPlayer(), onlinePlayers(), e.getMessage(), Rank.USER.getColor() + e.getPlayer().getName() + "§8 » §f");
-            BetaCore.log(Rank.USER.getColor() + e.getPlayer().getName() + "§8 » §f" + e.getMessage());
+            Bukkit.getConsoleSender().sendMessage(Rank.USER.getColor() + e.getPlayer().getName() + "§8 » §f" + e.getMessage());
         } else {
-            Chat.sendMessage(e.getPlayer(), onlinePlayers(), e.getMessage(), RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + "§7 | " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + "(Name)§8 » " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor(), true, true);        }
-            BetaCore.log(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + "§7 | " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + "(Name)§8 » " + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getMessage());
+            Bukkit.broadcastMessage(Commons.colorize(RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() +
+                    RankSystem.getRank(e.getPlayer().getUniqueId()).getName() + "§7 | "
+                    + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + e.getPlayer().getName() + "§7 » §f"
+                   + e.getMessage()));
+        }
     }
 }

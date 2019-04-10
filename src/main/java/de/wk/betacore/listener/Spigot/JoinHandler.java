@@ -23,12 +23,12 @@ import org.bukkit.scoreboard.Team;
 import java.util.ArrayList;
 
 public class JoinHandler implements Listener {
-    ConfigManager cm = new ConfigManager();
-    Json data = FileManager.getPlayerData();
+    private ConfigManager cm = new ConfigManager();
+    private Json data = FileManager.getPlayerData();
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-            scoreboard(e.getPlayer());
+        scoreboard(e.getPlayer());
 
         setPrefix();
         tablist(e.getPlayer());
@@ -74,34 +74,34 @@ public class JoinHandler implements Listener {
     }
 
     public void scoreboard(Player e) {
-        ConfigManager cm = new ConfigManager();
-
-        ArrayList<String> sscore = new ArrayList<>();
-        sscore.add("&6");
-        sscore.add("&6> &7Money");
-        sscore.add("&6> &e" + MoneySystem.getMoney(e.getUniqueId()));
-        sscore.add("&6> &7Rank");
-        sscore.add("&6> &e" + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName());
-        if (data.getInt(e.getPlayer().getUniqueId().toString() + ".wsrank") < 501) {
-            sscore.add("&7");
-            sscore.add("&6> &7WSRank");
-            sscore.add("&6> &e&l" + data.getInt(e.getPlayer().getUniqueId().toString() + ".wsrank"));
-        }
-        if (TeamSystem.isActiveWarShipTeam(data.getString(e.getUniqueId().toString() + ".wsteam"))) {
-            sscore.add("&6> &7Team: &e&l" + data.getString(e.getUniqueId() + ".wsteam"));
-        }
-        sscore.add("&8");
-        sscore.add("&6> &7Joins &e(Joins)");
-        sscore.add("&6> &7Play Time &e(PlayTime)");
-        sscore.add("&6TheWarking.de");
-
-        String[] st = new String[sscore.size()];
-        int i = 0;
-        for (String string : sscore) {
-            st[i] = string;
-            i++;
-        }
-        ScoreboardUtils.updateScoreboard("&aTheWarKing", st, e.getPlayer());
+//        ConfigManager cm = new ConfigManager();
+//
+//        ArrayList<String> sscore = new ArrayList<>();
+//        sscore.add("&6");
+//        sscore.add("&6> &7Money");
+//        sscore.add("&6> &e" + MoneySystem.getMoney(e.getUniqueId()));
+//        sscore.add("&6> &7Rank");
+//        sscore.add("&6> &e" + RankSystem.getRank(e.getPlayer().getUniqueId()).getColor() + RankSystem.getRank(e.getPlayer().getUniqueId()).getName());
+//        if (data.getInt(e.getPlayer().getUniqueId().toString() + ".wsrank") < 501) {
+//            sscore.add("&7");
+//            sscore.add("&6> &7WSRank");
+//            sscore.add("&6> &e&l" + data.getInt(e.getPlayer().getUniqueId().toString() + ".wsrank"));
+//        }
+//        if (TeamSystem.isActiveWarShipTeam(data.getString(e.getUniqueId().toString() + ".wsteam"))) {
+//            sscore.add("&6> &7Team: &e&l" + data.getString(e.getUniqueId() + ".wsteam"));
+//        }
+//        sscore.add("&8");
+//        sscore.add("&6> &7Joins &e(Joins)");
+//        sscore.add("&6> &7Play Time &e(PlayTime)");
+//        sscore.add("&6TheWarking.de");
+//
+//        String[] st = new String[sscore.size()];
+//        int i = 0;
+//        for (String string : sscore) {
+//            st[i] = string;
+//            i++;
+//        }
+//        ScoreboardUtils.updateScoreboard("&aTheWarKing", st, e.getPlayer());
     }
 
     public void setPrefix() {

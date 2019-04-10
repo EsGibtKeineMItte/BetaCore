@@ -2,14 +2,17 @@ package de.wk.betacore.environment;
 
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.BetaCoreBungee;
+import lombok.Getter;
+import lombok.Setter;
 
 public class EnvironmentManager {
 
+    @Getter
+    @Setter
     private static boolean spigot, bungeecord, mysql, maintenance;
 
 
-
-    private EnvironmentManager(){
+    private EnvironmentManager() {
 
     }
 
@@ -28,52 +31,23 @@ public class EnvironmentManager {
         return null;
     }
 
-    public static void debug(final String msg){
-        if(bungeecord){
+    public static void debug(final String msg) {
+        if (bungeecord) {
             BetaCoreBungee.debug(msg);
-        }else{
+        } else {
             BetaCore.debug(msg);
         }
     }
 
-    public static <T> T getInstance(){
-        if(spigot){
+    public static <T> T getInstance() {
+        if (spigot) {
             return (T) BetaCore.getInstance();
-        }else{
+        } else {
             return (T) BetaCoreBungee.getInstance();
         }
     }
 
 
-
-
-
-
-    public static boolean isSpigot() {
-        return spigot;
-    }
-
-    public static boolean isBungeecord() {
-        return bungeecord;
-    }
-
-    public static void setSpigot(boolean spigot) {
-        EnvironmentManager.spigot = spigot;
-    }
-
-    public static void setBungeecord(boolean bungeecord) {
-        EnvironmentManager.bungeecord = bungeecord;
-    }
-
-    public static boolean isMysql() {
-        return mysql;
-    }
-
-    public static void setMysql(boolean mysql) {
-        EnvironmentManager.mysql = mysql;
-    }
-
-    public static boolean isMaintenance() {
-        return maintenance;
-    }
 }
+
+
