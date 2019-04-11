@@ -20,9 +20,11 @@ public class Team extends TeamSystem {
     @Getter
     private int rank, wonPrivateFights, wonPublicFights, wonEvents, elo;
     @Getter
-    private List<String> teamMembers = new ArrayList<>();
+    private List<String> teamMembers;
     @Getter
     private UUID teamAdmin;
+
+
 
     public Team(String teamName, String shortName, Player teamAdmin) {
         createTeam(teamName, shortName, teamAdmin);
@@ -36,6 +38,7 @@ public class Team extends TeamSystem {
         this.wonPublicFights = teams.getInt(teamName + ".wonPublicFights");
         this.wonEvents = teams.getInt(teamName + ".wonEvents");
         this.world = teams.getString(teamName + ".world");
+        this.teamMembers = teams.getStringList(teamName + ".members");
 
         calculateElo(teamName);
 
@@ -56,11 +59,13 @@ public class Team extends TeamSystem {
         this.world = teams.getString(teamName + ".world");
         this.teamName = teamName;
         this.teamAdmin = UUID.fromString(teams.getString(teamName + ".admin"));
+        this.teamMembers = teams.getStringList(teamName + ".members");
 
         calculateElo(teamName);
 
         this.elo = teams.getInt(teamName + ".elo");
     }
+
 
 
     public void setShortName(String shortName) {

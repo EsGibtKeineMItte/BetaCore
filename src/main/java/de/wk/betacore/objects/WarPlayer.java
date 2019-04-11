@@ -9,6 +9,7 @@ import de.wk.betacore.util.MySQL;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.teamsystem.Team;
 import de.wk.betacore.util.teamsystem.TeamSystem;
+import org.bukkit.Bukkit;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,10 +21,12 @@ public class WarPlayer implements PlayerDataFactory {
     static Json data = FileManager.getPlayerData();
 
     public final String UUID;
+    public final UUID uuid;
+
 
     private int wsrank, money, fights;
     private Rank rank;
-    private String team, firstjoin, lastjoin, uuid, name;
+    private String team, firstjoin, lastjoin, name;
     private boolean banned, muted;
     private boolean inWarShipTeam;
     private Team wsteam;
@@ -32,8 +35,10 @@ public class WarPlayer implements PlayerDataFactory {
     public WarPlayer(UUID uuid, String name) {
         setupPlayer(uuid, name);
         this.UUID = uuid.toString();
+        this.uuid = uuid;
 
         if (!(EnvironmentManager.isMysql())) {
+
             //Data from Json
             this.firstjoin = data.getString(uuid.toString() + ".firstjoin");
             this.rank = Rank.valueOf(data.getString(uuid.toString() + ".rank"));
@@ -46,7 +51,6 @@ public class WarPlayer implements PlayerDataFactory {
 
 
             //Assigments
-            this.uuid = uuid.toString();
             this.name = name;
 
             if (isInWarShipTeam()) {
@@ -75,7 +79,6 @@ public class WarPlayer implements PlayerDataFactory {
                 }
 
                 this.rank = Rank.valueOf(rank);
-                this.uuid = uuid.toString();
                 this.name = name;
                 this.banned = data.getBoolean(uuid.toString() + ".banned");
                 this.muted = data.getBoolean(uuid.toString() + ".muted");
@@ -99,7 +102,7 @@ public class WarPlayer implements PlayerDataFactory {
     }
 
     public String getTeamName() {
-        EnvironmentManager.debug("UUID: "  + uuid);
+        EnvironmentManager.debug("UUID: " + uuid);
         return data.getString(uuid + ".wsteam");
     }
 
@@ -194,5 +197,15 @@ public class WarPlayer implements PlayerDataFactory {
         return TeamSystem.isActiveWarShipTeam(team);
     }
 
+    public boolean isOnline() {
+        return Bukkit.getPlayer(uuid) == null;
+    }
+
+
+    public void sendMessage(String msg) {
+        if(isOnline()){
+            Bukkit.getPlayer(uuid).sendMessage(msg);
+        }
+    }
 
 }

@@ -7,6 +7,7 @@ import lombok.Setter;
 
 public class EnvironmentManager {
 
+
     @Getter
     @Setter
     private static boolean spigot, bungeecord, mysql, maintenance;
@@ -15,6 +16,7 @@ public class EnvironmentManager {
     private EnvironmentManager() {
 
     }
+
 
 
     public static String getPathToDataFolder() {
@@ -47,7 +49,53 @@ public class EnvironmentManager {
         }
     }
 
+    public static int getPort(){
+        return 0;
+    }
 
+    public static String getDataBase(){
+        if(spigot){
+
+        }else{
+
+        }
+
+
+        return null;
+    }
+
+    public static String getPassword(){
+
+        if(spigot){
+
+        }else{
+
+        }
+
+        return null;
+    }
+
+    public static String getUsername(){
+
+        if(spigot){
+
+        }else{
+
+        }
+
+        return null;
+    }
+
+    public static String getHost(){
+
+        if(spigot){
+
+        }else{
+
+        }
+
+        return null;
+    }
 }
 
 

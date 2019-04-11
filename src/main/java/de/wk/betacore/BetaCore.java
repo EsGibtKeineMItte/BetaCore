@@ -17,6 +17,7 @@ import de.wk.betacore.util.travel.BauCommand;
 import de.wk.betacore.util.travel.FastTravelSystem;
 import de.wk.betacore.util.travel.LobbyCommand;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
@@ -46,7 +47,7 @@ public final class BetaCore extends JavaPlugin {
     private static BetaCore instance;
 
 
-    public void regCommands() {
+    private void regCommands() {
         getCommand("money").setExecutor(new Money());
         getCommand("core").setExecutor(new Core());
         getCommand("gm").setExecutor(new Gm());
@@ -63,7 +64,7 @@ public final class BetaCore extends JavaPlugin {
         getCommand("setup").setExecutor(new SetupCommand());
     }
 
-    public void regListeners() {
+    private void regListeners() {
         Bukkit.getPluginManager().registerEvents(new DataSetter(), this);
         Bukkit.getPluginManager().registerEvents(new MessageSend(), this);
         Bukkit.getPluginManager().registerEvents(new JoinHandler(), this);
@@ -95,27 +96,38 @@ public final class BetaCore extends JavaPlugin {
 
 
     @Override
+    public void onLoad(){
+        if(Bukkit.getPluginManager().getPlugin("WorldEdit") == null){
+            log("WorldEdit wurde nicht gefunden...");
+        }
+    }
+
+    @Override
     public void onEnable() {
 
-        log("§6Enabling BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + "...");
+        log(ChatColor.YELLOW + "[§eBetaCore " + ChatColor.GOLD + Misc.CODENAME + ChatColor.YELLOW + "v." + Misc.VERSION + "]");
         EnvironmentManager.setSpigot(true);
 
 
-        log("§6Setting up command-framework... ");
+        log("§3Setting up command-framework... ");
         instance = this;
+
+        //TODO Use new Command-Manager
         CommandManagerOld commandManager = new CommandManagerOld();
         commandManager.setup();
         CommandImplementer.implementCommands();
+
+
+        CommandFramework framework = new CommandFramework(this);
+        framework.registerCommands(new Update());
+        framework.registerCommands(new TeamCommand());
+        framework.registerCommands(new TracerCommand());
         log("§aDONE");
 
         log("§3Registering Commands & Listeners...");
         regCommands();
         regListeners();
         removeCommands();
-        CommandFramework framework = new CommandFramework(this);
-        framework.registerCommands(new Update());
-        framework.registerCommands(new TeamCommand());
-        framework.registerCommands(new TracerCommand());
         log("§aDONE");
         ConfigManager cm = new ConfigManager();
 
@@ -126,9 +138,9 @@ public final class BetaCore extends JavaPlugin {
         cm.getConfig().save();
         log("§aDONE");
 
-        log("§3Establishing MySQL Connection...");
 
         if (cm.getGlobalConfig().getBoolean("useMySQL")) {
+            log("§3Establishing MySQL Connection...");
             try {
                 MySQL.openConnection();
                 System.out.println("MySQL Connection erfolgreich.");

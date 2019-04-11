@@ -1,8 +1,6 @@
 package de.wk.betacore.datamanager;
 
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.datamanager.Config;
-import de.wk.betacore.environment.Environment;
 import de.wk.betacore.environment.EnvironmentManager;
 import de.wk.betacore.util.data.Misc;
 import lombok.Getter;
@@ -10,11 +8,23 @@ import org.bukkit.Bukkit;
 
 
 public class ConfigManager {
+    public Config getConfig() {
+        return config;
+    }
+
+    public Config getGlobalConfig() {
+        return globalConfig;
+    }
+
+    public Config getPermissions() {
+        return permissions;
+    }
+
     @Getter
     private Config config = new Config("config.yml", BetaCore.getInstance());
     @Getter
     private Config globalConfig = new Config("../../../Data/gconfig.yml", BetaCore.getInstance());
-    @Getter
+   @Getter
     private Config permissions = new Config("../../../Data/Permissions.yml", BetaCore.getInstance());
 
 

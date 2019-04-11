@@ -57,15 +57,14 @@ public class TeamCommand {
                 player.sendMessage(Misc.PREFIX + "§7Du bist in keinem WarShip-Team.");
             }
         } else if (args.getArgs().length == 1) {
-            if (!(TeamSystem.isActiveWarShipTeam(args.getArgs(0)))) {
-                BetaCore.debug("ARGS[0]: " + args.getArgs(0));
-                args.getSender().sendMessage(Misc.PREFIX + "§cDieses Team existiert nicht");
+            if (!(TeamSystem.isActiveWarShipTeam(args.getArgs(0)))) { args.getSender().sendMessage(Misc.PREFIX + "§cDieses Team existiert nicht");
                 return;
             }
             Team checked = new Team(args.getArgs(0));
             player.sendMessage("§6Team: §7" + checked.getTeamName());
             player.sendMessage("§6Kürzel: §7" + checked.getShortName());
             player.sendMessage("§6Admin: §7" + Bukkit.getOfflinePlayer(checked.getTeamAdmin()).getName());
+            player.sendMessage("§6Member: §7 ");
             player.sendMessage("§6Elo: §7" + checked.getElo());
             player.sendMessage("§6Gewonnene:\n-öffentliche Kämpfe: §7" + checked.getWonPublicFights());
             player.sendMessage("§6-private Kämpfe: §7" + checked.getWonPublicFights());
@@ -181,6 +180,14 @@ public class TeamCommand {
     @Command(name = "team.invite", description = "Command, um Teams zu erstellen und zu verwalten", aliases = {"wst.invite"}, inGameOnly = true)
 
     public void onInvite(CommandArgs args){
+        Player player = (Player) args.getSender();
+
+        if(args.getArgs().length != 1){
+            player.sendMessage(Misc.PREFIX + "§6Benutzung: §6/team invite §7<§6Spieler§7>");
+            return;
+        }
+        WarPlayer wp = new WarPlayer(player.getUniqueId(), player.getName());
+        if(wp.isInWarShipTeam() && wp.getTeam())
 
     }
 
