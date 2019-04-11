@@ -3,7 +3,6 @@ package de.wk.betacore;
 import com.minnymin.command.CommandFramework;
 import de.wk.betacore.commands.spigot.*;
 import de.wk.betacore.commands.spigot.commandmanager.CommandManagerOld;
-import de.wk.betacore.datamanager.FileManager;
 import de.wk.betacore.environment.EnvironmentManager;
 import de.wk.betacore.listener.Spigot.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
@@ -13,7 +12,6 @@ import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.CommandRemover;
 import de.wk.betacore.util.ranksystem.PermissionManager;
 import de.wk.betacore.util.ranksystem.PermissionsListener;
-import de.wk.betacore.util.teamsystem.TeamSystem;
 import de.wk.betacore.util.travel.ArenaCommand;
 import de.wk.betacore.util.travel.BauCommand;
 import de.wk.betacore.util.travel.FastTravelSystem;
@@ -53,7 +51,6 @@ public final class BetaCore extends JavaPlugin {
         getCommand("core").setExecutor(new Core());
         getCommand("gm").setExecutor(new Gm());
         getCommand("pc").setExecutor(new PcCommand());
-        getCommand("team").setExecutor(new TeamCommandTest());
         getCommand("pi").setExecutor(new PlayerInfoCommand());
         getCommand("cc").setExecutor(new CustomCommand());
         getCommand("addperm").setExecutor(new ManPermissionAdder());
@@ -74,6 +71,7 @@ public final class BetaCore extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new CustomCommand(), this);
         Bukkit.getPluginManager().registerEvents(new PermissionListener(), this);
         Bukkit.getPluginManager().registerEvents(new PermissionsListener("/help", "/bau", "/arena-1", "/arena-2", "/hub", "/l", "/r", "/msg"), this);
+        Bukkit.getPluginManager().registerEvents(new TNTTracer(), this);
         this.getServer().getPluginManager().registerEvents(RecordListener.getInstance(), this);
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BUNGEECORD");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BUNGEECORD", new FastTravelSystem());
@@ -116,6 +114,8 @@ public final class BetaCore extends JavaPlugin {
         removeCommands();
         CommandFramework framework = new CommandFramework(this);
         framework.registerCommands(new Update());
+        framework.registerCommands(new TeamCommand());
+        framework.registerCommands(new TracerCommand());
         log("§aDONE");
         ConfigManager cm = new ConfigManager();
 
@@ -175,7 +175,7 @@ public final class BetaCore extends JavaPlugin {
         log("MySQL: " + (cm.getGlobalConfig().getBoolean("useMySQL") ? "§atrue" : "§cfalse"));
 
 
-        log("Chatfilter: " + (cm.getConfig().getBoolean("useDefaultChatFilter") ? " §atrue" : "§cfalse"));
+        log("Chatfilter: " + (cm.getConfig().getBoolean("useDefaultChatFilter") ? "§atrue" : "§cfalse"));
         log("Anti-LaggSystem: " + (cm.getConfig().getBoolean("useAntiLaggSystem") ? "§atrue" : "§cfalse"));
 
         log("§eServer-Settings:");

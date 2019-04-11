@@ -21,9 +21,6 @@ commands:
     description: Command, um Kanonen automatisch zu beladen.
   gm:
     description: Command, um seinen GameMode zu wechseln
-  team:
-    description: Command, um WarShip-Teams zu erstellen und zu verwalten
-    aliases: t
   pi:
     description: Command, um sich Informationen über einen Spieler anzeigen zu lassen.
   cc:

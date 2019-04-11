@@ -5,24 +5,23 @@ import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.FileManager;
 
+
+
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 public class TeamSystem {
 
 
-    Json cfg;
-
     static Json teams = FileManager.getTeams();
     Json playerData = FileManager.getPlayerData();
 
 
-    public boolean createTeam(String teamName, String kuerzel, OfflinePlayer teamAdmin) {
+    public boolean createTeam(final String teamName, final String kuerzel, final OfflinePlayer teamAdmin) {
         ConfigManager cm = new ConfigManager();
         LocalDate dateOfTeamCreation = LocalDate.now();
 
@@ -39,12 +38,15 @@ public class TeamSystem {
         teams.set(teamName + ".admin", teamAdmin.getUniqueId().toString());
         teams.set(teamName + ".short", kuerzel);
         teams.set(teamName + ".dataOfCreation", dateOfTeamCreation.toString());
-        teams.set(teamName + ".teamrank", -1);//PrivateFight *3 + wonEvents*5 + wonpublicfights
+        teams.set(teamName + ".teamrank", getActiveTeams().size());//PrivateFight *3 + wonEvents*5 + wonpublicfights
         teams.set(teamName + ".wonPublicFights", 0);
         teams.set(teamName + ".wonPrivateFights", 0);
         teams.set(teamName + ".wonEvents", 0);
+        teams.set(teamName + ".elo", 0);
         teams.set(teamName + ".world", null);
         teams.set(teamName + ".teamws", null);
+        teams.set(teamName + ".members", new ArrayList<String>());
+        teams.set(teamName + ".invitations", new ArrayList<String>());
 
         ArrayList<String> activeTeams = getActiveTeams();
 
@@ -57,6 +59,35 @@ public class TeamSystem {
         BetaCore.debug("Das Team " + teamName + " wurde erstellt.");
         return true;
     }
+
+
+    public static int calculateElo(String teamName) {
+        if (!(isActiveWarShipTeam(teamName))) {
+            return 0;
+        }
+        int pub = teams.getInt(teamName + ".wonPublicFights");
+        int priv = teams.getInt(teamName + ".wonPrivateFights");
+        int events = teams.getInt(teamName + ".wonEvents");
+
+        if (priv == 0) {
+            return pub;
+        }
+
+        if (events == 0) {
+            return pub * (priv * 3);
+        }
+        return pub * (priv * 3) * (events * 5);
+    }
+
+
+    public static Map<String, Integer> getTeamList() {
+        HashMap<String, Integer> teamMap = new HashMap<>();
+        for(String teamName: getActiveTeams()){
+            teamMap.put(teamName, teams.getInt(teamName + ".elo"));
+        }
+        return sortByValue(teamMap);
+    }
+
 
     public void addTeamMember(String teamName, Player player) {
         if (!(teamExists(teamName))) {
@@ -122,6 +153,13 @@ public class TeamSystem {
     }
 
 
+    public static void remove(String teamName) {
+        ArrayList<String> activeTeams = getActiveTeams();
+        activeTeams.remove(teamName);
+        teams.set("activeTeams", activeTeams);
+    }
+
+
     public static boolean isActiveWarShipTeam(String teamName) {
         if (teamName == null) {
             return false;
@@ -151,6 +189,18 @@ public class TeamSystem {
 
         return teams.getStringList(teamName + ".invitations");
 
+    }
+
+    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
+        List<Map.Entry<K, V>> list = new ArrayList<>(map.entrySet());
+        list.sort(Map.Entry.comparingByValue());
+
+        Map<K, V> result = new LinkedHashMap<>();
+        for (Map.Entry<K, V> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+
+        return result;
     }
 }
 

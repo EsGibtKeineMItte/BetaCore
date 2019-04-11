@@ -15,9 +15,13 @@ public class Team extends TeamSystem {
 
     Json teams = FileManager.getTeams();
 
+    @Getter
     private String teamName, shortName, dateOfCreation, world;
-    private int rank, wonPrivateFights, wonPublicFights, wonEvents;
+    @Getter
+    private int rank, wonPrivateFights, wonPublicFights, wonEvents, elo;
+    @Getter
     private List<String> teamMembers = new ArrayList<>();
+    @Getter
     private UUID teamAdmin;
 
     public Team(String teamName, String shortName, Player teamAdmin) {
@@ -26,6 +30,16 @@ public class Team extends TeamSystem {
         this.shortName = shortName;
         this.teamAdmin = teamAdmin.getUniqueId();
         this.teamMembers = getTeamMembers(teamName);
+        this.dateOfCreation = teams.getString(teamName + ".dateofCreation");
+        this.rank = teams.getInt(teamName + ".teamrank");
+        this.wonPrivateFights = teams.getInt(teamName + ".wonPrivateFights");
+        this.wonPublicFights = teams.getInt(teamName + ".wonPublicFights");
+        this.wonEvents = teams.getInt(teamName + ".wonEvents");
+        this.world = teams.getString(teamName + ".world");
+
+        calculateElo(teamName);
+
+        this.elo = teams.getInt(teamName + ".elo");
     }
 
     public Team(String teamName) {
@@ -35,13 +49,17 @@ public class Team extends TeamSystem {
         this.teamName = teamName;
         this.shortName = teams.getString(teamName + ".short");
         this.dateOfCreation = teams.getString(teamName + ".dateofCreation");
-        this.rank = teams.getInt(teamName + ".rank");
+        this.rank = teams.getInt(teamName + ".teamrank");
         this.wonPrivateFights = teams.getInt(teamName + ".wonPrivateFights");
         this.wonPublicFights = teams.getInt(teamName + ".wonPublicFights");
         this.wonEvents = teams.getInt(teamName + ".wonEvents");
         this.world = teams.getString(teamName + ".world");
         this.teamName = teamName;
         this.teamAdmin = UUID.fromString(teams.getString(teamName + ".admin"));
+
+        calculateElo(teamName);
+
+        this.elo = teams.getInt(teamName + ".elo");
     }
 
 
@@ -97,60 +115,4 @@ public class Team extends TeamSystem {
         this.teamAdmin = teamAdmin;
         teams.set(teamName + ".admin", teamAdmin.toString());
     }
-
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public String getShortName() {
-        return shortName;
-    }
-
-
-    public String getDateOfCreation() {
-        return dateOfCreation;
-    }
-
-    public String getWorld() {
-        return world;
-    }
-
-    public int getRank() {
-        return rank;
-    }
-
-    public int getWonPublicFights() {
-        return wonPublicFights;
-    }
-
-    public int getWonPrivateFights() {
-        return wonPrivateFights;
-    }
-
-    public int getWonEvents() {
-        return wonEvents;
-    }
-
-    public UUID getTeamAdmin() {
-        if (teamAdmin == null) {
-            throw new NullPointerException("WTF?! WARUM IS DER TEAM ADMIN NULL?!");
-        }
-        return teamAdmin;
-    }
-
-    public List<String> getTeamMembers() {
-        return teamMembers;
-    }
-
-
-
-
-
-
-    /*
-
-     */
-
-
 }
