@@ -1,12 +1,10 @@
 package de.wk.betacore.listener.Spigot;
 
+import com.google.common.annotations.Beta;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.util.data.Misc;
 import lombok.Getter;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -25,7 +23,6 @@ public class TNTTracer implements Listener {
     private static HashMap<World, ArrayList<Location>> locationHashMap = new HashMap<>();
     @Getter
     private static ArrayList<World> checkedWorlds = new ArrayList<>();
-
 
     private static boolean canceled;
 
@@ -46,6 +43,10 @@ public class TNTTracer implements Listener {
     public static void removePlayerFromTracer(Player player) {
         World w = player.getWorld();
 
+        if (!(checkedWorlds.contains(w))) {
+            return;
+        }
+        checkedWorlds.remove(w);
         locations.clear();
         locationHashMap.remove(w);
     }
@@ -54,12 +55,15 @@ public class TNTTracer implements Listener {
     public static boolean showTraces(World w, Player player) {
 
         if (!(locationHashMap.containsKey(w))) {
+            player.sendMessage(Misc.PREFIX + "§cDu hast noch keine Traces aufgenommen.");
             return false;
         }
         ArrayList<Location> locations = locationHashMap.get(w);
         BetaCore.debug("Location-Size " + locations.size());
         for (Location loc : locations) {
             loc.getBlock().setType(Material.REDSTONE_BLOCK);
+            loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 20);
+
             try {
                 Thread.sleep(2);
             } catch (InterruptedException e) {
@@ -94,30 +98,24 @@ public class TNTTracer implements Listener {
     }
 
 
-
-
-
     @EventHandler
     public void onTNT(EntityExplodeEvent e) {
-
 
         World w = e.getLocation().getWorld();
 
         if (!(checkedWorlds.contains(w))) {
-            BetaCore.debug("Die Welt des Spielers wird nicht getestet. Block" + e.getLocation());
+            BetaCore.debug("Die Welt des Spielers wird nicht getestet.");
             return;
         }
 
-        checkedWorlds.remove(w);//Entferrnt die Welt - Weitere TNT Explosionen werden bis zum erneuten start irgnoriert;
-
-
+        checkedWorlds.remove(w);
 
         if (locationHashMap.containsKey(w)) {
             locations = locationHashMap.get(w);
         } else {
             locations = new ArrayList<>();
         }
-       int TaskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(BetaCore.getInstance(), new Runnable() {
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(BetaCore.getInstance(), new Runnable() {
             @Override
             public void run() {
                 for (Entity entity : w.getEntities()) {
@@ -126,7 +124,7 @@ public class TNTTracer implements Listener {
                         Location loc = new Location(e.getLocation().getWorld(), Math.round(entity.getLocation().getX() + 0.3),
                                 Math.round(entity.getLocation().getY()) + 0.3, Math.round(entity.getLocation().getZ()) + 0.3);
 
-                        if(!(locations.contains(loc)) && (loc.getBlock().getType() != Material.WATER)){
+                        if (!(locations.contains(loc)) && (loc.getBlock().getType() != Material.WATER)) {
                             locations.add(loc);
                             BetaCore.debug(loc.toString());
                         }
@@ -139,16 +137,17 @@ public class TNTTracer implements Listener {
         }, 5L, 2L);
 
 
+
         Bukkit.getScheduler().runTaskLater(BetaCore.getInstance(), new Runnable() {
             @Override
             public void run() {
-                Bukkit.getScheduler().cancelTask(TaskID);
+                checkedWorlds.add(w);
+                Bukkit.getScheduler().cancelAllTasks();
                 BetaCore.debug("TASKS");
             }
         }, 60L);
 
         locationHashMap.put(w, locations);
-        locations.clear();
     }
 
 

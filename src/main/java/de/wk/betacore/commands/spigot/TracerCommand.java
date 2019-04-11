@@ -54,7 +54,7 @@ public class TracerCommand {
 
 
         TNTTracer.removePlayerFromTracer(player);
-        player.sendMessage(Misc.PREFIX + "§aAufnahme beendet.");
+        player.sendMessage(Misc.PREFIX + "§cAufnahme beendet.");
 
 
     }
@@ -76,7 +76,7 @@ public class TracerCommand {
     }
 
 
-    @Command(name = "trace.unshow", description = "Command, um TNT zu tracen", inGameOnly = true)
+    @Command(name = "trace.unshow", description = "Command, um TNT zu tracen", inGameOnly = true, aliases = {"trace.hide"})
 
     public void traceUnshow(CommandArgs args) {
         Player player = (Player) args.getSender();
@@ -87,6 +87,8 @@ public class TracerCommand {
 
         TNTTracer.unShowTraces(player.getWorld(), player);
         TNTTracer.removePlayerFromTracer(player);
+
+        player.sendMessage(Misc.PREFIX + "§eEntfernte Traces");
     }
 
 
@@ -96,11 +98,11 @@ public class TracerCommand {
 
         Player player = (Player) args.getSender();
 
+        player.sendMessage("§7Welten überprüft: §6" + TNTTracer.getLocationHashMap().values().size() + " " +TNTTracer.getLocationHashMap().keySet().size()
+        );
+        player.sendMessage("§7Positionen für deine Welt in HashMap: §6" + (TNTTracer.getLocationHashMap().containsKey(player.getWorld()) ? TNTTracer.getLocationHashMap().get(player.getWorld()).size() : 0));
 
-        player.sendMessage("§7Positionen für Welten eingetragen: §6" + TNTTracer.getLocationHashMap().size());
-        player.sendMessage("§7Positionen gesetzt: §6" + TNTTracer.getLocations().size());
-        player.sendMessage("§7Welten gecheckt: §6" + TNTTracer.getCheckedWorlds().size());
-
+        player.sendMessage("§7Positionen im RAM: §6" + TNTTracer.getLocations().size());
         player.sendMessage("§7Aktuelle Welt gespeichert: " + (TNTTracer.getLocationHashMap().containsKey(player.getWorld()) ? "§aTrue" : "§cFalse"));
         player.sendMessage("§7Selbst als auf der toCheck-Liste: " + (TNTTracer.getCheckedWorlds().contains(player.getWorld()) ? "§aTrue" : "§cFalse"));
 
