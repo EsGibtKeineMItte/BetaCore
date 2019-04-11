@@ -1,6 +1,5 @@
 package de.wk.betacore.listener.Spigot;
 
-import com.google.common.annotations.Beta;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.util.data.Misc;
 import lombok.Getter;
@@ -18,7 +17,6 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.text.DecimalFormat;
-import java.time.LocalTime;
 import java.util.*;
 
 public class TNTTracer implements Listener {
@@ -27,6 +25,7 @@ public class TNTTracer implements Listener {
     private static HashMap<World, ArrayList<Location>> locationHashMap = new HashMap<>();
     @Getter
     private static ArrayList<World> checkedWorlds = new ArrayList<>();
+
 
     private static boolean canceled;
 
@@ -47,23 +46,17 @@ public class TNTTracer implements Listener {
     public static void removePlayerFromTracer(Player player) {
         World w = player.getWorld();
 
-        if (!(checkedWorlds.contains(w))) {
-            return;
-        }
-        checkedWorlds.remove(w);
         locations.clear();
         locationHashMap.remove(w);
     }
 
 
-    public static void showTraces(World w, Player player) {
+    public static boolean showTraces(World w, Player player) {
 
         if (!(locationHashMap.containsKey(w))) {
-            player.sendMessage(Misc.PREFIX + "§cDu hast noch keine Traces aufgenommen.");
-            return;
+            return false;
         }
         ArrayList<Location> locations = locationHashMap.get(w);
-        List<Location> finalLocations = removeDuplicate(locations);
         BetaCore.debug("Location-Size " + locations.size());
         for (Location loc : locations) {
             loc.getBlock().setType(Material.REDSTONE_BLOCK);
@@ -73,6 +66,7 @@ public class TNTTracer implements Listener {
                 e.printStackTrace();
             }
         }
+        return true;
     }
 
     public static boolean unShowTraces(World w, Player player) {
@@ -100,110 +94,62 @@ public class TNTTracer implements Listener {
     }
 
 
-    public static ArrayList<Location> testForDuplicates(ArrayList<Location> locs) {
 
-        ArrayList<Location> result = new ArrayList<>();
-
-        int i = 0;
-        int dopplungen = 0;
-        for (Location loc : locs) {
-            if (locs.get(i).equals(locs.get(i + 1))) {
-                i++;
-                dopplungen++;
-                continue;
-            }
-            /*
-            Check whether a RedstoneBlock is under my Block
-             */
-
-
-            Location testLocY = loc;
-
-            if (testLocY.getBlock().getType() == Material.REDSTONE_BLOCK) {
-                locs.remove(loc);
-                BetaCore.debug("Dopplung entfernt!");
-                dopplungen++;
-                continue;
-            }
-
-            Location newLocation = locs.get(i);
-
-            DecimalFormat f = new DecimalFormat("#0.0");
-
-
-            newLocation.setX(Math.round(loc.getX()));
-            newLocation.setY(Math.round(loc.getY()));
-            newLocation.setZ(Math.round(loc.getZ()));
-
-            if (!result.contains(newLocation)) {
-                result.add(newLocation);
-                i++;
-            }else{
-                dopplungen++;
-                i++;
-            }
-        }
-        Bukkit.getServer().broadcastMessage("Dopplungen: " + dopplungen);
-        return result;
-
-    }
 
 
     @EventHandler
     public void onTNT(EntityExplodeEvent e) {
 
-        if(canceled){
-            return;
-        }
 
         World w = e.getLocation().getWorld();
 
         if (!(checkedWorlds.contains(w))) {
-            BetaCore.debug("Die Welt des Spielers wird nicht getestet.");
+            BetaCore.debug("Die Welt des Spielers wird nicht getestet. Block" + e.getLocation());
             return;
         }
+
+        checkedWorlds.remove(w);//Entferrnt die Welt - Weitere TNT Explosionen werden bis zum erneuten start irgnoriert;
+
+
 
         if (locationHashMap.containsKey(w)) {
             locations = locationHashMap.get(w);
         } else {
             locations = new ArrayList<>();
         }
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(BetaCore.getInstance(), new Runnable() {
+       int TaskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(BetaCore.getInstance(), new Runnable() {
             @Override
             public void run() {
                 for (Entity entity : w.getEntities()) {
                     if (entity.getType() == EntityType.PRIMED_TNT) {
-                        locations.add(entity.getLocation());
-                        BetaCore.debug(entity.getLocation().toString());
+
+                        Location loc = new Location(e.getLocation().getWorld(), Math.round(entity.getLocation().getX() + 0.3),
+                                Math.round(entity.getLocation().getY()) + 0.3, Math.round(entity.getLocation().getZ()) + 0.3);
+
+                        if(!(locations.contains(loc)) && (loc.getBlock().getType() != Material.WATER)){
+                            locations.add(loc);
+                            BetaCore.debug(loc.toString());
+                        }
                         if (locations.size() > 1000) {
                             locations.clear();
                         }
                     }
                 }
             }
-        }, 3L, 2L);
+        }, 5L, 2L);
 
 
         Bukkit.getScheduler().runTaskLater(BetaCore.getInstance(), new Runnable() {
             @Override
             public void run() {
-                canceled = true;
-            }
-        }, 10L);
-
-        Bukkit.getScheduler().runTaskLater(BetaCore.getInstance(), new Runnable() {
-            @Override
-            public void run() {
-                canceled = false;
-                Bukkit.getScheduler().cancelAllTasks();
+                Bukkit.getScheduler().cancelTask(TaskID);
                 BetaCore.debug("TASKS");
             }
         }, 60L);
 
-        locations = testForDuplicates(locations);
         locationHashMap.put(w, locations);
+        locations.clear();
     }
-
 
 
     @EventHandler

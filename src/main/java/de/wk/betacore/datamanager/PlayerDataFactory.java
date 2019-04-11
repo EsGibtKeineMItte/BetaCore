@@ -22,29 +22,29 @@ public interface PlayerDataFactory {
     Json TEAMS = FileManager.getTeams();
 
 
-    int getWsRank(final UUID uuid);
+    int getWsRank();
 
-    int getMoney(final UUID uuid);
+    int getMoney();
 
-    int getFights(final UUID uuid);
+    int getFights();
 
-    Rank getRank(final UUID uuid);
+    Rank getRank();
 
-    String getFirstJoin(final UUID uuid);
+    String getFirstJoin();
 
-    String getLastJoin(final UUID uuid);
+    String getLastJoin();
 
-    String getName(final UUID uuid);
+    String getName();
 
-    Team getTeam(final UUID uuid);
+    Team getTeam();
 
-    boolean isBanned(final UUID uuid);
+    boolean isBanned();
 
-    boolean isMuted(final UUID uuid);
+    boolean isMuted();
 
-    void unmute(final UUID uuid);
+    void unmute();
 
-    void unban(final UUID uuid);
+    void unban();
 
 
     default void setupPlayer(UUID uuid, String name) {

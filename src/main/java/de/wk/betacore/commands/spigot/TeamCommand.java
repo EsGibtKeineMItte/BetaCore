@@ -46,12 +46,12 @@ public class TeamCommand {
 
             if (wp.isInWarShipTeam()) {
                 player.sendMessage("§6Team: §7" + wp.getTeamName());
-                player.sendMessage("§6Kürzel: §7" + wp.getTeam(UUID.fromString(wp.UUID)).getShortName());
-                player.sendMessage("§6Admin: §7" + Bukkit.getOfflinePlayer(wp.getTeam(player.getUniqueId()).getTeamAdmin()).getName());
-                player.sendMessage("§6Elo: §7" + wp.getTeam(UUID.fromString(wp.UUID)).getElo());
-                player.sendMessage("§6Gewonnene:\n-öffentliche Kämpfe: §7" + wp.getTeam(UUID.fromString(wp.UUID)).getWonPublicFights());
-                player.sendMessage("§6-private Kämpfe: §7" + wp.getTeam(UUID.fromString(wp.UUID)).getWonPublicFights());
-                player.sendMessage("§6-Events: §7" + wp.getTeam(UUID.fromString(wp.UUID)).getWonPrivateFights());
+                player.sendMessage("§6Kürzel: §7" + wp.getTeam().getShortName());
+                player.sendMessage("§6Admin: §7" + Bukkit.getOfflinePlayer(wp.getTeam().getTeamAdmin()).getName());
+                player.sendMessage("§6Elo: §7" + wp.getTeam().getElo());
+                player.sendMessage("§6Gewonnene:\n-öffentliche Kämpfe: §7" + wp.getTeam().getWonPublicFights());
+                player.sendMessage("§6-private Kämpfe: §7" + wp.getTeam().getWonPublicFights());
+                player.sendMessage("§6-Events: §7" + wp.getTeam().getWonPrivateFights());
                 //INFOS
             } else {
                 player.sendMessage(Misc.PREFIX + "§7Du bist in keinem WarShip-Team.");
@@ -100,12 +100,12 @@ public class TeamCommand {
             return;
         }
 
-        if(wp.getTeam(UUID.fromString(wp.UUID)).getTeamAdmin().toString().equals(wp.UUID)){
+        if(wp.getTeam().getTeamAdmin().toString().equals(wp.UUID)){
             player.sendMessage(Misc.PREFIX + "§7Du bist der Admin des Teams und kannst es nicht verlassen.\n§7Nutze §6/team delete§7 um dein Team zu löschen.");
             return;
         }
 
-        wp.getTeam(UUID.fromString(wp.UUID));
+        wp.getTeam();
         TeamSystem.remove(wp.getTeamName());
     }
 
@@ -168,7 +168,7 @@ public class TeamCommand {
             player.sendMessage(Misc.PREFIX + "§cDu bist in keinem Team, welches du verlassen löschen könntest.");
         }
 
-        if(!(wp.getTeam(UUID.fromString(wp.UUID)).getTeamAdmin().toString().equals(wp.UUID))){
+        if(!(wp.getTeam().getTeamAdmin().toString().equals(wp.UUID))){
             player.sendMessage(Misc.PREFIX + "§7Nur der Teamadmin kann ein Team löschen.");
             return;
         }
@@ -187,7 +187,6 @@ public class TeamCommand {
             return;
         }
         WarPlayer wp = new WarPlayer(player.getUniqueId(), player.getName());
-        if(wp.isInWarShipTeam() && wp.getTeam())
 
     }
 

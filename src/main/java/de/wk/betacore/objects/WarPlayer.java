@@ -9,6 +9,7 @@ import de.wk.betacore.util.MySQL;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.teamsystem.Team;
 import de.wk.betacore.util.teamsystem.TeamSystem;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 
 import java.sql.ResultSet;
@@ -20,12 +21,12 @@ public class WarPlayer implements PlayerDataFactory {
 
     static Json data = FileManager.getPlayerData();
 
-    public final String UUID;
+    @Getter
     public final UUID uuid;
-
 
     private int wsrank, money, fights;
     private Rank rank;
+    public final String UUID;
     private String team, firstjoin, lastjoin, name;
     private boolean banned, muted;
     private boolean inWarShipTeam;
@@ -133,62 +134,52 @@ public class WarPlayer implements PlayerDataFactory {
     }
 
     @Override
-    public int getWsRank(UUID uuid) {
+    public int getWsRank() {
         return this.wsrank;
     }
 
     @Override
-    public int getMoney(UUID uuid) {
+    public int getMoney() {
         return this.money;
     }
 
     @Override
-    public int getFights(UUID uuid) {
+    public int getFights() {
         return this.fights;
     }
 
     @Override
-    public Rank getRank(UUID uuid) {
+    public Rank getRank() {
         return this.rank;
     }
 
     @Override
-    public String getFirstJoin(UUID uuid) {
+    public String getFirstJoin() {
         return this.firstjoin;
     }
 
     @Override
-    public String getLastJoin(UUID uuid) {
+    public String getLastJoin() {
         return null;
     }
 
     @Override
-    public String getName(UUID uuid) {
+    public String getName() {
         return this.name;
     }
 
     @Override
-    public Team getTeam(UUID uuid) {
+    public Team getTeam() {
         return this.wsteam;
     }
 
     @Override
-    public boolean isBanned(UUID uuid) {
-        return this.banned;
-    }
-
-    @Override
-    public boolean isMuted(UUID uuid) {
-        return this.muted;
-    }
-
-    @Override
-    public void unmute(UUID uuid) {
+    public void unmute() {
         this.muted = false;
     }
 
     @Override
-    public void unban(UUID uuid) {
+    public void unban() {
         this.muted = false;
     }
 

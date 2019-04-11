@@ -2,15 +2,10 @@ package de.wk.betacore.commands.spigot;
 
 import com.minnymin.command.Command;
 import com.minnymin.command.CommandArgs;
-import de.wk.betacore.BetaCore;
 import de.wk.betacore.listener.Spigot.TNTTracer;
 import de.wk.betacore.util.data.Misc;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.util.List;
 
 public class TracerCommand {
 
@@ -73,8 +68,11 @@ public class TracerCommand {
             player.sendMessage(Misc.PREFIX + "§7Benutzung: §6/trace");
             return;
         }
-        TNTTracer.showTraces(player.getWorld(), player);
-        player.sendMessage(Misc.PREFIX + "§aTraces werden gezeigt.");
+        if (!(TNTTracer.showTraces(player.getWorld(), player))) {
+            player.sendMessage(Misc.PREFIX + "§cDu hast noch keine Traces aufgenommen.");
+            return;
+        }
+        player.sendMessage(Misc.PREFIX + "§aZeige TNT-Traces.");
     }
 
 
@@ -86,9 +84,9 @@ public class TracerCommand {
             player.sendMessage(Misc.PREFIX + "§7Benutzung: §6/trace");
             return;
         }
+
         TNTTracer.unShowTraces(player.getWorld(), player);
         TNTTracer.removePlayerFromTracer(player);
-
     }
 
 
@@ -103,22 +101,21 @@ public class TracerCommand {
         player.sendMessage("§7Positionen gesetzt: §6" + TNTTracer.getLocations().size());
         player.sendMessage("§7Welten gecheckt: §6" + TNTTracer.getCheckedWorlds().size());
 
-        player.sendMessage("§7Aktuelle Welt gespeichert: " + (TNTTracer.getLocationHashMap().containsKey(player.getWorld()) ? "§aTrue"  : "§cFalse"));
+        player.sendMessage("§7Aktuelle Welt gespeichert: " + (TNTTracer.getLocationHashMap().containsKey(player.getWorld()) ? "§aTrue" : "§cFalse"));
         player.sendMessage("§7Selbst als auf der toCheck-Liste: " + (TNTTracer.getCheckedWorlds().contains(player.getWorld()) ? "§aTrue" : "§cFalse"));
-
 
 
     }
 
     @Command(name = "trace.debug.list", description = "Debug traces", inGameOnly = true, permission = "betacore.debug.list")
 
-    public void onShow(CommandArgs args){
+    public void onShow(CommandArgs args) {
 
         Player player = (Player) args.getSender();
 
-        try{
+        try {
             player.sendMessage(TNTTracer.getLocationHashMap().get(player.getWorld()).toString());
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             player.sendMessage("§aDu bist nicht in der Liste.");
         }
 
@@ -126,29 +123,10 @@ public class TracerCommand {
 
     @Command(name = "trace.debug.points", description = "Debug traces", inGameOnly = true, permission = "betacore.debug.points")
 
-    public void onPoints(CommandArgs args){
-
-        Player player = (Player) args.getSender();
-
-        for (Location loc : TNTTracer.getLocations()){
-
-            player.sendMessage(loc.toString());
-
-            try {
-                Thread.sleep(20);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        }
-
+    public void onPoints(CommandArgs args) {
 
 
     }
-
-
-
-
 
 
 }
