@@ -117,6 +117,11 @@ public class TeamCommand {
             return;
         }
         Player player = (Player) args.getSender();
+        WarPlayer wp = new WarPlayer(player.getUniqueId(), player.getName());
+
+        Team team = new Team(args.getArgs(0));
+
+        team.joinTeam(args.getArgs(0), player);
 
 
 
@@ -187,8 +192,22 @@ public class TeamCommand {
             return;
         }
         WarPlayer wp = new WarPlayer(player.getUniqueId(), player.getName());
+        if(!(wp.getTeam().getTeamAdmin().equals(wp.uuid))){
+            player.sendMessage(Misc.PREFIX + "§cDu bist nicht der Admin des Teams und kannst auch keine Spieler einladen");
+            return;
+        }
+
+        if(Bukkit.getOfflinePlayer(args.getArgs(0)) == null){
+            player.sendMessage(Misc.PREFIX + "§cDieser Spieler existiert nicht.");
+            return;
+        }
+
+        wp.getTeam().invitePlayer(wp.getTeamName(), Bukkit.getOfflinePlayer(args.getArgs(0))); //TODO Bessere Funktion zu verfügung stellen, die diesen Parameter nicht braucht! -> Neue Funktion, die diese nutzt in Teamklasse.
+
+        player.sendMessage(Misc.PREFIX + "§aDu hast den Spieler erfolgreich eingeladen.");
 
     }
+
 
 
 

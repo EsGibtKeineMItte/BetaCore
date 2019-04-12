@@ -6,7 +6,7 @@ import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.FileManager;
 
 
-
+import de.wk.betacore.util.data.Misc;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -105,6 +105,8 @@ public class TeamSystem {
     }
 
 
+
+
     public List<String> getTeamMembers(String teamName) {
 
         return teams.getStringList(teamName + ".members");
@@ -129,7 +131,7 @@ public class TeamSystem {
     }
 
 
-    public void joinTeam(String teamName, Player player) {
+    public  void joinTeam(String teamName, Player player) {
         if (!(teamExists(teamName))) {
             throw new NullPointerException("Es wurde versucht, einem Team beizutreten, welches nicht existiert.");
         }
@@ -144,7 +146,12 @@ public class TeamSystem {
         invitations.remove(player.getUniqueId().toString());
         addTeamMember(teamName, player);
 
+        player.sendMessage(Misc.PREFIX + "§aDu bist dem Team §6" + teamName + " §aerfolgreich beigetreten");
+
     }
+
+
+
 
     public static ArrayList<String> getActiveTeams() {
 
@@ -174,7 +181,7 @@ public class TeamSystem {
 
 
     //Invitations
-    public void invitePlayer(String teamName, Player player) {
+    public void invitePlayer(String teamName, OfflinePlayer player) {
         if (!(teamExists(teamName))) {
             throw new NullPointerException("Das Team " + teamName + " existiert nicht.");
         }
