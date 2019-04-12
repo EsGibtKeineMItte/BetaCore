@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.UUID;
 
 public class MySQL {
+    @Getter
     private static Connection connection;
     private static ConfigManager cm = new ConfigManager();
     private static Json mysql = FileManager.getMysql();
@@ -72,6 +73,7 @@ public class MySQL {
         }
         connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
     }
+
 
 
     public static PreparedStatement preparedStatement(String query) {

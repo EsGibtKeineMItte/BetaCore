@@ -14,6 +14,7 @@ public class FileManager {
     private static Json settings;
     private static Json bungeePerms;
     private static Json mysql;
+    private static Json schematics;
 
     private FileManager() {
 
@@ -26,6 +27,7 @@ public class FileManager {
         teams = new Json("teams", path);
         settings = new Json("settings", path);
         bungeePerms = new Json("bungeeperms", path);
+        schematics = new Json("schematics", path + "/schematics");
     }
 
 
@@ -58,7 +60,11 @@ public class FileManager {
         return getJson(bungeePerms);
     }
 
-    public static Json getMysql(){
+    public static Json getMysql() {
         return getJson(mysql);
+    }
+
+    public static Json getSchematics() {
+        return getJson(schematics);
     }
 }

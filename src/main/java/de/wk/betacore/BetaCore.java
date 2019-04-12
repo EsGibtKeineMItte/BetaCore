@@ -1,6 +1,8 @@
 package de.wk.betacore;
 
 import com.minnymin.command.CommandFramework;
+import de.exceptionflug.schemorg.cmd.CommandSchemorg;
+import de.exceptionflug.schemorg.main.SchemOrg;
 import de.wk.betacore.commands.spigot.*;
 import de.wk.betacore.commands.spigot.commandmanager.CommandManagerOld;
 import de.wk.betacore.environment.EnvironmentManager;
@@ -95,8 +97,8 @@ public final class BetaCore extends JavaPlugin {
 
 
     @Override
-    public void onLoad(){
-        if(Bukkit.getPluginManager().getPlugin("WorldEdit") == null){
+    public void onLoad() {
+        if (Bukkit.getPluginManager().getPlugin("WorldEdit") == null) {
             log("WorldEdit wurde nicht gefunden...");
         }
     }
@@ -172,6 +174,14 @@ public final class BetaCore extends JavaPlugin {
             getCommand("arena").setExecutor(new ArenaCommand());
             getCommand("l").setExecutor(new LobbyCommand());
             getCommand("hub").setExecutor(new LobbyCommand());
+            System.out.println("SchemOrg > enabling...");
+            framework.registerCommands(new CommandSchemorg());
+            Bukkit.getScheduler().runTaskTimerAsynchronously(this, new SchemOrg.FileCheckerRunnable(), 60, 60);
+            Bukkit.getScheduler().runTaskTimer(this, new SchemOrg.NotifierRunnable(), 20 * 60 * 5, 20 * 60 * 5);
+            Bukkit.getPluginManager().registerEvents(new SchemOrg(), this);
+
+
+
             log("§3Using the server as building server");
         }
         log("§aDone");

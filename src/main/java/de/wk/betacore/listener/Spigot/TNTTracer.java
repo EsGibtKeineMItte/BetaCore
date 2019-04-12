@@ -23,9 +23,6 @@ public class TNTTracer implements Listener {
     private static HashMap<World, ArrayList<Location>> locationHashMap = new HashMap<>();
     @Getter
     private static ArrayList<World> checkedWorlds = new ArrayList<>();
-
-    private static boolean canceled;
-
     @Getter
     private static ArrayList<Location> locations = new ArrayList<>();
 
@@ -37,7 +34,6 @@ public class TNTTracer implements Listener {
         }
 
         checkedWorlds.add(w);
-
     }
 
     public static void removePlayerFromTracer(Player player) {
@@ -55,7 +51,6 @@ public class TNTTracer implements Listener {
     public static boolean showTraces(World w, Player player) {
 
         if (!(locationHashMap.containsKey(w))) {
-            player.sendMessage(Misc.PREFIX + "§cDu hast noch keine Traces aufgenommen.");
             return false;
         }
         ArrayList<Location> locations = locationHashMap.get(w);
@@ -115,6 +110,12 @@ public class TNTTracer implements Listener {
         } else {
             locations = new ArrayList<>();
         }
+
+        for(Player player : e.getLocation().getWorld().getPlayers()){
+            player.sendMessage(Misc.PREFIX + "§eAufnahme pausiert. Warte mit dem beladen von TNT etwas.");
+        }
+
+
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(BetaCore.getInstance(), new Runnable() {
             @Override
             public void run() {

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.boydti:fawe-api:18.03.26-48992d2-1054-19.4.17">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/boydti/fawe-api/18.03.26-48992d2-1054-19.4.17/fawe-api-18.03.26-48992d2-1054-19.4.17.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/boydti/fawe-api/18.03.26-48992d2-1054-19.4.17/fawe-api-18.03.26-48992d2-1054-19.4.17-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/boydti/fawe-api/18.03.26-48992d2-1054-19.4.17/fawe-api-18.03.26-48992d2-1054-19.4.17-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -5,6 +5,8 @@ import de.wk.betacore.BetaCoreBungee;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.PreparedStatement;
+
 public class EnvironmentManager {
 
 
@@ -52,6 +54,16 @@ public class EnvironmentManager {
     public static int getPort(){
         return 0;
     }
+
+//
+//    public PreparedStatement getPreparedstatement(){
+//        if(spigot){
+//            return
+//        }else{
+//
+//        }
+//    }
+
 
     public static String getDataBase(){
         if(spigot){
