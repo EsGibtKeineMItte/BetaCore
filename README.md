@@ -35,6 +35,8 @@ If there is anything you want please just ask us, we are willing to help!
 
 *MySQL*
 
+If you want to use MySQL - you can do this but BetaCore althouth works without it.
+
 You will need a MySQL Database, that you will have to setup a MySQL Database an a table called
 PLAYER_INFO, which the columns UUID [varchar],Rank[String], Money[int], Rank [varchar].
 
@@ -49,7 +51,7 @@ You can download a restart script or see how to setup a restart scrips in the wi
 
 
 
-*Copyright*
+#Copyright
 
 Used Libary's [MIT-License]: 
 
