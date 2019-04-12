@@ -45,3 +45,16 @@ You can see how to setup this MySQL Database in the wiki.
 To Restart the Proxy automatically you will need a start.sh in your proxy folder.
 Otherwise the server won't be able to restart automatically. 
 You can download a restart script or see how to setup a restart scrips in the wiki.
+
+
+
+
+*Copyright*
+
+Used Libary's [MIT-License]: 
+
+Schemloader: Copyright (c) 2019 Exceptionflug,EsGibtKeineMitte
+SchemOrg: Copyright (c) 2019 Exceptionflug,EsGibtKeineMitte
+
+
+
