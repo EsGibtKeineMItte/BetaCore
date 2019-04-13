@@ -3,9 +3,8 @@ package de.wk.betacore.util.ranksystem;
 import com.google.common.base.Strings;
 import de.leonhard.storage.Json;
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.FileManager;
-import de.wk.betacore.environment.EnvironmentManager;
+import de.wk.betacore.environment.Environment;
 import de.wk.betacore.util.MySQL;
 import org.apache.commons.lang3.EnumUtils;
 import org.bukkit.Bukkit;
@@ -18,7 +17,7 @@ public class RankSystem {
     private static Json data = FileManager.getPlayerData();
 
     public static void setRank(UUID uuid, String rank) {
-        if(!(EnvironmentManager.isMysql())){
+        if(!(Environment.isMysql())){
             if(!(EnumUtils.isValidEnum(Rank.class, rank))){
                 return;
             }
@@ -50,14 +49,14 @@ public class RankSystem {
     }
 
     public static Rank getRank(UUID uuid) {
-        if(!(EnvironmentManager.isMysql())){
+        if(!(Environment.isMysql())){
             if(Strings.isNullOrEmpty(data.getString(uuid.toString() + ".rank"))){
                 return Rank.USER;
             }
             if(EnumUtils.isValidEnum(Rank.class, data.getString(uuid.toString() + ".rank"))){
                 return Rank.valueOf(data.getString(uuid.toString() + ".rank"));
             }else{
-                EnvironmentManager.debug("In den Datenbanken ist ein fehlerhafter Rang für " + uuid + " eingetragen: " + data.getString(uuid.toString() + ".rank"));
+                Environment.debug("In den Datenbanken ist ein fehlerhafter Rang für " + uuid + " eingetragen: " + data.getString(uuid.toString() + ".rank"));
             }
         }
         try {

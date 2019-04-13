@@ -3,7 +3,7 @@ package de.wk.betacore.util;
 import de.leonhard.storage.Json;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.FileManager;
-import de.wk.betacore.environment.EnvironmentManager;
+import de.wk.betacore.environment.Environment;
 import lombok.Getter;
 
 import java.sql.*;
@@ -34,7 +34,7 @@ public class MySQL {
      */
 
     public static void setup() {
-        if (EnvironmentManager.isSpigot()) {
+        if (Environment.isSpigot()) {
             port = cm.getGlobalConfig().getInt("MySQL.port");
             host = cm.getGlobalConfig().getString("MySQL.host");
             database = cm.getGlobalConfig().getString("MySQL.database");
@@ -103,7 +103,7 @@ public class MySQL {
             rs.next();
             return rs.getInt(1) != 0;
         } catch (SQLException e) {
-            EnvironmentManager.debug("Es ist ein Fehler, beim Versuch zu prüfen, ob sich der Spieler " + uuid + " in der Datenbank befindet aufgetreten.");
+            Environment.debug("Es ist ein Fehler, beim Versuch zu prüfen, ob sich der Spieler " + uuid + " in der Datenbank befindet aufgetreten.");
             System.out.println("");
             e.printStackTrace();
             return false;

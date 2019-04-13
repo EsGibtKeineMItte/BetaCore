@@ -2,7 +2,7 @@ package de.wk.betacore.datamanager;
 
 
 import de.leonhard.storage.Json;
-import de.wk.betacore.environment.EnvironmentManager;
+import de.wk.betacore.environment.Environment;
 
 import java.io.IOException;
 
@@ -22,7 +22,7 @@ public class FileManager {
 
 
     public static void setup() throws IOException {
-        String path = EnvironmentManager.getPathToDataFolder();
+        String path = Environment.getPathToDataFolder();
         playerData = new Json("playerdata", path);
         teams = new Json("teams", path);
         settings = new Json("settings", path);

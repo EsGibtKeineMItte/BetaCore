@@ -73,7 +73,6 @@ public class SchemOrg implements Listener {
             File[] content = dir.listFiles();
 
             if(content == null){
-                BetaCore.log("Es existieren noch keine Schematics");
                 return;
             }
 

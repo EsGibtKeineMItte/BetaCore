@@ -3,7 +3,7 @@ package de.wk.betacore.datamanager;
 import com.google.common.base.Strings;
 import de.leonhard.storage.Json;
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.environment.EnvironmentManager;
+import de.wk.betacore.environment.Environment;
 import de.wk.betacore.util.MySQL;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.teamsystem.Team;
@@ -12,12 +12,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.UUID;
 
 public interface PlayerDataFactory {
-    String PATH = EnvironmentManager.getPathToDataFolder();
+    String PATH = Environment.getPathToDataFolder();
     Json PLAYER_DATA = FileManager.getPlayerData();
     Json TEAMS = FileManager.getTeams();
 
@@ -56,7 +55,7 @@ public interface PlayerDataFactory {
 
         String joinDate = now.toString() + "-" + time;
 
-        if (!(EnvironmentManager.isMysql())) {
+        if (!(Environment.isMysql())) {
             setupWarPlayer(uuid, name, joinDate);
             return;
         }

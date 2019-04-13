@@ -48,6 +48,7 @@ public class TNTTracer implements Listener {
     }
 
 
+
     public static boolean showTraces(World w, Player player) {
 
         if (!(locationHashMap.containsKey(w))) {

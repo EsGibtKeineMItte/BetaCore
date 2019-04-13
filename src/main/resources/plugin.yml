@@ -41,5 +41,9 @@ commands:
     description: Ein Command, um durch Entitys reduzierte Laggs zu reduzieren.
   dev:
     description: Command, um auf den/einen Dev-Server gesenden zu werden.
-
+  schem:
+    aliases:
+      - /schem
+      - /schematic
+      - schematic
 

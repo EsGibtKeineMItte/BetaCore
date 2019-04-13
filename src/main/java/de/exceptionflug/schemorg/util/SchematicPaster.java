@@ -9,7 +9,7 @@ import com.sk89q.worldedit.extent.clipboard.BlockArrayClipboard;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
 import com.sk89q.worldedit.world.registry.WorldData;
-import de.wk.betacore.environment.EnvironmentManager;
+import de.wk.betacore.environment.Environment;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -19,7 +19,7 @@ import java.io.IOException;
 
 public class SchematicPaster {
 
-    public static final String SCHEM_DIR = EnvironmentManager.getPathToDataFolder() + "/schematics";
+    public static final String SCHEM_DIR = Environment.getPathToDataFolder() + "/schematics";
 
     public static void pasteWarShip(final Location loc, final Player p, final File schem) {
         Location pastepoint = loc;

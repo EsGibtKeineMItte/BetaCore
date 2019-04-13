@@ -2,8 +2,7 @@ package de.wk.betacore.util.ranksystem;
 
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.ConfigManager;
-import de.wk.betacore.environment.EnvironmentManager;
-import org.apache.commons.lang.ObjectUtils;
+import de.wk.betacore.environment.Environment;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 
@@ -52,7 +51,7 @@ public class PermissionManager {
                 attachment.setPermission(permissions.toString(), true);
             }
         }catch(NullPointerException e){
-            EnvironmentManager.debug("Die Permissions wurden noch nicht eingetragen.");
+            Environment.debug("Die Permissions wurden noch nicht eingetragen.");
         }
 
     }

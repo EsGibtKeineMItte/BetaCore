@@ -1,7 +1,7 @@
 package de.wk.betacore.datamanager;
 
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.environment.EnvironmentManager;
+import de.wk.betacore.environment.Environment;
 import de.wk.betacore.util.data.Misc;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -79,7 +79,7 @@ public class ConfigManager {
 
     public void setupMySQL() { //Eigene MYSQL Config?
         if (!(globalConfig.getBoolean("UseMySQL"))) {
-            EnvironmentManager.setMysql(false);
+            Environment.setMysql(false);
             return;
         }
         globalConfig.setBoolean("UseMySQL", true);

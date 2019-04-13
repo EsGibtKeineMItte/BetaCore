@@ -4,7 +4,7 @@ import de.leonhard.storage.Json;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.FileManager;
 import de.wk.betacore.datamanager.PlayerDataFactory;
-import de.wk.betacore.environment.EnvironmentManager;
+import de.wk.betacore.environment.Environment;
 import de.wk.betacore.util.MySQL;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.teamsystem.Team;
@@ -38,7 +38,7 @@ public class WarPlayer implements PlayerDataFactory {
         this.UUID = uuid.toString();
         this.uuid = uuid;
 
-        if (!(EnvironmentManager.isMysql())) {
+        if (!(Environment.isMysql())) {
 
             //Data from Json
             this.firstjoin = data.getString(uuid.toString() + ".firstjoin");
@@ -103,7 +103,7 @@ public class WarPlayer implements PlayerDataFactory {
     }
 
     public String getTeamName() {
-        EnvironmentManager.debug("UUID: " + uuid);
+        Environment.debug("UUID: " + uuid);
         return data.getString(uuid + ".wsteam");
     }
 

@@ -1,15 +1,18 @@
 package de.wk.betacore;
 
 import com.minnymin.command.CommandFramework;
+import de.exceptionflug.schemloader.cmd.CommandSchem;
 import de.exceptionflug.schemorg.cmd.CommandSchemorg;
 import de.exceptionflug.schemorg.main.SchemOrg;
 import de.wk.betacore.commands.spigot.*;
 import de.wk.betacore.commands.spigot.commandmanager.CommandManagerOld;
-import de.wk.betacore.environment.EnvironmentManager;
+import de.wk.betacore.environment.Environment;
 import de.wk.betacore.listener.Spigot.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
 import de.wk.betacore.datamanager.ConfigManager;
+import de.wk.betacore.util.ConnectionHolder;
 import de.wk.betacore.util.MySQL;
+import de.wk.betacore.util.Synchronizor;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.CommandRemover;
 import de.wk.betacore.util.ranksystem.PermissionManager;
@@ -18,20 +21,39 @@ import de.wk.betacore.util.travel.ArenaCommand;
 import de.wk.betacore.util.travel.BauCommand;
 import de.wk.betacore.util.travel.FastTravelSystem;
 import de.wk.betacore.util.travel.LobbyCommand;
+import exceptionflug.schemloader.cmd.CommandSchemloader;
+import lombok.Getter;
+import net.thecobix.brew.main.Brew;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Map;
 
 public final class BetaCore extends JavaPlugin {
 
 
+
+
       /*
-    <AlphaCore a core plugin for minecraft server.>
+    <BetaCore a core plugin for minecraft server.>
     Copyright (C) <2018>  <linksKeineMitte, YoyoNow, Chaoschaot>
     CommandRemover by Exceptionflug.
+
+    Libarys's/API's used:
+
+    MIT: Schemloader & SchemOrg: Copyright (c) 2019 Exceptionflug,EsGibtKeineMitte
+    MIT: Lightningstorage: Copyright (c) 2019 Leonhard/EsGibtKeineMitte
+    MIT: PluginLib: Copyright (c) 2019 Leonhard/EsGibtKeineMitte
+    MIT: MIT-org.json Copyright (c) 2002 JSON.org
+    MIT: YAMLBEANS - Copyright (c) 2008 Nathan Sweet, Copyright (c) 2006 Ola Bini
+
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -47,6 +69,9 @@ public final class BetaCore extends JavaPlugin {
    */
 
     private static BetaCore instance;
+    @Getter
+    private ConnectionHolder connectionHolder;
+    public static Brew brew;
 
 
     private void regCommands() {
@@ -99,15 +124,28 @@ public final class BetaCore extends JavaPlugin {
     @Override
     public void onLoad() {
         if (Bukkit.getPluginManager().getPlugin("WorldEdit") == null) {
-            log("WorldEdit wurde nicht gefunden...");
+            Environment.setWorldedit(false);
+            log("WorldEdit wurde nicht gefunden.");
+        } else {
+            log("WorldEdit wurde gefunden.");
+            Environment.setWorldedit(true);
         }
+        if (Bukkit.getPluginManager().getPermissionSubscriptions("Brew") == null) {
+            Environment.setBrew(false);
+            log("Brew wurde nicht gefunden.");
+        } else {
+            Environment.setBrew(true);
+            log("Brew wurde gefunden.");
+        }
+
+
     }
 
     @Override
     public void onEnable() {
 
         log(ChatColor.YELLOW + "[§eBetaCore " + ChatColor.GOLD + Misc.CODENAME + ChatColor.YELLOW + "v." + Misc.VERSION + "]");
-        EnvironmentManager.setSpigot(true);
+        Environment.setSpigot(true);
 
 
         log("§3Setting up command-framework... ");
@@ -142,6 +180,9 @@ public final class BetaCore extends JavaPlugin {
 
         if (cm.getGlobalConfig().getBoolean("useMySQL")) {
             log("§3Establishing MySQL Connection...");
+            Synchronizor.synchronize();
+            connectionHolder = new ConnectionHolder();
+            connectionHolder.connect(Environment.getMySqlHost(), Environment.getMySqlDatabase(), Environment.getMySqlPort(), Environment.getMySqlUsername(), Environment.getMySqlPassword());
             try {
                 MySQL.openConnection();
                 System.out.println("MySQL Connection erfolgreich.");
@@ -151,10 +192,10 @@ public final class BetaCore extends JavaPlugin {
                 System.out.println("");
                 x.printStackTrace();
             }
-            EnvironmentManager.setMysql(true);
+            Environment.setMysql(true);
             log("§aDONE");
         } else {
-            EnvironmentManager.setMysql(false);//Neeeded?
+            Environment.setMysql(false);//Neeeded? No:P
         }
 
 
@@ -174,14 +215,30 @@ public final class BetaCore extends JavaPlugin {
             getCommand("arena").setExecutor(new ArenaCommand());
             getCommand("l").setExecutor(new LobbyCommand());
             getCommand("hub").setExecutor(new LobbyCommand());
-            System.out.println("SchemOrg > enabling...");
-            framework.registerCommands(new CommandSchemorg());
-            Bukkit.getScheduler().runTaskTimerAsynchronously(this, new SchemOrg.FileCheckerRunnable(), 60, 60);
-            Bukkit.getScheduler().runTaskTimer(this, new SchemOrg.NotifierRunnable(), 20 * 60 * 5, 20 * 60 * 5);
-            Bukkit.getPluginManager().registerEvents(new SchemOrg(), this);
-
-
-
+            log("§3Enabling SchemOrg");
+            try {
+                framework.registerCommands(new CommandSchemorg());
+                Bukkit.getScheduler().runTaskTimerAsynchronously(this, new SchemOrg.FileCheckerRunnable(), 60, 60);
+                Bukkit.getScheduler().runTaskTimer(this, new SchemOrg.NotifierRunnable(), 20 * 60 * 5, 20 * 60 * 5);
+                Bukkit.getPluginManager().registerEvents(new SchemOrg(), this);
+            } catch (Exception e) {
+                log("§cFAILED");
+                e.printStackTrace();
+            }
+            try {
+                log("§3Enabling SchemLoader");
+                if(!(Environment.isBrew()) || (!(Environment.isWorldedit()))){
+                    BetaCore.debug("Die benötigten Dependency's sind nicht installiert.");
+                }
+                brew = Brew.getBrew();
+                renameCommand("/schematic", "/schematic_legacy");
+                renameCommand("/schem", "/schem_legacy");
+                getCommand("schem").setExecutor(new CommandSchem());
+                framework.registerCommands(new CommandSchemloader());
+            } catch (Exception e) {
+                log("§cFAILED");
+                e.printStackTrace();
+            }
             log("§3Using the server as building server");
         }
         log("§aDone");
@@ -193,6 +250,7 @@ public final class BetaCore extends JavaPlugin {
 
         log("§eGlobal-Settings:");
 
+        log("Plattform: " + (Environment.isSpigot() ? "§3Spigot" : "§3BungeeCord"));
         log("MySQL: " + (cm.getGlobalConfig().getBoolean("useMySQL") ? "§atrue" : "§cfalse"));
 
 
@@ -201,9 +259,13 @@ public final class BetaCore extends JavaPlugin {
 
         log("§eServer-Settings:");
 
-        log("Nutzung als Bau-Server: " + (!cm.getConfig().getBoolean("useAsBauServer") ? "§cfalse" : "§atrue"));
-        log("Nutzung als Arena: " + (!cm.getConfig().getBoolean("useAsArena") ? "§cfalse" : "§atrue"));
-        log("Nutzung als Lobby: " + (!cm.getConfig().getBoolean("useAsLobby") ? "§cfalse" : "§atrue"));
+        log("Nutzung als Bau-Server: " + (cm.getConfig().getBoolean("useAsBauServer") ? "§atrue" : "§cfalse"));
+        log("Nutzung als Arena: " + (cm.getConfig().getBoolean("useAsArena") ? "§atrue" : "§cfalse"));
+        log("Nutzung als Lobby: " + (cm.getConfig().getBoolean("useAsLobby") ? "§atrue" : "§cfalse"));
+
+        log("§eDependency's:");
+        log("Brew: " + (Environment.isBrew() ? "§atrue" : "§cfalse"));
+        log("WorldEdit: " + (Environment.isWorldedit() ? "§atrue" : "§cfalse"));
 
 
         log("§6Successfully enabled BetaCore" + Misc.CODENAME + "v." + Misc.VERSION + ".");
@@ -216,6 +278,22 @@ public final class BetaCore extends JavaPlugin {
         log("§3Successfully disabled " + Misc.CODENAME + "v." + Misc.VERSION + ".");
     }
 
+
+
+    private  void renameCommand(String string, String string2) throws Exception {
+        String packageName = Bukkit.getServer().getClass().getPackage().getName();
+        String version = packageName.substring(packageName.lastIndexOf(".") + 1);
+        Class serverClass = Class.forName("org.bukkit.craftbukkit." + version + ".CraftServer");
+        Field f1 = serverClass.getDeclaredField("commandMap");
+        f1.setAccessible(true);
+        SimpleCommandMap commandMap = (SimpleCommandMap) f1.get(Bukkit.getServer());
+        Field f2 = SimpleCommandMap.class.getDeclaredField("knownCommands");
+        f2.setAccessible(true);
+        Map<String, Command> knownCommands = (Map) f2.get(commandMap);
+        Command cmd = knownCommands.get(string);
+        knownCommands.remove(string);
+        knownCommands.put(string2, cmd);
+    }
 
     public static BetaCore getInstance() {
         return instance;

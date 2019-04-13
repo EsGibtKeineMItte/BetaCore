@@ -3,10 +3,8 @@ package de.wk.betacore.util.moneysystem;
 import de.leonhard.storage.Json;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.FileManager;
-import de.wk.betacore.environment.EnvironmentManager;
+import de.wk.betacore.environment.Environment;
 import de.wk.betacore.util.MySQL;
-import de.wk.betacore.util.ranksystem.Rank;
-import org.apache.commons.lang3.EnumUtils;
 import org.bukkit.Bukkit;
 
 import java.sql.ResultSet;
@@ -24,7 +22,7 @@ public class MoneySystem {
 
     public static int getMoney(UUID uuid){
 
-        if(!(EnvironmentManager.isMysql())){
+        if(!(Environment.isMysql())){
             return data.getInt(uuid.toString() + ".money");
         }
 
@@ -48,7 +46,7 @@ public class MoneySystem {
 
     public static void setMoney(UUID uuid, int money){
 
-        if(!(EnvironmentManager.isMysql())){
+        if(!(Environment.isMysql())){
             data.set(uuid.toString() + ".money", money);
             return;
         }

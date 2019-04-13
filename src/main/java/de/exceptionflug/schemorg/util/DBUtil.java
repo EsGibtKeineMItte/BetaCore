@@ -3,7 +3,7 @@ package de.exceptionflug.schemorg.util;
 import de.leonhard.storage.Json;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.FileManager;
-import de.wk.betacore.environment.EnvironmentManager;
+import de.wk.betacore.environment.Environment;
 import de.wk.betacore.util.MySQL;
 
 import java.sql.PreparedStatement;
@@ -18,7 +18,7 @@ public class DBUtil {
     public static void addRejection(String ownaz, UUID rejector, String schem, String reason) throws SQLException {
         //TODO CREATE REJECTION FOR BETACORE
 
-        if(EnvironmentManager.isMysql()){
+        if(Environment.isMysql()){
             PreparedStatement ps = MySQL.preparedStatement("INSERT INTO DeclinedSchematics (owner,schematic,reason,rejector) VALUES (?,?,?,?)");
             ps.setString(1, ownaz);
             ps.setString(2, schem);
