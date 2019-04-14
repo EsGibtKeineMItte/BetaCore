@@ -59,6 +59,8 @@ Schemloader: Copyright (c) 2019 Exceptionflug,EsGibtKeineMitte
 
 SchemOrg: Copyright (c) 2019 Exceptionflug,EsGibtKeineMitte
 
+NNXCore: Copyright (c) 2019 Exceptionflug
+
 LightningStorage: Copyright (c) 2019 EsGibtKeineMitte
 
 
