@@ -19,7 +19,6 @@ Licences: GLP V3
 * Money
   
 **Comming:**
-* Teams (Priority : 1)
 * Ban/Kick/Mute (Priority : 3)
 * Logs (Priority : 2)
 * Schems (Priority : 3)
