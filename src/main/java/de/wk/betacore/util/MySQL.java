@@ -71,6 +71,11 @@ public class MySQL {
         if (connection != null && connection.isClosed()) {
             return;
         }
+
+        if(!(isSetup)){
+            setup();
+        }
+
         connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
     }
 

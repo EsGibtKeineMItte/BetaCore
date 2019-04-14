@@ -1,6 +1,5 @@
 package de.wk.betacore.listener.Spigot;
 
-import com.google.common.annotations.Beta;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.util.data.Misc;
 import lombok.Getter;
@@ -14,15 +13,15 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import java.text.DecimalFormat;
 import java.util.*;
 
+@Getter
 public class TNTTracer implements Listener {
 
     @Getter
     private static HashMap<World, ArrayList<Location>> locationHashMap = new HashMap<>();
     @Getter
-    private static ArrayList<World> checkedWorlds = new ArrayList<>();
+    private static List<World> checkedWorlds = new ArrayList<>();
     @Getter
     private static ArrayList<Location> locations = new ArrayList<>();
 
@@ -57,8 +56,32 @@ public class TNTTracer implements Listener {
         ArrayList<Location> locations = locationHashMap.get(w);
         BetaCore.debug("Location-Size " + locations.size());
         for (Location loc : locations) {
-            loc.getBlock().setType(Material.REDSTONE_BLOCK);
-            loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 20);
+
+            for(Player p : w.getPlayers()){
+                player.sendBlockChange(loc, Material.STAINED_GLASS, (byte) 3);
+            }
+
+            try {
+                Thread.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
+
+    public static boolean showTraces(World w, Player player, byte type) {
+
+        if (!(locationHashMap.containsKey(w))) {
+            return false;
+        }
+        ArrayList<Location> locations = locationHashMap.get(w);
+        BetaCore.debug("Location-Size " + locations.size());
+        for (Location loc : locations) {
+
+            for(Player p : w.getPlayers()){
+                player.sendBlockChange(loc, Material.STAINED_GLASS, type);
+            }
 
             try {
                 Thread.sleep(2);
@@ -77,7 +100,9 @@ public class TNTTracer implements Listener {
         List<Location> finalLocation = removeDuplicate(locations);
 
         for (Location loc : locations) {
-            w.getBlockAt(loc).setType(Material.AIR);
+            for(Player p : w.getPlayers()){
+                p.sendBlockChange(loc, Material.AIR, (byte) 0);
+            }
         }
         return true;
     }
@@ -100,7 +125,6 @@ public class TNTTracer implements Listener {
         World w = e.getLocation().getWorld();
 
         if (!(checkedWorlds.contains(w))) {
-            BetaCore.debug("Die Welt des Spielers wird nicht getestet.");
             return;
         }
 
@@ -123,8 +147,8 @@ public class TNTTracer implements Listener {
                 for (Entity entity : w.getEntities()) {
                     if (entity.getType() == EntityType.PRIMED_TNT) {
 
-                        Location loc = new Location(e.getLocation().getWorld(), Math.round(entity.getLocation().getX() + 0.3),
-                                Math.round(entity.getLocation().getY()) + 0.3, Math.round(entity.getLocation().getZ()) + 0.3);
+                        Location loc = new Location(e.getLocation().getWorld(), round1(entity.getLocation().getX() + 0.1),
+                                round1(entity.getLocation().getY()), round1(entity.getLocation().getZ()) + 0.1);
 
                         if (!(locations.contains(loc)) && (loc.getBlock().getType() != Material.WATER)) {
                             locations.add(loc);
@@ -136,7 +160,7 @@ public class TNTTracer implements Listener {
                     }
                 }
             }
-        }, 5L, 2L);
+        }, 2L, 2L);
 
 
 
@@ -144,8 +168,10 @@ public class TNTTracer implements Listener {
             @Override
             public void run() {
                 checkedWorlds.add(w);
+                for(Player player : e.getLocation().getWorld().getPlayers()){
+                    player.sendMessage(Misc.PREFIX + "§aDu kannst nun wieder schießen.");
+                }
                 Bukkit.getScheduler().cancelAllTasks();
-                BetaCore.debug("TASKS");
             }
         }, 60L);
 
@@ -183,5 +209,8 @@ public class TNTTracer implements Listener {
         return list;
     }
 
+    public static double round1(double value){
+        return Math.round(10.0 * value)/10;
+    }
 
 }

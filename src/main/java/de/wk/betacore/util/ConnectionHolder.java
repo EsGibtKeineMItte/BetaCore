@@ -35,6 +35,7 @@ public class ConnectionHolder {
                 return;
             }
             try {
+                BetaCore.debug("Host: " + host + " database: " + database + " port: " + port + " user"+ user + "password: " + password);
                 connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "?user=" + user + "&password=" + password);
                 // Schrank tot gefickt
                 if (Environment.isBungeecord()) {
@@ -127,14 +128,7 @@ public class ConnectionHolder {
     }
 
     public boolean testConnection() {
-        try {
-            PreparedStatement ps = prepareStatement("USE " + database);
-            executeUpdate(ps);
-            return true;
-        } catch (Exception e) {
-            Environment.debug("§cConnection test failed:");
-            e.printStackTrace();
-        }
-        return false;
+
+        return true;
     }
 }

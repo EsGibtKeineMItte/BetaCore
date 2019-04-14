@@ -67,7 +67,7 @@ public class CommandSchem implements CommandExecutor {
             p.sendMessage(SchemLoader.prefix + "§bBefehle:");
             p.sendMessage("§8//schem load <Schematic> - §6Lädt eine deiner Schematics");
             p.sendMessage("§8//schem save <Schematic> - §6Speichert eine Schematic");
-            p.sendMessage("§8//schem changetype <Schematic> <normal,warship> - §6Ändert den Typ einer Schematic");
+            p.sendMessage("§8//schem changetype <Schematic> <normal,warship,wargear> - §6Ändert den Typ einer Schematic");
             p.sendMessage("§8//schem info <Schematic> - §6Speichert eine Schematic");
             p.sendMessage("§8//schem list - §6Listet alle deine Schematics auf.");
             p.sendMessage("§8//schem addmember <Schematic> <Spieler> - §6Fügt einen Spieler zu einer Schematic hinzu.");
@@ -86,7 +86,7 @@ public class CommandSchem implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("info")) {
                 p.sendMessage(SchemLoader.prefix + "§bBenutzung: //schem info <Name>");
             } else if (args[0].equalsIgnoreCase("changetype")) {
-                p.sendMessage(SchemLoader.prefix + "§bBenutzung: //schem changetype <Name> <normal,warship>");
+                p.sendMessage(SchemLoader.prefix + "§bBenutzung: //schem changetype <Name> <normal,warship,wargear>");
             } else if (args[0].equalsIgnoreCase("addmember")) {
                 p.sendMessage(SchemLoader.prefix + "§bBenutzung: //schem addmember <Schematic> <Spieler>");
             } else if (args[0].equalsIgnoreCase("delmember")) {
@@ -186,14 +186,13 @@ public class CommandSchem implements CommandExecutor {
                                                 + " " + gs.getValue());
                                     }
                                 });
-//                                mpi.addItem(li);
-                                BetaCore.debug("Noch nicht vervollständigter Code: Inventory Item -> Linkitem CommandSchem:178 (Gibts 2x, die obere Stelle)");
+                                mpi.addItem(li);
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 continue;
                             }
                         }
-//                        mpi.register(handle);
+                        mpi.register(handle);
                         mpi.showUp(p);
                     }
                 });
@@ -518,7 +517,7 @@ public class CommandSchem implements CommandExecutor {
                     }
                     try {
                         if (!BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
-                            p.sendMessage(SchemLoader.prefix + "§cDies ist keine gültige SGSchematic!");
+                            p.sendMessage(SchemLoader.prefix + "§cDies ist keine gültige Schematic!");
                             return false;
                         }
                         SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(schem);
@@ -578,7 +577,7 @@ public class CommandSchem implements CommandExecutor {
                             File test = new File(SchemLoader.SCHEM_DIR + "tocheck/");
 
                             if(!test.exists()){
-                                test.createNewFile();
+                                test.mkdirs();
                             }
 
                             BetaCore.brew.getSchematicUtil().saveSchematic(BetaCore.brew.getSchematicUtil().toWeClipboard(s),
@@ -633,7 +632,7 @@ public class CommandSchem implements CommandExecutor {
                     try {
                         if (!BetaCore.brew.getSchematicUtil().isSchematic(schem)
                                 || !BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
-                            p.sendMessage(SchemLoader.prefix + "§cKeine gültige SGSchematic.");
+                            p.sendMessage(SchemLoader.prefix + "§cKeine gültige Schematic.");
                             return false;
                         }
                         SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(schem);
@@ -746,7 +745,7 @@ public class CommandSchem implements CommandExecutor {
                     try {
                         if (!BetaCore.brew.getSchematicUtil().isSchematic(schem)
                                 || !BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
-                            p.sendMessage(SchemLoader.prefix + "§cKeine gültige SGSchematic.");
+                            p.sendMessage(SchemLoader.prefix + "§cKeine gültige Schematic.");
                             return false;
                         }
                         WorldEditPlugin wep = (WorldEditPlugin) Bukkit.getServer().getPluginManager()
@@ -810,7 +809,7 @@ public class CommandSchem implements CommandExecutor {
                     try {
                         if (!BetaCore.brew.getSchematicUtil().isSchematic(schem)
                                 || !BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
-                            p.sendMessage(SchemLoader.prefix + "§cKeine gültige SGSchematic.");
+                            p.sendMessage(SchemLoader.prefix + "§cKeine gültige Schematic.");
                             return false;
                         }
                         PreparedStatement ps = Environment.getCurrent().getConnectionHolder().prepareStatement(
@@ -990,7 +989,7 @@ public class CommandSchem implements CommandExecutor {
                     }
                     try {
                         if (!BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
-                            p.sendMessage(SchemLoader.prefix + "§cDies ist keine gültige SGSchematic!");
+                            p.sendMessage(SchemLoader.prefix + "§cDies ist keine gültige Schematic!");
                             return false;
                         }
                         SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(schem);
@@ -1109,8 +1108,8 @@ public class CommandSchem implements CommandExecutor {
                             SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(toLoad);
                             UUID id3 = UUID.fromString(s.getSchemOwner());
                             p.sendMessage("§3--- §6" + name + " §3---");
-                            p.sendMessage("§8Typ: §6SGSchematic");
-                            p.sendMessage("§8GiantTyp: §6" + s.getType());
+                            p.sendMessage("§8Typ: §6WarKing-Schematic");
+                            p.sendMessage("§8Typ: §6" + s.getType());
                             p.sendMessage("§8Name: §6" + s.getSchemName());
                             p.sendMessage("§8Owner: §6" + UUIDFetcher.getName(id3));
                             PreparedStatement ps = Environment.getCurrent().getConnectionHolder()
@@ -1259,11 +1258,10 @@ public class CommandSchem implements CommandExecutor {
                                     }
                                 }
                             });
-                            BetaCore.debug("FEHLER: Noch nicht gefixter Code: Inventory Item zu Link-Item -> CommandSchem 1240");
-                            //mpi.addItem(li);
+                            mpi.addItem(li);
                         }
 
-                        //   mpi.register(h);
+                           mpi.register(h);
                         mpi.showUp(p);
                     }
                 });

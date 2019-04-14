@@ -25,6 +25,7 @@ public class DBUtil {
             ps.setString(3, reason);
             ps.setString(4, rejector.toString());
             ps.executeUpdate();
+            return;
         }
         BetaCore.debug("Es wurde versucht eine Schematic anzunehmen/abzulehnen, während MySQL deaktiviert ist.");
 

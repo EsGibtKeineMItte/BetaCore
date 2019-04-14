@@ -1,5 +1,6 @@
 package de.wk.betacore;
 
+import com.google.common.annotations.Beta;
 import com.minnymin.command.CommandFramework;
 import de.exceptionflug.schemloader.cmd.CommandSchem;
 import de.exceptionflug.schemorg.cmd.CommandSchemorg;
@@ -99,7 +100,9 @@ public final class BetaCore extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new CommandListener(), this);
         Bukkit.getPluginManager().registerEvents(new CustomCommand(), this);
         Bukkit.getPluginManager().registerEvents(new PermissionListener(), this);
-        Bukkit.getPluginManager().registerEvents(new PermissionsListener("/help", "/bau", "/arena-1", "/arena-2", "/hub", "/l", "/r", "/msg"), this);
+        Bukkit.getPluginManager().registerEvents(new PermissionsListener("/help", "/bau", "/arena-1",
+                "/arena-2", "/hub", "/l", "/r", "/msg", "/server bau", "/server Arena-1", "/server Arena-2",
+                "/server Lobby-1"), this);
         Bukkit.getPluginManager().registerEvents(new TNTTracer(), this);
         this.getServer().getPluginManager().registerEvents(RecordListener.getInstance(), this);
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BUNGEECORD");
@@ -190,6 +193,7 @@ public final class BetaCore extends JavaPlugin {
             try {
                 connectionHolder = new ConnectionHolder();
                 connectionHolder.connect(Environment.getMySqlHost(), Environment.getMySqlDatabase(), Environment.getMySqlPort(), Environment.getMySqlUsername(), Environment.getMySqlPassword());
+
                 MySQL.openConnection();
                 System.out.println("MySQL Connection erfolgreich.");
 
@@ -199,6 +203,8 @@ public final class BetaCore extends JavaPlugin {
                 System.out.print("SQLException: " + x.getMessage());
                 System.out.print("SQLState: " + x.getSQLState());
                 System.out.print("VendorError: " + x.getErrorCode());
+
+                x.printStackTrace();
 
             }
             Environment.setMysql(true);

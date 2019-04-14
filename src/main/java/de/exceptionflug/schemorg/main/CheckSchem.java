@@ -33,14 +33,14 @@ public class CheckSchem {
 
     public void accept(UUID rejector) throws IOException {
         if (Brew.schematicUtil.isSchematic(file)) {
-            File tar = new File(SchematicPaster.SCHEM_DIR + owner + "/" + name);
+            File tar = new File(SchematicPaster.SCHEM_DIR + "/" + owner + "/" + name);
             try {
                 DBUtil.addRejection(owner, rejector, name, "Accepted");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             new File(tar.getParent()).mkdirs();
-            if (tar.exists() == false) {
+            if (!tar.exists()) {
                 tar.createNewFile();
             }
             if (!Brew.schematicUtil.isGiantSchematic(file)) {

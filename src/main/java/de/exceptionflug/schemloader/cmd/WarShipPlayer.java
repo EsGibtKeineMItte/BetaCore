@@ -1,5 +1,6 @@
-package net.thecobix.schemloader.cmd;
+package de.exceptionflug.schemloader.cmd;
 
+import exceptionflug.schemloader.cmd.WarShipTeam;
 import org.apache.commons.lang.ObjectUtils;
 
 import java.util.UUID;

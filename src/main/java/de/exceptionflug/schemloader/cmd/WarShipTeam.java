@@ -1,4 +1,4 @@
-package net.thecobix.schemloader.cmd;
+package de.exceptionflug.schemloader.cmd;
 
 public class WarShipTeam {
 

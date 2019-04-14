@@ -150,7 +150,7 @@ public class CommandSchemorg {
                 target = uuid.toString();
             }
             String name = args.getArgs(1);
-            if (name.endsWith(".schematic") == false) {
+            if (!name.endsWith(".schematic")) {
                 name = name.concat(".schematic");
             }
             CheckSchem cs = SchemOrg.getSchem(target, name);
