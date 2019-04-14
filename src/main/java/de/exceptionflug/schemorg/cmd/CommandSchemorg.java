@@ -1,11 +1,13 @@
 package de.exceptionflug.schemorg.cmd;
 
+import com.google.common.annotations.Beta;
 import com.google.common.base.Joiner;
 import com.minnymin.command.Command;
 import com.minnymin.command.CommandArgs;
 import de.exceptionflug.schemorg.main.CheckSchem;
 import de.exceptionflug.schemorg.main.SchemOrg;
 import de.exceptionflug.schemorg.util.SchematicPaster;
+import de.wk.betacore.BetaCore;
 import de.wk.betacore.util.data.Misc;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
@@ -22,16 +24,19 @@ public class CommandSchemorg {
             "so"}, inGameOnly = true)
     public void onSchemorg(CommandArgs args) {
         Player p = args.getPlayer();
-        p.sendMessage(SchemOrg.S_PREFIX + "SchematicOrganizer v"
+        p.sendMessage(SchemOrg.S_PREFIX + "SchematicSystem v"
                 + Misc.VERSION + " by TheWarking.de (C) 2019");
-        if (SchemOrg.toCheck.size() == 0) {
-            p.sendMessage(SchemOrg.S_PREFIX + "Es gibt §ckeine §7Schematics zu prüfen");
-        } else if (SchemOrg.toCheck.size() == 1) {
-            p.sendMessage(SchemOrg.S_PREFIX + "Es gibt §ceine §7Schematic zu prüfen");
-        } else {
-            p.sendMessage(SchemOrg.S_PREFIX + "Es gibt §c" + SchemOrg.toCheck.size() + " §7Schematics zu prüfen");
+        if (p.hasPermission("schemorg.list")) {
+            if (SchemOrg.toCheck.size() == 0) {
+                p.sendMessage(SchemOrg.S_PREFIX + "Es gibt §ckeine §7Schematics zu prüfen");
+            } else if (SchemOrg.toCheck.size() == 1) {
+                p.sendMessage(SchemOrg.S_PREFIX + "Es gibt §ceine §7Schematic zu prüfen");
+            } else {
+                p.sendMessage(SchemOrg.S_PREFIX + "Es gibt §c" + SchemOrg.toCheck.size() + " §7Schematics zu prüfen");
+            }
         }
     }
+
 
     @Command(name = "schemorg.list", permission = "schemorg.list", aliases = {"so.list"}, inGameOnly = true)
     public void list(CommandArgs args) {
@@ -43,7 +48,7 @@ public class CommandSchemorg {
             for (CheckSchem cs : SchemOrg.toCheck) {
 
                 try {
-                    TextComponent tc = new TextComponent("§6" + cs.getName() + " §7von §6" +  Bukkit.getOfflinePlayer(cs.getOwner()).getName() + " §7[" + cs.getType().toUpperCase() + "]");
+                    TextComponent tc = new TextComponent("§6" + cs.getName() + " §7von §6" + Bukkit.getOfflinePlayer(UUID.fromString(cs.getOwner())).getName() + " §7[" + cs.getType().toUpperCase() + "]");
                     tc.setClickEvent(new ClickEvent(Action.RUN_COMMAND,
                             "/schemorg load " + Bukkit.getOfflinePlayer(cs.getOwner()).getName() + " " + cs.getName()));
                     p.spigot().sendMessage(tc);
@@ -76,15 +81,10 @@ public class CommandSchemorg {
         if (args.length() < 2) {
             p.sendMessage(SchemOrg.S_PREFIX + "§bBenutzung: /schemorg load <Besitzer> <Schematic>");
         } else {
-            UUID uuid = Bukkit.getOfflinePlayer(args.getArgs(0)).getUniqueId();
-            String target = null;
-            if (uuid == null) {
-                target = args.getArgs(0);
-            } else {
-                target = uuid.toString();
-            }
+
+            String target = args.getArgs(0);
             String name = args.getArgs(1);
-            if (name.endsWith(".schematic") == false) {
+            if (!name.endsWith(".schematic")) {
                 name = name.concat(".schematic");
             }
             CheckSchem cs = SchemOrg.getSchem(target, name);
@@ -93,12 +93,17 @@ public class CommandSchemorg {
                 return;
             }
             try {
-                if (!p.getWorld().getName().equalsIgnoreCase(SchemOrg.conf.checkSpawn.getWorld().getName())) {
-                    p.teleport(SchemOrg.conf.checkSpawn);
+                if (SchemOrg.conf.checkSpawn.getWorld().getName() == null) {
+                    BetaCore.debug("Ist null lol");
                 }
+                BetaCore.debug(SchemOrg.conf.checkSpawn.getWorld().getName());
+//                if (!(p.getWorld().getName().equalsIgnoreCase(SchemOrg.conf.checkSpawn.getWorld().getName()))) {
+                p.teleport(SchemOrg.conf.checkSpawn);
+//                }
                 SchematicPaster.pasteWarShip(SchemOrg.conf.autoPasteLoc, p, cs.getFile());
                 p.sendMessage(SchemOrg.S_PREFIX + "§aSchematic wurde geladen.");
             } catch (Exception e) {
+                e.printStackTrace();
                 p.sendMessage(
                         SchemOrg.S_PREFIX + "§4Es ist ein Fehler bei der Kommunikation mit WorldEdit aufgetreten!");
             }
@@ -150,7 +155,7 @@ public class CommandSchemorg {
             }
             CheckSchem cs = SchemOrg.getSchem(target, name);
             if (cs == null) {
-                p.sendMessage(SchemOrg.S_PREFIX + "§cSchematic nicht gefunden");
+                p.sendMessage(SchemOrg.S_PREFIX + "§cSchematic nicht gefunden?");
                 return;
             }
             try {
@@ -193,13 +198,13 @@ public class CommandSchemorg {
             }
             try {
                 cs.decline(p.getUniqueId(), msg);
-                if(uuid == null) {
+                if (uuid == null) {
                     return;
                 }
                 p.sendMessage(SchemOrg.S_PREFIX + "§cSchematic abgelehnt");
                 Player z = Bukkit.getPlayer(uuid);
                 if (z != null) {
-                    z.sendMessage(Misc.PREFIX +  " §cDeine Schematic §6" + name + " §cwurde abgelehnt: §6" + msg);
+                    z.sendMessage(Misc.PREFIX + " §cDeine Schematic §6" + name + " §cwurde abgelehnt: §6" + msg);
                 }
             } catch (IOException e) {
                 p.sendMessage(SchemOrg.S_PREFIX + "§cEs ist ein Fehler aufgetreten");

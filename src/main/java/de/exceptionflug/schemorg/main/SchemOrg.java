@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SchemOrg implements Listener {
 
@@ -21,12 +22,16 @@ public class SchemOrg implements Listener {
     public static Config conf;
 
 
+
     public static CheckSchem getSchem(String ownaz, String name) {
+        BetaCore.debug("" + toCheck.size());
         for (CheckSchem cs : toCheck) {
+            BetaCore.debug("CS Owner: " + cs.getOwner() + " CS Name: " + cs.getName() + " Searched Owner: " + ownaz + " Searched name: " + name);
             if (cs.getOwner().equals(ownaz) && cs.getName().equalsIgnoreCase(name)) {
                 return cs;
             }
         }
+        BetaCore.debug("Es konnte keine Schematic gefunden werden");
         return null;
     }
 
@@ -69,10 +74,11 @@ public class SchemOrg implements Listener {
         public void run() {
             toCheck.clear();
             File dirall = new File(SchematicPaster.SCHEM_DIR);
-            File dir = new File(dirall.getParent() + "/tocheck");
+            File dir = new File(dirall.getAbsolutePath() + "/tocheck");
+
             File[] content = dir.listFiles();
 
-            if(content == null){
+            if (content == null) {
                 return;
             }
 
@@ -87,12 +93,9 @@ public class SchemOrg implements Listener {
                             String name = comps[2];
                             toCheck.add(new CheckSchem(f, type, name, owner));
                         }
-                    } else {
-                        System.out.println("Skipping "+f.getName()+": not a valid schematic");
                     }
                 } catch (Exception e) {
                     System.out.println("Err: " + e.getMessage() + " @ " + e);
-                    continue;
                 }
             }
         }

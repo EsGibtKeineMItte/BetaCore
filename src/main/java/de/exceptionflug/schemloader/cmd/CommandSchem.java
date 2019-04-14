@@ -21,6 +21,7 @@ import de.wk.betacore.environment.Environment;
 import exceptionflug.invlib.*;
 import exceptionflug.presets.MultiPageInventory;
 import exceptionflug.schemloader.cmd.UUIDFetcher;
+import net.thecobix.brew.main.Brew;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -46,7 +47,6 @@ import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.registry.WorldData;
 
-import net.thecobix.brew.main.Brew;
 import net.thecobix.brew.schematic.SGSchematic;
 import net.thecobix.brew.schematic.Schematic;
 
@@ -109,7 +109,7 @@ public class CommandSchem implements CommandExecutor {
                                         Main.SCHEM_DIR + rs.getString("owner") + "/" + rs.getString("name"));
                                 if (f.exists()) {
                                     try {
-                                        if (Main.brew.getSchematicUtil().isGiantSchematic(f) == false) {
+                                        if (!BetaCore.brew.getSchematicUtil().isGiantSchematic(f)) {
                                             continue;
                                         }
                                     } catch (IOException e) {
@@ -118,7 +118,7 @@ public class CommandSchem implements CommandExecutor {
                                     }
                                     try {
                                         schemsList.add(new AbstractMap.SimpleEntry(
-                                                Main.brew.getBrew().getSchematicUtil().loadGiantSchematic(f),
+                                                BetaCore.brew.getBrew().getSchematicUtil().loadGiantSchematic(f),
                                                 f.getName()));
                                     } catch (IOException e) {
                                         p.sendMessage(Main.prefix + "§cFehler: " + e.getMessage());
@@ -132,7 +132,7 @@ public class CommandSchem implements CommandExecutor {
                         }
                         for (File f : schems) {
                             try {
-                                if (Main.brew.getSchematicUtil().isGiantSchematic(f) == false) {
+                                if (BetaCore.brew.getSchematicUtil().isGiantSchematic(f) == false) {
                                     continue;
                                 }
                             } catch (IOException e) {
@@ -142,7 +142,7 @@ public class CommandSchem implements CommandExecutor {
                             count++;
                             try {
                                 schemsList.add(new AbstractMap.SimpleEntry(
-                                        Main.brew.getBrew().getSchematicUtil().loadGiantSchematic(f), f.getName()));
+                                        BetaCore.brew.getBrew().getSchematicUtil().loadGiantSchematic(f), f.getName()));
                             } catch (IOException e) {
                                 p.sendMessage(Main.prefix + "§cFehler: " + e.getMessage());
                                 continue;
@@ -244,12 +244,12 @@ public class CommandSchem implements CommandExecutor {
                     return false;
                 }
                 try {
-                    if (!Main.brew.getSchematicUtil().isSchematic(schem)
-                            || !Main.brew.getSchematicUtil().isGiantSchematic(schem)) {
+                    if (!BetaCore.brew.getSchematicUtil().isSchematic(schem)
+                            || !BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
                         p.sendMessage(Main.prefix + "§cKeine gültige SGSchematic.");
                         return false;
                     }
-                    SGSchematic s = Main.brew.getSchematicUtil().loadGiantSchematic(schem);
+                    SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(schem);
                     if (s.getType().equalsIgnoreCase("gesperrt")) {
                         p.sendMessage(Main.prefix + "§cDie Schematic ist gesperrt und kann nicht geladen werden!");
                         return false;
@@ -262,7 +262,7 @@ public class CommandSchem implements CommandExecutor {
                     LocalSession localSession = we.getSession(localPlayer);
                     EditSession editSession = localSession.createEditSession(localPlayer);
                     WorldData worldData = editSession.getWorld().getWorldData();
-                    ClipboardHolder clipboardHolder = new ClipboardHolder(Main.brew.getSchematicUtil().toWeClipboard(s),
+                    ClipboardHolder clipboardHolder = new ClipboardHolder(BetaCore.brew.getSchematicUtil().toWeClipboard(s),
                             worldData);
                     localSession.setClipboard(clipboardHolder);
                     p.sendMessage(Main.prefix + "§aSchematic §6" + s.getSchemName() + " §ageladen! ");
@@ -354,7 +354,7 @@ public class CommandSchem implements CommandExecutor {
                     return false;
                 }
                 try {
-                    if (!Main.brew.getSchematicUtil().isSchematic(toLoad)) {
+                    if (!BetaCore.brew.getSchematicUtil().isSchematic(toLoad)) {
                         p.sendMessage(Main.prefix + "§cDas ist keine Schematic.");
                         return false;
                     }
@@ -364,8 +364,8 @@ public class CommandSchem implements CommandExecutor {
                     return false;
                 }
                 try {
-                    if (!Main.brew.getSchematicUtil().isGiantSchematic(toLoad)) {
-                        Schematic s = Main.brew.getSchematicUtil().loadSchematic(toLoad);
+                    if (!BetaCore.brew.getSchematicUtil().isGiantSchematic(toLoad)) {
+                        Schematic s = BetaCore.brew.getSchematicUtil().loadSchematic(toLoad);
                         p.sendMessage("§3--- §6" + name + " §3---");
                         p.sendMessage("§8Typ: §6Schematic");
                         int blocks = s.getWidth() * s.getHeight() * s.getLength();
@@ -378,7 +378,7 @@ public class CommandSchem implements CommandExecutor {
                         p.sendMessage(
                                 "§8WEOffset: §6" + s.getWEOffsetX() + " " + s.getWEOffsetY() + " " + s.getWEOffsetZ());
                     } else {
-                        SGSchematic s = Main.brew.getSchematicUtil().loadGiantSchematic(toLoad);
+                        SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(toLoad);
                         UUID id3 = UUID.fromString(s.getSchemOwner());
                         p.sendMessage("§3--- §6" + name + " §3---");
                         p.sendMessage("§8Typ: §6SGSchematic");
@@ -435,7 +435,7 @@ public class CommandSchem implements CommandExecutor {
                 int count = 0;
                 for (File f : schems) {
                     try {
-                        if (Main.brew.getSchematicUtil().isGiantSchematic(f) == false) {
+                        if (BetaCore.brew.getSchematicUtil().isGiantSchematic(f) == false) {
                             continue;
                         }
                     } catch (IOException e) {
@@ -444,7 +444,7 @@ public class CommandSchem implements CommandExecutor {
                     }
                     count++;
                     try {
-                        SGSchematic s = Main.brew.getSchematicUtil().loadGiantSchematic(f);
+                        SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(f);
                         p.sendMessage("§8" + count + " §6" + f.getName() + " §7[§6" + s.getType().toUpperCase() + "§7]");
 
                     } catch (IOException e) {
@@ -471,9 +471,9 @@ public class CommandSchem implements CommandExecutor {
                     return false;
                 }
                 try {
-                    if (Main.brew.getSchematicUtil().isSchematic(f)) {
-                        if (Main.brew.getSchematicUtil().isGiantSchematic(f)) {
-                            SGSchematic cs = Main.brew.getSchematicUtil().loadGiantSchematic(f);
+                    if (BetaCore.brew.getSchematicUtil().isSchematic(f)) {
+                        if (BetaCore.brew.getSchematicUtil().isGiantSchematic(f)) {
+                            SGSchematic cs = BetaCore.brew.getSchematicUtil().loadGiantSchematic(f);
                             int my = cs.getId();
                             Bukkit.getScheduler().runTaskAsynchronously(BetaCore.getInstance(), new Runnable() {
 
@@ -517,11 +517,11 @@ public class CommandSchem implements CommandExecutor {
                         return false;
                     }
                     try {
-                        if (!Main.brew.getSchematicUtil().isGiantSchematic(schem)) {
+                        if (!BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
                             p.sendMessage(Main.prefix + "§cDies ist keine gültige SGSchematic!");
                             return false;
                         }
-                        SGSchematic s = Main.brew.getSchematicUtil().loadGiantSchematic(schem);
+                        SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(schem);
                         if (s.getType().equalsIgnoreCase("gesperrt")) {
                             p.sendMessage(
                                     Main.prefix + "§cDie Schematic ist gesperrt und kann nicht bearbeitet werden!");
@@ -529,7 +529,7 @@ public class CommandSchem implements CommandExecutor {
                         }
                         s.setType(type);
                         if (s.getType().equalsIgnoreCase("normal")) {
-                            Main.brew.getSchematicUtil().saveSchematic(Main.brew.getSchematicUtil().toWeClipboard(s),
+                            BetaCore.brew.getSchematicUtil().saveSchematic(BetaCore.brew.getSchematicUtil().toWeClipboard(s),
                                     new File(Main.SCHEM_DIR + p.getUniqueId().toString() + "/" + name),
                                     p.getUniqueId().toString(), s.getSchemName(), s.getType(), s.getIcon(),
                                     System.currentTimeMillis());
@@ -569,17 +569,25 @@ public class CommandSchem implements CommandExecutor {
                                     }
                                 }
                             }
-                            if (allowed == false) {
+                            if (!allowed) {
                                 p.sendMessage(Main.prefix
                                         + "§cTyp wurde nicht geändert! Bitte überprüfe deine Schematic auf grobe Verstöße.");
                                 return false;
                             }
 
-                            Main.brew.getSchematicUtil().saveSchematic(Main.brew.getSchematicUtil().toWeClipboard(s),
-                                    new File("/home/netuser/tocheck/" + s.getType() + ";"
-                                            + p.getUniqueId().toString() + ";" + name),
+                            File test = new File(Main.SCHEM_DIR + "tocheck/");
+
+                            if(!test.exists()){
+                                test.createNewFile();
+                            }
+
+                            BetaCore.brew.getSchematicUtil().saveSchematic(BetaCore.brew.getSchematicUtil().toWeClipboard(s),
+                                    new File(Main.SCHEM_DIR + "tocheck/" + s.getType() + ";"
+                                            + p.getUniqueId() + ";" + name),
                                     p.getUniqueId().toString(), s.getSchemName(), s.getType(), s.getIcon(),
                                     s.getCreated());
+//                            BetaCore.brew.getSchematicUtil().saveSchematic(BetaCore.brew.getSchematicUtil().toWeClipboard(s), new File(Main.SCHEM_DIR + "tocheck/" + s.getSchemName()),
+//                                    p.getUniqueId().toString(), s.getSchemName(), s.getType(), s.getIcon(), s.getCreated());
                             p.sendMessage(Main.prefix
                                     + "§aTyp erfolgreich geändert. Schematic muss noch auf Regelkonformität geprüft werden.");
 
@@ -621,12 +629,12 @@ public class CommandSchem implements CommandExecutor {
                         return false;
                     }
                     try {
-                        if (!Main.brew.getSchematicUtil().isSchematic(schem)
-                                || !Main.brew.getSchematicUtil().isGiantSchematic(schem)) {
+                        if (!BetaCore.brew.getSchematicUtil().isSchematic(schem)
+                                || !BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
                             p.sendMessage(Main.prefix + "§cKeine gültige SGSchematic.");
                             return false;
                         }
-                        SGSchematic s = Main.brew.getSchematicUtil().loadGiantSchematic(schem);
+                        SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(schem);
                         WorldEditPlugin wep = (WorldEditPlugin) Bukkit.getServer().getPluginManager()
                                 .getPlugin("WorldEdit");
                         WorldEdit we = wep.getWorldEdit();
@@ -636,7 +644,7 @@ public class CommandSchem implements CommandExecutor {
                         EditSession editSession = localSession.createEditSession(localPlayer);
                         WorldData worldData = editSession.getWorld().getWorldData();
                         ClipboardHolder clipboardHolder = new ClipboardHolder(
-                                Main.brew.getSchematicUtil().toWeClipboard(s), worldData);
+                                BetaCore.brew.getSchematicUtil().toWeClipboard(s), worldData);
                         localSession.setClipboard(clipboardHolder);
                         p.sendMessage(Main.prefix + "§aSchematic §6" + s.getSchemName() + " §ageladen! ");
                     } catch (IOException e) {
@@ -675,7 +683,7 @@ public class CommandSchem implements CommandExecutor {
                         ps.setString(3, p.getUniqueId().toString());
                         ResultSet rs = Environment.getCurrent().getConnectionHolder().executeQuery(ps);
                         while (rs.next()) {
-                            SGSchematic s = Main.brew.getSchematicUtil().loadGiantSchematic(schem);
+                            SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(schem);
                             WorldEditPlugin wep = (WorldEditPlugin) Bukkit.getServer().getPluginManager()
                                     .getPlugin("WorldEdit");
                             WorldEdit we = wep.getWorldEdit();
@@ -685,13 +693,13 @@ public class CommandSchem implements CommandExecutor {
                             EditSession editSession = localSession.createEditSession(localPlayer);
                             WorldData worldData = editSession.getWorld().getWorldData();
                             ClipboardHolder clipboardHolder = new ClipboardHolder(
-                                    Main.brew.getSchematicUtil().toWeClipboard(s), worldData);
+                                    BetaCore.brew.getSchematicUtil().toWeClipboard(s), worldData);
                             localSession.setClipboard(clipboardHolder);
                             p.sendMessage(Main.prefix + "§aSchematic §6" + s.getSchemName() + " §ageladen! ");
                             return false;
                         }
                         if (p.getUniqueId().equals(id)) {
-                            SGSchematic s = Main.brew.getSchematicUtil().loadGiantSchematic(schem);
+                            SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(schem);
                             WorldEditPlugin wep = (WorldEditPlugin) Bukkit.getServer().getPluginManager()
                                     .getPlugin("WorldEdit");
                             WorldEdit we = wep.getWorldEdit();
@@ -701,7 +709,7 @@ public class CommandSchem implements CommandExecutor {
                             EditSession editSession = localSession.createEditSession(localPlayer);
                             WorldData worldData = editSession.getWorld().getWorldData();
                             ClipboardHolder clipboardHolder = new ClipboardHolder(
-                                    Main.brew.getSchematicUtil().toWeClipboard(s), worldData);
+                                    BetaCore.brew.getSchematicUtil().toWeClipboard(s), worldData);
                             localSession.setClipboard(clipboardHolder);
                             p.sendMessage(Main.prefix + "§aSchematic §6" + s.getSchemName() + " §ageladen! ");
                             return false;
@@ -734,8 +742,8 @@ public class CommandSchem implements CommandExecutor {
                     }
                     File schem = new File(Main.SCHEM_DIR + id.toString() + "/" + name);
                     try {
-                        if (!Main.brew.getSchematicUtil().isSchematic(schem)
-                                || !Main.brew.getSchematicUtil().isGiantSchematic(schem)) {
+                        if (!BetaCore.brew.getSchematicUtil().isSchematic(schem)
+                                || !BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
                             p.sendMessage(Main.prefix + "§cKeine gültige SGSchematic.");
                             return false;
                         }
@@ -759,7 +767,7 @@ public class CommandSchem implements CommandExecutor {
                                 target = clipboard;
                             }
                             new File(Main.SCHEM_DIR + id.toString() + "/").mkdirs();
-                            Main.brew.getSchematicUtil().saveSchematic(clipboard,
+                            BetaCore.brew.getSchematicUtil().saveSchematic(clipboard,
                                     new File(Main.SCHEM_DIR + id.toString() + "/" + name), id.toString(), name,
                                     "normal", "STONE:0", System.currentTimeMillis());
                             p.sendMessage(Main.prefix + "§aGespeichert: §6" + name);
@@ -798,8 +806,8 @@ public class CommandSchem implements CommandExecutor {
                         return false;
                     }
                     try {
-                        if (!Main.brew.getSchematicUtil().isSchematic(schem)
-                                || !Main.brew.getSchematicUtil().isGiantSchematic(schem)) {
+                        if (!BetaCore.brew.getSchematicUtil().isSchematic(schem)
+                                || !BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
                             p.sendMessage(Main.prefix + "§cKeine gültige SGSchematic.");
                             return false;
                         }
@@ -837,7 +845,7 @@ public class CommandSchem implements CommandExecutor {
                                 target = clipboard;
                             }
                             new File(Main.SCHEM_DIR + id.toString() + "/").mkdirs();
-                            Main.brew.getSchematicUtil().saveSchematic(clipboard,
+                            BetaCore.brew.getSchematicUtil().saveSchematic(clipboard,
                                     new File(Main.SCHEM_DIR + id.toString() + "/" + name), user, name, "normal",
                                     "STONE:0", System.currentTimeMillis());
                             p.sendMessage(Main.prefix + "§aGespeichert: §6" + name);
@@ -979,18 +987,18 @@ public class CommandSchem implements CommandExecutor {
                         return false;
                     }
                     try {
-                        if (!Main.brew.getSchematicUtil().isGiantSchematic(schem)) {
+                        if (!BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
                             p.sendMessage(Main.prefix + "§cDies ist keine gültige SGSchematic!");
                             return false;
                         }
-                        SGSchematic s = Main.brew.getSchematicUtil().loadGiantSchematic(schem);
+                        SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(schem);
                         if (s.getType().equalsIgnoreCase("gesperrt")) {
                             p.sendMessage(
                                     Main.prefix + "§cDie Schematic ist gesperrt und kann nicht bearbeitet werden!");
                             return false;
                         }
                         s.setType("gesperrt");
-                        Main.brew.getSchematicUtil().saveSchematic(Main.brew.getSchematicUtil().toWeClipboard(s),
+                        BetaCore.brew.getSchematicUtil().saveSchematic(BetaCore.brew.getSchematicUtil().toWeClipboard(s),
                                 new File(Main.SCHEM_DIR + id.toString() + "/" + name), p.getUniqueId().toString(),
                                 s.getSchemName(), s.getType(), s.getIcon(), s.getCreated());
                         p.sendMessage(Main.prefix + "§aSchematic gesperrt.");
@@ -1027,13 +1035,13 @@ public class CommandSchem implements CommandExecutor {
                         return false;
                     }
                     try {
-                        if (!Main.brew.getSchematicUtil().isGiantSchematic(schem)) {
+                        if (!BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
                             p.sendMessage(Main.prefix + "§cDies ist keine gültige SGSchematic!");
                             return false;
                         }
-                        SGSchematic s = Main.brew.getSchematicUtil().loadGiantSchematic(schem);
+                        SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(schem);
                         s.setType("normal");
-                        Main.brew.getSchematicUtil().saveSchematic(Main.brew.getSchematicUtil().toWeClipboard(s),
+                        BetaCore.brew.getSchematicUtil().saveSchematic(BetaCore.brew.getSchematicUtil().toWeClipboard(s),
                                 new File(Main.SCHEM_DIR + id.toString() + "/" + name), p.getUniqueId().toString(),
                                 s.getSchemName(), s.getType(), s.getIcon(), s.getCreated());
                         p.sendMessage(Main.prefix + "§aSchematic entsperrt.");
@@ -1072,7 +1080,7 @@ public class CommandSchem implements CommandExecutor {
                         return false;
                     }
                     try {
-                        if (!Main.brew.getSchematicUtil().isSchematic(toLoad)) {
+                        if (!BetaCore.brew.getSchematicUtil().isSchematic(toLoad)) {
                             p.sendMessage(Main.prefix + "§cDas ist keine Schematic.");
                             return false;
                         }
@@ -1082,8 +1090,8 @@ public class CommandSchem implements CommandExecutor {
                         return false;
                     }
                     try {
-                        if (!Main.brew.getSchematicUtil().isGiantSchematic(toLoad)) {
-                            Schematic s = Main.brew.getSchematicUtil().loadSchematic(toLoad);
+                        if (!BetaCore.brew.getSchematicUtil().isGiantSchematic(toLoad)) {
+                            Schematic s = BetaCore.brew.getSchematicUtil().loadSchematic(toLoad);
                             p.sendMessage("§3--- §6" + name + " §3---");
                             p.sendMessage("§8Typ: §6Schematic");
                             int blocks = s.getWidth() * s.getHeight() * s.getLength();
@@ -1096,7 +1104,7 @@ public class CommandSchem implements CommandExecutor {
                             p.sendMessage("§8WEOffset: §6" + s.getWEOffsetX() + " " + s.getWEOffsetY() + " "
                                     + s.getWEOffsetZ());
                         } else {
-                            SGSchematic s = Main.brew.getSchematicUtil().loadGiantSchematic(toLoad);
+                            SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(toLoad);
                             UUID id3 = UUID.fromString(s.getSchemOwner());
                             p.sendMessage("§3--- §6" + name + " §3---");
                             p.sendMessage("§8Typ: §6SGSchematic");
@@ -1158,7 +1166,7 @@ public class CommandSchem implements CommandExecutor {
                     return false;
                 }
                 try {
-                    if (!Main.brew.getSchematicUtil().isSchematic(toLoad)) {
+                    if (!BetaCore.brew.getSchematicUtil().isSchematic(toLoad)) {
                         p.sendMessage(Main.prefix + "§cDas ist keine Schematic.");
                         return false;
                     }

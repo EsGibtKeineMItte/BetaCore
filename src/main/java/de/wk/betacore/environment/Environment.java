@@ -43,6 +43,7 @@ public class Environment {
 
     }
 
+
     public static void debug(final String msg) {
         if (bungeecord) {
             BetaCoreBungee.debug(msg);
@@ -63,6 +64,9 @@ public class Environment {
         if (bungeecord) {
             return BetaCoreBungee.getInstance().getConnectionHolder();
         } else {
+            if(BetaCore.getInstance().getConnectionHolder() == null){
+                BetaCore.debug("Connectionholder lebt nicht.");
+            }
             return BetaCore.getInstance().getConnectionHolder();
         }
     }

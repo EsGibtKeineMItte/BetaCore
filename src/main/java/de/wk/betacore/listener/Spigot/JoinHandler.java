@@ -33,6 +33,8 @@ public class JoinHandler implements Listener {
         setPrefix();
         tablist(e.getPlayer());
 
+        e.getPlayer().getInventory().clear();
+
         if (cm.getConfig().getLocation("Spawn") != null) {
             e.getPlayer().teleport(cm.getConfig().getLocation("Spawn"));
         }

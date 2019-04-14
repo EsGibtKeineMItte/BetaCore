@@ -4,6 +4,9 @@ main: de.wk.betacore.BetaCore
 author: linksKeineMitte, YoyoNow, Chaoscaot
 api-version: 1.13
 description: Ein CoreSystem für Minecraft Server, speziell für WarShip und WarGear Server
+loadbefore: [WorldEdit, Brew]
+softdepend: [WorldEdit, Brew]
+website: https://github.com/EsGibtKeineMitte
 
 commands:
   bau:

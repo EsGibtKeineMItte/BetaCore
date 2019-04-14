@@ -74,6 +74,11 @@ public class ConfigManager {
         if (globalConfig.getString("LinkToLobby") == null) {
             globalConfig.setString("LinkToLobby", "Lobby-1");
         }
+
+        if(globalConfig.getString("Location.pasteloc") == null){//TODO Put SchemOrg Config to BetaCore config.
+            globalConfig.setString("Location.pasteloc", "world/0/64/0/90/0");
+        }
+
     }
 
 

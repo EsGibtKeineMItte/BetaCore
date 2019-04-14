@@ -82,7 +82,7 @@
     </orderEntry>
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.6" level="project" />
     <orderEntry type="library" name="Maven: de.leonhard:command:1.0" level="project" />
-    <orderEntry type="library" name="Maven: de.leonhard:pluginlib:1.1" level="project" />
+    <orderEntry type="library" name="Maven: de.leonhard:pluginlib:1.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: de.quantumnanox:brew:1.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.boydti:fawe-api:18.03.26-48992d2-1054-19.4.17" level="project" />
     <orderEntry type="module-library">

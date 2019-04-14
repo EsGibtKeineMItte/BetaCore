@@ -1,6 +1,8 @@
 package de.wk.betacore.listener.Spigot;
 
+import de.leonhard.lib.lib.Commons;
 import de.leonhard.storage.Json;
+import de.wk.betacore.BetaCore;
 import de.wk.betacore.appearance.ScoreboardUtils;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.FileManager;
@@ -9,10 +11,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
@@ -63,5 +70,46 @@ public class LobbyListener implements Listener {
             i++;
         }
         ScoreboardUtils.updateScoreboard("&aTheWarKing", st, e.getPlayer());
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onDamage(EntityDamageEvent e){
+        e.setCancelled(true);
+        if(e.getEntity() instanceof Player){
+            ((Player) e.getEntity()).setHealth(20);
+            ((Player) e.getEntity()).setFoodLevel(20);
+        }
+
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+
+    public void onDie(PlayerDeathEvent e) {
+        final Player player = e.getEntity();
+
+
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                try {
+                    ConfigManager cm = new ConfigManager();
+                    player.spigot().respawn();
+                    player.teleport(cm.getConfig().getLocation("Spawn"));
+
+
+                } catch (final Throwable t) {//Falsche Version, Craftbukkit bzw < 1.8
+                    Commons.tell(player, "§cDu konntest nicht automatisch respawn werden");
+
+
+                    if (!(t instanceof NoClassDefFoundError)) {//Wenn es nicht an der Version lag.
+                        t.printStackTrace();
+                    }
+                }
+            }
+        }.runTaskLater(BetaCore.getInstance(), 7); //Delay
+
+
+
+
     }
 }

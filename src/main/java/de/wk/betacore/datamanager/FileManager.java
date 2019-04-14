@@ -28,6 +28,7 @@ public class FileManager {
         settings = new Json("settings", path);
         bungeePerms = new Json("bungeeperms", path);
         schematics = new Json("schematics", path + "/schematics");
+        mysql = new Json("mysql", path);
     }
 
 

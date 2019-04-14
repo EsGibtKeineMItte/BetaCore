@@ -18,7 +18,7 @@ public class Config {
     
     public Config() {
         this.file = new File("plugins/SchemOrg/config.yml");
-        this.cfg = YamlConfiguration.loadConfiguration(this.file);
+        this.cfg = YamlConfiguration.loadConfiguration(this.file);//HIER DIE WERTE AUS DER GLOBAL CONFIG EINTRAGEN
     }
     
     public void initConfig() {

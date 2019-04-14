@@ -3,6 +3,7 @@ package de.wk.betacore;
 import com.minnymin.command.CommandFramework;
 import de.exceptionflug.schemloader.cmd.CommandSchem;
 import de.exceptionflug.schemorg.cmd.CommandSchemorg;
+import de.exceptionflug.schemorg.main.Config;
 import de.exceptionflug.schemorg.main.SchemOrg;
 import de.wk.betacore.commands.spigot.*;
 import de.wk.betacore.commands.spigot.commandmanager.CommandManagerOld;
@@ -91,6 +92,7 @@ public final class BetaCore extends JavaPlugin {
     }
 
     private void regListeners() {
+        Bukkit.getPluginManager().registerEvents(new WorldSystemUtil(), this);
         Bukkit.getPluginManager().registerEvents(new DataSetter(), this);
         Bukkit.getPluginManager().registerEvents(new MessageSend(), this);
         Bukkit.getPluginManager().registerEvents(new JoinHandler(), this);
@@ -167,6 +169,7 @@ public final class BetaCore extends JavaPlugin {
         regCommands();
         regListeners();
         removeCommands();
+
         log("§aDONE");
         ConfigManager cm = new ConfigManager();
 
@@ -175,22 +178,28 @@ public final class BetaCore extends JavaPlugin {
         cm.setupMySQL();
         cm.getConfig().setString("build", LocalDate.now().toString());
         cm.getConfig().save();
+        SchemOrg.conf = new Config();
+        SchemOrg.conf.initConfig();
         log("§aDONE");
 
 
-        if (cm.getGlobalConfig().getBoolean("useMySQL")) {
+        if (cm.getGlobalConfig().getBoolean("UseMySQL")) {
             log("§3Establishing MySQL Connection...");
             Synchronizor.synchronize();
-            connectionHolder = new ConnectionHolder();
-            connectionHolder.connect(Environment.getMySqlHost(), Environment.getMySqlDatabase(), Environment.getMySqlPort(), Environment.getMySqlUsername(), Environment.getMySqlPassword());
+
             try {
+                connectionHolder = new ConnectionHolder();
+                connectionHolder.connect(Environment.getMySqlHost(), Environment.getMySqlDatabase(), Environment.getMySqlPort(), Environment.getMySqlUsername(), Environment.getMySqlPassword());
                 MySQL.openConnection();
                 System.out.println("MySQL Connection erfolgreich.");
 
             } catch (SQLException x) {
                 log("§4FAILED");
-                System.out.println("");
-                x.printStackTrace();
+                System.out.println("Verbindung nicht möglich!");
+                System.out.print("SQLException: " + x.getMessage());
+                System.out.print("SQLState: " + x.getSQLState());
+                System.out.print("VendorError: " + x.getErrorCode());
+
             }
             Environment.setMysql(true);
             log("§aDONE");
@@ -211,7 +220,6 @@ public final class BetaCore extends JavaPlugin {
             getCommand("hub").setExecutor(new LobbyCommand());
             log("Using the server as normal server.");
         } else {
-            this.getServer().getPluginManager().registerEvents(new WorldSystemUtil(), this);
             getCommand("arena").setExecutor(new ArenaCommand());
             getCommand("l").setExecutor(new LobbyCommand());
             getCommand("hub").setExecutor(new LobbyCommand());
@@ -227,7 +235,7 @@ public final class BetaCore extends JavaPlugin {
             }
             try {
                 log("§3Enabling SchemLoader");
-                if(!(Environment.isBrew()) || (!(Environment.isWorldedit()))){
+                if (!(Environment.isBrew()) || (!(Environment.isWorldedit()))) {
                     BetaCore.debug("Die benötigten Dependency's sind nicht installiert.");
                 }
                 brew = Brew.getBrew();
@@ -251,7 +259,7 @@ public final class BetaCore extends JavaPlugin {
         log("§eGlobal-Settings:");
 
         log("Plattform: " + (Environment.isSpigot() ? "§3Spigot" : "§3BungeeCord"));
-        log("MySQL: " + (cm.getGlobalConfig().getBoolean("useMySQL") ? "§atrue" : "§cfalse"));
+        log("MySQL: " + (cm.getGlobalConfig().getBoolean("UseMySQL") ? "§atrue" : "§cfalse"));
 
 
         log("Chatfilter: " + (cm.getConfig().getBoolean("useDefaultChatFilter") ? "§atrue" : "§cfalse"));
@@ -279,8 +287,7 @@ public final class BetaCore extends JavaPlugin {
     }
 
 
-
-    private  void renameCommand(String string, String string2) throws Exception {
+    private void renameCommand(String string, String string2) throws Exception {
         String packageName = Bukkit.getServer().getClass().getPackage().getName();
         String version = packageName.substring(packageName.lastIndexOf(".") + 1);
         Class serverClass = Class.forName("org.bukkit.craftbukkit." + version + ".CraftServer");
@@ -305,5 +312,12 @@ public final class BetaCore extends JavaPlugin {
 
     public static void debug(String message) {
         Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + "[§eDEBUG§7]" + message);
+    }
+
+    public static void debug(String message, boolean serverChat) {
+        Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + "[§eDEBUG§7]" + message);
+        if(serverChat){
+            Bukkit.getServer().broadcastMessage(Misc.PREFIX + "§8[§eDEBUG§8]§7" + message);
+        }
     }
 }

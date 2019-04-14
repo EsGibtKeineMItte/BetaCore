@@ -5,7 +5,7 @@ import de.wk.betacore.BetaCore;
 import de.wk.betacore.BetaCoreBungee;
 import de.wk.betacore.environment.Environment;
 import lombok.Getter;
-import net.md_5.bungee.api.ProxyServer;
+//import net.md_5.bungee.api.ProxyServer;
 import org.bukkit.Bukkit;
 
 import java.sql.*;
@@ -35,22 +35,23 @@ public class ConnectionHolder {
                 return;
             }
             try {
-
                 connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "?user=" + user + "&password=" + password);
                 // Schrank tot gefickt
                 if (Environment.isBungeecord()) {
-                    BetaCoreBungee.log("Zum angegebenen MySQL Server verbunden!");
-                    if (!taskRunning) {
-                        ProxyServer.getInstance().getScheduler().schedule(BetaCoreBungee.getInstance(), () -> {
-                            taskRunning = true;
-                            statements = 0;
-                            if (!testConnection()) {
-                                close();
-                                connect(host, database, port, user, password);
-
-                            }
-                        }, 1, 1, TimeUnit.MINUTES);
-                    }
+                    System.out.print("DAFUQ?");
+//                    BetaCoreBungee.log("Zum angegebenen MySQL Server verbunden!");
+//                    if (!taskRunning) {
+//                        System.out.print("HALLO ICH BIN EIN SCHEDULER DER SINNLOS GEFICKT WURDE");
+//                        ProxyServer.getInstance().getScheduler().schedule(BetaCoreBungee.getInstance(), () -> {
+//                            taskRunning = true;
+//                            statements = 0;
+//                            if (!testConnection()) {
+//                                close();
+//                                connect(host, database, port, user, password);
+//
+//                            }
+//                        }, 1, 1, TimeUnit.MINUTES);
+//                    }
                 } else {
                     //Schrank penetriert
                     BetaCore.log("Zum angegebenen MySQL Server verbunden!");

@@ -9,6 +9,7 @@ import com.sk89q.worldedit.extent.clipboard.BlockArrayClipboard;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
 import com.sk89q.worldedit.world.registry.WorldData;
+import de.wk.betacore.BetaCore;
 import de.wk.betacore.environment.Environment;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -24,6 +25,11 @@ public class SchematicPaster {
     public static void pasteWarShip(final Location loc, final Player p, final File schem) {
         Location pastepoint = loc;
         pastepoint.setWorld(p.getWorld());
+
+
+        if(!schem.exists()){
+            BetaCore.debug("Warum tut die Schem nicht?");
+        }
 
         try {
             // LOAD
@@ -51,7 +57,6 @@ public class SchematicPaster {
                 }
             }
             pastepoint = new Location(pastepoint.getWorld(), pastepoint.getX(), loc.getY() - y, pastepoint.getZ());
-
             final Schematic schematic = ClipboardFormat.SCHEMATIC.load(schem);
             schematic.getClipboard().setOrigin(c.getMinimumPoint());
             schematic.paste(BukkitUtil.getLocalWorld(p.getWorld()), BukkitUtil.toVector(pastepoint), false, true, null);
