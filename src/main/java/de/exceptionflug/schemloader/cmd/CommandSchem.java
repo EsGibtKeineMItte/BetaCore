@@ -15,7 +15,7 @@ import java.util.Map.Entry;
 import java.util.UUID;
 
 import de.exceptionflug.schemloader.main.CheckFile;
-import de.exceptionflug.schemloader.main.Main;
+import de.exceptionflug.schemloader.main.SchemLoader;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.environment.Environment;
 import exceptionflug.invlib.*;
@@ -64,7 +64,7 @@ public class CommandSchem implements CommandExecutor {
 
 
         if (args.length == 0) {
-            p.sendMessage(Main.prefix + "§bBefehle:");
+            p.sendMessage(SchemLoader.prefix + "§bBefehle:");
             p.sendMessage("§8//schem load <Schematic> - §6Lädt eine deiner Schematics");
             p.sendMessage("§8//schem save <Schematic> - §6Speichert eine Schematic");
             p.sendMessage("§8//schem changetype <Schematic> <normal,warship> - §6Ändert den Typ einer Schematic");
@@ -80,22 +80,22 @@ public class CommandSchem implements CommandExecutor {
             }
         } else if (args.length == 1) {
             if (args[0].equalsIgnoreCase("load")) {
-                p.sendMessage(Main.prefix + "§bBenutzung: //schem load <Name>");
+                p.sendMessage(SchemLoader.prefix + "§bBenutzung: //schem load <Name>");
             } else if (args[0].equalsIgnoreCase("save")) {
-                p.sendMessage(Main.prefix + "§bBenutzung: //schem save <Name>");
+                p.sendMessage(SchemLoader.prefix + "§bBenutzung: //schem save <Name>");
             } else if (args[0].equalsIgnoreCase("info")) {
-                p.sendMessage(Main.prefix + "§bBenutzung: //schem info <Name>");
+                p.sendMessage(SchemLoader.prefix + "§bBenutzung: //schem info <Name>");
             } else if (args[0].equalsIgnoreCase("changetype")) {
-                p.sendMessage(Main.prefix + "§bBenutzung: //schem changetype <Name> <normal,warship>");
+                p.sendMessage(SchemLoader.prefix + "§bBenutzung: //schem changetype <Name> <normal,warship>");
             } else if (args[0].equalsIgnoreCase("addmember")) {
-                p.sendMessage(Main.prefix + "§bBenutzung: //schem addmember <Schematic> <Spieler>");
+                p.sendMessage(SchemLoader.prefix + "§bBenutzung: //schem addmember <Schematic> <Spieler>");
             } else if (args[0].equalsIgnoreCase("delmember")) {
-                p.sendMessage(Main.prefix + "§bBenutzung: //schem delmember <Schematic> <Spieler>");
+                p.sendMessage(SchemLoader.prefix + "§bBenutzung: //schem delmember <Schematic> <Spieler>");
             } else if (args[0].equalsIgnoreCase("list")) {
                 Bukkit.getScheduler().runTaskAsynchronously(BetaCore.getInstance(), new Runnable() {
                     public void run() {
-                        new File(Main.SCHEM_DIR + p.getUniqueId().toString() + "/").mkdirs();
-                        File[] schems = new File(Main.SCHEM_DIR + p.getUniqueId().toString() + "/").listFiles();
+                        new File(SchemLoader.SCHEM_DIR + p.getUniqueId().toString() + "/").mkdirs();
+                        File[] schems = new File(SchemLoader.SCHEM_DIR + p.getUniqueId().toString() + "/").listFiles();
                         int count = schems.length;
                         ArrayList<Entry<SGSchematic, String>> schemsList = new ArrayList<>();
                         try {
@@ -106,14 +106,14 @@ public class CommandSchem implements CommandExecutor {
                             while (rs.next()) {
                                 count++;
                                 File f = new File(
-                                        Main.SCHEM_DIR + rs.getString("owner") + "/" + rs.getString("name"));
+                                        SchemLoader.SCHEM_DIR + rs.getString("owner") + "/" + rs.getString("name"));
                                 if (f.exists()) {
                                     try {
                                         if (!BetaCore.brew.getSchematicUtil().isGiantSchematic(f)) {
                                             continue;
                                         }
                                     } catch (IOException e) {
-                                        p.sendMessage(Main.prefix + "§cFehler: " + e.getMessage());
+                                        p.sendMessage(SchemLoader.prefix + "§cFehler: " + e.getMessage());
                                         continue;
                                     }
                                     try {
@@ -121,12 +121,12 @@ public class CommandSchem implements CommandExecutor {
                                                 BetaCore.brew.getBrew().getSchematicUtil().loadGiantSchematic(f),
                                                 f.getName()));
                                     } catch (IOException e) {
-                                        p.sendMessage(Main.prefix + "§cFehler: " + e.getMessage());
+                                        p.sendMessage(SchemLoader.prefix + "§cFehler: " + e.getMessage());
                                     }
                                 }
                             }
                         } catch (SQLException e1) {
-                            p.sendMessage(Main.prefix
+                            p.sendMessage(SchemLoader.prefix
                                     + "§cDie Schematics mit Userzugriff konnten nicht kalkuliert werden :(");
                             e1.printStackTrace();
                         }
@@ -136,7 +136,7 @@ public class CommandSchem implements CommandExecutor {
                                     continue;
                                 }
                             } catch (IOException e) {
-                                p.sendMessage(Main.prefix + "§cFehler: " + e.getMessage());
+                                p.sendMessage(SchemLoader.prefix + "§cFehler: " + e.getMessage());
                                 continue;
                             }
                             count++;
@@ -144,12 +144,12 @@ public class CommandSchem implements CommandExecutor {
                                 schemsList.add(new AbstractMap.SimpleEntry(
                                         BetaCore.brew.getBrew().getSchematicUtil().loadGiantSchematic(f), f.getName()));
                             } catch (IOException e) {
-                                p.sendMessage(Main.prefix + "§cFehler: " + e.getMessage());
+                                p.sendMessage(SchemLoader.prefix + "§cFehler: " + e.getMessage());
                                 continue;
                             }
                         }
                         if (count == 0) {
-                            p.sendMessage(Main.prefix + "§cDu hast noch keine Schematics!");
+                            p.sendMessage(SchemLoader.prefix + "§cDu hast noch keine Schematics!");
                             return;
                         }
                         InventoryHandler handle = new InventoryHandler(BetaCore.getInstance(), p);
@@ -197,7 +197,7 @@ public class CommandSchem implements CommandExecutor {
                         mpi.showUp(p);
                     }
                 });
-                p.sendMessage(Main.prefix + "§aBitte warte einen Moment während die Liste zusammengestellt wird...");
+                p.sendMessage(SchemLoader.prefix + "§aBitte warte einen Moment während die Liste zusammengestellt wird...");
             } else if (args[0].equalsIgnoreCase("scan")) {
                 if (p.isOp()) {
                     WorldEditPlugin wep = (WorldEditPlugin) Bukkit.getServer().getPluginManager()
@@ -206,52 +206,52 @@ public class CommandSchem implements CommandExecutor {
                     if (s != null) {
                         try {
                             Region r = s.getRegionSelector().getRegion();
-                            p.sendMessage(Main.prefix + "§eScannen...");
+                            p.sendMessage(SchemLoader.prefix + "§eScannen...");
 //                            CannonPattern cp = Scanner.scanSingle(BukkitUtil.toLocation(p.getWorld(), r.getMinimumPoint()), BukkitUtil.toLocation(p.getWorld(), r.getMaximumPoint()));
-//                            p.sendMessage(Main.prefix + "§aFertig.");
+//                            p.sendMessage(Schemloader.prefix + "§aFertig.");
 //                            p.sendMessage("§8Zeilen: §6" + cp.getSource().length);
 //                            p.sendMessage("§8Segmente Zeile 1: §6" + cp.getSource()[0].length);
 //                            p.sendMessage("§8Daten Segment 1: §6" + cp.getSource()[0][0].length);
                         } catch (IncompleteRegionException e) {
-                            p.sendMessage(Main.prefix + "§cDeine Region ist unvollständig.");
+                            p.sendMessage(SchemLoader.prefix + "§cDeine Region ist unvollständig.");
                         }
                     } else {
-                        p.sendMessage(Main.prefix + "§cDeine Region ist leer.");
+                        p.sendMessage(SchemLoader.prefix + "§cDeine Region ist leer.");
                     }
                 }
             }
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("load")) {
                 if (args[1].contains(";")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §6; §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6; §cverwenden!");
                     return false;
                 }
                 if (args[1].contains("/")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §6/ §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6/ §cverwenden!");
                     return false;
                 }
                 if (args[1].contains("\\")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §\\ §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §\\ §cverwenden!");
                     return false;
                 }
                 String name = args[1];
                 if (!name.endsWith(".schematic")) {
                     name = name + ".schematic";
                 }
-                File schem = new File(Main.SCHEM_DIR + p.getUniqueId().toString() + "/" + name);
+                File schem = new File(SchemLoader.SCHEM_DIR + p.getUniqueId().toString() + "/" + name);
                 if (!schem.exists()) {
-                    p.sendMessage(Main.prefix + "§cDie Schematic konnte nicht gefunden werden.");
+                    p.sendMessage(SchemLoader.prefix + "§cDie Schematic konnte nicht gefunden werden.");
                     return false;
                 }
                 try {
                     if (!BetaCore.brew.getSchematicUtil().isSchematic(schem)
                             || !BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
-                        p.sendMessage(Main.prefix + "§cKeine gültige SGSchematic.");
+                        p.sendMessage(SchemLoader.prefix + "§cKeine gültige SGSchematic.");
                         return false;
                     }
                     SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(schem);
                     if (s.getType().equalsIgnoreCase("gesperrt")) {
-                        p.sendMessage(Main.prefix + "§cDie Schematic ist gesperrt und kann nicht geladen werden!");
+                        p.sendMessage(SchemLoader.prefix + "§cDie Schematic ist gesperrt und kann nicht geladen werden!");
                         return false;
                     }
                     WorldEditPlugin wep = (WorldEditPlugin) Bukkit.getServer().getPluginManager()
@@ -265,21 +265,21 @@ public class CommandSchem implements CommandExecutor {
                     ClipboardHolder clipboardHolder = new ClipboardHolder(BetaCore.brew.getSchematicUtil().toWeClipboard(s),
                             worldData);
                     localSession.setClipboard(clipboardHolder);
-                    p.sendMessage(Main.prefix + "§aSchematic §6" + s.getSchemName() + " §ageladen! ");
+                    p.sendMessage(SchemLoader.prefix + "§aSchematic §6" + s.getSchemName() + " §ageladen! ");
                 } catch (IOException e) {
-                    p.sendMessage(Main.prefix + "§cFehler.");
+                    p.sendMessage(SchemLoader.prefix + "§cFehler.");
                 }
             } else if (args[0].equalsIgnoreCase("save")) {
                 if (args[1].contains(";")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §6; §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6; §cverwenden!");
                     return false;
                 }
                 if (args[1].contains("/")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §6/ §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6/ §cverwenden!");
                     return false;
                 }
                 if (args[1].contains("\\")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §\\ §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §\\ §cverwenden!");
                     return false;
                 }
                 String name = args[1];
@@ -304,18 +304,18 @@ public class CommandSchem implements CommandExecutor {
                     } else {
                         target = clipboard;
                     }
-                    new File(Main.SCHEM_DIR + p.getUniqueId().toString() + "/").mkdirs();
+                    new File(SchemLoader.SCHEM_DIR + p.getUniqueId().toString() + "/").mkdirs();
                     BetaCore.brew.getSchematicUtil().saveSchematic(clipboard,
-                            new File(Main.SCHEM_DIR + p.getUniqueId().toString() + "/" + name),
+                            new File(SchemLoader.SCHEM_DIR + p.getUniqueId().toString() + "/" + name),
                             p.getUniqueId().toString(), name, "Normal", "STONE:0", System.currentTimeMillis());
-                    p.sendMessage(Main.prefix + "§aGespeichert: §6" + name);
+                    p.sendMessage(SchemLoader.prefix + "§aGespeichert: §6" + name);
                 } catch (EmptyClipboardException e) {
-                    p.sendMessage(Main.prefix + "§cDein Clipboard ist leer. Kopiere mal was mit §6//copy");
+                    p.sendMessage(SchemLoader.prefix + "§cDein Clipboard ist leer. Kopiere mal was mit §6//copy");
                 } catch (IOException e) {
                     p.sendMessage("§cFehler beim speichern.");
                     e.printStackTrace();
                 }
-                // Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(),
+                // Bukkit.getScheduler().scheduleSyncDelayedTask(Schemloader.getInstance(),
                 // new Runnable() {
                 //
                 // @Override
@@ -326,40 +326,40 @@ public class CommandSchem implements CommandExecutor {
                 // FileUtils.moveFile(schem, new
                 // File("/root/Arbeitsfläche/Netzwerk/Global/schems/"+name));
                 // } catch (IOException e) {
-                // p.sendMessage(Main.prefix+"§cEs ist ein Fehler
+                // p.sendMessage(Schemloader.prefix+"§cEs ist ein Fehler
                 // aufgetreten.");
                 // }
                 // }
                 // }, 20L);
             } else if (args[0].equalsIgnoreCase("info")) {
                 if (args[1].contains(";")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §6; §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6; §cverwenden!");
                     return false;
                 }
                 if (args[1].contains("/")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §6/ §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6/ §cverwenden!");
                     return false;
                 }
                 if (args[1].contains("\\")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §6\\ §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6\\ §cverwenden!");
                     return false;
                 }
                 String name = args[1];
                 if (!name.endsWith(".schematic")) {
                     name = name + ".schematic";
                 }
-                File toLoad = new File(Main.SCHEM_DIR + p.getUniqueId().toString() + "/" + name);
+                File toLoad = new File(SchemLoader.SCHEM_DIR + p.getUniqueId().toString() + "/" + name);
                 if (!toLoad.exists()) {
-                    p.sendMessage(Main.prefix + "§cDie Schematic konnte nicht gefunden werden.");
+                    p.sendMessage(SchemLoader.prefix + "§cDie Schematic konnte nicht gefunden werden.");
                     return false;
                 }
                 try {
                     if (!BetaCore.brew.getSchematicUtil().isSchematic(toLoad)) {
-                        p.sendMessage(Main.prefix + "§cDas ist keine Schematic.");
+                        p.sendMessage(SchemLoader.prefix + "§cDas ist keine Schematic.");
                         return false;
                     }
                 } catch (IOException e) {
-                    p.sendMessage(Main.prefix + "§cEin Fehler ist aufgetreten.");
+                    p.sendMessage(SchemLoader.prefix + "§cEin Fehler ist aufgetreten.");
                     e.printStackTrace();
                     return false;
                 }
@@ -418,20 +418,20 @@ public class CommandSchem implements CommandExecutor {
                 File[] schems = null;
                 UUID id = UUIDFetcher.getUUID(args[1]);
                 if (id == null) {
-                    p.sendMessage(Main.prefix + "Der Spieler ist unbekannt.");
+                    p.sendMessage(SchemLoader.prefix + "Der Spieler ist unbekannt.");
                     return false;
                 }
                 try {
-                    schems = new File(Main.SCHEM_DIR + id.toString() + "/").listFiles();
+                    schems = new File(SchemLoader.SCHEM_DIR + id.toString() + "/").listFiles();
                 } catch (Exception e) {
-                    p.sendMessage(Main.prefix + "§cProblem: " + ExceptionUtils.getFullStackTrace(e));
+                    p.sendMessage(SchemLoader.prefix + "§cProblem: " + ExceptionUtils.getFullStackTrace(e));
                     return false;
                 }
                 if (schems.length == 0) {
-                    p.sendMessage(Main.prefix + "§c" + args[1] + " hat noch keine Schematics!");
+                    p.sendMessage(SchemLoader.prefix + "§c" + args[1] + " hat noch keine Schematics!");
                     return false;
                 }
-                p.sendMessage(Main.prefix + "Schematics:");
+                p.sendMessage(SchemLoader.prefix + "Schematics:");
                 int count = 0;
                 for (File f : schems) {
                     try {
@@ -439,7 +439,7 @@ public class CommandSchem implements CommandExecutor {
                             continue;
                         }
                     } catch (IOException e) {
-                        p.sendMessage(Main.prefix + "§cFehler");
+                        p.sendMessage(SchemLoader.prefix + "§cFehler");
                         return false;
                     }
                     count++;
@@ -452,11 +452,11 @@ public class CommandSchem implements CommandExecutor {
                     }
                 }
             } else if (args[0].equalsIgnoreCase("addmember")) {
-                p.sendMessage(Main.prefix + "§bBenutzung: //schem addmember <Schematic> <Spieler>");
+                p.sendMessage(SchemLoader.prefix + "§bBenutzung: //schem addmember <Schematic> <Spieler>");
             } else if (args[0].equalsIgnoreCase("delmember")) {
-                p.sendMessage(Main.prefix + "§bBenutzung: //schem delmember <Schematic> <Spieler>");
+                p.sendMessage(SchemLoader.prefix + "§bBenutzung: //schem delmember <Schematic> <Spieler>");
             } else if (args[0].equalsIgnoreCase("changetype")) {
-                p.sendMessage(Main.prefix + "§bBenutzung: //schem changetype <Schematic> <normal, warship>");
+                p.sendMessage(SchemLoader.prefix + "§bBenutzung: //schem changetype <Schematic> <normal, warship>");
             } else if (args[0].equalsIgnoreCase("check")) {
                 String path = args[1];
                 if (!path.endsWith(".schematic")) {
@@ -465,7 +465,7 @@ public class CommandSchem implements CommandExecutor {
                 if (!p.hasPermission("cobix.check")) {
                     return false;
                 }
-                File f = new File(Main.SCHEM_DIR + path);
+                File f = new File(SchemLoader.SCHEM_DIR + path);
                 if (!f.exists()) {
                     p.sendMessage("§cFehler: Datei nicht existent. §bFormat: uuid/schematic(.schematic)");
                     return false;
@@ -479,7 +479,7 @@ public class CommandSchem implements CommandExecutor {
 
                                 @Override
                                 public void run() {
-                                    CheckFile.check(p, my, new File(Main.SCHEM_DIR));
+                                    CheckFile.check(p, my, new File(SchemLoader.SCHEM_DIR));
                                     p.sendMessage("§aFertig.");
                                 }
                             });
@@ -497,11 +497,11 @@ public class CommandSchem implements CommandExecutor {
         } else if (args.length == 3) {
             if (args[0].equalsIgnoreCase("changetype")) {
                 if (args[1].contains("/")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §6/ §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6/ §cverwenden!");
                     return false;
                 }
                 if (args[1].contains("\\")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §\\ §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §\\ §cverwenden!");
                     return false;
                 }
                 String type = args[2];
@@ -510,38 +510,38 @@ public class CommandSchem implements CommandExecutor {
                     name = name + ".schematic";
                 }
                 final String fname = name;
-                if (type.equalsIgnoreCase("normal") || type.equalsIgnoreCase("warship")) {
-                    File schem = new File(Main.SCHEM_DIR + p.getUniqueId().toString() + "/" + name);
+                if (type.equalsIgnoreCase("normal") || type.equalsIgnoreCase("warship") || type.equalsIgnoreCase("WarGear")) {
+                    File schem = new File(SchemLoader.SCHEM_DIR + p.getUniqueId().toString() + "/" + name);
                     if (!schem.exists()) {
-                        p.sendMessage(Main.prefix + "§cDie Schematic existiert nicht!");
+                        p.sendMessage(SchemLoader.prefix + "§cDie Schematic existiert nicht!");
                         return false;
                     }
                     try {
                         if (!BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
-                            p.sendMessage(Main.prefix + "§cDies ist keine gültige SGSchematic!");
+                            p.sendMessage(SchemLoader.prefix + "§cDies ist keine gültige SGSchematic!");
                             return false;
                         }
                         SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(schem);
                         if (s.getType().equalsIgnoreCase("gesperrt")) {
                             p.sendMessage(
-                                    Main.prefix + "§cDie Schematic ist gesperrt und kann nicht bearbeitet werden!");
+                                    SchemLoader.prefix + "§cDie Schematic ist gesperrt und kann nicht bearbeitet werden!");
                             return false;
                         }
                         s.setType(type);
                         if (s.getType().equalsIgnoreCase("normal")) {
                             BetaCore.brew.getSchematicUtil().saveSchematic(BetaCore.brew.getSchematicUtil().toWeClipboard(s),
-                                    new File(Main.SCHEM_DIR + p.getUniqueId().toString() + "/" + name),
+                                    new File(SchemLoader.SCHEM_DIR + p.getUniqueId().toString() + "/" + name),
                                     p.getUniqueId().toString(), s.getSchemName(), s.getType(), s.getIcon(),
                                     System.currentTimeMillis());
-                            p.sendMessage(Main.prefix + "§aTyp erfolgreich geändert.");
-                        } else {
+                            p.sendMessage(SchemLoader.prefix + "§aTyp erfolgreich geändert.");
+                        } else if(s.getType().equalsIgnoreCase("warship")) {//TODO Intregrate WarGears
                             short[] blocks = s.getBlockInfo();
                             boolean allowed = true;
                             int count46 = 0;
                             int count325 = 0;
                             List<Integer> notified = new ArrayList<>();
                             for (int i = 0; i < blocks.length; i++) {
-                                if (Main.isAllowed(blocks[i])) {
+                                if (SchemLoader.isAllowed(blocks[i])) {
                                     if ((int) blocks[i] == 7) {
                                         count325++;
                                     }
@@ -550,7 +550,7 @@ public class CommandSchem implements CommandExecutor {
                                     }
                                     if (count325 > 1000) {
                                         if (!notified.contains(49)) {
-                                            p.sendMessage(Main.prefix
+                                            p.sendMessage(SchemLoader.prefix
                                                     + "§cDu hast zu viel TNT und Schleimblöcke in deinem WarShip! Du darfst maximal §61000 §cvon beiden insgesamt verbauen!");
                                             allowed = false;
                                             notified.add(49);
@@ -558,7 +558,7 @@ public class CommandSchem implements CommandExecutor {
                                     }
                                 } else {
                                     if (!notified.contains((int) blocks[i])) {
-                                        p.sendMessage(Main.prefix + "§cEs wurde ein verbotener Block entdeckt: §6"
+                                        p.sendMessage(SchemLoader.prefix + "§cEs wurde ein verbotener Block entdeckt: §6"
                                                 + Material.getMaterial(blocks[i]));
                                         allowed = false;
                                         notified.add((int) blocks[i]);
@@ -570,68 +570,70 @@ public class CommandSchem implements CommandExecutor {
                                 }
                             }
                             if (!allowed) {
-                                p.sendMessage(Main.prefix
+                                p.sendMessage(SchemLoader.prefix
                                         + "§cTyp wurde nicht geändert! Bitte überprüfe deine Schematic auf grobe Verstöße.");
                                 return false;
                             }
 
-                            File test = new File(Main.SCHEM_DIR + "tocheck/");
+                            File test = new File(SchemLoader.SCHEM_DIR + "tocheck/");
 
                             if(!test.exists()){
                                 test.createNewFile();
                             }
 
                             BetaCore.brew.getSchematicUtil().saveSchematic(BetaCore.brew.getSchematicUtil().toWeClipboard(s),
-                                    new File(Main.SCHEM_DIR + "tocheck/" + s.getType() + ";"
+                                    new File(SchemLoader.SCHEM_DIR + "tocheck/" + s.getType() + ";"
                                             + p.getUniqueId() + ";" + name),
                                     p.getUniqueId().toString(), s.getSchemName(), s.getType(), s.getIcon(),
                                     s.getCreated());
-//                            BetaCore.brew.getSchematicUtil().saveSchematic(BetaCore.brew.getSchematicUtil().toWeClipboard(s), new File(Main.SCHEM_DIR + "tocheck/" + s.getSchemName()),
+//                            BetaCore.brew.getSchematicUtil().saveSchematic(BetaCore.brew.getSchematicUtil().toWeClipboard(s), new File(Schemloader.SCHEM_DIR + "tocheck/" + s.getSchemName()),
 //                                    p.getUniqueId().toString(), s.getSchemName(), s.getType(), s.getIcon(), s.getCreated());
-                            p.sendMessage(Main.prefix
+                            p.sendMessage(SchemLoader.prefix
                                     + "§aTyp erfolgreich geändert. Schematic muss noch auf Regelkonformität geprüft werden.");
 
+                        }else{
+                            p.sendMessage(SchemLoader.prefix + "§7WarGears werden erst bald hinzugefügt. Gedulde dich noch etwas.");
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
-                        p.sendMessage(Main.prefix + "§cEin Fehler ist aufgetreten!");
+                        p.sendMessage(SchemLoader.prefix + "§cEin Fehler ist aufgetreten!");
                         return false;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 } else {
-                    p.sendMessage(Main.prefix
+                    p.sendMessage(SchemLoader.prefix
                             + "§cDu hast einen ungültigen Typ angegeben! Gültige Typen sind: §6normal §cund §6warship");
                 }
             } else if (args[0].equalsIgnoreCase("load")) {
                 if (p.hasPermission("system.schem.load.other")) {
                     if (args[1].contains("/")) {
-                        p.sendMessage(Main.prefix + "§cDu darfst keine §6/ §cverwenden!");
+                        p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6/ §cverwenden!");
                         return false;
                     }
                     if (args[1].contains("\\")) {
-                        p.sendMessage(Main.prefix + "§cDu darfst keine §\\ §cverwenden!");
+                        p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §\\ §cverwenden!");
                         return false;
                     }
                     String user = args[1];
                     UUID id = UUIDFetcher.getUUID(user);
                     if (id == null) {
-                        p.sendMessage(Main.prefix + "§cUnbekannter Spieler.");
+                        p.sendMessage(SchemLoader.prefix + "§cUnbekannter Spieler.");
                         return false;
                     }
                     String name = args[2];
                     if (!name.endsWith(".schematic")) {
                         name = name + ".schematic";
                     }
-                    File schem = new File(Main.SCHEM_DIR + id.toString() + "/" + name);
+                    File schem = new File(SchemLoader.SCHEM_DIR + id.toString() + "/" + name);
                     if (!schem.exists()) {
-                        p.sendMessage(Main.prefix + "§cDie Schematic existiert nicht!");
+                        p.sendMessage(SchemLoader.prefix + "§cDie Schematic existiert nicht!");
                         return false;
                     }
                     try {
                         if (!BetaCore.brew.getSchematicUtil().isSchematic(schem)
                                 || !BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
-                            p.sendMessage(Main.prefix + "§cKeine gültige SGSchematic.");
+                            p.sendMessage(SchemLoader.prefix + "§cKeine gültige SGSchematic.");
                             return false;
                         }
                         SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(schem);
@@ -646,33 +648,33 @@ public class CommandSchem implements CommandExecutor {
                         ClipboardHolder clipboardHolder = new ClipboardHolder(
                                 BetaCore.brew.getSchematicUtil().toWeClipboard(s), worldData);
                         localSession.setClipboard(clipboardHolder);
-                        p.sendMessage(Main.prefix + "§aSchematic §6" + s.getSchemName() + " §ageladen! ");
+                        p.sendMessage(SchemLoader.prefix + "§aSchematic §6" + s.getSchemName() + " §ageladen! ");
                     } catch (IOException e) {
-                        p.sendMessage(Main.prefix + "§cEin Fehler ist aufgetreten!");
+                        p.sendMessage(SchemLoader.prefix + "§cEin Fehler ist aufgetreten!");
                         return false;
                     }
                 } else {
                     if (args[1].contains("/")) {
-                        p.sendMessage(Main.prefix + "§cDu darfst keine §6/ §cverwenden!");
+                        p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6/ §cverwenden!");
                         return false;
                     }
                     if (args[1].contains("\\")) {
-                        p.sendMessage(Main.prefix + "§cDu darfst keine §\\ §cverwenden!");
+                        p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §\\ §cverwenden!");
                         return false;
                     }
                     String user = args[1];
                     UUID id = UUIDFetcher.getUUID(user);
                     if (id == null) {
-                        p.sendMessage(Main.prefix + "§cUnbekannter Spieler.");
+                        p.sendMessage(SchemLoader.prefix + "§cUnbekannter Spieler.");
                         return false;
                     }
                     String name = args[2];
                     if (!name.endsWith(".schematic")) {
                         name = name + ".schematic";
                     }
-                    File schem = new File(Main.SCHEM_DIR + id.toString() + "/" + name);
+                    File schem = new File(SchemLoader.SCHEM_DIR + id.toString() + "/" + name);
                     if (!schem.exists()) {
-                        p.sendMessage(Main.prefix + "§cDie Schematic existiert nicht!");
+                        p.sendMessage(SchemLoader.prefix + "§cDie Schematic existiert nicht!");
                         return false;
                     }
                     try {
@@ -695,7 +697,7 @@ public class CommandSchem implements CommandExecutor {
                             ClipboardHolder clipboardHolder = new ClipboardHolder(
                                     BetaCore.brew.getSchematicUtil().toWeClipboard(s), worldData);
                             localSession.setClipboard(clipboardHolder);
-                            p.sendMessage(Main.prefix + "§aSchematic §6" + s.getSchemName() + " §ageladen! ");
+                            p.sendMessage(SchemLoader.prefix + "§aSchematic §6" + s.getSchemName() + " §ageladen! ");
                             return false;
                         }
                         if (p.getUniqueId().equals(id)) {
@@ -711,40 +713,40 @@ public class CommandSchem implements CommandExecutor {
                             ClipboardHolder clipboardHolder = new ClipboardHolder(
                                     BetaCore.brew.getSchematicUtil().toWeClipboard(s), worldData);
                             localSession.setClipboard(clipboardHolder);
-                            p.sendMessage(Main.prefix + "§aSchematic §6" + s.getSchemName() + " §ageladen! ");
+                            p.sendMessage(SchemLoader.prefix + "§aSchematic §6" + s.getSchemName() + " §ageladen! ");
                             return false;
                         }
-                        p.sendMessage(Main.prefix + "§cDu hast keine Rechte auf diese Schematic.");
+                        p.sendMessage(SchemLoader.prefix + "§cDu hast keine Rechte auf diese Schematic.");
                     } catch (Exception e) {
-                        p.sendMessage(Main.prefix + "§cEin Fehler ist aufgetreten!");
+                        p.sendMessage(SchemLoader.prefix + "§cEin Fehler ist aufgetreten!");
                         return false;
                     }
                 }
             } else if (args[0].equalsIgnoreCase("save")) {
                 if (p.hasPermission("system.schem.save.other")) {
                     if (args[1].contains("/")) {
-                        p.sendMessage(Main.prefix + "§cDu darfst keine §6/ §cverwenden!");
+                        p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6/ §cverwenden!");
                         return false;
                     }
                     if (args[1].contains("\\")) {
-                        p.sendMessage(Main.prefix + "§cDu darfst keine §\\ §cverwenden!");
+                        p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §\\ §cverwenden!");
                         return false;
                     }
                     String user = args[1];
                     UUID id = UUIDFetcher.getUUID(user);
                     if (id == null) {
-                        p.sendMessage(Main.prefix + "§cUnbekannter Spieler.");
+                        p.sendMessage(SchemLoader.prefix + "§cUnbekannter Spieler.");
                         return false;
                     }
                     String name = args[2];
                     if (!name.endsWith(".schematic")) {
                         name = name + ".schematic";
                     }
-                    File schem = new File(Main.SCHEM_DIR + id.toString() + "/" + name);
+                    File schem = new File(SchemLoader.SCHEM_DIR + id.toString() + "/" + name);
                     try {
                         if (!BetaCore.brew.getSchematicUtil().isSchematic(schem)
                                 || !BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
-                            p.sendMessage(Main.prefix + "§cKeine gültige SGSchematic.");
+                            p.sendMessage(SchemLoader.prefix + "§cKeine gültige SGSchematic.");
                             return false;
                         }
                         WorldEditPlugin wep = (WorldEditPlugin) Bukkit.getServer().getPluginManager()
@@ -766,34 +768,34 @@ public class CommandSchem implements CommandExecutor {
                             } else {
                                 target = clipboard;
                             }
-                            new File(Main.SCHEM_DIR + id.toString() + "/").mkdirs();
+                            new File(SchemLoader.SCHEM_DIR + id.toString() + "/").mkdirs();
                             BetaCore.brew.getSchematicUtil().saveSchematic(clipboard,
-                                    new File(Main.SCHEM_DIR + id.toString() + "/" + name), id.toString(), name,
+                                    new File(SchemLoader.SCHEM_DIR + id.toString() + "/" + name), id.toString(), name,
                                     "normal", "STONE:0", System.currentTimeMillis());
-                            p.sendMessage(Main.prefix + "§aGespeichert: §6" + name);
+                            p.sendMessage(SchemLoader.prefix + "§aGespeichert: §6" + name);
                         } catch (EmptyClipboardException e) {
-                            p.sendMessage(Main.prefix + "§cDein Clipboard ist leer. Kopiere mal was mit §6//copy");
+                            p.sendMessage(SchemLoader.prefix + "§cDein Clipboard ist leer. Kopiere mal was mit §6//copy");
                         } catch (IOException e) {
                             p.sendMessage("§cFehler beim speichern.");
                             e.printStackTrace();
                         }
                     } catch (Exception e) {
-                        p.sendMessage(Main.prefix + "§cEin Fehler ist aufgetreten!");
+                        p.sendMessage(SchemLoader.prefix + "§cEin Fehler ist aufgetreten!");
                         return false;
                     }
                 } else {
                     if (args[1].contains("/")) {
-                        p.sendMessage(Main.prefix + "§cDu darfst keine §6/ §cverwenden!");
+                        p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6/ §cverwenden!");
                         return false;
                     }
                     if (args[1].contains("\\")) {
-                        p.sendMessage(Main.prefix + "§cDu darfst keine §\\ §cverwenden!");
+                        p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §\\ §cverwenden!");
                         return false;
                     }
                     String user = args[1];
                     UUID id = UUIDFetcher.getUUID(user);
                     if (id == null) {
-                        p.sendMessage(Main.prefix + "§cUnbekannter Spieler.");
+                        p.sendMessage(SchemLoader.prefix + "§cUnbekannter Spieler.");
                         return false;
                     }
                     String name = args[2];
@@ -802,13 +804,13 @@ public class CommandSchem implements CommandExecutor {
                     }
                     File schem = new File("plugins/WorldEdit/schematics/" + user.toLowerCase() + "/" + name);
                     if (!schem.exists()) {
-                        p.sendMessage(Main.prefix + "§cDie Schematic existiert nicht!");
+                        p.sendMessage(SchemLoader.prefix + "§cDie Schematic existiert nicht!");
                         return false;
                     }
                     try {
                         if (!BetaCore.brew.getSchematicUtil().isSchematic(schem)
                                 || !BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
-                            p.sendMessage(Main.prefix + "§cKeine gültige SGSchematic.");
+                            p.sendMessage(SchemLoader.prefix + "§cKeine gültige SGSchematic.");
                             return false;
                         }
                         PreparedStatement ps = Environment.getCurrent().getConnectionHolder().prepareStatement(
@@ -822,7 +824,7 @@ public class CommandSchem implements CommandExecutor {
                             ddos = true;
                         }
                         if (!ddos) {
-                            p.sendMessage(Main.prefix + "§cDu hast kein Recht auf diese Schematic.");
+                            p.sendMessage(SchemLoader.prefix + "§cDu hast kein Recht auf diese Schematic.");
                             return false;
                         }
                         WorldEditPlugin wep = (WorldEditPlugin) Bukkit.getServer().getPluginManager()
@@ -844,44 +846,44 @@ public class CommandSchem implements CommandExecutor {
                             } else {
                                 target = clipboard;
                             }
-                            new File(Main.SCHEM_DIR + id.toString() + "/").mkdirs();
+                            new File(SchemLoader.SCHEM_DIR + id.toString() + "/").mkdirs();
                             BetaCore.brew.getSchematicUtil().saveSchematic(clipboard,
-                                    new File(Main.SCHEM_DIR + id.toString() + "/" + name), user, name, "normal",
+                                    new File(SchemLoader.SCHEM_DIR + id.toString() + "/" + name), user, name, "normal",
                                     "STONE:0", System.currentTimeMillis());
-                            p.sendMessage(Main.prefix + "§aGespeichert: §6" + name);
+                            p.sendMessage(SchemLoader.prefix + "§aGespeichert: §6" + name);
                         } catch (EmptyClipboardException e) {
-                            p.sendMessage(Main.prefix + "§cDein Clipboard ist leer. Kopiere mal was mit §6//copy");
+                            p.sendMessage(SchemLoader.prefix + "§cDein Clipboard ist leer. Kopiere mal was mit §6//copy");
                         } catch (IOException e) {
                             p.sendMessage("§cFehler beim speichern.");
                             e.printStackTrace();
                         }
                     } catch (Exception e) {
-                        p.sendMessage(Main.prefix + "§cEin Fehler ist aufgetreten!");
+                        p.sendMessage(SchemLoader.prefix + "§cEin Fehler ist aufgetreten!");
                         return false;
                     }
                 }
             } else if (args[0].equalsIgnoreCase("addmember")) {
                 if (args[1].contains("/")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §6/ §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6/ §cverwenden!");
                     return false;
                 }
                 if (args[1].contains("\\")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §\\ §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §\\ §cverwenden!");
                     return false;
                 }
                 String user = args[2];
                 UUID id = UUIDFetcher.getUUID(user);
                 if (id == null) {
-                    p.sendMessage(Main.prefix + "§cUnbekannter Spieler.");
+                    p.sendMessage(SchemLoader.prefix + "§cUnbekannter Spieler.");
                     return false;
                 }
                 String name = args[1];
                 if (!name.endsWith(".schematic")) {
                     name = name + ".schematic";
                 }
-                File schem = new File(Main.SCHEM_DIR + p.getUniqueId().toString() + "/" + name);
+                File schem = new File(SchemLoader.SCHEM_DIR + p.getUniqueId().toString() + "/" + name);
                 if (!schem.exists()) {
-                    p.sendMessage(Main.prefix + "§cDie Schematic existiert nicht!");
+                    p.sendMessage(SchemLoader.prefix + "§cDie Schematic existiert nicht!");
                     return false;
                 }
                 try {
@@ -896,7 +898,7 @@ public class CommandSchem implements CommandExecutor {
                         ddos = true;
                     }
                     if (ddos) {
-                        p.sendMessage(Main.prefix + "§6" + user + " §cist bereits der Schematic hinzugefügt.");
+                        p.sendMessage(SchemLoader.prefix + "§6" + user + " §cist bereits der Schematic hinzugefügt.");
                         return false;
                     }
                     ps = Environment.getCurrent().getConnectionHolder()
@@ -905,33 +907,33 @@ public class CommandSchem implements CommandExecutor {
                     ps.setString(2, p.getUniqueId().toString());
                     ps.setString(3, id.toString());
                     Environment.getCurrent().getConnectionHolder().executeUpdate(ps);
-                    p.sendMessage(Main.prefix + "§aDu hast §6" + user + " §azu deiner Schematic hinzugefügt.");
+                    p.sendMessage(SchemLoader.prefix + "§aDu hast §6" + user + " §azu deiner Schematic hinzugefügt.");
                 } catch (SQLException e) {
-                    p.sendMessage(Main.prefix + "§cNetzwerkfehler");
+                    p.sendMessage(SchemLoader.prefix + "§cNetzwerkfehler");
                     e.printStackTrace();
                 }
             } else if (args[0].equalsIgnoreCase("delmember")) {
                 if (args[1].contains("/")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §6/ §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6/ §cverwenden!");
                     return false;
                 }
                 if (args[1].contains("\\")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §6\\ §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6\\ §cverwenden!");
                     return false;
                 }
                 String user = args[2];
                 UUID id = UUIDFetcher.getUUID(user);
                 if (id == null) {
-                    p.sendMessage(Main.prefix + "§cUnbekannter Spieler.");
+                    p.sendMessage(SchemLoader.prefix + "§cUnbekannter Spieler.");
                     return false;
                 }
                 String name = args[1];
                 if (!name.endsWith(".schematic")) {
                     name = name + ".schematic";
                 }
-                File schem = new File(Main.SCHEM_DIR + p.getUniqueId().toString() + "/" + name);
+                File schem = new File(SchemLoader.SCHEM_DIR + p.getUniqueId().toString() + "/" + name);
                 if (!schem.exists()) {
-                    p.sendMessage(Main.prefix + "§cDie Schematic existiert nicht!");
+                    p.sendMessage(SchemLoader.prefix + "§cDie Schematic existiert nicht!");
                     return false;
                 }
                 try {
@@ -946,7 +948,7 @@ public class CommandSchem implements CommandExecutor {
                         ddos = true;
                     }
                     if (!ddos) {
-                        p.sendMessage(Main.prefix + "§cDer Spieler ist kein Mitglied der Schematic.");
+                        p.sendMessage(SchemLoader.prefix + "§cDer Spieler ist kein Mitglied der Schematic.");
                         return false;
                     }
                     ps = Environment.getCurrent().getConnectionHolder()
@@ -955,25 +957,25 @@ public class CommandSchem implements CommandExecutor {
                     ps.setString(2, p.getUniqueId().toString());
                     ps.setString(3, id.toString());
                     Environment.getCurrent().getConnectionHolder().executeUpdate(ps);
-                    p.sendMessage(Main.prefix + "§aDu hast §6" + user + " §caaus deiner Schematic entfernt.");
+                    p.sendMessage(SchemLoader.prefix + "§aDu hast §6" + user + " §caaus deiner Schematic entfernt.");
                 } catch (SQLException e) {
-                    p.sendMessage(Main.prefix + "§cNetzwerkfehler");
+                    p.sendMessage(SchemLoader.prefix + "§cNetzwerkfehler");
                     e.printStackTrace();
                 }
             } else if (args[0].equalsIgnoreCase("lock")) {
                 if (p.hasPermission("system.schem.lock")) {
                     if (args[2].contains("/")) {
-                        p.sendMessage(Main.prefix + "§cDu darfst keine §6/ §cverwenden!");
+                        p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6/ §cverwenden!");
                         return false;
                     }
                     if (args[2].contains("\\")) {
-                        p.sendMessage(Main.prefix + "§cDu darfst keine §\\ §cverwenden!");
+                        p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §\\ §cverwenden!");
                         return false;
                     }
                     String user = args[1];
                     UUID id = UUIDFetcher.getUUID(user);
                     if (id == null) {
-                        p.sendMessage(Main.prefix + "§cUnbekannter Spieler.");
+                        p.sendMessage(SchemLoader.prefix + "§cUnbekannter Spieler.");
                         return false;
                     }
                     String name = args[2];
@@ -981,47 +983,47 @@ public class CommandSchem implements CommandExecutor {
                         name = name + ".schematic";
                     }
                     final String fname = name;
-                    File schem = new File(Main.SCHEM_DIR + id.toString() + "/" + name);
+                    File schem = new File(SchemLoader.SCHEM_DIR + id.toString() + "/" + name);
                     if (!schem.exists()) {
-                        p.sendMessage(Main.prefix + "§cDie Schematic existiert nicht!");
+                        p.sendMessage(SchemLoader.prefix + "§cDie Schematic existiert nicht!");
                         return false;
                     }
                     try {
                         if (!BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
-                            p.sendMessage(Main.prefix + "§cDies ist keine gültige SGSchematic!");
+                            p.sendMessage(SchemLoader.prefix + "§cDies ist keine gültige SGSchematic!");
                             return false;
                         }
                         SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(schem);
                         if (s.getType().equalsIgnoreCase("gesperrt")) {
                             p.sendMessage(
-                                    Main.prefix + "§cDie Schematic ist gesperrt und kann nicht bearbeitet werden!");
+                                    SchemLoader.prefix + "§cDie Schematic ist gesperrt und kann nicht bearbeitet werden!");
                             return false;
                         }
                         s.setType("gesperrt");
                         BetaCore.brew.getSchematicUtil().saveSchematic(BetaCore.brew.getSchematicUtil().toWeClipboard(s),
-                                new File(Main.SCHEM_DIR + id.toString() + "/" + name), p.getUniqueId().toString(),
+                                new File(SchemLoader.SCHEM_DIR + id.toString() + "/" + name), p.getUniqueId().toString(),
                                 s.getSchemName(), s.getType(), s.getIcon(), s.getCreated());
-                        p.sendMessage(Main.prefix + "§aSchematic gesperrt.");
+                        p.sendMessage(SchemLoader.prefix + "§aSchematic gesperrt.");
                     } catch (IOException e) {
                         e.printStackTrace();
-                        p.sendMessage(Main.prefix + "§cEin Fehler ist aufgetreten!");
+                        p.sendMessage(SchemLoader.prefix + "§cEin Fehler ist aufgetreten!");
                         return false;
                     }
                 }
             } else if (args[0].equalsIgnoreCase("unlock")) {
                 if (p.hasPermission("system.schem.unlock")) {
                     if (args[2].contains("/")) {
-                        p.sendMessage(Main.prefix + "§cDu darfst keine §6/ §cverwenden!");
+                        p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6/ §cverwenden!");
                         return false;
                     }
                     if (args[2].contains("\\")) {
-                        p.sendMessage(Main.prefix + "§cDu darfst keine §\\ §cverwenden!");
+                        p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §\\ §cverwenden!");
                         return false;
                     }
                     String user = args[1];
                     UUID id = UUIDFetcher.getUUID(user);
                     if (id == null) {
-                        p.sendMessage(Main.prefix + "§cUnbekannter Spieler.");
+                        p.sendMessage(SchemLoader.prefix + "§cUnbekannter Spieler.");
                         return false;
                     }
                     String name = args[2];
@@ -1029,40 +1031,40 @@ public class CommandSchem implements CommandExecutor {
                         name = name + ".schematic";
                     }
                     final String fname = name;
-                    File schem = new File(Main.SCHEM_DIR + id.toString() + "/" + name);
+                    File schem = new File(SchemLoader.SCHEM_DIR + id.toString() + "/" + name);
                     if (!schem.exists()) {
-                        p.sendMessage(Main.prefix + "§cDie Schematic existiert nicht!");
+                        p.sendMessage(SchemLoader.prefix + "§cDie Schematic existiert nicht!");
                         return false;
                     }
                     try {
                         if (!BetaCore.brew.getSchematicUtil().isGiantSchematic(schem)) {
-                            p.sendMessage(Main.prefix + "§cDies ist keine gültige SGSchematic!");
+                            p.sendMessage(SchemLoader.prefix + "§cDies ist keine gültige SGSchematic!");
                             return false;
                         }
                         SGSchematic s = BetaCore.brew.getSchematicUtil().loadGiantSchematic(schem);
                         s.setType("normal");
                         BetaCore.brew.getSchematicUtil().saveSchematic(BetaCore.brew.getSchematicUtil().toWeClipboard(s),
-                                new File(Main.SCHEM_DIR + id.toString() + "/" + name), p.getUniqueId().toString(),
+                                new File(SchemLoader.SCHEM_DIR + id.toString() + "/" + name), p.getUniqueId().toString(),
                                 s.getSchemName(), s.getType(), s.getIcon(), s.getCreated());
-                        p.sendMessage(Main.prefix + "§aSchematic entsperrt.");
+                        p.sendMessage(SchemLoader.prefix + "§aSchematic entsperrt.");
                     } catch (IOException e) {
                         e.printStackTrace();
-                        p.sendMessage(Main.prefix + "§cEin Fehler ist aufgetreten!");
+                        p.sendMessage(SchemLoader.prefix + "§cEin Fehler ist aufgetreten!");
                         return false;
                     }
                 }
             } else if (args[0].equalsIgnoreCase("info")) {
                 if (p.hasPermission("system.schem.info.other")) {
                     if (args[2].contains(";")) {
-                        p.sendMessage(Main.prefix + "§cDu darfst keine §6; §cverwenden!");
+                        p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6; §cverwenden!");
                         return false;
                     }
                     if (args[2].contains("/")) {
-                        p.sendMessage(Main.prefix + "§cDu darfst keine §6/ §cverwenden!");
+                        p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6/ §cverwenden!");
                         return false;
                     }
                     if (args[2].contains("\\")) {
-                        p.sendMessage(Main.prefix + "§cDu darfst keine §6\\ §cverwenden!");
+                        p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6\\ §cverwenden!");
                         return false;
                     }
                     String name = args[2];
@@ -1071,21 +1073,21 @@ public class CommandSchem implements CommandExecutor {
                     }
                     UUID id = UUIDFetcher.getUUID(args[1]);
                     if (id == null) {
-                        p.sendMessage(Main.prefix + "§cUnbekannter Spieler.");
+                        p.sendMessage(SchemLoader.prefix + "§cUnbekannter Spieler.");
                         return false;
                     }
-                    File toLoad = new File(Main.SCHEM_DIR + id.toString() + "/" + name);
+                    File toLoad = new File(SchemLoader.SCHEM_DIR + id.toString() + "/" + name);
                     if (!toLoad.exists()) {
-                        p.sendMessage(Main.prefix + "§cDie Schematic konnte nicht gefunden werden.");
+                        p.sendMessage(SchemLoader.prefix + "§cDie Schematic konnte nicht gefunden werden.");
                         return false;
                     }
                     try {
                         if (!BetaCore.brew.getSchematicUtil().isSchematic(toLoad)) {
-                            p.sendMessage(Main.prefix + "§cDas ist keine Schematic.");
+                            p.sendMessage(SchemLoader.prefix + "§cDas ist keine Schematic.");
                             return false;
                         }
                     } catch (IOException e) {
-                        p.sendMessage(Main.prefix + "§cEin Fehler ist aufgetreten.");
+                        p.sendMessage(SchemLoader.prefix + "§cEin Fehler ist aufgetreten.");
                         e.printStackTrace();
                         return false;
                     }
@@ -1140,15 +1142,15 @@ public class CommandSchem implements CommandExecutor {
                 }
             } else if (args[0].equalsIgnoreCase("gui")) {
                 if (args[2].contains(";")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §6; §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6; §cverwenden!");
                     return false;
                 }
                 if (args[2].contains("/")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §6/ §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6/ §cverwenden!");
                     return false;
                 }
                 if (args[2].contains("\\")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §6\\ §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6\\ §cverwenden!");
                     return false;
                 }
                 String name = args[2];
@@ -1157,21 +1159,21 @@ public class CommandSchem implements CommandExecutor {
                 }
                 UUID id = UUIDFetcher.getUUID(args[1]);
                 if (id == null) {
-                    p.sendMessage(Main.prefix + "§cUnbekannter Spieler.");
+                    p.sendMessage(SchemLoader.prefix + "§cUnbekannter Spieler.");
                     return false;
                 }
-                File toLoad = new File(Main.SCHEM_DIR + id.toString() + "/" + name);
+                File toLoad = new File(SchemLoader.SCHEM_DIR + id.toString() + "/" + name);
                 if (!toLoad.exists()) {
-                    p.sendMessage(Main.prefix + "§cDie Schematic konnte nicht gefunden werden.");
+                    p.sendMessage(SchemLoader.prefix + "§cDie Schematic konnte nicht gefunden werden.");
                     return false;
                 }
                 try {
                     if (!BetaCore.brew.getSchematicUtil().isSchematic(toLoad)) {
-                        p.sendMessage(Main.prefix + "§cDas ist keine Schematic.");
+                        p.sendMessage(SchemLoader.prefix + "§cDas ist keine Schematic.");
                         return false;
                     }
                 } catch (IOException e) {
-                    p.sendMessage(Main.prefix + "§cEin Fehler ist aufgetreten.");
+                    p.sendMessage(SchemLoader.prefix + "§cEin Fehler ist aufgetreten.");
                     e.printStackTrace();
                     return false;
                 }
@@ -1250,9 +1252,9 @@ public class CommandSchem implements CommandExecutor {
                                                 schem.getSchemOwner(), schem.getSchemName(), schem.getType(),
                                                 schem.getIcon(), schem.getCreated());
                                         p.sendMessage(
-                                                Main.prefix + "§aDas Icon wurde zu §6" + m.name() + " §ageändert.");
+                                                SchemLoader.prefix + "§aDas Icon wurde zu §6" + m.name() + " §ageändert.");
                                     } catch (IOException e) {
-                                        p.sendMessage(Main.prefix + "§cEs ist ein Fehler aufgetreten.");
+                                        p.sendMessage(SchemLoader.prefix + "§cEs ist ein Fehler aufgetreten.");
                                         e.printStackTrace();
                                     }
                                 }
@@ -1283,24 +1285,24 @@ public class CommandSchem implements CommandExecutor {
                 p.openInventory(inv.build());
             } else if (args[0].equalsIgnoreCase("delete")) {
                 if (args[2].contains(";")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §6; §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6; §cverwenden!");
                     return false;
                 }
                 if (args[2].contains("/")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §6/ §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6/ §cverwenden!");
                     return false;
                 }
                 if (args[2].contains("\\")) {
-                    p.sendMessage(Main.prefix + "§cDu darfst keine §6\\ §cverwenden!");
+                    p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6\\ §cverwenden!");
                     return false;
                 }
                 String name = args[2];
                 if (!name.endsWith(".schematic")) {
                     name = name + ".schematic";
                 }
-                File toLoad = new File(Main.SCHEM_DIR + p.getUniqueId().toString() + "/" + name);
+                File toLoad = new File(SchemLoader.SCHEM_DIR + p.getUniqueId().toString() + "/" + name);
                 if (!toLoad.exists()) {
-                    p.sendMessage(Main.prefix + "§cDie Schematic konnte nicht gefunden werden.");
+                    p.sendMessage(SchemLoader.prefix + "§cDie Schematic konnte nicht gefunden werden.");
                     return false;
                 }
                 try {
@@ -1310,9 +1312,9 @@ public class CommandSchem implements CommandExecutor {
                     ps.setString(2, p.getUniqueId().toString());
                     Environment.getCurrent().getConnectionHolder().executeUpdate(ps);
                     toLoad.delete();
-                    p.sendMessage(Main.prefix + "§aSchematic gelöscht");
+                    p.sendMessage(SchemLoader.prefix + "§aSchematic gelöscht");
                 } catch (SQLException e) {
-                    p.sendMessage(Main.prefix + "§cEs ist ein Fehla aufgetreten :I");
+                    p.sendMessage(SchemLoader.prefix + "§cEs ist ein Fehla aufgetreten :I");
                     e.printStackTrace();
                 }
             }

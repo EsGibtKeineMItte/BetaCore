@@ -39,6 +39,8 @@ public class Misc {
     public static final String CONSOLEPREFIX = "§8[§aBetaCore§8]§7 ";
     public static final String CODENAME = "Brass ";
     public static final String VERSION = "0.3";
+    public static final String SCHEM_ORG_PREFIX = "§8[§bSchemOrg§8] §7";
+    public static final String SCHEMLOADER_PREFIX = "§8[§3Schematic§8] §7";
 
 
     public static String getPREFIX() {

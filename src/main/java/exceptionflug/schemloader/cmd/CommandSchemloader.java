@@ -2,7 +2,7 @@ package exceptionflug.schemloader.cmd;
 
 import com.minnymin.command.Command;
 import com.minnymin.command.CommandArgs;
-import de.exceptionflug.schemloader.main.Main;
+import de.exceptionflug.schemloader.main.SchemLoader;
 import de.wk.betacore.BetaCore;
 import exceptionflug.invlib.*;
 import exceptionflug.presets.MultiPageInventory;
@@ -24,7 +24,7 @@ public class CommandSchemloader {
     public void onGui(CommandArgs args) {
         final Player p = args.getPlayer();
         if (args.length() < 2) {
-            p.sendMessage(Main.prefix + "§bBenutzung: /schemloader gui <Spieler> <Schematic>");
+            p.sendMessage(SchemLoader.prefix + "§bBenutzung: /schemloader gui <Spieler> <Schematic>");
             return;
         }
         final String arg0 = args.getArgs(0);
@@ -35,15 +35,15 @@ public class CommandSchemloader {
 
         }
         if (arg1.contains(";")) {
-            p.sendMessage(Main.prefix + "§cDu darfst keine §6; §cverwenden!");
+            p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6; §cverwenden!");
             return;
         }
         if (arg1.contains("/")) {
-            p.sendMessage(Main.prefix + "§cDu darfst keine §6/ §cverwenden!");
+            p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6/ §cverwenden!");
             return;
         }
         if (arg1.contains("\\")) {
-            p.sendMessage(Main.prefix + "§cDu darfst keine §6\\ §cverwenden!");
+            p.sendMessage(SchemLoader.prefix + "§cDu darfst keine §6\\ §cverwenden!");
             return;
         }
         String name = arg1;
@@ -52,16 +52,16 @@ public class CommandSchemloader {
         }
         final File f = id != null ? new File("/home/netuser/schematics/" + id.toString() + "/" + name) : new File("/home/netuser/schematics/wst/" + wst + "/" + name);
         if (!f.exists()) {
-            p.sendMessage(Main.prefix + "§cSchematic existiert nicht");
+            p.sendMessage(SchemLoader.prefix + "§cSchematic existiert nicht");
             return;
         }
         try {
             if (!BetaCore.brew.getSchematicUtil().isSchematic(f)) {
-                p.sendMessage(Main.prefix + "§cDas ist keine Schematic.");
+                p.sendMessage(SchemLoader.prefix + "§cDas ist keine Schematic.");
                 return;
             }
         } catch (IOException e) {
-            p.sendMessage(Main.prefix + "§cEin Fehler ist aufgetreten.");
+            p.sendMessage(SchemLoader.prefix + "§cEin Fehler ist aufgetreten.");
             e.printStackTrace();
             return;
         }
@@ -123,10 +123,10 @@ public class CommandSchemloader {
                                 event.getWhoClicked().closeInventory();
                                 try {
                                     System.out.print("NOCH NIX FERTIG:I -> Command Schematic net.thecobix.schemloader.cmd");
-                                    SGSchematic schem = Brew.getBrew().getSchematicUtil().loadGiantSchematic(new File(Main.SCHEM_DIR + ".schematic"));
+                                    SGSchematic schem = Brew.getBrew().getSchematicUtil().loadGiantSchematic(new File(SchemLoader.SCHEM_DIR + ".schematic"));
                                     schem.setIcon(m.name() + ":0");
                                     Brew.getBrew().getSchematicUtil().saveSchematic(
-                                            Brew.getBrew().getSchematicUtil().toWeClipboard(schem), new File(Main.SCHEM_DIR + ".schematic"), schem
+                                            Brew.getBrew().getSchematicUtil().toWeClipboard(schem), new File(SchemLoader.SCHEM_DIR + ".schematic"), schem
                                                     .getSchemOwner(), schem.getSchemName(), schem.getType(), schem
                                                     .getIcon(), schem.getCreated());
 

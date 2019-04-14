@@ -2,6 +2,7 @@ package de.exceptionflug.schemorg.main;
 
 import de.exceptionflug.schemorg.util.SchematicPaster;
 import de.wk.betacore.BetaCore;
+import de.wk.betacore.util.data.Misc;
 import net.thecobix.brew.main.Brew;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -15,7 +16,7 @@ import java.util.Arrays;
 
 public class SchemOrg implements Listener {
 
-    public static final String S_PREFIX = "§8[§bSchemOrg§8] §7";
+    public static final String S_PREFIX = Misc.SCHEM_ORG_PREFIX;
     public static ArrayList<CheckSchem> toCheck = new ArrayList<>();
 
 

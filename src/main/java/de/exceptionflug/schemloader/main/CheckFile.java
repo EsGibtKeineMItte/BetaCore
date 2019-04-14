@@ -13,8 +13,8 @@ public class CheckFile {
                 check(p, id, f);
             } else {
                 try {
-                    if (Main.brew.getSchematicUtil().isSchematic(f)) {
-                        SGSchematic s = Main.brew.getSchematicUtil().toGiantSchematic(Main.brew.getSchematicUtil().loadSchematic(f), "N/A", "N/A", "CheckSchematic", "STONE:0", System.currentTimeMillis());
+                    if (SchemLoader.brew.getSchematicUtil().isSchematic(f)) {
+                        SGSchematic s = SchemLoader.brew.getSchematicUtil().toGiantSchematic(SchemLoader.brew.getSchematicUtil().loadSchematic(f), "N/A", "N/A", "CheckSchematic", "STONE:0", System.currentTimeMillis());
                         int min;
                         int max;
                         if (id > s.getId()) {

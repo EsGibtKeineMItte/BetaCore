@@ -2,28 +2,28 @@ package de.exceptionflug.schemloader.main;
 
 import de.wk.betacore.environment.Environment;
 import de.wk.betacore.util.ConnectionHolder;
+import de.wk.betacore.util.data.Misc;
 import lombok.Getter;
 import net.thecobix.brew.main.Brew;
 
 
-public class Main  {
+public class SchemLoader {
 
     @Getter
     private static ConnectionHolder connectionHolder;
 
 
     public static final String SCHEM_DIR = Environment.getPathToDataFolder() + "/schematics/";
-    public static String prefix = "§8[§3Schematic§8] §7";
+    public static String prefix = Misc.SCHEMLOADER_PREFIX;
 
     public static Brew brew;
 
-    private int runnerTask;
 
 
 
 
-   public static synchronized Main getInstance(){
-        return new Main();
+   public static synchronized SchemLoader getInstance(){
+        return new SchemLoader();
    }
 
     public static boolean isAllowed(int id) {

@@ -1,5 +1,6 @@
 package de.exceptionflug.schemorg.main;
 
+import de.wk.betacore.environment.Environment;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.WorldCreator;
@@ -17,7 +18,7 @@ public class Config {
     public Location checkSpawn;
     
     public Config() {
-        this.file = new File("plugins/SchemOrg/config.yml");
+        this.file = new File(Environment.getPathToDataFolder() + "/schemorg/config.yml");
         this.cfg = YamlConfiguration.loadConfiguration(this.file);//HIER DIE WERTE AUS DER GLOBAL CONFIG EINTRAGEN
     }
     
