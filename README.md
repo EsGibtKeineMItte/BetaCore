@@ -1,9 +1,10 @@
 # Betacore
 This is an OpenSource Minecraft Core
 
-Authors: LinksKleineMitte, YoyoNow, Chaoscaot444, Zeanon
+Authors: linksKeineMitte, YoyoNow, Chaoscaot444, Zeanon
+Special thanks to: Exceptionflug.
 
-Version: 1.0 Alpha
+Version: 0.3
 
 Licences: GLP V3
 
@@ -55,7 +56,10 @@ You can download a restart script or see how to setup a restart scrips in the wi
 Used Libary's [MIT-License]: 
 
 Schemloader: Copyright (c) 2019 Exceptionflug,EsGibtKeineMitte
+
 SchemOrg: Copyright (c) 2019 Exceptionflug,EsGibtKeineMitte
+
+LightningStorage: Copyright (c) 2019 EsGibtKeineMitte
 
 
 
