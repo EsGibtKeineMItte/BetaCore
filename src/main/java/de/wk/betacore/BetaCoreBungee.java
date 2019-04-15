@@ -1,7 +1,7 @@
 package de.wk.betacore;
 
 import de.leonhard.storage.Json;
-import de.wk.betacore.commands.bungee.BungeePluginsReloadCommand;
+import de.wk.betacore.commands.bungee.BungeeUpdate;
 import de.wk.betacore.commands.bungee.KickSystem;
 import de.wk.betacore.commands.bungee.PingCommand;
 import de.wk.betacore.datamanager.FileManager;
@@ -24,7 +24,7 @@ public class BetaCoreBungee extends Plugin {
 
 
     private static BetaCoreBungee instance;
-    private static Json mysql = FileManager.getMysql();
+    private static Json mysql;
     @Getter
     private  ConnectionHolder connectionHolder;
     public boolean restart;
@@ -32,7 +32,7 @@ public class BetaCoreBungee extends Plugin {
     private void regCommands() {
         this.getProxy().getPluginManager().registerCommand(this, new PingCommand());
         this.getProxy().getPluginManager().registerCommand(this, new KickSystem());
-        this.getProxy().getPluginManager().registerCommand(this, new BungeePluginsReloadCommand("grl"));
+        this.getProxy().getPluginManager().registerCommand(this, new BungeeUpdate("b"));
     }
 
     private void regListeners() {
@@ -43,6 +43,9 @@ public class BetaCoreBungee extends Plugin {
 
     @Override
     public void onEnable() {
+        Environment.setBungeecord(true);
+
+
         log("§6[BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + "]");
         log("");
         Environment.setBungeecord(true);
@@ -55,8 +58,17 @@ public class BetaCoreBungee extends Plugin {
         regListeners();
         log("§aDONE");
 
+        mysql = new Json("mysql", "../Data");
+
+        if(mysql == null){
+            debug("Warum ist mysql null?!");
+            return;
+        }
+
+
         if (mysql.getBoolean("useMySQL")) {
             log("§3Verbinde zum MySQL-Server");
+            Environment.setMysql(true);
             try {
                 MySQL.openConnection();
                 System.out.println("MySQL Connection erfolgreich.");
@@ -72,6 +84,25 @@ public class BetaCoreBungee extends Plugin {
 
         }
 
+        log("§7=====§eBUILDINFORMATIONEN§7======");
+
+
+        System.out.println("");
+
+        log("§eGlobal-Settings:");
+
+        log("BetaCore-Version: " + Misc.VERSION);
+        log("Code-Name: " + Misc.CODENAME);
+
+        log("Plattform: " + (Environment.isSpigot() ? "§3Spigot" : "§3BungeeCord"));
+        log("MySQL: " + (Environment.isMysql() ? "§atrue" : "§cfalse"));
+
+        log("§eServer-Settings:");
+
+        log("§eDependency's:");
+        log("Brew: " + (Environment.isBrew() ? "§atrue" : "§cfalse"));
+        log("WorldEdit: " + (Environment.isWorldedit() ? "§atrue" : "§cfalse"));
+        log("§6Successfully enabled BetaCore" + Misc.CODENAME + "v." + Misc.VERSION + ".");
 
         log("§3BetaCore " + Misc.CODENAME + "v." + Misc.VERSION + "successfully enabled.");
     }

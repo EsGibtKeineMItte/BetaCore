@@ -1,0 +1,84 @@
+ADMIN:
+  - betacore.*
+  - betacore.core.help
+  - ws.*
+  - worldedit.*
+  - worldguard.*
+  - fawe.admin
+  - fawe.bypass
+  - bukkit.command.restart
+  - bukkit.command.tps
+  - bukkit.command.timings
+  - bukkit.command.reload
+  - bukkit.command.tp
+BUILDER:
+  - betacore.core
+  - betacore.clearlagg
+  - betacore.money
+  - betacore.money.pay
+  - ws.get
+  - fawe.permpack.basic
+  - worldedit.navigation.jumpto.tool
+  - worldedit.navigation.thru.tool
+DEV:
+  - betacore.*
+  - ws.get
+  - ws.tp.*
+  - ws.delete
+  - ws.lag
+  - ws.gamemode
+  - fawe.admin
+  - bukkit.command.tps
+  - bukkit.command.tp
+MOD:
+  - betacore.gm.self
+  - betacore.gm.other
+  - betacore.clearlagg
+  - betacore.core
+  - betacore.money
+  - betacore.money.pay
+  - ws.get
+  - ws.lag
+  - ws.delete
+  - ws.tp.*
+  - ws.gamemmode
+  - fawe.admin
+  - bukkit.command.tps
+PREMIUM:
+  - betacore.money
+  - betacore.money.pay
+  - ws.sethome
+  - ws.get
+  - fawe.permpack.basic
+  - worldedit.navigation.jumpto.tool
+  - worldedit.navigation.thru.tool
+SUPPORTER:
+  - betacore.gm.self
+  - betacore.core
+  - betacore.clearlagg
+  - betacore.money
+  - betacore.money.pay
+  - ws.get
+  - ws.lag
+  - fawe.permpack.basic
+  - worldedit.navigation.jumpto.tool
+  - worldedit.navigation.thru.tool
+  - worldedit.region.stack
+USER:
+  - betacore.money
+  - betacore.money.pay
+  - ws.get
+  - fawe.permpack.basic
+  - worldedit.navigation.jumpto.tool
+  - worldedit.navigation.thru.tool
+  - worldedit.region.stack
+YOU_TUBER:
+  - betacore.money
+  - betacore.money.pay
+  - ws.get
+  - ws.sethome
+  - fawe.permpack.basic
+  - worldedit.navigation.jumpto.tool
+  - worldedit.navigation.thru.tool
+  - worldedit.region.stack
+permsSetup: true

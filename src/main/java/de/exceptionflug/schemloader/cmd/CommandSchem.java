@@ -72,8 +72,6 @@ public class CommandSchem implements CommandExecutor {
             p.sendMessage("§8//schem list - §6Listet alle deine Schematics auf.");
             p.sendMessage("§8//schem addmember <Schematic> <Spieler> - §6Fügt einen Spieler zu einer Schematic hinzu.");
             p.sendMessage("§8//schem delmember <Schematic> <Spieler> - §6Entfernt einen Spieler von einer Schematic.");
-            p.sendMessage("§8//schem download <Schematic> - §6Gibt einen Downloadlink für deine Schematic");
-            p.sendMessage("§8//schem market - §6Öffnet den Schematic-Shop");
             if (p.hasPermission("system.schemloader.help")) {
                 p.sendMessage("§8//schem lock <Spieler> <Schematic> - §6Sperrt eine Schematic.");
                 p.sendMessage("§8//schem unlock <Spieler> <Schematic> - §6Entsperrt eine Schematic.");
@@ -179,7 +177,6 @@ public class CommandSchem implements CommandExecutor {
                                     public void onClick(Inventory inv, InventoryClickEvent event) {
                                         event.getWhoClicked().closeInventory();
 //                                        mpi.unregister(han);
-                                        BetaCore.debug("Inventory Handler zu Inventory: Command Schem: 171");
                                         handle.die();
                                         ((Player) event.getWhoClicked()).chat("//schematic gui "
                                                 + UUIDFetcher.getName(UUID.fromString(gs.getKey().getSchemOwner()))

@@ -1,0 +1,13 @@
+UseMySQL: true
+LinkToArena-1: Arena-1
+LinkToArena-2: Arena-2
+LinkToBau: Bau
+LinkToLobby: Lobby-1
+MySQL:
+  host: thewarking.de
+  username: admin
+  port: 3306
+  database: thewarking.de
+  password: _58CS_=ib=J5K_EvDZ
+Location:
+  pasteloc: world/0/64/0/90/0

@@ -1,5 +1,6 @@
 package de.exceptionflug.schemorg.main;
 
+import de.exceptionflug.schemloader.main.SchemLoader;
 import de.exceptionflug.schemorg.util.SchematicPaster;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.util.data.Misc;
@@ -16,12 +17,11 @@ import java.util.Arrays;
 
 public class SchemOrg implements Listener {
 
-    public static final String S_PREFIX = Misc.SCHEM_ORG_PREFIX;
+    public static final String S_PREFIX = SchemLoader.prefix;
     public static ArrayList<CheckSchem> toCheck = new ArrayList<>();
 
 
     public static Config conf;
-
 
 
     public static CheckSchem getSchem(String ownaz, String name) {

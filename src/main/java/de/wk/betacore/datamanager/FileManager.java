@@ -15,6 +15,7 @@ public class FileManager {
     private static Json bungeePerms;
     private static Json mysql;
     private static Json schematics;
+    private static Json spawn;
 
     private FileManager() {
 
@@ -27,8 +28,9 @@ public class FileManager {
         teams = new Json("teams", path);
         settings = new Json("settings", path);
         bungeePerms = new Json("bungeeperms", path);
-        schematics = new Json("schematics", path + "/schematics");
         mysql = new Json("mysql", path);
+        spawn = new Json("spawn", "plugins/BetaCore");
+
     }
 
 
@@ -67,5 +69,9 @@ public class FileManager {
 
     public static Json getSchematics() {
         return getJson(schematics);
+    }
+
+    public static Json getSpawn() {
+        return getJson(spawn);
     }
 }

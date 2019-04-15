@@ -12,6 +12,7 @@ import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
 import de.wk.betacore.util.teamsystem.TeamSystem;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,10 +35,9 @@ public class JoinHandler implements Listener {
         tablist(e.getPlayer());
 
         e.getPlayer().getInventory().clear();
+        e.getPlayer().setGameMode(GameMode.ADVENTURE);
 
-        if (cm.getConfig().getLocation("Spawn") != null) {
-            e.getPlayer().teleport(cm.getConfig().getLocation("Spawn"));
-        }
+        BetaCore.teleportSpawn(e.getPlayer());
 
         if (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.setJoinMessage("");

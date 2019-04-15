@@ -29,14 +29,12 @@ public class WorldSystemUtil implements Listener {
 
         if(msg.startsWith("//schematic")){
             e.setCancelled(true);
-            BetaCore.debug("Rep //schematic /schematic");
             String message = msg.replace("//schematic", "schem");
             player.performCommand(message);
         }
 
         if(msg.startsWith("//schem")){
             e.setCancelled(true);
-            BetaCore.debug("Rep //schem /schem");
             String message = msg.replace("//schem", "schem");
             BetaCore.debug(message);
             player.performCommand(message);

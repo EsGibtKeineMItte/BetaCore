@@ -1,9 +1,12 @@
 package de.wk.betacore.util.ranksystem;
 
 import de.wk.betacore.util.data.Misc;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +39,29 @@ public class PermissionsListener implements Listener {
         } else {
            // e.getPlayer().sendMessage("Du darfst den Command " + msg + " auf der Welt " + e.getPlayer().getWorld().getName() + " verwenden.");
         }
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent e){
+        if(e.getPlayer().getWorld().getName().equals("world") && (!(e.getPlayer().hasPermission("betacore.build"))) && (!(e.getPlayer().hasPermission("betacore.*")))){
+            e.setCancelled(true);
+            e.getPlayer().sendMessage(Misc.PREFIX + "§cDas darfst du hier nicht.");
+            return;
+        }
+    }
+
+    @EventHandler
+    public void onInteract(PlayerInteractEvent e){
+        if(!(e.getMaterial() == Material.SIGN)){
+            return;
+        }
+        if(e.getPlayer().hasPermission("betacore.*") || e.getPlayer().hasPermission("betacore.build")){
+            return;
+        }
+
+        e.setCancelled(true);
+        e.getPlayer().sendMessage(Misc.PREFIX + "§cDas darfst du hier nicht.");
+
     }
 
 

@@ -6,8 +6,10 @@ import de.exceptionflug.schemloader.cmd.CommandSchem;
 import de.exceptionflug.schemorg.cmd.CommandSchemorg;
 import de.exceptionflug.schemorg.main.Config;
 import de.exceptionflug.schemorg.main.SchemOrg;
+import de.leonhard.storage.Json;
 import de.wk.betacore.commands.spigot.*;
 import de.wk.betacore.commands.spigot.commandmanager.CommandManagerOld;
+import de.wk.betacore.datamanager.FileManager;
 import de.wk.betacore.environment.Environment;
 import de.wk.betacore.listener.Spigot.RecordListener;
 import de.wk.betacore.listener.Spigot.*;
@@ -28,8 +30,11 @@ import lombok.Getter;
 import net.thecobix.brew.main.Brew;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.SimpleCommandMap;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Field;
@@ -102,7 +107,7 @@ public final class BetaCore extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PermissionListener(), this);
         Bukkit.getPluginManager().registerEvents(new PermissionsListener("/help", "/bau", "/arena-1",
                 "/arena-2", "/hub", "/l", "/r", "/msg", "/server bau", "/server Arena-1", "/server Arena-2",
-                "/server Lobby-1"), this);
+                "/server Lobby-1", "/ws"), this);
         Bukkit.getPluginManager().registerEvents(new TNTTracer(), this);
         this.getServer().getPluginManager().registerEvents(RecordListener.getInstance(), this);
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BUNGEECORD");
@@ -166,6 +171,7 @@ public final class BetaCore extends JavaPlugin {
         framework.registerCommands(new Update());
         framework.registerCommands(new TeamCommand());
         framework.registerCommands(new TracerCommand());
+        framework.registerCommands(new ServerCommand());
         log("§aDONE");
 
         log("§3Registering Commands & Listeners...");
@@ -203,9 +209,7 @@ public final class BetaCore extends JavaPlugin {
                 System.out.print("SQLException: " + x.getMessage());
                 System.out.print("SQLState: " + x.getSQLState());
                 System.out.print("VendorError: " + x.getErrorCode());
-
                 x.printStackTrace();
-
             }
             Environment.setMysql(true);
             log("§aDONE");
@@ -280,10 +284,7 @@ public final class BetaCore extends JavaPlugin {
         log("§eDependency's:");
         log("Brew: " + (Environment.isBrew() ? "§atrue" : "§cfalse"));
         log("WorldEdit: " + (Environment.isWorldedit() ? "§atrue" : "§cfalse"));
-
-
         log("§6Successfully enabled BetaCore" + Misc.CODENAME + "v." + Misc.VERSION + ".");
-
     }
 
     @Override
@@ -320,10 +321,36 @@ public final class BetaCore extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + "[§eDEBUG§7]" + message);
     }
 
-    public static void debug(String message, boolean serverChat) {
+    public static void debug(String message, boolean chat) {
         Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + "[§eDEBUG§7]" + message);
-        if(serverChat){
+        if (chat) {
             Bukkit.getServer().broadcastMessage(Misc.PREFIX + "§8[§eDEBUG§8]§7" + message);
         }
+    }
+
+
+
+    public static void teleportSpawn(Player p) {
+        Json spawn = FileManager.getSpawn();
+
+        Location loc = new Location(Bukkit.getWorld(spawn.getString("Spawn.world")),  spawn.getDouble("Spawn.x"), spawn.getDouble("Spawn.y"),
+                spawn.getDouble("Spawn.z"), (float)( spawn.getDouble("Spawn.yaw")), (float) spawn.getDouble("Spawn.pitch"));
+
+
+
+        p.teleport(loc);
+    }
+
+    public static void setSpawn(Location loc) {
+        BetaCore.debug("ID: " + Bukkit.getServerId() + " Name: " + Bukkit.getServer().getName());
+        Json spawn = FileManager.getSpawn();
+
+        spawn.set("Spawn.world", loc.getWorld().getName());
+
+        spawn.set("Spawn.x", loc.getBlockX() + 0.01);
+        spawn.set("Spawn.y", loc.getBlockY() + 0.01);
+        spawn.set("Spawn.z", loc.getZ() + 0.01);
+        spawn.set("Spawn.yaw", Math.round(loc.getYaw()) + 0.1);
+        spawn.set("Spawn.pitch", Math.round(loc.getPitch()) + 0.1);
     }
 }

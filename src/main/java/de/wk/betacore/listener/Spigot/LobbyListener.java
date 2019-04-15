@@ -94,8 +94,7 @@ public class LobbyListener implements Listener {
                 try {
                     ConfigManager cm = new ConfigManager();
                     player.spigot().respawn();
-                    player.teleport(cm.getConfig().getLocation("Spawn"));
-
+                    BetaCore.teleportSpawn(player);
 
                 } catch (final Throwable t) {//Falsche Version, Craftbukkit bzw < 1.8
                     Commons.tell(player, "§cDu konntest nicht automatisch respawn werden");

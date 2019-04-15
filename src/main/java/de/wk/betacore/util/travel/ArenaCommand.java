@@ -27,9 +27,11 @@ public class ArenaCommand implements CommandExecutor {
         Player player = (Player) sender;
         if (args[0].equals("1")) {
             player.sendMessage("§aDu wirst zur Arena§7-§a1 verbunden.");
+            fs.connect(player, "Arena-1");
             player.performCommand("/server Arena-1");
         } else if (args[0].equals("2")) {
             player.sendMessage("§aDu wirst zur Arena§7-§a2 verbunden.");
+            fs.connect(player, "Arena-2");
             player.performCommand("/server Arena-2");
         } else {
             player.sendMessage(Misc.getPREFIX() + "§cDiese Arena existiert nicht.");
