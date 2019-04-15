@@ -1,9 +1,10 @@
 # Betacore
 This is an OpenSource Minecraft Core
 
-Authors: LinksKleineMitte, YoyoNow, Chaoscaot444, Zeanon
+Authors: linksKeineMitte, YoyoNow, Chaoscaot444, Zeanon
+Special thanks to: Exceptionflug.
 
-Version: 1.0 Alpha
+Version: 0.3
 
 Licences: GLP V3
 
@@ -19,7 +20,6 @@ Licences: GLP V3
 * Money
   
 **Comming:**
-* Teams (Priority : 1)
 * Ban/Kick/Mute (Priority : 3)
 * Logs (Priority : 2)
 * Schems (Priority : 3)
@@ -56,7 +56,12 @@ You can download a restart script or see how to setup a restart scrips in the wi
 Used Libary's [MIT-License]: 
 
 Schemloader: Copyright (c) 2019 Exceptionflug,EsGibtKeineMitte
+
 SchemOrg: Copyright (c) 2019 Exceptionflug,EsGibtKeineMitte
+
+NNXCore: Copyright (c) 2019 Exceptionflug
+
+LightningStorage: Copyright (c) 2019 EsGibtKeineMitte
 
 
 
