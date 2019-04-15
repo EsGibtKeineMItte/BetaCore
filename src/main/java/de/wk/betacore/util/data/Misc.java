@@ -17,6 +17,12 @@ betacore.setupplayer
 betacore.debug
 
 betacore.setrank.
+
+betacore.update
+
+
+//Proxy:
+betacore.servers
  */
 
 

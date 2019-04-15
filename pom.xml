@@ -51,6 +51,8 @@
                                     </excludes>
                                 </filter>
                             </filters>
+                            <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml
+                            </dependencyReducedPomLocation>
                         </configuration>
                     </execution>
                 </executions>
@@ -86,6 +88,10 @@
         <repository>
             <id>WorldEdit</id>
             <url>http://maven.sk89q.com/repo/</url>
+        </repository>
+        <repository>
+            <id>aikar</id>
+            <url>https://repo.aikar.co/content/groups/aikar/</url>
         </repository>
     </repositories>
 
@@ -155,14 +161,12 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/worldedit.jar</systemPath>
         </dependency>
-        <!--
-                <dependency>
-                    <groupId>com.sk89q.worldedit</groupId>
-                    <artifactId>worldedit-bukkit</artifactId>
-                    <version>LATEST</version>
-                    <scope>provided</scope>
-                </dependency>
 
-                -->
+        <dependency>
+            <groupId>co.aikar</groupId>
+            <artifactId>acf-bungee</artifactId> <!-- Don't forget to replace this -->
+            <version>0.5.0-SNAPSHOT</version> <!-- Replace this as well -->
+        </dependency>
+
     </dependencies>
 </project>

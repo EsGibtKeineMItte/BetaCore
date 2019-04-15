@@ -1,6 +1,5 @@
 package de.wk.betacore;
 
-import com.google.common.annotations.Beta;
 import com.minnymin.command.CommandFramework;
 import de.exceptionflug.schemloader.cmd.CommandSchem;
 import de.exceptionflug.schemorg.cmd.CommandSchemorg;
@@ -21,17 +20,13 @@ import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.CommandRemover;
 import de.wk.betacore.util.ranksystem.PermissionManager;
 import de.wk.betacore.util.ranksystem.PermissionsListener;
-import de.wk.betacore.util.travel.ArenaCommand;
-import de.wk.betacore.util.travel.BauCommand;
-import de.wk.betacore.util.travel.FastTravelSystem;
-import de.wk.betacore.util.travel.LobbyCommand;
+
 import exceptionflug.schemloader.cmd.CommandSchemloader;
 import lombok.Getter;
 import net.thecobix.brew.main.Brew;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.entity.Player;
@@ -94,7 +89,6 @@ public final class BetaCore extends JavaPlugin {
         getCommand("setspawn").setExecutor(new SetSpawnCommand());
         getCommand("rl").setExecutor(new ReloadCommand());
         getCommand("lag").setExecutor(new LagCommand());
-        getCommand("dev").setExecutor(new TeamSzoneServer());
     }
 
     private void regListeners() {
@@ -110,8 +104,6 @@ public final class BetaCore extends JavaPlugin {
                 "/server Lobby-1", "/ws"), this);
         Bukkit.getPluginManager().registerEvents(new TNTTracer(), this);
         this.getServer().getPluginManager().registerEvents(RecordListener.getInstance(), this);
-        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BUNGEECORD");
-        this.getServer().getMessenger().registerIncomingPluginChannel(this, "BUNGEECORD", new FastTravelSystem());
     }
 
     // Remove annoying Native MC Commands
@@ -171,7 +163,6 @@ public final class BetaCore extends JavaPlugin {
         framework.registerCommands(new Update());
         framework.registerCommands(new TeamCommand());
         framework.registerCommands(new TracerCommand());
-        framework.registerCommands(new ServerCommand());
         log("§aDONE");
 
         log("§3Registering Commands & Listeners...");
@@ -224,15 +215,10 @@ public final class BetaCore extends JavaPlugin {
 
         log("§3Getting links though servers");
         if (!cm.getConfig().getBoolean("useAsBauServer")) {
-            getCommand("bau").setExecutor(new BauCommand());
-            getCommand("arena").setExecutor(new ArenaCommand());
-            getCommand("l").setExecutor(new LobbyCommand());
-            getCommand("hub").setExecutor(new LobbyCommand());
+
             log("Using the server as normal server.");
         } else {
-            getCommand("arena").setExecutor(new ArenaCommand());
-            getCommand("l").setExecutor(new LobbyCommand());
-            getCommand("hub").setExecutor(new LobbyCommand());
+
             log("§3Enabling SchemOrg");
             try {
                 framework.registerCommands(new CommandSchemorg());
@@ -315,6 +301,13 @@ public final class BetaCore extends JavaPlugin {
 
     public static void log(String message) {
         Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + message);
+    }
+
+    public static void log(String message, boolean chat) {
+        Bukkit.getConsoleSender().sendMessage(Misc.CONSOLEPREFIX + message);
+        if(chat){
+            Bukkit.getServer().broadcastMessage(Misc.PREFIX + message);
+        }
     }
 
     public static void debug(String message) {

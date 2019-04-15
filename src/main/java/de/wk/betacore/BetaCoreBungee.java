@@ -1,12 +1,11 @@
 package de.wk.betacore;
 
 import de.leonhard.storage.Json;
-import de.wk.betacore.commands.bungee.BungeeUpdate;
-import de.wk.betacore.commands.bungee.KickSystem;
-import de.wk.betacore.commands.bungee.PingCommand;
+import de.wk.betacore.commands.bungee.*;
 import de.wk.betacore.datamanager.FileManager;
 import de.wk.betacore.environment.Environment;
 import de.wk.betacore.listener.Bungee.ConnectionListener;
+import de.wk.betacore.listener.Bungee.JoinHandler;
 import de.wk.betacore.listener.Bungee.PermissionListenerBungee;
 import de.wk.betacore.listener.Bungee.PingListenerB;
 import de.wk.betacore.util.ConnectionHolder;
@@ -33,12 +32,16 @@ public class BetaCoreBungee extends Plugin {
         this.getProxy().getPluginManager().registerCommand(this, new PingCommand());
         this.getProxy().getPluginManager().registerCommand(this, new KickSystem());
         this.getProxy().getPluginManager().registerCommand(this, new BungeeUpdate("b"));
+        this.getProxy().getPluginManager().registerCommand(this, new ConnectCommand("connect", "betacore.servers", "con"));
+        this.getProxy().getPluginManager().registerCommand(this, new BauCommand("bau", "betacore.servers", "bauserver"));
+        this.getProxy().getPluginManager().registerCommand(this, new LobbyCommand("l", "betacore.servers", "hub", "lobby"));
     }
 
     private void regListeners() {
         this.getProxy().getPluginManager().registerListener(this, new PingListenerB());
         this.getProxy().getPluginManager().registerListener(this, new ConnectionListener());
         this.getProxy().getPluginManager().registerListener(this, new PermissionListenerBungee());
+        this.getProxy().getPluginManager().registerListener(this, new JoinHandler());
     }
 
     @Override

@@ -13,7 +13,6 @@ public class WorldSystemUtil implements Listener {
     @EventHandler
     public void onCmd(PlayerCommandPreprocessEvent e) {
         if(!(cm.getConfig().getBoolean("useAsBauServer"))){
-            BetaCore.debug("Werde nicht als BauServer genutzt.");
             return;
         }
 

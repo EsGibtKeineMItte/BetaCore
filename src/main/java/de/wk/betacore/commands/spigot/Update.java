@@ -20,9 +20,18 @@ public class Update {
         Process p;
 
         try {
+            if (System.getProperties().contains("Windows")) {//FOR NNX:D
+                p = Runtime.getRuntime().exec("copy ../target/Betacore-1.0-SNAPSHOT.jar plugins/Betacore-1.0-SNAPSHOT.jar");
+                p.waitFor();
+                BetaCoreBungee.log("Update erfolgreich.");
+                BetaCoreBungee.log("Stoppe Server...");
+                BetaCoreBungee.getInstance().getProxy().stop("Server muss neu starten...");
+                return;
+            }
+
             p = Runtime.getRuntime().exec("cp ../target/Betacore-1.0-SNAPSHOT.jar plugins/Betacore-1.0-SNAPSHOT.jar");
             p.waitFor();
-            BetaCore.log("Kopiervorgang erfolgreich. Reloade nun");
+            BetaCore.log("Kopiervorgang erfolgreich. Reloade nun", true);
             Bukkit.getServer().reload();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
