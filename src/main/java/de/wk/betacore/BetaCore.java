@@ -163,6 +163,8 @@ public final class BetaCore extends JavaPlugin {
         framework.registerCommands(new Update());
         framework.registerCommands(new TeamCommand());
         framework.registerCommands(new TracerCommand());
+        framework.registerCommands(new Update());
+        framework.registerCommands(new BuildInformationCommand());
         log("§aDONE");
 
         log("§3Registering Commands & Listeners...");
@@ -247,10 +249,13 @@ public final class BetaCore extends JavaPlugin {
         }
         log("§aDone");
 
+        log("§6Successfully enabled BetaCore" + Misc.CODENAME + "v." + Misc.VERSION + ".");
+        log("");
+
         log("§7=====§eBUILDINFORMATIONEN§7======");
 
 
-        System.out.println("");
+        log("");
 
         log("§eGlobal-Settings:");
 
@@ -270,7 +275,6 @@ public final class BetaCore extends JavaPlugin {
         log("§eDependency's:");
         log("Brew: " + (Environment.isBrew() ? "§atrue" : "§cfalse"));
         log("WorldEdit: " + (Environment.isWorldedit() ? "§atrue" : "§cfalse"));
-        log("§6Successfully enabled BetaCore" + Misc.CODENAME + "v." + Misc.VERSION + ".");
     }
 
     @Override
@@ -326,12 +330,13 @@ public final class BetaCore extends JavaPlugin {
     public static void teleportSpawn(Player p) {
         Json spawn = FileManager.getSpawn();
 
-        Location loc = new Location(Bukkit.getWorld(spawn.getString("Spawn.world")),  spawn.getDouble("Spawn.x"), spawn.getDouble("Spawn.y"),
-                spawn.getDouble("Spawn.z"), (float)( spawn.getDouble("Spawn.yaw")), (float) spawn.getDouble("Spawn.pitch"));
+        try {
+            Location loc = new Location(Bukkit.getWorld(spawn.getString("Spawn.world")), spawn.getDouble("Spawn.x"), spawn.getDouble("Spawn.y"),
+                    spawn.getDouble("Spawn.z"), (float) (spawn.getDouble("Spawn.yaw")), (float) spawn.getDouble("Spawn.pitch"));
 
-
-
-        p.teleport(loc);
+            p.teleport(loc);
+        }catch (Exception ignored){
+        }
     }
 
     public static void setSpawn(Location loc) {

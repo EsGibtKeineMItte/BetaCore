@@ -15,7 +15,6 @@ import lombok.Getter;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
-
 import java.sql.SQLException;
 
 
@@ -63,10 +62,7 @@ public class BetaCoreBungee extends Plugin {
 
         mysql = new Json("mysql", "../Data");
 
-        if(mysql == null){
-            debug("Warum ist mysql null?!");
-            return;
-        }
+
 
 
         if (mysql.getBoolean("useMySQL")) {

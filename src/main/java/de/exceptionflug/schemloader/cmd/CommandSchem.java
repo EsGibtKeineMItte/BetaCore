@@ -130,7 +130,7 @@ public class CommandSchem implements CommandExecutor {
                         }
                         for (File f : schems) {
                             try {
-                                if (BetaCore.brew.getSchematicUtil().isGiantSchematic(f) == false) {
+                                if (!BetaCore.brew.getSchematicUtil().isGiantSchematic(f)) {
                                     continue;
                                 }
                             } catch (IOException e) {

@@ -15,7 +15,7 @@ import java.io.IOException;
 public class Update {
 
 
-    @Command(name = "update", aliases = {"up"}, description = "Command, um das FightsSystem zu updaten ", permission = "fight.update")
+    @Command(name = "update", aliases = {"u"}, description = "Command, um das FightsSystem zu updaten ", permission = "fight.update")
     public static void onCopy(CommandArgs args) {
         Process p;
 
@@ -23,9 +23,8 @@ public class Update {
             if (System.getProperties().contains("Windows")) {//FOR NNX:D
                 p = Runtime.getRuntime().exec("copy ../target/Betacore-1.0-SNAPSHOT.jar plugins/Betacore-1.0-SNAPSHOT.jar");
                 p.waitFor();
-                BetaCoreBungee.log("Update erfolgreich.");
-                BetaCoreBungee.log("Stoppe Server...");
-                BetaCoreBungee.getInstance().getProxy().stop("Server muss neu starten...");
+                BetaCore.log("Kopiervorgang erfolgreich. Reloade nun", true);
+                Bukkit.getServer().reload();
                 return;
             }
 
@@ -39,7 +38,7 @@ public class Update {
         }
     }
 
-    @Command(name = "update.playerdata", aliases = {"up.playerdata"}, description = "Command, um das FightsSystem zu updaten.", permission = "fight.update")
+    @Command(name = "update.playerdata", aliases = {"update.playerdata"}, description = "Command, um das FightsSystem zu updaten.", permission = "fight.update")
     public static void onDelete(CommandArgs args) {
 
         File destination = new File("/home/leonhard/IdeaProjects/Betacore/Data/playerdata.json");

@@ -1,5 +1,6 @@
 package de.wk.betacore.commands.spigot;
 
+import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.listener.Spigot.JoinHandler;
 import de.wk.betacore.util.data.Misc;
@@ -32,10 +33,8 @@ public class ReloadCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             player.setGameMode(GameMode.CREATIVE);
-            if (cm.getConfig().getLocation("Spawn") != null) {
-                player.sendMessage("§aDu wurdest zum Spawn teleportiert.");
-                player.teleport(cm.getConfig().getLocation("Spawn"));
-            }
+
+            BetaCore.teleportSpawn(player);
         }
         for (Player e : Bukkit.getOnlinePlayers()) {
             JoinHandler joinHandler = new JoinHandler();
