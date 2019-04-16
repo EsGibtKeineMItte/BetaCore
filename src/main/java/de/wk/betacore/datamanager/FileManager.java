@@ -30,6 +30,7 @@ public class FileManager {
         bungeePerms = new Json("bungeeperms", path);
         mysql = new Json("mysql", path);
         spawn = new Json("spawn", "plugins/BetaCore");
+        Environment.debug("Path" + path);
 
     }
 
@@ -48,7 +49,6 @@ public class FileManager {
 
     public static Json getPlayerData() {
         return getJson(playerData);
-
     }
 
     public static Json getTeams() {

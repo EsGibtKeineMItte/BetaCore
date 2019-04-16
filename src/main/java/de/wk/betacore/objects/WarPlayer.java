@@ -19,7 +19,7 @@ import java.util.UUID;
 public class WarPlayer implements PlayerDataFactory {
 
 
-    static Json data = FileManager.getPlayerData();
+    private static final Json DATA = new Json("playerdata", PATH);
 
     @Getter
     public final UUID uuid;
@@ -41,14 +41,17 @@ public class WarPlayer implements PlayerDataFactory {
         if (!(Environment.isMysql())) {
 
             //Data from Json
-            this.firstjoin = data.getString(uuid.toString() + ".firstjoin");
-            this.rank = Rank.valueOf(data.getString(uuid.toString() + ".rank"));
-            this.money = data.getInt(uuid.toString() + ".money");
-            this.firstjoin = data.getString(uuid.toString() + ".firstjoin");
-            this.lastjoin = data.getString(uuid.toString() + ".lastjoin");
-            this.team = data.getString(uuid.toString() + ".wsteam");
-            this.wsrank = data.getInt(uuid.toString() + ".wsrank");
-            this.fights = data.getInt(uuid.toString() + ".fights");
+            this.firstjoin = DATA.getString(uuid.toString() + ".firstjoin");
+            this.rank = Rank.valueOf(DATA.getString(uuid.toString() + ".rank"));
+            this.money = DATA.getInt(uuid.toString() + ".money");
+            this.firstjoin = DATA.getString(uuid.toString() + ".firstjoin");
+            this.lastjoin = DATA.getString(uuid.toString() + ".lastjoin");
+            this.team = DATA.getString(uuid.toString() + ".wsteam");
+            this.wsrank = DATA.getInt(uuid.toString() + ".wsrank");
+            this.fights = DATA.getInt(uuid.toString() + ".fights");
+            this.banned = DATA.getBoolean(uuid.toString() + ".banned");
+            this.muted = DATA.getBoolean(uuid.toString() + ".muted");
+
 
 
             //Assigments
@@ -70,23 +73,23 @@ public class WarPlayer implements PlayerDataFactory {
                 rs2.next();
                 String rank = rs2.getString("RANK");
                 this.money = rs2.getInt("MONEY");
-                this.firstjoin = data.getString(uuid.toString() + ".firstjoin");
-                this.lastjoin = data.getString(uuid.toString() + ".lastjoin");
-                this.team = data.getString(uuid.toString() + ".wsteam");
-                this.wsrank = data.getInt(uuid.toString() + ".wsrank");
-                this.fights = data.getInt(uuid.toString() + ".fights");
+                this.firstjoin = DATA.getString(uuid.toString() + ".firstjoin");
+                this.lastjoin = DATA.getString(uuid.toString() + ".lastjoin");
+                this.team = DATA.getString(uuid.toString() + ".wsteam");
+                this.wsrank = DATA.getInt(uuid.toString() + ".wsrank");
+                this.fights = DATA.getInt(uuid.toString() + ".fights");
                 if (isInWarShipTeam()) {
                     this.wsteam = new Team(team);
                 }
 
                 this.rank = Rank.valueOf(rank);
                 this.name = name;
-                this.banned = data.getBoolean(uuid.toString() + ".banned");
-                this.muted = data.getBoolean(uuid.toString() + ".muted");
+                this.banned = DATA.getBoolean(uuid.toString() + ".banned");
+                this.muted = DATA.getBoolean(uuid.toString() + ".muted");
 
-                data.set(uuid.toString() + ".money", this.money);
-                data.set(uuid.toString() + ".rank", rank);
-                data.set(uuid.toString() + ".name", name);
+                DATA.set(uuid.toString() + ".money", this.money);
+                DATA.set(uuid.toString() + ".rank", rank);
+                DATA.set(uuid.toString() + ".name", name);
             } else {
                 throw new NullPointerException("Es wurde versucht einen War-Player zu erstellen, welcher nicht in den Datenbanken existiert.");
             }
@@ -98,17 +101,17 @@ public class WarPlayer implements PlayerDataFactory {
     }
 
     public void setWarShipTeam(String teamName) {
-        data.set(uuid + ".wsteam", teamName);
+        DATA.set(uuid + ".wsteam", teamName);
 
     }
 
     public String getTeamName() {
         Environment.debug("UUID: " + uuid);
-        return data.getString(uuid + ".wsteam");
+        return DATA.getString(uuid + ".wsteam");
     }
 
-    public boolean isBanned() {
-        return banned;
+    public boolean isBanned(){
+        return PlayerDataFactory.isBanned(uuid);
     }
 
     public boolean isMuted() {

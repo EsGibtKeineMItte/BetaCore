@@ -25,9 +25,5 @@ public class DataSetter implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         WarPlayer wp = new WarPlayer(player.getUniqueId(), e.getPlayer().getName());
-
-
-
-        LocalDate today = LocalDate.now();
     }
 }

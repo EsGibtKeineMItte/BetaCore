@@ -4,6 +4,7 @@ package de.wk.betacore.commands.spigot;
 import de.leonhard.storage.Json;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.FileManager;
+import de.wk.betacore.datamanager.PlayerDataFactory;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.RankSystem;
 import org.bukkit.Bukkit;
@@ -40,20 +41,8 @@ public class PlayerInfoCommand implements CommandExecutor {
             sender.sendMessage("§6Rank: §7" + RankSystem.getRank(Bukkit.getOfflinePlayer(args[0]).getUniqueId()).getColor() + RankSystem.getRank(Bukkit.getOfflinePlayer(args[0]).getUniqueId()));
             sender.sendMessage("§6Erster Join: §7" + data.getString(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".firstjoin"));
             sender.sendMessage("§6Letzer Join: §7" + data.getString(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".lastjoin"));
-            if (data.getBoolean(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".muted")) {
-                sender.sendMessage("§6Muted: §aTRUE");
-
-            } else {
-                sender.sendMessage("§6Muted: §cFALSE");
-            }
-
-            if (data.getBoolean(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".banned")) {
-                sender.sendMessage("§6Banned: §aTRUE");
-            } else {
-                sender.sendMessage("§6Banned: §cFALSE");
-            }
-
-
+            sender.sendMessage("§6Banned: " + (PlayerDataFactory.isBanned(Bukkit.getOfflinePlayer(args[0]).getUniqueId()) ? "§aTrue" : "§cFalse"));
+            sender.sendMessage("§6Muted: " + (data.getBoolean(Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString() + ".muted") ? "§aTrue" : "§cFalse"));
             sender.sendMessage("§6Server-Fights: §7" + data.getInt(uuid + ".fights"));
             sender.sendMessage("§6WSRank: §7 " + data.getInt(uuid + ".wsrank"));
 

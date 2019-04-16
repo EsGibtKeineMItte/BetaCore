@@ -23,22 +23,22 @@ public class BuildInformationCommand {
 
         args.getSender().sendMessage("§eGlobal-Settings:");
 
-        args.getSender().sendMessage("Plattform: " + (Environment.isSpigot() ? "§3Spigot" : "§3BungeeCord"));
-        args.getSender().sendMessage("MySQL: " + (cm.getGlobalConfig().getBoolean("UseMySQL") ? "§atrue" : "§cfalse"));
+        args.getSender().sendMessage("§7Plattform: " + (Environment.isSpigot() ? "§3Spigot" : "§3BungeeCord"));
+        args.getSender().sendMessage("§7MySQL: " + (cm.getGlobalConfig().getBoolean("UseMySQL") ? "§atrue" : "§cfalse"));
 
 
-        args.getSender().sendMessage("Chatfilter: " + (cm.getConfig().getBoolean("useDefaultChatFilter") ? "§atrue" : "§cfalse"));
-        args.getSender().sendMessage("Anti-LaggSystem: " + (cm.getConfig().getBoolean("useAntiLaggSystem") ? "§atrue" : "§cfalse"));
+        args.getSender().sendMessage("§7Chatfilter: " + (cm.getConfig().getBoolean("useDefaultChatFilter") ? "§atrue" : "§cfalse"));
+        args.getSender().sendMessage("§7Anti-LaggSystem: " + (cm.getConfig().getBoolean("useAntiLaggSystem") ? "§atrue" : "§cfalse"));
 
         args.getSender().sendMessage("§eServer-Settings:");
 
-        args.getSender().sendMessage("Nutzung als Bau-Server: " + (cm.getConfig().getBoolean("useAsBauServer") ? "§atrue" : "§cfalse"));
-        args.getSender().sendMessage("Nutzung als Arena: " + (cm.getConfig().getBoolean("useAsArena") ? "§atrue" : "§cfalse"));
-        args.getSender().sendMessage("Nutzung als Lobby: " + (cm.getConfig().getBoolean("useAsLobby") ? "§atrue" : "§cfalse"));
+        args.getSender().sendMessage("§7Nutzung als Bau-Server: " + (cm.getConfig().getBoolean("useAsBauServer") ? "§atrue" : "§cfalse"));
+        args.getSender().sendMessage("§7Nutzung als Arena: " + (cm.getConfig().getBoolean("useAsArena") ? "§atrue" : "§cfalse"));
+        args.getSender().sendMessage("§7Nutzung als Lobby: " + (cm.getConfig().getBoolean("useAsLobby") ? "§atrue" : "§cfalse"));
 
         args.getSender().sendMessage("§eDependency's:");
-        args.getSender().sendMessage("Brew: " + (Environment.isBrew() ? "§atrue" : "§cfalse"));
-        args.getSender().sendMessage("WorldEdit: " + (Environment.isWorldedit() ? "§atrue" : "§cfalse"));
+        args.getSender().sendMessage("§7Brew: " + (Environment.isBrew() ? "§atrue" : "§cfalse"));
+        args.getSender().sendMessage("§7WorldEdit: " + (Environment.isWorldedit() ? "§atrue" : "§cfalse"));
 
     }
 

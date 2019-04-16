@@ -12,12 +12,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.UUID;
 
 public interface PlayerDataFactory {
     String PATH = Environment.getPathToDataFolder();
-    Json PLAYER_DATA = FileManager.getPlayerData();
+    Json PLAYER_DATA = new Json("playerdata", PATH);
     Json TEAMS = FileManager.getTeams();
 
 
@@ -84,6 +85,12 @@ public interface PlayerDataFactory {
 
     default void setupWarPlayer(UUID uuid, String name, String joinDate) {
 
+        if (PLAYER_DATA == null) {
+
+        }
+
+        Environment.debug(PATH);
+
         if (Strings.isNullOrEmpty(PLAYER_DATA.getString(uuid.toString() + ".name"))) {
             PLAYER_DATA.set(uuid.toString() + ".name", name);
         }
@@ -105,10 +112,12 @@ public interface PlayerDataFactory {
             PLAYER_DATA.set(uuid.toString() + ".wsrank", 900);
         }
 
-        if (!PLAYER_DATA.getBoolean(uuid.toString() + ".banned")) {
+        if (!(PLAYER_DATA.getBoolean(uuid.toString() + ".banned"))) {//TODO make usable -> Vllt andere Config.
+            Environment.debug(PLAYER_DATA.getBoolean(uuid.toString() + ".banned") + "");
+            Environment.debug("Setze .banned um. " + uuid);
             PLAYER_DATA.set(uuid.toString() + ".banned", false);
         }
-        if (!PLAYER_DATA.getBoolean(uuid.toString() + ".muted")) {
+        if (!(PLAYER_DATA.getBoolean(uuid.toString() + ".muted"))) {
             PLAYER_DATA.set(uuid.toString() + ".muted", false);
         }
         if (PLAYER_DATA.getInt(uuid.toString() + ".fights") == 0) {
@@ -129,4 +138,24 @@ public interface PlayerDataFactory {
         PLAYER_DATA.set(uuid.toString() + ".lastjoin", joinDate);
     }
 
+    static void ban(final UUID uuid) {
+        ArrayList<String> bannedPlayers = new ArrayList<>(getBannedPlayers());
+        bannedPlayers.add(uuid.toString());
+        PLAYER_DATA.set("bannedPlayers", bannedPlayers);
+    }
+
+    static ArrayList<String> getBannedPlayers() {
+        if (PLAYER_DATA.getStringList("bannedPlayers") == null) {
+            return new ArrayList<>();
+        }
+
+        ArrayList<String> result = new ArrayList<>(PLAYER_DATA.getStringList("bannedPlayers"));
+        return result;
+    }
+
+    static boolean isBanned(UUID uuid) {
+        return (getBannedPlayers().contains(uuid.toString()));
+    }
 }
+
+
