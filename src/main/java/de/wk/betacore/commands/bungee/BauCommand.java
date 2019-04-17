@@ -19,10 +19,7 @@ public class BauCommand extends Command {
             sender.sendMessage(Misc.NOTINCONSOLE);
             return;
         }
-        if (strings.length != 0) {
-            sender.sendMessage(Misc.PREFIX + "§7Benutzung: §6/bau");
-            return;
-        }
+
         ProxiedPlayer player = (ProxiedPlayer) sender;
         player.connect(ProxyServer.getInstance().getServerInfo("Bau"));
     }

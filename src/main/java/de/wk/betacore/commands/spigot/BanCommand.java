@@ -24,7 +24,7 @@ public class BanCommand {
         }
         PlayerDataFactory.ban(Bukkit.getOfflinePlayer(args.getArgs(0)).getUniqueId());
         if(Bukkit.getPlayer(args.getArgs(0)) != null){
-            Bukkit.getPlayer(args.getArgs(0)).kickPlayer("Du wurdest gebannt^^");
+            Bukkit.getPlayer(args.getArgs(0)).kickPlayer("Du wurdest gebannt");
         }
     }
 
