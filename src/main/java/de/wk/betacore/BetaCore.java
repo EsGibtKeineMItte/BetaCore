@@ -101,8 +101,9 @@ public final class BetaCore extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PermissionListener(), this);
         Bukkit.getPluginManager().registerEvents(new PermissionsListener("/help", "/bau", "/arena-1",
                 "/arena-2", "/hub", "/l", "/r", "/msg", "/server bau", "/server Arena-1", "/server Arena-2",
-                "/server Lobby-1", "/ws"), this);
+                "/server Lobby-1", "/ws", "/wsk", "/fight", "/arena"), this);
         Bukkit.getPluginManager().registerEvents(new TNTTracer(), this);
+        Bukkit.getPluginManager().registerEvents(new ServerListener(), this);
         this.getServer().getPluginManager().registerEvents(RecordListener.getInstance(), this);
     }
 
@@ -139,8 +140,6 @@ public final class BetaCore extends JavaPlugin {
             Environment.setBrew(true);
             log("Brew wurde gefunden.");
         }
-
-
     }
 
     @Override
@@ -217,8 +216,12 @@ public final class BetaCore extends JavaPlugin {
         log("§aDONE");
 
         log("§3Getting links though servers");
-        if (!cm.getConfig().getBoolean("useAsBauServer")) {
 
+        if(cm.getConfig().getBoolean("useAsLobby")){
+            Bukkit.getPluginManager().registerEvents(new LobbyListener(), this);
+        }
+
+        if (!cm.getConfig().getBoolean("useAsBauServer")) {
             log("Using the server as normal server.");
         } else {
 

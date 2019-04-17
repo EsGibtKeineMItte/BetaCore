@@ -35,7 +35,6 @@ public class ConnectionHolder {
                 return;
             }
             try {
-                BetaCore.debug("Host: " + host + " database: " + database + " port: " + port + " user"+ user + "password: " + password);
                 connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "?user=" + user + "&password=" + password);
                 // Schrank tot gefickt
                 if (Environment.isBungeecord()) {

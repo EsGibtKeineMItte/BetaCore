@@ -1,5 +1,7 @@
 package de.wk.betacore.util.ranksystem;
 
+import de.wk.betacore.BetaCore;
+import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.util.data.Misc;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -32,8 +34,9 @@ public class PermissionsListener implements Listener {
     public void onCMD(PlayerCommandPreprocessEvent e) {
 
         String msg = e.getMessage().toLowerCase();
-
-        if (e.getPlayer().getWorld().getName().equalsIgnoreCase("world") && (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) && (!(allowedCMDs.contains(msg)))) {
+        ConfigManager cm = new ConfigManager();
+        if (e.getPlayer().getWorld().getName().equalsIgnoreCase("world") && (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER))
+                && (!(allowedCMDs.contains(msg))) && (!cm.getConfig().getBoolean("useAsArena"))) {
             e.setCancelled(true);
             e.getPlayer().sendMessage(Misc.PREFIX + "§7Du kannst diesen Befehl hier nicht verwenden");
         } else {
@@ -52,15 +55,15 @@ public class PermissionsListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent e){
-        if(!(e.getMaterial() == Material.SIGN)){
+        if(e.getMaterial() == Material.SIGN){
+            BetaCore.debug("Auf sings darf  man drücken");
             return;
         }
         if(e.getPlayer().hasPermission("betacore.*") || e.getPlayer().hasPermission("betacore.build")){
             return;
         }
-
-        e.setCancelled(true);
         e.getPlayer().sendMessage(Misc.PREFIX + "§cDas darfst du hier nicht.");
+        e.setCancelled(true);
 
     }
 

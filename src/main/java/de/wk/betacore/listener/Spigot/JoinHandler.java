@@ -36,6 +36,8 @@ public class JoinHandler implements Listener {
 
         e.getPlayer().getInventory().clear();
         e.getPlayer().setGameMode(GameMode.ADVENTURE);
+        e.getPlayer().setHealth(20.0);
+        e.getPlayer().setFoodLevel(20);
 
         BetaCore.teleportSpawn(e.getPlayer());
 

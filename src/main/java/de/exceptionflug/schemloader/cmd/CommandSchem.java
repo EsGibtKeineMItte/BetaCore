@@ -544,10 +544,10 @@ public class CommandSchem implements CommandExecutor {
                                     if ((int) blocks[i] == 49) {
                                         count325++;
                                     }
-                                    if (count325 > 1000) {
+                                    if (count325 > 2000) {
                                         if (!notified.contains(49)) {
                                             p.sendMessage(SchemLoader.prefix
-                                                    + "§cDu hast zu viel TNT und Schleimblöcke in deinem WarShip! Du darfst maximal §61000 §cvon beiden insgesamt verbauen!");
+                                                    + "§cDu hast zu viel TNT und Schleimblöcke in deinem WarShip! Du darfst maximal §62000 §cvon beiden insgesamt verbauen!");
                                             allowed = false;
                                             notified.add(49);
                                         }

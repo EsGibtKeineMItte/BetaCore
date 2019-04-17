@@ -25,12 +25,14 @@ public class BetaCoreBungee extends Plugin {
     public boolean restart;
 
     private void regCommands() {
+
         this.getProxy().getPluginManager().registerCommand(this, new PingCommand());
         this.getProxy().getPluginManager().registerCommand(this, new KickSystem());
         this.getProxy().getPluginManager().registerCommand(this, new BungeeUpdate("b"));
         this.getProxy().getPluginManager().registerCommand(this, new ConnectCommand("connect", "betacore.servers", "con"));
         this.getProxy().getPluginManager().registerCommand(this, new BauCommand("bauserver", "betacore.servers","baumeee"));
         this.getProxy().getPluginManager().registerCommand(this, new LobbyCommand("l", "betacore.servers", "hub", "lobby"));
+        this.getProxy().getPluginManager().registerCommand(this, new ArenaCommand("arena", "betacore.servers", "a"));
     }
 
     private void regListeners() {

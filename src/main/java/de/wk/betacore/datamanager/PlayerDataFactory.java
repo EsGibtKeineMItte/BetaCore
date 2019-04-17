@@ -113,8 +113,6 @@ public interface PlayerDataFactory {
         }
 
         if (!(PLAYER_DATA.getBoolean(uuid.toString() + ".banned"))) {//TODO make usable -> Vllt andere Config.
-            Environment.debug(PLAYER_DATA.getBoolean(uuid.toString() + ".banned") + "");
-            Environment.debug("Setze .banned um. " + uuid);
             PLAYER_DATA.set(uuid.toString() + ".banned", false);
         }
         if (!(PLAYER_DATA.getBoolean(uuid.toString() + ".muted"))) {
