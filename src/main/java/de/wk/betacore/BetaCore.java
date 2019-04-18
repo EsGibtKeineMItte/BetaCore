@@ -165,6 +165,7 @@ public final class BetaCore extends JavaPlugin {
         framework.registerCommands(new Update());
         framework.registerCommands(new BuildInformationCommand());
         framework.registerCommands(new BanCommand());
+        framework.registerCommands(new MaintanceCommand());
         log("§aDONE");
 
         log("§3Registering Commands & Listeners...");

@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.UUID;
 
 public interface PlayerDataFactory {
@@ -137,8 +138,14 @@ public interface PlayerDataFactory {
     }
 
     static void ban(final UUID uuid) {
-        ArrayList<String> bannedPlayers = new ArrayList<>(getBannedPlayers());
+        List<String> bannedPlayers = new ArrayList<>(getBannedPlayers());
         bannedPlayers.add(uuid.toString());
+        PLAYER_DATA.set("bannedPlayers", bannedPlayers);
+    }
+
+    static  void unBan(final UUID uuid){
+        List<String> bannedPlayers = new ArrayList<>(getBannedPlayers());
+        bannedPlayers.remove(uuid.toString());
         PLAYER_DATA.set("bannedPlayers", bannedPlayers);
     }
 
