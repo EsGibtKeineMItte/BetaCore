@@ -8,7 +8,6 @@ import de.wk.betacore.datamanager.PlayerDataFactory;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.ranksystem.RankSystem;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

@@ -1,8 +1,5 @@
 package de.wk.betacore.util;
 
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;

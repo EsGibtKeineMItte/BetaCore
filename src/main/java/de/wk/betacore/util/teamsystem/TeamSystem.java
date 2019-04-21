@@ -4,8 +4,6 @@ import de.leonhard.storage.Json;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.FileManager;
-
-
 import de.wk.betacore.util.data.Misc;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;

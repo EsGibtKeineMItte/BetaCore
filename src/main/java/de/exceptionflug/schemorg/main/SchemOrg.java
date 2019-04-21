@@ -3,7 +3,6 @@ package de.exceptionflug.schemorg.main;
 import de.exceptionflug.schemloader.main.SchemLoader;
 import de.exceptionflug.schemorg.util.SchematicPaster;
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.util.data.Misc;
 import net.thecobix.brew.main.Brew;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -13,7 +12,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SchemOrg implements Listener {
 

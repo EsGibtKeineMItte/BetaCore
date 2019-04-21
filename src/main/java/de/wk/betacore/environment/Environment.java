@@ -9,9 +9,6 @@ import de.wk.betacore.util.ConnectionHolder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-
 public class Environment {
 
 

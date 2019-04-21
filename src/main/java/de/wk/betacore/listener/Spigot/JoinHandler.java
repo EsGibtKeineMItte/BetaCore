@@ -3,14 +3,11 @@ package de.wk.betacore.listener.Spigot;
 import de.leonhard.storage.Json;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.appearance.Color;
-import de.wk.betacore.appearance.ScoreboardUtils;
 import de.wk.betacore.appearance.Tablist;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.FileManager;
-import de.wk.betacore.util.moneysystem.MoneySystem;
 import de.wk.betacore.util.ranksystem.Rank;
 import de.wk.betacore.util.ranksystem.RankSystem;
-import de.wk.betacore.util.teamsystem.TeamSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -20,8 +17,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
-
-import java.util.ArrayList;
 
 public class JoinHandler implements Listener {
     private ConfigManager cm = new ConfigManager();

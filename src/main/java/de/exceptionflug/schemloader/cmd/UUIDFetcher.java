@@ -1,5 +1,9 @@
 package net.thecobix.schemloader.cmd;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.mojang.util.UUIDTypeAdapter;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -10,10 +14,6 @@ import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.mojang.util.UUIDTypeAdapter;
 
 @Deprecated
 public class UUIDFetcher {

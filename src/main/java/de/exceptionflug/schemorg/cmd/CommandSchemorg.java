@@ -1,6 +1,5 @@
 package de.exceptionflug.schemorg.cmd;
 
-import com.google.common.annotations.Beta;
 import com.google.common.base.Joiner;
 import com.minnymin.command.Command;
 import com.minnymin.command.CommandArgs;

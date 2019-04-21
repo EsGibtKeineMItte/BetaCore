@@ -1,16 +1,13 @@
 package de.wk.betacore.listener.Bungee;
 
 import de.wk.betacore.BetaCoreBungee;
-import de.wk.betacore.datamanager.FileManager;
 import de.wk.betacore.environment.Environment;
 import de.wk.betacore.objects.WarPlayer;
 import de.wk.betacore.util.MaintanceSystem;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.event.LoginEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
-import sun.applet.Main;
 
 public class ConnectionListener implements Listener {
 

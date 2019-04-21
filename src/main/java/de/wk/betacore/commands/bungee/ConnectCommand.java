@@ -1,6 +1,5 @@
 package de.wk.betacore.commands.bungee;
 
-import de.wk.betacore.BetaCore;
 import de.wk.betacore.BetaCoreBungee;
 import de.wk.betacore.util.data.Misc;
 import net.md_5.bungee.api.CommandSender;

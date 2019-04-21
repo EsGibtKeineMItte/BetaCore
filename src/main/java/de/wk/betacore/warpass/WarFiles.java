@@ -3,7 +3,6 @@ package de.wk.betacore.warpass;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.*;
-import java.util.HashMap;
 
 public class WarFiles {
     File f = new File("plugins//warpass");

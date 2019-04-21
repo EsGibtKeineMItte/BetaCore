@@ -2,7 +2,6 @@ package de.wk.betacore.commands.spigot;
 
 import com.minnymin.command.Command;
 import com.minnymin.command.CommandArgs;
-import de.wk.betacore.BetaCore;
 import de.wk.betacore.objects.WarPlayer;
 import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.StringUtils;

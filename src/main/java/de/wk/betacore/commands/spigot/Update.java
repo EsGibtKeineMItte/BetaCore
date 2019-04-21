@@ -3,9 +3,7 @@ package de.wk.betacore.commands.spigot;
 import com.minnymin.command.Command;
 import com.minnymin.command.CommandArgs;
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.BetaCoreBungee;
 import de.wk.betacore.util.data.Misc;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 
 import java.io.File;

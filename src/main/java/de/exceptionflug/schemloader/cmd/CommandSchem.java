@@ -1,5 +1,34 @@
 package de.exceptionflug.schemloader.cmd;
 
+import com.sk89q.worldedit.*;
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldedit.bukkit.selections.Selection;
+import com.sk89q.worldedit.extent.clipboard.Clipboard;
+import com.sk89q.worldedit.math.transform.Transform;
+import com.sk89q.worldedit.regions.Region;
+import com.sk89q.worldedit.session.ClipboardHolder;
+import com.sk89q.worldedit.world.registry.WorldData;
+import de.exceptionflug.schemloader.main.CheckFile;
+import de.exceptionflug.schemloader.main.SchemLoader;
+import de.wk.betacore.BetaCore;
+import de.wk.betacore.environment.Environment;
+import exceptionflug.invlib.*;
+import exceptionflug.presets.MultiPageInventory;
+import exceptionflug.schemloader.cmd.UUIDFetcher;
+import net.thecobix.brew.main.Brew;
+import net.thecobix.brew.schematic.SGSchematic;
+import net.thecobix.brew.schematic.Schematic;
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,42 +42,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.UUID;
-
-import de.exceptionflug.schemloader.main.CheckFile;
-import de.exceptionflug.schemloader.main.SchemLoader;
-import de.wk.betacore.BetaCore;
-import de.wk.betacore.environment.Environment;
-import exceptionflug.invlib.*;
-import exceptionflug.presets.MultiPageInventory;
-import exceptionflug.schemloader.cmd.UUIDFetcher;
-import net.thecobix.brew.main.Brew;
-import org.apache.commons.lang.exception.ExceptionUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
-
-import com.sk89q.worldedit.EditSession;
-import com.sk89q.worldedit.EmptyClipboardException;
-import com.sk89q.worldedit.IncompleteRegionException;
-import com.sk89q.worldedit.LocalPlayer;
-import com.sk89q.worldedit.LocalSession;
-import com.sk89q.worldedit.WorldEdit;
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import com.sk89q.worldedit.bukkit.selections.Selection;
-import com.sk89q.worldedit.extent.clipboard.Clipboard;
-import com.sk89q.worldedit.math.transform.Transform;
-import com.sk89q.worldedit.regions.Region;
-import com.sk89q.worldedit.session.ClipboardHolder;
-import com.sk89q.worldedit.world.registry.WorldData;
-
-import net.thecobix.brew.schematic.SGSchematic;
-import net.thecobix.brew.schematic.Schematic;
 
 public class CommandSchem implements CommandExecutor {
 

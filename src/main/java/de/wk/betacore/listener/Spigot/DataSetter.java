@@ -9,8 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-import java.time.LocalDate;
-
 public class DataSetter implements Listener {
     ConfigManager cm = new ConfigManager();
 

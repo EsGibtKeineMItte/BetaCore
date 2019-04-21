@@ -2,7 +2,6 @@ package de.wk.betacore.objects;
 
 import de.leonhard.storage.Json;
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.datamanager.FileManager;
 import de.wk.betacore.datamanager.PlayerDataFactory;
 import de.wk.betacore.environment.Environment;
 import de.wk.betacore.util.MySQL;

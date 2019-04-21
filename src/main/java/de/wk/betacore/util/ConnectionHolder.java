@@ -2,14 +2,13 @@ package de.wk.betacore.util;
 
 
 import de.wk.betacore.BetaCore;
-import de.wk.betacore.BetaCoreBungee;
 import de.wk.betacore.environment.Environment;
 import lombok.Getter;
-//import net.md_5.bungee.api.ProxyServer;
 import org.bukkit.Bukkit;
 
 import java.sql.*;
-import java.util.concurrent.TimeUnit;
+
+//import net.md_5.bungee.api.ProxyServer;
 
 public class ConnectionHolder {
 
@@ -22,7 +21,7 @@ public class ConnectionHolder {
 
     private String database;
 
-    //Eine Datenbank (Schrank) ist wie eine Frau, in dem man keinen
+    //Eine Datenbank (Schrank) ist wie eine Frau, in der man keinen
     //Platz verschwenden möchte
 
     public void connect(String host, String database, int port, String user, String password) {

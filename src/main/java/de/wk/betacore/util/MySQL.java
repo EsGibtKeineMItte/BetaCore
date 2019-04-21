@@ -52,8 +52,7 @@ public class MySQL {
                 return;
             }
 
-            connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
-
+            connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "?autoReconnect=true", username, password);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -72,13 +71,12 @@ public class MySQL {
             return;
         }
 
-        if(!(isSetup)){
+        if (!(isSetup)) {
             setup();
         }
 
-        connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
+        connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "?autoReconnect=true", username, password);
     }
-
 
 
     public static PreparedStatement preparedStatement(String query) {

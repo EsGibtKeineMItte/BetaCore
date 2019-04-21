@@ -3,8 +3,6 @@ package de.wk.betacore.commands.spigot;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.util.data.Misc;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

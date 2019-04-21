@@ -75,7 +75,7 @@ public class MaintanceCommand {
 
         MaintanceSystem.addPlayer(Bukkit.getOfflinePlayer(args.getArgs(0)).getUniqueId());
         sender.sendMessage(Misc.PREFIX + "§aDu hast den Spieler: §6" + Bukkit.getOfflinePlayer(args.getArgs(0)).getName() +
-                " §7 zu der Wartungen hinzugefügt.");
+                " §a zu der Wartungen hinzugefügt.");
 
     }
 
@@ -93,7 +93,7 @@ public class MaintanceCommand {
         MaintanceSystem.remove(Bukkit.getOfflinePlayer(args.getArgs(0)).getUniqueId());
 
         sender.sendMessage(Misc.PREFIX + "§aDu hast den Spieler: §6" + Bukkit.getOfflinePlayer(args.getArgs(0)).getName() +
-                " §7 aus der Wartungs entfernt.");
+                " §a aus der Wartungs entfernt.");
     }
 
     @Command(name = "maintance.ban", description = "Bannt einen Spieler, dies ist nur per .json Dateien reversibel", permission = "betacore.maintenance.ban",aliases = {"m.ban"})
@@ -110,6 +110,6 @@ public class MaintanceCommand {
         MaintanceSystem.ban(Bukkit.getOfflinePlayer(args.getArgs(0)).getUniqueId());
 
         sender.sendMessage(Misc.PREFIX + "§aDu hast den Spieler: §6" + Bukkit.getOfflinePlayer(args.getArgs(0)).getName() +
-                " §7 aus der Wartungs entfernt.");
+                " §a aus der Wartungs entfernt.");
     }
 }
