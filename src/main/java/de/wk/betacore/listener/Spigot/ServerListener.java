@@ -25,6 +25,12 @@ public class ServerListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
 
     public void onDie(PlayerDeathEvent e) {
+        ConfigManager cm = new ConfigManager();
+
+        if(cm.getConfig().getBoolean("useAsArena")){
+            return;
+        }
+
         final Player player = e.getEntity();
 
 
@@ -32,11 +38,10 @@ public class ServerListener implements Listener {
             @Override
             public void run() {
                 try {
-                    ConfigManager cm = new ConfigManager();
                     player.spigot().respawn();
                     BetaCore.teleportSpawn(player);
                 } catch (final Throwable t) {//Falsche Version, Craftbukkit bzw < 1.8
-                    Commons.tell(player, "§cDu konntest nicht automatisch respawn werden");
+                    Commons.tell(player, "§cDu konntest nicht automatisch respawnt werden");
                     if (!(t instanceof NoClassDefFoundError)) {//Wenn es nicht an der Version lag.
                         t.printStackTrace();
                     }

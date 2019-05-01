@@ -4,6 +4,7 @@ import de.leonhard.storage.Json;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.datamanager.FileManager;
+import de.wk.betacore.objects.WarPlayer;
 import de.wk.betacore.util.data.Misc;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -80,7 +81,7 @@ public class TeamSystem {
 
     public static Map<String, Integer> getTeamList() {
         HashMap<String, Integer> teamMap = new HashMap<>();
-        for(String teamName: getActiveTeams()){
+        for (String teamName : getActiveTeams()) {
             teamMap.put(teamName, teams.getInt(teamName + ".elo"));
         }
         return sortByValue(teamMap);
@@ -98,11 +99,15 @@ public class TeamSystem {
         ArrayList<String> teamMembers = new ArrayList<String>(teams.getStringList(teamName + ".members"));
         teamMembers.add(player.getUniqueId().toString());
         teams.set(teamName + ".members", teamMembers);
+        try {
+            WarPlayer wp = new WarPlayer(player.getUniqueId(), player.getName());
+            wp.setWarShipTeam(teamName);
+        } catch (Exception ignored) {
+
+        }
         teamMembers.clear();
 
     }
-
-
 
 
     public List<String> getTeamMembers(String teamName) {
@@ -129,7 +134,7 @@ public class TeamSystem {
     }
 
 
-    public  void joinTeam(String teamName, Player player) {
+    public boolean joinTeam(String teamName, Player player) {
         if (!(teamExists(teamName))) {
             throw new NullPointerException("Es wurde versucht, einem Team beizutreten, welches nicht existiert.");
         }
@@ -138,17 +143,17 @@ public class TeamSystem {
         }
         ArrayList<String> invitations = new ArrayList<>(teams.getStringList(teamName + ".invitations")); //Kann die null sein?
         if (!(invitations.contains(player.getUniqueId().toString()))) {
-            player.sendMessage("Du bist nicht in dieses Team eingeladen.");
-            return;
+            return false;
         }
         invitations.remove(player.getUniqueId().toString());
+
+        teams.set(teamName + ".invitations", invitations);
+
         addTeamMember(teamName, player);
 
-        player.sendMessage(Misc.PREFIX + "§aDu bist dem Team §6" + teamName + " §aerfolgreich beigetreten");
+        return true;
 
     }
-
-
 
 
     public static ArrayList<String> getActiveTeams() {
@@ -186,7 +191,7 @@ public class TeamSystem {
         ArrayList<String> invitations = new ArrayList<>(teams.getStringList(teamName + ".invitations"));
         invitations.add(player.getUniqueId().toString());
 
-        teams.set(teamName + "invitations", invitations);
+        teams.set(teamName + ".invitations", invitations);
 
     }
 

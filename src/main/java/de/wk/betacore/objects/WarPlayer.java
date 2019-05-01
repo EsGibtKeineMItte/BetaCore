@@ -101,7 +101,6 @@ public class WarPlayer implements PlayerDataFactory {
 
     public void setWarShipTeam(String teamName) {
         DATA.set(uuid + ".wsteam", teamName);
-
     }
 
     public String getTeamName() {

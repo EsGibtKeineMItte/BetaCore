@@ -40,31 +40,16 @@ public class PermissionsListener implements Listener {
             e.setCancelled(true);
             e.getPlayer().sendMessage(Misc.PREFIX + "§7Du kannst diesen Befehl hier nicht verwenden");
         } else {
-           // e.getPlayer().sendMessage("Du darfst den Command " + msg + " auf der Welt " + e.getPlayer().getWorld().getName() + " verwenden.");
+            // e.getPlayer().sendMessage("Du darfst den Command " + msg + " auf der Welt " + e.getPlayer().getWorld().getName() + " verwenden.");
         }
     }
 
     @EventHandler
-    public void onBlockBreak(BlockBreakEvent e){
-        if(e.getPlayer().getWorld().getName().equals("world") && (!(e.getPlayer().hasPermission("betacore.build"))) && (!(e.getPlayer().hasPermission("betacore.*")))){
+    public void onBlockBreak(BlockBreakEvent e) {
+        if (e.getPlayer().getWorld().getName().equals("world") && (!(e.getPlayer().hasPermission("betacore.build"))) && (!(e.getPlayer().hasPermission("betacore.*")))) {
             e.setCancelled(true);
             e.getPlayer().sendMessage(Misc.PREFIX + "§cDas darfst du hier nicht.");
-            return;
         }
-    }
-
-    @EventHandler
-    public void onInteract(PlayerInteractEvent e){
-        if(e.getMaterial() == Material.SIGN){
-            BetaCore.debug("Auf sings darf  man drücken");
-            return;
-        }
-        if(e.getPlayer().hasPermission("betacore.*") || e.getPlayer().hasPermission("betacore.build")){
-            return;
-        }
-        e.getPlayer().sendMessage(Misc.PREFIX + "§cDas darfst du hier nicht.");
-        e.setCancelled(true);
-
     }
 
 

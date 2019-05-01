@@ -7,6 +7,7 @@ import de.wk.betacore.util.data.Misc;
 import de.wk.betacore.util.misc.StringUtils;
 import de.wk.betacore.util.teamsystem.Team;
 import de.wk.betacore.util.teamsystem.TeamSystem;
+import net.md_5.bungee.api.ProxyServer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -43,6 +44,7 @@ public class TeamCommand {
                 return;
             }
 
+
             if (wp.isInWarShipTeam()) {
                 player.sendMessage("§6Team: §7" + wp.getTeamName());
                 player.sendMessage("§6Kürzel: §7" + wp.getTeam().getShortName());
@@ -51,12 +53,21 @@ public class TeamCommand {
                 player.sendMessage("§6Gewonnene:\n-öffentliche Kämpfe: §7" + wp.getTeam().getWonPublicFights());
                 player.sendMessage("§6-private Kämpfe: §7" + wp.getTeam().getWonPublicFights());
                 player.sendMessage("§6-Events: §7" + wp.getTeam().getWonPrivateFights());
+                player.sendMessage("§6Member: ");
+                for (String teamMember : wp.getTeam().getTeamMembers()) {
+                    if (Bukkit.getOfflinePlayer(UUID.fromString(teamMember)) != null) {
+                        player.sendMessage("§6- §e " + Bukkit.getOfflinePlayer(UUID.fromString(teamMember)).getName());
+                    }
+                }
+
+
                 //INFOS
             } else {
                 player.sendMessage(Misc.PREFIX + "§7Du bist in keinem WarShip-Team.");
             }
         } else if (args.getArgs().length == 1) {
-            if (!(TeamSystem.isActiveWarShipTeam(args.getArgs(0)))) { args.getSender().sendMessage(Misc.PREFIX + "§cDieses Team existiert nicht");
+            if (!(TeamSystem.isActiveWarShipTeam(args.getArgs(0)))) {
+                args.getSender().sendMessage(Misc.PREFIX + "§cDieses Team existiert nicht");
                 return;
             }
             Team checked = new Team(args.getArgs(0));
@@ -68,71 +79,82 @@ public class TeamCommand {
             player.sendMessage("§6Gewonnene:\n-öffentliche Kämpfe: §7" + checked.getWonPublicFights());
             player.sendMessage("§6-private Kämpfe: §7" + checked.getWonPublicFights());
             player.sendMessage("§6-Events: §7" + checked.getWonPrivateFights());
+            for (String teamMember : checked.getTeamMembers()) {
+                if (Bukkit.getOfflinePlayer(UUID.fromString(teamMember)) != null) {
+                    player.sendMessage("§6- §e " + Bukkit.getOfflinePlayer(UUID.fromString(teamMember)).getName());
+                }
+            }
 
         }
     }
-
 
 
     @Command(name = "team.list", description = "Command, um Teams zu erstellen und zu verwalten", aliases = {"wst.list"})
     public void onList(CommandArgs args) {
         args.getSender().sendMessage("§7Aktive WarShip Teams:");
         int i = 1;
-        for(String key: TeamSystem.getTeamList().keySet()){
-            args.getSender().sendMessage(Misc.PREFIX + ChatColor.GOLD + i + ": " + key  + " §7- " + TeamSystem.getTeamList().get(key));
+        for (String key : TeamSystem.getTeamList().keySet()) {
+            args.getSender().sendMessage(Misc.PREFIX + ChatColor.GOLD + i + ": " + key + " §7- " + TeamSystem.getTeamList().get(key));
             i++;
         }
     }
 
     @Command(name = "team.leave", description = "Command, um Teams zu erstellen und zu verwalten", aliases = {"wst.leave"})
 
-    public void leave(CommandArgs args){
-        if(!(args.getSender() instanceof Player)){
+    public void leave(CommandArgs args) {
+        if (!(args.getSender() instanceof Player)) {
             args.getSender().sendMessage(Misc.NOTINCONSOLE);
             return;
         }
         Player player = (Player) args.getSender();
         WarPlayer wp = new WarPlayer(player.getUniqueId(), player.getName());
 
-        if(!(wp.isInWarShipTeam())){
+        if (!(wp.isInWarShipTeam())) {
             player.sendMessage(Misc.PREFIX + "§cDu bist in keinem WarShipTeam, welches du verlassen könntest");
             return;
         }
 
-        if(wp.getTeam().getTeamAdmin().toString().equals(wp.UUID)){
+        if (wp.getTeam().getTeamAdmin().toString().equals(wp.UUID)) {
             player.sendMessage(Misc.PREFIX + "§7Du bist der Admin des Teams und kannst es nicht verlassen.\n§7Nutze §6/team delete§7 um dein Team zu löschen.");
             return;
         }
-
-        wp.getTeam();
+        wp.setWarShipTeam("");
         TeamSystem.remove(wp.getTeamName());
     }
 
 
     @Command(name = "team.join", description = "Command, um Teams zu erstellen und zu verwalten", aliases = {"wst.join"}, inGameOnly = true)
-    public void onJoin(CommandArgs args){
-        if(args.getArgs().length != 1){
+    public void onJoin(CommandArgs args) {
+        if (args.getArgs().length != 1) {
             args.getSender().sendMessage(Misc.PREFIX + "§7Benutzung: §6/team join §7<§6Teamname§7>");
             return;
         }
         Player player = (Player) args.getSender();
         WarPlayer wp = new WarPlayer(player.getUniqueId(), player.getName());
 
+        if (wp.isInWarShipTeam()) {
+            player.sendMessage(Misc.PREFIX + "§7Um einem neuen Team beitreten zu können, musst du zuerst dein altes verlassen.");
+            return;
+        }
+
         Team team = new Team(args.getArgs(0));
 
-        team.joinTeam(args.getArgs(0), player);
-
+        if (team.joinTeam(args.getArgs(0), player))
+            player.sendMessage(Misc.PREFIX + "§aDu bist erfolgreich dem Team:§e " + args.getArgs(0) + " §abeigetreten");
+        else
+            player.sendMessage(Misc.PREFIX + "§cDu bist nicht in dieses Team eingeladen.");
 
 
     }
 
     @Command(name = "team.challenge", description = "Command, um Teams zu erstellen und zu verwalten", aliases = {"wst.challenge"}, inGameOnly = true)
-    public void onChallenge(CommandArgs args){
+    public void onChallenge(CommandArgs args) {
 
-        if(args.getArgs().length != 1){
+        if (args.getArgs().length != 1) {
             args.getSender().sendMessage(Misc.PREFIX + "§7Benutzung: §6/team challenge §7<Teamname§7>");
             return;
-        }if(!(TeamSystem.isActiveWarShipTeam(args.getArgs(0)))){
+        }
+        if (!(TeamSystem.isActiveWarShipTeam(args.getArgs(0)))) {
             args.getSender().sendMessage(Misc.PREFIX + "§7Dieses Team existiert nicht.");
             return;
         }
@@ -143,36 +165,37 @@ public class TeamCommand {
 
 
     @Command(name = "team.create", description = "Command, um Teams zu erstellen und zu verwalten", aliases = {"wst.create"}, inGameOnly = true)
-    public void onCreate(CommandArgs args){
+    public void onCreate(CommandArgs args) {
         Player player = (Player) args.getSender();
         WarPlayer wp = new WarPlayer(player.getUniqueId(), player.getName());
 
-        if(args.getArgs().length != 2){
+        if (args.getArgs().length != 2) {
             player.sendMessage(Misc.PREFIX + "§7Benutzung: §6/team create §7<§6Teamname§7> §7<§6Kürzel§7>");
             return;
         }
 
-        if(wp.isInWarShipTeam()){
+        if (wp.isInWarShipTeam()) {
             player.sendMessage(Misc.PREFIX + "§7Du bist bereits in einem WarShip-Team verlasse dieses, bevor du ein neues gründest.");
             return;
         }
 
         Team team = new Team(args.getArgs(0), args.getArgs(1), player);
+        wp.setWarShipTeam(args.getArgs(0));
         args.getSender().sendMessage((Misc.getPREFIX() + "§7Du hast das Team §6" + args.getArgs(0) + "§7#§2" + args.getArgs(1)) + " erstellt.");
 
     }
 
     @Command(name = "team.delete", description = "Command, um Teams zu erstellen und zu verwalten", aliases = {"wst.delete"}, inGameOnly = true)
 
-    public void onDelete(CommandArgs args){
+    public void onDelete(CommandArgs args) {
         Player player = (Player) args.getSender();
         WarPlayer wp = new WarPlayer(player.getUniqueId(), player.getName());
 
-        if(!(wp.isInWarShipTeam())){
+        if (!(wp.isInWarShipTeam())) {
             player.sendMessage(Misc.PREFIX + "§cDu bist in keinem Team, welches du verlassen löschen könntest.");
         }
 
-        if(!(wp.getTeam().getTeamAdmin().toString().equals(wp.UUID))){
+        if (!(wp.getTeam().getTeamAdmin().toString().equals(wp.UUID))) {
             player.sendMessage(Misc.PREFIX + "§7Nur der Teamadmin kann ein Team löschen.");
             return;
         }
@@ -183,20 +206,20 @@ public class TeamCommand {
 
     @Command(name = "team.invite", description = "Command, um Teams zu erstellen und zu verwalten", aliases = {"wst.invite"}, inGameOnly = true)
 
-    public void onInvite(CommandArgs args){
+    public void onInvite(CommandArgs args) {
         Player player = (Player) args.getSender();
 
-        if(args.getArgs().length != 1){
+        if (args.getArgs().length != 1) {
             player.sendMessage(Misc.PREFIX + "§6Benutzung: §6/team invite §7<§6Spieler§7>");
             return;
         }
         WarPlayer wp = new WarPlayer(player.getUniqueId(), player.getName());
-        if(!(wp.getTeam().getTeamAdmin().equals(wp.uuid))){
+        if (!(wp.getTeam().getTeamAdmin().equals(wp.uuid))) {
             player.sendMessage(Misc.PREFIX + "§cDu bist nicht der Admin des Teams und kannst auch keine Spieler einladen");
             return;
         }
 
-        if(Bukkit.getOfflinePlayer(args.getArgs(0)) == null){
+        if (Bukkit.getOfflinePlayer(args.getArgs(0)) == null) {
             player.sendMessage(Misc.PREFIX + "§cDieser Spieler existiert nicht.");
             return;
         }
@@ -206,11 +229,6 @@ public class TeamCommand {
         player.sendMessage(Misc.PREFIX + "§aDu hast den Spieler erfolgreich eingeladen.");
 
     }
-
-
-
-
-
 
 
 }

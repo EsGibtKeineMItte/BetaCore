@@ -1,6 +1,7 @@
 package de.wk.betacore.listener.Spigot;
 
 import de.leonhard.storage.Json;
+import de.leonhard.storage.Yaml;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.appearance.Color;
 import de.wk.betacore.appearance.Tablist;
@@ -45,6 +46,7 @@ public class JoinHandler implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
+
         if (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER)) {
             e.setQuitMessage("");
         } else {
@@ -104,6 +106,12 @@ public class JoinHandler implements Listener {
     }
 
     public void setPrefix() {
+        ConfigManager cm = new ConfigManager();
+
+        if (cm.getConfig().getBoolean("useAsArena")) {
+            return;
+        }
+
 
         Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
         Team Admin = board.registerNewTeam("01Admin");
