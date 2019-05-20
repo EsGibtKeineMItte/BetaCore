@@ -1,3 +1,11 @@
+### Minecraft template
+
+BetaCore-TestServer
+Arena
+Data
+BungeeCord
+
+
 target/
 pom.xml.tag
 pom.xml.releaseBackup
