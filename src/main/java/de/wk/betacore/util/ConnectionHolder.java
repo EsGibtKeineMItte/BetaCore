@@ -34,7 +34,7 @@ public class ConnectionHolder {
                 return;
             }
             try {
-                connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "?user=" + user + "&password=" + password);
+                connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "?autoReconnect=true", user, password);
                 // Schrank tot gefickt
                 if (Environment.isBungeecord()) {
                     System.out.print("DAFUQ?");

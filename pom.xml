@@ -135,12 +135,6 @@
             <version>1.0</version>
             <scope>compile</scope>
         </dependency>
-
-        <dependency>
-            <groupId>de.leonhard</groupId>
-            <artifactId>pluginlib</artifactId>
-            <version>1.0</version>
-        </dependency>
         <dependency>
             <groupId>de.quantumnanox</groupId>
             <artifactId>brew</artifactId>
