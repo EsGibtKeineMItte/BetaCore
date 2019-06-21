@@ -78,14 +78,6 @@
             <url>http://repo.dmulloy2.net/nexus/repository/public/</url>
         </repository>
         <repository>
-            <id>PluginLib</id>
-            <url>http://thewarking.de:8081/repository/PluginLib/</url>
-        </repository>
-        <repository>
-            <id>fawe</id>
-            <url>http://ci.athion.net/job/FastAsyncWorldEdit/ws/mvn/</url>
-        </repository>
-        <repository>
             <id>WorldEdit</id>
             <url>http://maven.sk89q.com/repo/</url>
         </repository>
@@ -139,13 +131,15 @@
             <groupId>de.quantumnanox</groupId>
             <artifactId>brew</artifactId>
             <version>1.0</version>
-            <scope>provided</scope>
+            <systemPath>${basedir}/lib/Brew.jar</systemPath>
+            <scope>system</scope>
         </dependency>
         <dependency>
             <groupId>com.boydti</groupId>
             <artifactId>fawe-api</artifactId>
             <version>18.03.26-48992d2-1054-19.4.17</version>
-            <scope>provided</scope>
+            <systemPath>${basedir}/lib/FAWE.jar</systemPath>
+            <scope>system</scope>
         </dependency>
 
         <dependency>
@@ -155,12 +149,5 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/worldedit.jar</systemPath>
         </dependency>
-
-        <dependency>
-            <groupId>co.aikar</groupId>
-            <artifactId>acf-bungee</artifactId> <!-- Don't forget to replace this -->
-            <version>0.5.0-SNAPSHOT</version> <!-- Replace this as well -->
-        </dependency>
-
     </dependencies>
 </project>

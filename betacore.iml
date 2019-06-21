@@ -82,8 +82,24 @@
     </orderEntry>
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.6" level="project" />
     <orderEntry type="library" name="Maven: de.leonhard:command:1.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: de.quantumnanox:brew:1.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.boydti:fawe-api:18.03.26-48992d2-1054-19.4.17" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: de.quantumnanox:brew:1.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/Brew.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: com.boydti:fawe-api:18.03.26-48992d2-1054-19.4.17">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/FAWE.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="module-library">
       <library name="Maven: com.sk89q.worldedit:worldedit-bukkit:6.1.7.3">
         <CLASSES>
@@ -93,11 +109,5 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Maven: co.aikar:acf-bungee:0.5.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: co.aikar:acf-core:0.5.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: co.aikar:Table:1.0.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: co.aikar:DelegatingMap:1.0.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: co.aikar:locales:1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: net.jodah:expiringmap:0.5.8" level="project" />
   </component>
 </module>
