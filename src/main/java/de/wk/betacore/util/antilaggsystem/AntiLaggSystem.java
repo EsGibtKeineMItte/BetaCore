@@ -30,14 +30,11 @@ public class AntiLaggSystem {
             }
         }
         Bukkit.broadcastMessage(Misc.PREFIX + "§7Es wurden §6 " + removedEntities + " §7Entities entfernt.");
-        Bukkit.getScheduler().scheduleSyncDelayedTask(BetaCore.getInstance(), new Runnable() {
-            @Override
-            public void run() {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(BetaCore.getInstance(), () -> {
 
-                if (cm.getConfig().getBoolean("useAsBauServer") && MinecraftServer.getServer().recentTps[2] < 18) {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stoplag");
-                    Bukkit.broadcastMessage(Misc.PREFIX + "§7Aufgrund der aktuellen TPS Zahlen wurde Stoplag aktiviert!");
-                }
+            if (cm.getConfig().getBoolean("useAsBauServer") && MinecraftServer.getServer().recentTps[2] < 18) {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stoplag");
+                Bukkit.broadcastMessage(Misc.PREFIX + "§7Aufgrund der aktuellen TPS Zahlen wurde Stoplag aktiviert!");
             }
         }, 20 * 11);
     }

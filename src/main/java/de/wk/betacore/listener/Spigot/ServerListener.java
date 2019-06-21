@@ -1,26 +1,24 @@
 package de.wk.betacore.listener.Spigot;
 
-import de.leonhard.lib.lib.Commons;
 import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.ConfigManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ServerListener implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onDamage(EntityDamageEvent e) {
-        e.setCancelled(true);
-        if (e.getEntity() instanceof Player) {
-            ((Player) e.getEntity()).setHealth(20);
-            ((Player) e.getEntity()).setFoodLevel(20);
-        }
-    }
+//    @EventHandler(priority = EventPriority.HIGHEST)
+//    public void onDamage(EntityDamageEvent e) {
+//        e.setCancelled(true);
+//        if (e.getEntity() instanceof Player) {
+//            ((Player) e.getEntity()).setHealth(20);
+//            ((Player) e.getEntity()).setFoodLevel(20);
+//        }
+//    }
 
     @EventHandler(priority = EventPriority.HIGHEST)
 
@@ -41,7 +39,7 @@ public class ServerListener implements Listener {
                     player.spigot().respawn();
                     BetaCore.teleportSpawn(player);
                 } catch (final Throwable t) {//Falsche Version, Craftbukkit bzw < 1.8
-                    Commons.tell(player, "§cDu konntest nicht automatisch respawnt werden");
+//                    Commons.tell(player, "§cDu konntest nicht automatisch respawnt werden");
                     if (!(t instanceof NoClassDefFoundError)) {//Wenn es nicht an der Version lag.
                         t.printStackTrace();
                     }

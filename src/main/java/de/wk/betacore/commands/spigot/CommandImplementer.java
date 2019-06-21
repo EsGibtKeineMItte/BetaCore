@@ -272,7 +272,6 @@ public class CommandImplementer {
                 priority.add(Rank.PREMIUM.getPriority() + "");
                 priority.add(Rank.USER.getPriority() + "");
 
-                Boolean isRank = true;
                 int their = 0;
 
                 if (!(sender.hasPermission("betacore.setrank")) && (!(sender.hasPermission("betacore.*")))) {

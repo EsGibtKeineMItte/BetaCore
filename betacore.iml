@@ -81,7 +81,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.6" level="project" />
-    <orderEntry type="library" name="Maven: de.leonhard:command:1.0" level="project" />
     <orderEntry type="module-library">
       <library name="Maven: de.quantumnanox:brew:1.0">
         <CLASSES>
@@ -109,5 +108,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="Maven: com.github.EsGibtKeineMitte:Command:1.1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.JavaFactoryDev:LightningStorage:2.3.3" level="project" />
   </component>
 </module>

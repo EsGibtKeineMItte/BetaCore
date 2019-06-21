@@ -85,6 +85,10 @@
             <id>aikar</id>
             <url>https://repo.aikar.co/content/groups/aikar/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -122,18 +126,13 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>de.leonhard</groupId>
-            <artifactId>command</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>de.quantumnanox</groupId>
             <artifactId>brew</artifactId>
             <version>1.0</version>
             <systemPath>${basedir}/lib/Brew.jar</systemPath>
             <scope>system</scope>
         </dependency>
+
         <dependency>
             <groupId>com.boydti</groupId>
             <artifactId>fawe-api</artifactId>
@@ -149,5 +148,17 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/worldedit.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.github.EsGibtKeineMitte</groupId>
+            <artifactId>Command</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.JavaFactoryDev</groupId>
+            <artifactId>LightningStorage</artifactId>
+            <version>2.3.3</version>
+        </dependency>
+
+
     </dependencies>
 </project>

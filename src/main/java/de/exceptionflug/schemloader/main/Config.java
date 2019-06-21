@@ -12,7 +12,7 @@ public class Config {
 	public FileConfiguration cfg;
 	
 	public Config() {
-		this.file = new File("plugins/TheCobixSystem/config.yml");
+		this.file = new File("plugins/BetaCore/config.yml");
 		this.cfg = YamlConfiguration.loadConfiguration(this.file);
 	}
 	
