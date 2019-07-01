@@ -32,7 +32,7 @@ public class MessageSend implements Listener {
         return Online;
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onChat(AsyncPlayerChatEvent e) {
         e.setCancelled(true);
         if (data.getBoolean(e.getPlayer().getUniqueId().toString() + ".muted")) {

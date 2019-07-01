@@ -12,15 +12,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class LobbyListener implements Listener {
-    ConfigManager cm = new ConfigManager();
-    Json data = FileManager.getPlayerData();
+    private final ConfigManager cm = new ConfigManager();
 
     BossBar bossBar = Bukkit.createBossBar(cm.getConfig().getString("BossBarTitle"), BarColor.BLUE, BarStyle.SEGMENTED_20);
 
 
-
     @EventHandler
-    public void onJoin(PlayerJoinEvent e){
+    public void onJoin(PlayerJoinEvent e) {
         bossBar.addPlayer(e.getPlayer());
     }
 

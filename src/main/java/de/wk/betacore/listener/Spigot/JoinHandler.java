@@ -30,7 +30,8 @@ public class JoinHandler implements Listener {
         setPrefix();
         tablist(e.getPlayer());
 
-        e.getPlayer().getInventory().clear();
+        if (!cm.getConfig().getBoolean("useAsLobby"))
+            e.getPlayer().getInventory().clear();
         e.getPlayer().setGameMode(GameMode.ADVENTURE);
         e.getPlayer().setHealth(20.0);
         e.getPlayer().setFoodLevel(20);

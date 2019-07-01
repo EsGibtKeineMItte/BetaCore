@@ -8,11 +8,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class WorldSystemUtil implements Listener {
-    ConfigManager cm = new ConfigManager();
+    private final ConfigManager cm = new ConfigManager();
 
     @EventHandler
     public void onCmd(PlayerCommandPreprocessEvent e) {
-        if(!(cm.getConfig().getBoolean("useAsBauServer"))){
+        if (!(cm.getConfig().getBoolean("useAsBauServer"))) {
             return;
         }
 
@@ -26,13 +26,13 @@ public class WorldSystemUtil implements Listener {
             player.performCommand(message);
         }
 
-        if(msg.startsWith("//schematic")){
+        if (msg.startsWith("//schematic")) {
             e.setCancelled(true);
             String message = msg.replace("//schematic", "schem");
             player.performCommand(message);
         }
 
-        if(msg.startsWith("//schem")){
+        if (msg.startsWith("//schem")) {
             e.setCancelled(true);
             String message = msg.replace("//schem", "schem");
             BetaCore.debug(message);

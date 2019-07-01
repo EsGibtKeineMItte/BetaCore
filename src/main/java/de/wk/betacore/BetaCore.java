@@ -100,7 +100,7 @@ public final class BetaCore extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PermissionListener(), this);
         Bukkit.getPluginManager().registerEvents(new PermissionsListener("/help", "/bau", "/arena-1",
                 "/arena-2", "/hub", "/l", "/r", "/msg", "/server bau", "/server Arena-1", "/server Arena-2",
-                "/server Lobby-1", "/ws", "/wsk", "/fight", "/arena"), this);
+                "/server Lobby-1", "/ws", "/wsk", "/fight", "/arena", "/bau get", "/bau home", "bau tp", "ws home", "ws get"), this);
         Bukkit.getPluginManager().registerEvents(new TNTTracer(), this);
         Bukkit.getPluginManager().registerEvents(new ServerListener(), this);
         this.getServer().getPluginManager().registerEvents(RecordListener.getInstance(), this);
@@ -165,6 +165,7 @@ public final class BetaCore extends JavaPlugin {
         framework.registerCommands(new BuildInformationCommand());
         framework.registerCommands(new BanCommand());
         framework.registerCommands(new MaintanceCommand());
+        framework.registerCommands(new BetaCoreCommand());
         log("§aDONE");
 
         log("§3Registering Commands & Listeners...");

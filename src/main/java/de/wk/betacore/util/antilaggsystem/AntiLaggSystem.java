@@ -11,13 +11,11 @@ import org.bukkit.entity.EntityType;
 
 public class AntiLaggSystem {
 
-    ConfigManager cm = new ConfigManager();
+    private final ConfigManager cm = new ConfigManager();
 
     int TICK_COUNT = 0;
     int removedEntities;
     long[] TICKS = new long[600];
-
-
 
 
     public void removeLaggs() {

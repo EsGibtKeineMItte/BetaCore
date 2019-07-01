@@ -1,14 +1,11 @@
 package de.wk.betacore.util.ranksystem;
 
-import de.wk.betacore.BetaCore;
 import de.wk.betacore.datamanager.ConfigManager;
 import de.wk.betacore.util.data.Misc;
-import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +33,13 @@ public class PermissionsListener implements Listener {
         String msg = e.getMessage().toLowerCase();
         ConfigManager cm = new ConfigManager();
         if (e.getPlayer().getWorld().getName().equalsIgnoreCase("world") && (RankSystem.getRank(e.getPlayer().getUniqueId()).equals(Rank.USER))
-                && (!(allowedCMDs.contains(msg))) && (!cm.getConfig().getBoolean("useAsArena"))) {
+                && (!cm.getConfig().getBoolean("useAsArena"))) {
+
+            for (final String cmd : allowedCMDs) {
+                if (msg.startsWith(cmd))
+                    return;
+            }
+
             e.setCancelled(true);
             e.getPlayer().sendMessage(Misc.PREFIX + "§7Du kannst diesen Befehl hier nicht verwenden");
         } else {
@@ -44,13 +47,18 @@ public class PermissionsListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void onBlockBreak(BlockBreakEvent e) {
-        if (e.getPlayer().getWorld().getName().equals("world") && (!(e.getPlayer().hasPermission("betacore.build"))) && (!(e.getPlayer().hasPermission("betacore.*")))) {
-            e.setCancelled(true);
-            e.getPlayer().sendMessage(Misc.PREFIX + "§cDas darfst du hier nicht.");
-        }
-    }
+//    @EventHandler
+//    public void onBlockBreak(BlockBreakEvent e) {
+//        final ConfigManager cm = new ConfigManager();
+//
+//        if (cm.getConfig().getBoolean("useAsArena"))
+//            return;
+//
+//        if (e.getPlayer().getWorld().getName().equals("world") && (!(e.getPlayer().hasPermission("betacore.build"))) && (!(e.getPlayer().hasPermission("betacore.*")))) {
+//            e.setCancelled(true);
+//            e.getPlayer().sendMessage(Misc.PREFIX + "§cDas darfst du hier nicht.");
+//        }
+//    }
 
 
 }
